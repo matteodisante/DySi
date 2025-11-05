@@ -1,0 +1,84 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Output files
+outputs/results/*.csv
+outputs/results/*.txt
+outputs/results/*.json
+outputs/plots/*.png
+outputs/plots/*.pdf
+outputs/reports/*.html
+outputs/reports/*.pdf
+
+# Keep directory structure
+!outputs/results/.gitkeep
+!outputs/plots/.gitkeep
+!outputs/reports/.gitkeep
+
+# Data files (large)
+*.nc
+*.nc4
+*.grib
+*.grib2
+
+# Compiled
+*.pyc
+*.pyo
+
+# Logs
+*.log
