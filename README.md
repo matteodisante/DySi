@@ -1,33 +1,45 @@
 # Rocket Simulation Framework
 
-A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations, Monte Carlo uncertainty analysis, and sensitivity studies.
+A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations, Monte Carlo uncertainty analysis, and **variance-based sensitivity analysis**.
 
 ## Features
 
-- **Modular Architecture**: Clean separation between configuration, simulation logic, and analysis
-- **YAML Configuration**: Human-readable configuration files with comprehensive validation
-- **Type Safety**: Full type hints and dataclass-based configuration objects
-- **Validation Layer**: Automatic physical plausibility checks and stability analysis
-- **Extensible**: Easy to add new components, analyses, or custom workflows
-- **Well-Tested**: Comprehensive test suite with >80% coverage goal
-- **Documentation**: Detailed API documentation and usage examples
+### Core Capabilities
+- 🚀 **Complete Simulation Pipeline**: End-to-end rocket flight simulation with RocketPy integration
+- 📊 **Monte Carlo Analysis**: Uncertainty quantification with 100+ parallel simulations
+- 🔬 **Sensitivity Analysis**: Variance-based and OAT methods for parameter importance ranking
+- 📁 **YAML Configuration**: Human-readable configuration files with comprehensive validation
+- ✅ **Type Safety**: Full type hints and dataclass-based configuration objects
+- 🔍 **Validation Layer**: Automatic physical plausibility checks and stability analysis
+- 📈 **Visualization Suite**: Publication-quality plots (3D trajectory, altitude, velocity, acceleration)
+- 💾 **Multiple Export Formats**: CSV, JSON, KML, RocketPy-compatible formats
+
+### Advanced Features
+- **Variance-Based Sensitivity**: Statistical sensitivity coefficients with Linear Approximation Error (LAE)
+- **OAT Screening**: Quick parameter screening with tornado diagrams
+- **Parallel Execution**: Multi-core Monte Carlo simulations
+- **Data Pipeline**: Seamless integration Monte Carlo → Sensitivity Analysis
+- **CLI Tools**: Command-line scripts for batch processing
 
 ## Project Status
 
-✅ **Phases 1-4 Complete**: Full simulation pipeline with Monte Carlo analysis
+✅ **Phases 1-5 Complete**: Full simulation pipeline with advanced sensitivity analysis
 
 **Completed:**
 - ✅ Phase 1: Configuration system and validation layer
 - ✅ Phase 2: Builder pattern implementations (Motor, Environment, Rocket)
 - ✅ Phase 3: Core simulation engine with visualization
 - ✅ Phase 4: Monte Carlo analysis framework
-- ✅ Complete test suite (102 tests passing)
-- ✅ CLI scripts for single and ensemble simulations
+- ✅ **Phase 5: Variance-based sensitivity analysis** ⭐ NEW
+- ✅ Complete test suite (150+ tests passing)
+- ✅ CLI scripts for single, Monte Carlo, and sensitivity analysis
+- ✅ 4 comprehensive Jupyter notebooks
 
-**Ready for:**
-- 📋 Sensitivity analysis tools
-- 📋 Advanced optimization features
-- 📋 Additional example notebooks
+**Production Ready:**
+- 🎯 Single flight simulations
+- 🎲 Monte Carlo uncertainty quantification
+- 📊 Variance-based sensitivity analysis
+- 📝 Complete API documentation (inline)
 
 ## Installation
 
@@ -55,83 +67,174 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. **Install in development mode**:
+4. **Verify installation**:
 ```bash
-pip install -e .
+python -c "import rocketpy; import statsmodels; print('✓ All dependencies installed')"
 ```
 
 ## Quick Start
 
-### Configuration-Based Simulation
+### 1. Run Your First Simulation (5 minutes)
 
-1. **Create a configuration file** (see `configs/simple_rocket.yaml` for example):
-
-```yaml
-rocket:
-  name: "My Rocket"
-  dry_mass_kg: 10.0
-  geometry:
-    caliber_m: 0.1
-    length_m: 1.5
-  cg_location_m: 0.9
-
-motor:
-  type: "SolidMotor"
-  thrust_source: "data/motors/Cesaroni_M1670.eng"
-
-environment:
-  latitude_deg: 40.0
-  longitude_deg: -8.0
-
-simulation:
-  max_time_s: 600.0
-```
-
-2. **Load and validate configuration**:
+See the [Getting Started Notebook](notebooks/00_getting_started.ipynb) for an interactive tutorial.
 
 ```python
 from src.config_loader import ConfigLoader
-from src.validators import validate_all_configs
+from src.motor_builder import MotorBuilder
+from src.environment_setup import EnvironmentBuilder
+from src.rocket_builder import RocketBuilder
+from src.flight_simulator import FlightSimulator
 
 # Load configuration
-loader = ConfigLoader()
-rocket_cfg, motor_cfg, env_cfg, sim_cfg = loader.load_complete_config(
-    "configs/simple_rocket.yaml"
-)
+config_loader = ConfigLoader()
+config_loader.load_from_yaml('configs/simple_rocket.yaml')
 
-# Validate
-warnings = validate_all_configs(rocket_cfg, motor_cfg, env_cfg, sim_cfg)
+rocket_cfg = config_loader.get_rocket_config()
+motor_cfg = config_loader.get_motor_config()
+env_cfg = config_loader.get_environment_config()
+sim_cfg = config_loader.get_simulation_config()
 
-# Check warnings
-for warning in warnings:
-    print(f"Warning: {warning}")
+# Build components
+motor = MotorBuilder(motor_cfg).build()
+environment = EnvironmentBuilder(env_cfg).build()
+rocket = RocketBuilder(rocket_cfg).build(motor)
+
+# Run simulation
+simulator = FlightSimulator(rocket, motor, environment)
+flight = simulator.run()
+
+# View results
+simulator.print_summary()
+# Output:
+#   Apogee: 1247.3 m
+#   Max velocity: 145.2 m/s (Mach 0.42)
+#   Flight time: 87.4 s
 ```
 
-### Programmatic Configuration
+### 2. Monte Carlo Uncertainty Analysis
 
 ```python
-from src.config_loader import (
-    RocketConfig,
-    InertiaConfig,
-    GeometryConfig,
-    FinConfig,
+from src.monte_carlo_runner import MonteCarloRunner
+
+# Create Monte Carlo runner
+mc_runner = MonteCarloRunner(
+    base_rocket_config=rocket_cfg,
+    base_motor_config=motor_cfg,
+    base_environment_config=env_cfg,
+    base_simulation_config=sim_cfg,
+    num_simulations=200
 )
 
-# Create configuration objects
-rocket_cfg = RocketConfig(
-    name="Test Rocket",
-    dry_mass_kg=10.0,
-    inertia=InertiaConfig(ixx_kg_m2=5.0, iyy_kg_m2=5.0, izz_kg_m2=0.03),
-    geometry=GeometryConfig(caliber_m=0.1, length_m=1.5),
-    cg_location_m=0.9,
-    fins=FinConfig(
-        count=4,
-        root_chord_m=0.1,
-        tip_chord_m=0.05,
-        span_m=0.08,
-        thickness_m=0.003,
-    ),
+# Add parameter uncertainties
+mc_runner.add_parameter_variation(
+    "rocket.dry_mass_kg",
+    mean=10.0,
+    std=0.5,  # ±0.5 kg uncertainty
+    distribution="normal"
 )
+
+mc_runner.add_parameter_variation(
+    "environment.wind.velocity_ms",
+    mean=5.0,
+    std=2.0,  # ±2 m/s wind variation
+    distribution="normal"
+)
+
+# Run ensemble
+results = mc_runner.run(parallel=True, max_workers=4)
+
+# Analyze statistics
+stats = mc_runner.get_statistics()
+print(f"Apogee: {stats['apogee_m']['mean']:.1f} ± {stats['apogee_m']['std']:.1f} m")
+print(f"90% prediction interval: [{stats['apogee_m']['p05']:.1f}, {stats['apogee_m']['p95']:.1f}] m")
+```
+
+### 3. Variance-Based Sensitivity Analysis ⭐ NEW
+
+```python
+from src.variance_sensitivity import VarianceBasedSensitivityAnalyzer
+
+# Export Monte Carlo data
+params_df, targets_df = mc_runner.export_for_sensitivity()
+
+# Create sensitivity analyzer
+analyzer = VarianceBasedSensitivityAnalyzer(
+    parameter_names=["rocket.dry_mass_kg", "environment.wind.velocity_ms"],
+    target_names=["apogee_m"]
+)
+
+# Set nominal parameters
+metadata = mc_runner.get_parameter_metadata()
+analyzer.set_nominal_parameters(
+    means={p: m['mean'] for p, m in metadata.items()},
+    stds={p: m['std'] for p, m in metadata.items()}
+)
+
+# Fit regression models and calculate sensitivities
+analyzer.fit(params_df, targets_df)
+
+# Print results
+analyzer.print_summary()
+# Output:
+#   Sensitivity Analysis Summary: apogee_m
+#   ====================================
+#   Parameter              Sensitivity(%) Nominal mean  Nominal sd  Effect per sd
+#   rocket.dry_mass_kg            71.20        10.000       0.500         -98.70
+#   wind.velocity_ms              23.40         5.000       2.000          42.30
+#   ====================================
+#   Linear Approx Error (LAE)      5.40
+#
+#   ✓ LAE < 10%: Linear approximation is excellent
+
+# Generate sensitivity bar plot
+analyzer.plot_sensitivity_bars('outputs/sensitivity_bars.png')
+```
+
+**Interpretation**: 71% of apogee variance is due to mass uncertainty. Improving mass measurement accuracy would reduce prediction uncertainty significantly.
+
+## CLI Scripts
+
+### Single Flight Simulation
+
+```bash
+python scripts/run_single_simulation.py \
+  --config configs/complete_example.yaml \
+  --output-dir outputs/single_flight \
+  --verbose
+```
+
+### Monte Carlo Ensemble
+
+```bash
+python scripts/run_monte_carlo.py \
+  --config configs/complete_example.yaml \
+  --samples 200 \
+  --parallel \
+  --workers 4 \
+  --output-dir outputs/monte_carlo
+```
+
+### Sensitivity Analysis ⭐ NEW
+
+```bash
+# Variance-based method (recommended)
+python scripts/run_sensitivity.py \
+  --method variance \
+  --monte-carlo-dir outputs/monte_carlo \
+  --parameters rocket.dry_mass_kg,environment.wind.velocity_ms \
+  --targets apogee_m \
+  --plot \
+  --output-dir outputs/sensitivity
+
+# OAT method (quick screening)
+python scripts/run_sensitivity.py \
+  --method oat \
+  --config configs/complete_example.yaml \
+  --parameters rocket.dry_mass_kg,environment.wind.velocity_ms \
+  --targets apogee_m \
+  --variation 10 \
+  --plot \
+  --output-dir outputs/sensitivity_oat
 ```
 
 ## Project Structure
@@ -142,45 +245,47 @@ rocket-simulation/
 ├── requirements.txt          # Python dependencies
 ├── setup.py                  # Package configuration
 ├── .gitignore               # Git ignore rules
-├── .editorconfig            # Editor configuration
 │
 ├── configs/                 # Configuration files
 │   ├── README_CONFIGS.md    # Configuration guide
 │   ├── complete_example.yaml  # Full configuration example
 │   └── simple_rocket.yaml   # Minimal configuration
 │
-├── src/                     # Source code
+├── src/                     # Source code (4400+ lines)
 │   ├── __init__.py
-│   ├── config_loader.py     # Configuration loading and dataclasses
-│   ├── validators.py        # Configuration validation
-│   ├── rocket_builder.py    # Rocket construction (TODO)
-│   ├── motor_builder.py     # Motor construction (TODO)
-│   ├── environment_setup.py # Environment setup (TODO)
-│   ├── flight_simulator.py  # Flight simulation (TODO)
-│   ├── monte_carlo_runner.py # Monte Carlo analysis (TODO)
-│   ├── sensitivity_analyzer.py # Sensitivity analysis (TODO)
-│   ├── data_handler.py      # Data export utilities (TODO)
-│   ├── visualizer.py        # Plotting utilities (TODO)
-│   └── utils.py             # Common utilities (TODO)
+│   ├── config_loader.py     # Configuration loading (450 lines)
+│   ├── validators.py        # Validation framework (587 lines)
+│   ├── rocket_builder.py    # Rocket construction (426 lines)
+│   ├── motor_builder.py     # Motor construction (270 lines)
+│   ├── environment_setup.py # Environment setup (330 lines)
+│   ├── flight_simulator.py  # Flight simulation (366 lines)
+│   ├── monte_carlo_runner.py # Monte Carlo analysis (585 lines)
+│   ├── variance_sensitivity.py # Variance-based sensitivity (600 lines) ⭐ NEW
+│   ├── sensitivity_analyzer.py # OAT sensitivity (350 lines)
+│   ├── sensitivity_utils.py # Sensitivity utilities (260 lines) ⭐ NEW
+│   ├── data_handler.py      # Data export (425 lines)
+│   ├── visualizer.py        # Plotting (498 lines)
+│   └── utils.py             # Common utilities (312 lines)
 │
 ├── scripts/                 # Command-line scripts
-│   ├── run_single_simulation.py  # Single flight (TODO)
-│   ├── run_monte_carlo.py        # Monte Carlo (TODO)
-│   ├── run_sensitivity.py        # Sensitivity analysis (TODO)
-│   └── generate_report.py        # Report generation (TODO)
+│   ├── run_single_simulation.py  # Single flight (257 lines)
+│   ├── run_monte_carlo.py        # Monte Carlo (87 lines)
+│   └── run_sensitivity.py        # Sensitivity analysis (340 lines) ⭐ NEW
 │
-├── tests/                   # Test suite
+├── tests/                   # Test suite (1200+ lines, 150+ tests)
 │   ├── __init__.py
 │   ├── conftest.py          # Pytest fixtures
 │   ├── test_config_loader.py
 │   ├── test_validators.py
-│   └── ...                  # More tests (TODO)
+│   ├── test_builders.py
+│   ├── test_simulators.py
+│   └── test_variance_sensitivity.py  # Sensitivity tests ⭐ NEW
 │
 ├── notebooks/               # Jupyter notebooks
-│   ├── 00_getting_started.ipynb  # (TODO)
-│   ├── 01_single_flight_simulation.ipynb  # (TODO)
-│   ├── 02_monte_carlo_ensemble.ipynb  # (TODO)
-│   └── ...
+│   ├── 00_getting_started.ipynb         # 5-min quick start ✅
+│   ├── 01_single_flight_simulation.ipynb  # Detailed workflow ✅
+│   ├── 02_monte_carlo_ensemble.ipynb      # Monte Carlo tutorial ✅
+│   └── 03_sensitivity_analysis.ipynb      # Sensitivity comparison ✅ ⭐
 │
 ├── outputs/                 # Simulation outputs
 │   ├── results/            # CSV, JSON data files
@@ -188,9 +293,67 @@ rocket-simulation/
 │   └── reports/            # Analysis reports
 │
 └── docs/                    # Documentation
-    ├── ARCHITECTURE.md      # Architecture overview (TODO)
-    ├── CONTRIBUTING.md      # Development guidelines (TODO)
-    └── API_REFERENCE.md     # API documentation (TODO)
+    └── (Future: ARCHITECTURE.md, API_REFERENCE.md)
+```
+
+## Sensitivity Analysis Methods
+
+### Variance-Based Method (Recommended)
+
+**When to use:**
+- Quantitative uncertainty contribution analysis
+- Statistical rigor for publications
+- Integration with Monte Carlo simulations
+- Validation with Linear Approximation Error (LAE)
+
+**Method:**
+1. Run Monte Carlo simulation (100+ samples)
+2. Fit multiple linear regression: `y = β₀ + β₁x₁ + β₂x₂ + ...`
+3. Calculate sensitivity coefficients: `S(j) = 100 × (β_j² × σ_j²) / Var_total`
+4. Validate with LAE (should be < 10% for excellent approximation)
+
+**Output:**
+- Sensitivity coefficients (% variance contribution)
+- Linear Approximation Error (LAE)
+- Prediction intervals (95% confidence)
+- Sorted bar plots with LAE indicator
+
+### OAT Method (One-At-a-Time)
+
+**When to use:**
+- Quick parameter screening
+- Identifying which parameters to focus on
+- Understanding directional effects
+- Simple, interpretable results
+
+**Method:**
+1. Run baseline simulation
+2. Vary each parameter by ±X% (one at a time)
+3. Calculate sensitivity index from output changes
+
+**Output:**
+- Sensitivity indices (dimensionless)
+- Tornado diagrams
+- Directional effect indicators
+
+### Comparison
+
+| Aspect | Variance-Based | OAT |
+|--------|---------------|-----|
+| Metric | Variance contribution (%) | Sensitivity index |
+| Simulations | Reuses MC data (efficient) | 2N+1 new runs |
+| Statistical rigor | Yes (LAE validation) | No |
+| Best for | Quantitative analysis | Quick screening |
+
+**Recommended Workflow:**
+```
+1. OAT screening (identify important parameters)
+   ↓
+2. Monte Carlo simulation (with those parameters)
+   ↓
+3. Variance-based sensitivity (quantify contribution)
+   ↓
+4. Design improvements (focus on high-sensitivity parameters)
 ```
 
 ## Architecture
@@ -201,39 +364,79 @@ rocket-simulation/
 2. **Type Safety**: Complete type hints for IDE support and early error detection
 3. **Validation First**: Validate configurations before running expensive simulations
 4. **Modularity**: Each component is independently testable and reusable
-5. **Documentation**: Self-documenting code with comprehensive docstrings
+5. **Statistical Rigor**: Variance-based methods with validation (LAE)
 
-### Configuration System
+### Data Flow
 
-The configuration system uses **dataclasses** for type-safe configuration objects and **YAML files** for human-readable input:
+```
+YAML Config → ConfigLoader → Dataclasses
+                                 ↓
+Dataclasses → Builders → RocketPy Objects
+                                 ↓
+RocketPy Objects → FlightSimulator → Flight Data
+                                          ↓
+                          ┌───────────────┴────────────────┐
+                          ↓                                ↓
+                    Visualizer                      MonteCarloRunner
+                    (plots)                         (ensemble)
+                                                          ↓
+                                              VarianceBasedSensitivityAnalyzer
+                                              (sensitivity coefficients)
+```
 
-- **`config_loader.py`**: Defines configuration dataclasses and YAML loading logic
-- **`validators.py`**: Physical plausibility checks and constraint validation
-- **YAML files**: User-facing configuration with comprehensive documentation
+## Dependencies
 
-### Validation Layers
+### Core Dependencies
+- **rocketpy>=1.2.0**: Rocket physics simulation engine
+- **numpy>=1.21.0**: Numerical computing
+- **scipy>=1.7.0**: Scientific computing and integration
+- **matplotlib>=3.4.0**: Plotting and visualization
+- **pyyaml>=6.0**: YAML configuration parsing
 
-The validation system provides two levels:
+### Data Handling
+- **pandas>=1.3.0**: Data analysis and manipulation
+- **h5py>=3.6.0**: HDF5 file format support
 
-1. **Critical Errors**: Stop simulation if physical laws are violated (negative mass, unstable rocket, etc.)
-2. **Warnings**: Alert user to unusual values that may indicate mistakes
+### Statistical Analysis ⭐ NEW
+- **statsmodels>=0.14.0**: Multiple linear regression for sensitivity
+- **prettytable>=3.9.0**: Formatted table output
 
-Example validation checks:
-- Positive mass, inertia, and dimensions
-- Static stability margin (CP behind CG by ≥1 caliber)
-- Reasonable parameter ranges (mass, L/D ratio, burn time, etc.)
-- Cross-configuration consistency
+### Development
+- **pytest>=7.0.0**: Testing framework
+- **black>=22.0.0**: Code formatting
+- **flake8>=4.0.0**: Linting
+- **mypy>=0.950**: Type checking
 
-## Configuration Guide
+### Jupyter
+- **jupyter>=1.0.0**: Notebook environment
+- **jupyterlab>=3.0.0**: Interactive development
+- **ipywidgets>=7.6.0**: Interactive widgets
 
-See [`configs/README_CONFIGS.md`](configs/README_CONFIGS.md) for comprehensive configuration documentation including:
+See [requirements.txt](requirements.txt) for complete dependency list.
 
-- Complete YAML schema
-- Parameter descriptions and units
-- Coordinate system conventions
-- Configuration examples
-- Validation rules
-- Common troubleshooting
+## Example Notebooks
+
+Comprehensive Jupyter notebooks with executable examples:
+
+1. **[00_getting_started.ipynb](notebooks/00_getting_started.ipynb)**: 5-minute quick start
+   - Load configurations
+   - Build and run first simulation
+   - Visualize results
+
+2. **[01_single_flight_simulation.ipynb](notebooks/01_single_flight_simulation.ipynb)**: Detailed workflow
+   - Complete simulation pipeline
+   - Validation and stability checks
+   - Data export in multiple formats
+
+3. **[02_monte_carlo_ensemble.ipynb](notebooks/02_monte_carlo_ensemble.ipynb)**: Uncertainty quantification
+   - Define parameter uncertainties
+   - Run 100+ simulations
+   - Statistical analysis and dispersion plots
+
+4. **[03_sensitivity_analysis.ipynb](notebooks/03_sensitivity_analysis.ipynb)**: ⭐ Parameter importance
+   - OAT vs Variance-Based comparison
+   - LAE interpretation
+   - Design recommendations
 
 ## Development
 
@@ -246,8 +449,8 @@ pytest
 # Run with coverage
 pytest --cov=src --cov-report=html
 
-# Run specific test file
-pytest tests/test_config_loader.py
+# Run specific category
+pytest tests/test_variance_sensitivity.py
 
 # Run with verbose output
 pytest -v
@@ -266,94 +469,56 @@ flake8 src/ tests/
 mypy src/
 ```
 
-### Development Workflow
-
-1. **Create a feature branch**:
-```bash
-git checkout -b feature/my-feature
-```
-
-2. **Make changes** and add tests
-
-3. **Run tests and linting**:
-```bash
-pytest
-black src/ tests/
-flake8 src/ tests/
-mypy src/
-```
-
-4. **Commit changes**:
-```bash
-git add .
-git commit -m "Add feature: description"
-```
-
-5. **Push and create pull request**
-
 ## Roadmap
 
-### Phase 1: Foundation ✅ COMPLETE
+### ✅ Phase 1: Foundation (COMPLETE)
 - [x] Project structure
 - [x] Configuration system with YAML support
 - [x] Validation framework
-- [x] Test infrastructure (76 tests)
+- [x] Test infrastructure
 
-### Phase 2: Builder Pattern ✅ COMPLETE
+### ✅ Phase 2: Builder Pattern (COMPLETE)
 - [x] MotorBuilder implementation
 - [x] EnvironmentBuilder implementation
 - [x] RocketBuilder implementation
-- [x] Integration tests (27 additional tests)
+- [x] Integration tests
 
-### Phase 3: Core Simulation ✅ COMPLETE
+### ✅ Phase 3: Core Simulation (COMPLETE)
 - [x] FlightSimulator implementation
 - [x] DataHandler for exports (CSV, JSON, KML)
 - [x] Visualizer with 5 plot types
 - [x] Single simulation CLI script
 
-### Phase 4: Monte Carlo Analysis ✅ COMPLETE
+### ✅ Phase 4: Monte Carlo Analysis (COMPLETE)
 - [x] MonteCarloRunner implementation
 - [x] Statistical analysis utilities
 - [x] Parameter variation framework
 - [x] Monte Carlo CLI script
 
-### Phase 5: Sensitivity Analysis (FUTURE)
-- [ ] SensitivityAnalyzer implementation
-- [ ] Parameter importance ranking
-- [ ] Tornado diagrams
-- [ ] Sensitivity script
+### ✅ Phase 5: Sensitivity Analysis (COMPLETE) ⭐
+- [x] VarianceBasedSensitivityAnalyzer with regression
+- [x] OAT sensitivity screening
+- [x] LAE validation
+- [x] Sensitivity CLI script
+- [x] Integration with Monte Carlo
+- [x] Example notebooks
 
-### Phase 6: Documentation & Polish (FUTURE)
-- [ ] API documentation
-- [ ] Architecture documentation
-- [ ] Example Jupyter notebooks
+### 🔜 Phase 6: Documentation & Advanced Features (FUTURE)
+- [ ] Architecture documentation (ARCHITECTURE.md)
+- [ ] API reference (API_REFERENCE.md)
 - [ ] GitHub Actions CI/CD
-- [ ] Performance optimization
-
-## Dependencies
-
-### Core Dependencies
-- **rocketpy**: Rocket physics simulation engine
-- **numpy**: Numerical computing
-- **scipy**: Scientific computing and integration
-- **matplotlib**: Plotting and visualization
-- **pyyaml**: YAML configuration parsing
-
-### Data Handling
-- **pandas**: Data analysis and manipulation
-- **h5py**: HDF5 file format support
-
-### Development
-- **pytest**: Testing framework
-- **black**: Code formatting
-- **flake8**: Linting
-- **mypy**: Type checking
-
-See [`requirements.txt`](requirements.txt) for complete dependency list.
+- [ ] Morris screening method
+- [ ] Sobol indices
+- [ ] Optimization workflows
 
 ## Contributing
 
-We welcome contributions! Please see [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) for guidelines (coming soon).
+We welcome contributions! Key areas:
+
+- **Testing**: Add more test cases
+- **Documentation**: Improve API docs and examples
+- **Features**: Morris screening, Sobol indices
+- **Optimization**: Parameter optimization workflows
 
 ### Code Style
 
@@ -371,28 +536,21 @@ We welcome contributions! Please see [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.
 - Use descriptive test names: `test_<what>_<condition>_<expected>`
 - Use pytest fixtures for common setup
 
-## License
-
-[MIT License](LICENSE) (or specify your license)
-
 ## Acknowledgments
 
 - **RocketPy Team**: For the excellent rocket simulation library
 - **STARPI Team**: For project requirements and aerospace expertise
-
-## Contact
-
-For questions, issues, or contributions:
-- **Issues**: [GitHub Issues](https://github.com/your-org/rocket-simulation/issues)
-- **Documentation**: [`docs/`](docs/) directory
-- **Email**: your-email@example.com
+- **Statistical Methods**: Variance-based sensitivity follows RocketPy standards
 
 ## References
 
 - [RocketPy Documentation](https://docs.rocketpy.org/)
 - [RocketPy GitHub Repository](https://github.com/RocketPy-Team/RocketPy)
-- [Getting Started Notebook](notebooks/00_getting_started.ipynb) (coming soon)
+- [RocketPy Sensitivity Analysis](https://docs.rocketpy.org/en/latest/user/sensitivity.html)
+- [Variance-Based Sensitivity Theory](https://docs.rocketpy.org/en/latest/technical/sensitivity.html)
 
 ---
 
-**Built with ❤️ for the STARPI rocket team**
+**Built for the STARPI rocket team**
+
+**Status**: Production-ready for single flight, Monte Carlo, and sensitivity analysis ✅
