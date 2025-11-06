@@ -82,3 +82,7 @@ outputs/reports/*.pdf
 
 # Logs
 *.log
+
+# Custom data and results directories
+data/
+results/
