@@ -376,3 +376,209 @@ class MonteCarloRunner:
                 print(f"  95th %ile:{s['p95']:10.2f}")
 
         print("=" * 70 + "\n")
+
+    def export_for_sensitivity(
+        self,
+        parameter_names: Optional[List[str]] = None,
+        target_names: Optional[List[str]] = None
+    ) -> Tuple["pd.DataFrame", "pd.DataFrame"]:
+        """
+        Export Monte Carlo results as DataFrames for sensitivity analysis.
+
+        This method prepares data in the format expected by
+        VarianceBasedSensitivityAnalyzer, extracting parameter values
+        and target variables from simulation results.
+
+        Args:
+            parameter_names: List of parameter paths to export (None = all)
+            target_names: List of target variable names to export (None = all)
+
+        Returns:
+            Tuple of (parameters_df, targets_df)
+            - parameters_df: DataFrame with shape (N samples, P parameters)
+            - targets_df: DataFrame with shape (N samples, T targets)
+
+        Raises:
+            RuntimeError: If no results available
+            ValueError: If requested parameters/targets don't exist
+
+        Example:
+            >>> params_df, targets_df = mc_runner.export_for_sensitivity(
+            ...     parameter_names=["rocket.dry_mass_kg", "motor.thrust_avg"],
+            ...     target_names=["apogee_m", "max_velocity_ms"]
+            ... )
+            >>> # Now use with VarianceBasedSensitivityAnalyzer
+            >>> analyzer = VarianceBasedSensitivityAnalyzer(
+            ...     parameter_names=list(params_df.columns),
+            ...     target_names=list(targets_df.columns)
+            ... )
+            >>> analyzer.fit(params_df, targets_df)
+        """
+        import pandas as pd
+
+        if not self.results:
+            raise RuntimeError(
+                "No results available. Run Monte Carlo simulation first."
+            )
+
+        logger.info("Exporting Monte Carlo data for sensitivity analysis")
+
+        # Default to all parameters and common target metrics
+        if parameter_names is None:
+            parameter_names = list(self.parameter_variations.keys())
+
+        if target_names is None:
+            target_names = [
+                "apogee_m",
+                "apogee_time_s",
+                "max_velocity_ms",
+                "x_impact_m",
+                "y_impact_m",
+                "lateral_distance_m",
+                "flight_time_s"
+            ]
+
+        # Extract parameter values
+        param_data = []
+        for result in self.results:
+            param_row = {}
+            for param_name in parameter_names:
+                if param_name in result.get("parameters", {}):
+                    param_row[param_name] = result["parameters"][param_name]
+                else:
+                    raise ValueError(
+                        f"Parameter '{param_name}' not found in results"
+                    )
+            param_data.append(param_row)
+
+        parameters_df = pd.DataFrame(param_data)
+
+        # Extract target values
+        target_data = []
+        for result in self.results:
+            target_row = {}
+            for target_name in target_names:
+                if target_name in result:
+                    target_row[target_name] = result[target_name]
+                else:
+                    # Try to find in nested structure
+                    found = False
+                    for key, value in result.items():
+                        if isinstance(value, dict) and target_name in value:
+                            target_row[target_name] = value[target_name]
+                            found = True
+                            break
+                    if not found:
+                        logger.warning(
+                            f"Target '{target_name}' not found in results, skipping"
+                        )
+            if target_row:  # Only add if at least one target was found
+                target_data.append(target_row)
+
+        targets_df = pd.DataFrame(target_data)
+
+        # Validate dimensions match
+        if len(parameters_df) != len(targets_df):
+            logger.warning(
+                f"Parameter samples ({len(parameters_df)}) don't match "
+                f"target samples ({len(targets_df)}). Using intersection."
+            )
+            min_len = min(len(parameters_df), len(targets_df))
+            parameters_df = parameters_df.iloc[:min_len]
+            targets_df = targets_df.iloc[:min_len]
+
+        logger.info(
+            f"Exported {len(parameters_df)} samples with "
+            f"{len(parameters_df.columns)} parameters and "
+            f"{len(targets_df.columns)} targets"
+        )
+
+        return parameters_df, targets_df
+
+    def save_rocketpy_format(
+        self,
+        output_dir: str,
+        filename_prefix: str = "monte_carlo",
+        parameter_names: Optional[List[str]] = None,
+        target_names: Optional[List[str]] = None
+    ) -> Tuple[Path, Path]:
+        """
+        Save Monte Carlo results in RocketPy standard format.
+
+        Creates two space-separated text files compatible with RocketPy:
+        - {prefix}.inputs.txt: Parameter values for each simulation
+        - {prefix}.outputs.txt: Output values for each simulation
+
+        This format is compatible with RocketPy's load_monte_carlo_data()
+        and sensitivity analysis tools.
+
+        Args:
+            output_dir: Directory to save files
+            filename_prefix: Prefix for output filenames
+            parameter_names: Parameters to export (None = all)
+            target_names: Targets to export (None = common metrics)
+
+        Returns:
+            Tuple of (input_file_path, output_file_path)
+
+        Example:
+            >>> input_path, output_path = mc_runner.save_rocketpy_format(
+            ...     output_dir="outputs/sensitivity_data",
+            ...     filename_prefix="calisto_mc"
+            ... )
+            >>> # Files can now be loaded with sensitivity_utils.load_monte_carlo_data()
+        """
+        # Get data as DataFrames
+        parameters_df, targets_df = self.export_for_sensitivity(
+            parameter_names=parameter_names,
+            target_names=target_names
+        )
+
+        # Save using utility function
+        from src.sensitivity_utils import save_monte_carlo_data
+
+        input_path, output_path = save_monte_carlo_data(
+            parameters_df=parameters_df,
+            targets_df=targets_df,
+            output_dir=output_dir,
+            filename_prefix=filename_prefix
+        )
+
+        logger.info(
+            f"Saved Monte Carlo data in RocketPy format:\n"
+            f"  - {input_path}\n"
+            f"  - {output_path}"
+        )
+
+        return input_path, output_path
+
+    def get_parameter_metadata(self) -> Dict[str, Dict[str, float]]:
+        """
+        Get nominal mean and standard deviation for each varied parameter.
+
+        Returns metadata needed for variance-based sensitivity analysis.
+
+        Returns:
+            Dictionary mapping parameter names to {"mean": ..., "std": ...}
+
+        Example:
+            >>> metadata = mc_runner.get_parameter_metadata()
+            >>> print(metadata["rocket.dry_mass_kg"])
+            {'mean': 10.0, 'std': 0.5}
+            >>>
+            >>> # Use with VarianceBasedSensitivityAnalyzer
+            >>> analyzer.set_nominal_parameters(
+            ...     means={k: v['mean'] for k, v in metadata.items()},
+            ...     stds={k: v['std'] for k, v in metadata.items()}
+            ... )
+        """
+        metadata = {}
+
+        for param_name, param_config in self.parameter_variations.items():
+            metadata[param_name] = {
+                "mean": param_config["mean"],
+                "std": param_config["std"],
+                "distribution": param_config.get("distribution", "normal")
+            }
+
+        return metadata

@@ -9,6 +9,10 @@ pyyaml>=6.0
 pandas>=1.3.0
 h5py>=3.6.0
 
+# Statistical analysis (for variance-based sensitivity)
+statsmodels>=0.14.0
+prettytable>=3.9.0
+
 # Geospatial
 simplekml>=1.3.6
 
