@@ -170,7 +170,7 @@ def main():
 
         # Build rocket
         logger.info("Building rocket...")
-        rocket_builder = RocketBuilder(rocket_cfg, motor=motor)
+        rocket_builder = RocketBuilder(rocket_cfg, motor=motor, motor_config=motor_cfg)
         rocket = rocket_builder.build()
         rocket_summary = rocket_builder.get_summary()
         logger.info(

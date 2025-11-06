@@ -42,6 +42,7 @@ class RocketBuilder:
         self,
         config: RocketConfig,
         motor: Optional[SolidMotor] = None,
+        motor_config: Optional["MotorConfig"] = None,
     ):
         """Initialize RocketBuilder.
 
@@ -49,6 +50,7 @@ class RocketBuilder:
             config: RocketConfig object with rocket parameters.
             motor: Optional SolidMotor instance. If provided, will be added
                    during build().
+            motor_config: Optional MotorConfig for extracting motor position.
 
         Raises:
             ImportError: If RocketPy is not installed.
@@ -60,6 +62,7 @@ class RocketBuilder:
 
         self.config = config
         self.motor = motor
+        self.motor_config = motor_config
         self.rocket: Optional[Rocket] = None
 
     def build(self) -> Rocket:
@@ -190,14 +193,19 @@ class RocketBuilder:
         if self.rocket is None:
             raise RuntimeError("Rocket not created yet. Call build() first.")
 
-        # Use position from config if not provided
+        # Use position from motor config if not provided
         if position_m is None:
-            # Motor position is REQUIRED - no safe default exists
-            raise ValueError(
-                "Motor position_m is required. Specify in motor config section. "
-                "Position is measured from rocket's coordinate system origin "
-                "(typically from nose tip or tail, depending on coordinate_system_orientation)."
-            )
+            if self.motor_config is not None and hasattr(self.motor_config, 'position_m'):
+                position_m = self.motor_config.position_m
+                logger.debug(f"Using motor position from config: {position_m} m")
+            else:
+                # Motor position is REQUIRED - no safe default exists
+                raise ValueError(
+                    "Motor position_m is required. Specify 'position_m' in motor config section, "
+                    "or pass motor_config to RocketBuilder constructor. "
+                    "Position is measured from rocket's coordinate system origin "
+                    "(typically from nose tip or tail, depending on coordinate_system_orientation)."
+                )
 
         self.rocket.add_motor(motor, position=position_m)
         logger.debug(f"Motor added at position {position_m} m")

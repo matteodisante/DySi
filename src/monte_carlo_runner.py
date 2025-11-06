@@ -234,7 +234,7 @@ class MonteCarloRunner:
             # Build components
             motor = MotorBuilder(motor_cfg).build()
             env = EnvironmentBuilder(env_cfg).build()
-            rocket = RocketBuilder(rocket_cfg, motor=motor).build()
+            rocket = RocketBuilder(rocket_cfg, motor=motor, motor_config=motor_cfg).build()
 
             # Run simulation
             simulator = FlightSimulator(rocket, env, sim_cfg)
