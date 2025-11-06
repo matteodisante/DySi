@@ -49,7 +49,7 @@ rocket:
 
 motor:
   type: "SolidMotor"
-  thrust_source: "data/motors/Cesaroni_M1670.eng"  # Path to thrust curve file
+  thrust_source: "data/motors/Cesaroni_5880M1160-P.eng"  # Path to thrust curve file
 
   dry_mass_kg: 1.815
   dry_inertia: [0.125, 0.125, 0.002]  # [Ixx, Iyy, Izz] in kg·m²
