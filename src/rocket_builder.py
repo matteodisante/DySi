@@ -192,9 +192,12 @@ class RocketBuilder:
 
         # Use position from config if not provided
         if position_m is None:
-            # Position should be provided in motor config
-            logger.warning("Motor position not specified, using default -1.373 m")
-            position_m = -1.373
+            # Motor position is REQUIRED - no safe default exists
+            raise ValueError(
+                "Motor position_m is required. Specify in motor config section. "
+                "Position is measured from rocket's coordinate system origin "
+                "(typically from nose tip or tail, depending on coordinate_system_orientation)."
+            )
 
         self.rocket.add_motor(motor, position=position_m)
         logger.debug(f"Motor added at position {position_m} m")

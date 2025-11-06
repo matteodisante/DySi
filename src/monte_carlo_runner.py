@@ -169,6 +169,46 @@ class MonteCarloRunner:
 
         return rocket_cfg, motor_cfg, env_cfg, sim_cfg
 
+    def _extract_parameter_values(
+        self,
+        rocket_cfg,
+        motor_cfg,
+        env_cfg,
+        sim_cfg
+    ) -> Dict[str, float]:
+        """Extract actual parameter values from configs for sensitivity analysis.
+
+        Args:
+            rocket_cfg: Rocket configuration
+            motor_cfg: Motor configuration
+            env_cfg: Environment configuration
+            sim_cfg: Simulation configuration
+
+        Returns:
+            Dictionary mapping parameter paths to their values.
+        """
+        values = {}
+        configs = {
+            "rocket": rocket_cfg,
+            "motor": motor_cfg,
+            "environment": env_cfg,
+            "simulation": sim_cfg,
+        }
+
+        for param_path in self.parameter_variations.keys():
+            parts = param_path.split(".")
+            config_name = parts[0]
+            attr_path = parts[1:]
+
+            obj = configs[config_name]
+            for attr in attr_path:
+                obj = getattr(obj, attr)
+
+            # Convert to float for analysis
+            values[param_path] = float(obj)
+
+        return values
+
     def _run_single_simulation(self, simulation_index: int) -> Optional[Dict[str, Any]]:
         """Run a single Monte Carlo simulation.
 
@@ -186,6 +226,11 @@ class MonteCarloRunner:
                 simulation_index
             )
 
+            # Extract input parameter values for sensitivity analysis
+            input_parameters = self._extract_parameter_values(
+                rocket_cfg, motor_cfg, env_cfg, sim_cfg
+            )
+
             # Build components
             motor = MotorBuilder(motor_cfg).build()
             env = EnvironmentBuilder(env_cfg).build()
@@ -198,6 +243,7 @@ class MonteCarloRunner:
             # Get results
             summary = simulator.get_summary()
             summary["simulation_index"] = simulation_index
+            summary["parameters"] = input_parameters  # ADD INPUT PARAMETERS
 
             return summary
 

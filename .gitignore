@@ -86,3 +86,4 @@ outputs/reports/*.pdf
 # Custom data and results directories
 data/
 results/
+outputs/

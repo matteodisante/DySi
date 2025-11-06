@@ -261,13 +261,24 @@ class EnvironmentBuilder:
                 logger.debug("No wind (velocity = 0)")
             else:
                 # Convert meteorological direction to wind components
-                # Wind direction: where wind comes FROM (meteorological convention)
-                # Convert to radians for calculation
+                #
+                # METEOROLOGICAL CONVENTION (used by RocketPy):
+                # Wind direction = where wind comes FROM (0° = North, 90° = East, ...)
+                #
+                # Examples:
+                #   - Wind from North (0°):   blows South  → u=0,  v=-V
+                #   - Wind from East (90°):   blows West   → u=-V, v=0
+                #   - Wind from South (180°): blows North  → u=0,  v=+V
+                #   - Wind from West (270°):  blows East   → u=+V, v=0
+                #
+                # Formula: u = -V*sin(θ), v = -V*cos(θ)
+                # Negative sign because wind COMES FROM direction (not GOES TO)
+
                 direction_rad = np.deg2rad(wind_direction)
 
-                # Wind components (negative because wind comes FROM direction)
-                wind_u = -wind_velocity * np.sin(direction_rad)  # East component
-                wind_v = -wind_velocity * np.cos(direction_rad)  # North component
+                # Calculate wind components (RocketPy convention)
+                wind_u = -wind_velocity * np.sin(direction_rad)  # East component (m/s)
+                wind_v = -wind_velocity * np.cos(direction_rad)  # North component (m/s)
 
                 # Get current atmospheric model settings
                 atm_type = self.environment.atmospheric_model_type

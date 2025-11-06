@@ -118,6 +118,22 @@ class AirBrakesController:
         logger.info(f"AirBrakesController initialized: algorithm={config.algorithm}, "
                    f"target={config.target_apogee_m}m, rate={config.sampling_rate_hz}Hz")
 
+    def reset_state(self):
+        """Reset controller state for new simulation.
+
+        This method should be called between Monte Carlo runs to prevent
+        state contamination. It's automatically called on first controller
+        invocation (when observed_variables is empty).
+        """
+        self._integral = 0.0
+        self._prev_error = 0.0
+        self._commanded_deployment = 0.0
+        self._actual_deployment = 0.0
+        self._computation_buffer = []
+        self._filtered_altitude = None
+        self._filtered_velocity = None
+        logger.debug("Controller state reset for new simulation")
+
     def get_controller_function(self) -> Callable:
         """Get controller function for RocketPy integration.
 
@@ -162,14 +178,12 @@ class AirBrakesController:
             altitude = state[2]  # z position (m)
             vz = state[5]  # vertical velocity (m/s)
 
-            # Initialize on first call
+            # Initialize/reset on first call (new simulation)
             if not observed_variables:
+                # Auto-reset state for new simulation (prevents Monte Carlo contamination)
+                self.reset_state()
                 self._filtered_altitude = altitude
                 self._filtered_velocity = vz
-                self._integral = 0.0
-                self._prev_error = 0.0
-                self._commanded_deployment = 0.0
-                self._actual_deployment = 0.0
                 air_brakes.deployment_level = 0.0
                 return (time, 0.0, 0.0, self.config.target_apogee_m, 0.0, 0.0)
 
