@@ -1,0 +1,231 @@
+# Weather Integration Example Configuration
+# Demonstrates using real weather data sources with RocketPy
+
+# This file contains multiple example configurations for different weather data sources.
+# Uncomment and modify the section you want to use.
+
+# =============================================================================
+# EXAMPLE 1: Wyoming Sounding (Real Atmospheric Profile + Wind)
+# =============================================================================
+# Uses radiosonde balloon data from Wyoming University database
+# Provides complete atmospheric profile with temperature, pressure, and wind
+# Updated twice daily (00Z and 12Z UTC)
+
+rocket:
+  name: "Wyoming Weather Test"
+  dry_mass_kg: 15.0
+
+  inertia:
+    ixx_kg_m2: 6.0
+    iyy_kg_m2: 6.0
+    izz_kg_m2: 0.03
+
+  geometry:
+    caliber_m: 0.127
+    length_m: 2.0
+
+  cg_location_m: 1.2
+
+  fins:
+    count: 4
+    root_chord_m: 0.120
+    tip_chord_m: 0.060
+    span_m: 0.100
+    thickness_m: 0.003
+    position_m: -1.0
+
+  parachute:
+    enabled: true
+    cd_s: 10.0
+    trigger: "apogee"
+
+motor:
+  type: "SolidMotor"
+  thrust_source: "data/motors/Cesaroni_5472M2250-P.eng"
+  dry_mass_kg: 1.8
+  position_m: -1.4
+
+environment:
+  latitude_deg: 37.8267  # Oakland, CA
+  longitude_deg: -122.4233
+  elevation_m: 5.0
+
+  date: [2024, 7, 15, 12]  # July 15, 2024, 12:00 UTC (required for Wyoming)
+
+  weather:
+    source: "wyoming"
+    wyoming_station: "72340"  # Oakland radiosonde station (KOAK)
+    fetch_real_time: false  # Use historical data from specified date
+
+  wind:
+    model: "from_weather"  # Wind profile from Wyoming sounding
+
+  max_expected_height_m: 5000.0
+
+simulation:
+  max_time_s: 600.0
+  rail:
+    length_m: 5.2
+    inclination_deg: 85.0
+    heading_deg: 0.0
+
+---
+# =============================================================================
+# EXAMPLE 2: GFS Forecast (Numerical Weather Prediction)
+# =============================================================================
+# Uses Global Forecast System model data from NOAA
+# Provides atmospheric conditions and wind forecasts
+# Updated 4 times daily with forecasts up to 16 days ahead
+
+environment:
+  latitude_deg: 39.3897  # Alcochete, Portugal (EuRoC launch site)
+  longitude_deg: -8.2889
+  elevation_m: 100.0
+
+  date: [2024, 7, 20, 14]  # Forecast date and time
+
+  weather:
+    source: "gfs"
+    fetch_real_time: false
+
+  wind:
+    model: "from_weather"  # Wind forecast from GFS
+
+---
+# =============================================================================
+# EXAMPLE 3: ERA5 Reanalysis (Historical Data)
+# =============================================================================
+# Uses ERA5 reanalysis data from ECMWF
+# Provides high-quality historical atmospheric conditions
+# Available from 1950 to present with ~5 day latency
+
+environment:
+  latitude_deg: 32.9902  # Las Cruces, NM (Spaceport America)
+  longitude_deg: -106.9750
+  elevation_m: 1200.0
+
+  date: [2024, 6, 10, 16]  # Historical date for analysis
+
+  weather:
+    source: "era5"
+    fetch_real_time: false
+
+  wind:
+    model: "from_weather"  # Wind data from ERA5
+
+---
+# =============================================================================
+# EXAMPLE 4: Custom Atmospheric Profile
+# =============================================================================
+# Uses custom atmospheric data file
+# Useful for testing specific conditions or using other data sources
+
+environment:
+  latitude_deg: 45.0
+  longitude_deg: 10.0
+  elevation_m: 200.0
+
+  weather:
+    source: "custom"
+    custom_file: "data/custom_atmosphere.txt"  # Path to custom profile
+
+  wind:
+    model: "constant"  # Or from_weather if custom file includes wind
+    velocity_ms: 5.0
+    direction_deg: 270.0
+
+---
+# =============================================================================
+# EXAMPLE 5: Standard Atmosphere (No Weather Data)
+# =============================================================================
+# Uses International Standard Atmosphere model
+# Good for initial design and testing
+
+environment:
+  latitude_deg: 39.0
+  longitude_deg: -8.0
+  elevation_m: 50.0
+
+  weather:
+    source: "standard_atmosphere"
+
+  wind:
+    model: "constant"
+    velocity_ms: 5.0
+    direction_deg: 90.0  # From East
+
+---
+# =============================================================================
+# WYOMING STATION CODES (Common US and European Stations)
+# =============================================================================
+# United States:
+#   72340 - Oakland, CA (KOAK)
+#   72376 - San Diego, CA (KNKX)
+#   72469 - Denver, CO (KDNR)
+#   72230 - Great Falls, MT (KTFX)
+#   72520 - Salt Lake City, UT (KSLC)
+#   72632 - North Platte, NE (KLBF)
+#   72645 - Topeka, KS (KTOP)
+#   72230 - Boise, ID (KBOI)
+#
+# Europe:
+#   08495 - Lisbon, Portugal
+#   08221 - Madrid, Spain
+#   16245 - Milan, Italy
+#   10868 - Munich, Germany
+#   03005 - Lerwick, UK
+#   11035 - Vienna, Austria
+#
+# For complete list, see: http://weather.uwyo.edu/upperair/sounding.html
+
+# =============================================================================
+# NOTES ON WEATHER DATA SOURCES
+# =============================================================================
+#
+# Wyoming Soundings:
+# - Best for: Launch day operations, real atmospheric profiles
+# - Pros: Real measured data, includes wind profile, updated twice daily
+# - Cons: Limited locations, 12-hour gaps between soundings
+# - Requires: date, wyoming_station
+#
+# GFS Forecasts:
+# - Best for: Planning launches days ahead, competitions
+# - Pros: Global coverage, forecasts up to 16 days, updated 4x daily
+# - Cons: Less accurate than reanalysis, forecast uncertainty
+# - Requires: date, latitude, longitude
+#
+# ERA5 Reanalysis:
+# - Best for: Historical analysis, validating past flights
+# - Pros: High quality, global coverage, hourly data, consistent
+# - Cons: 5-day latency, not for real-time launches
+# - Requires: date, latitude, longitude
+#
+# Custom:
+# - Best for: Testing specific conditions, other data sources
+# - Pros: Complete control over atmospheric profile
+# - Cons: Requires manual data preparation
+# - Requires: custom_file path
+#
+# Standard Atmosphere:
+# - Best for: Initial design, conservative estimates
+# - Pros: Simple, reproducible, no external data needed
+# - Cons: Doesn't reflect real conditions, no wind gradients
+# - Requires: None
+
+# =============================================================================
+# WIND MODEL OPTIONS
+# =============================================================================
+#
+# from_weather:
+#   - Use wind profile from weather data source
+#   - Available with: wyoming, gfs, era5
+#   - Wind varies with altitude automatically
+#
+# constant:
+#   - Single wind velocity/direction for all altitudes
+#   - Simple, good for conservative estimates
+#   - Requires: velocity_ms, direction_deg
+#
+# function/custom:
+#   - Not yet implemented
+#   - Will allow user-defined wind profiles

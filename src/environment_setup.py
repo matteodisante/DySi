@@ -7,6 +7,7 @@ Environment objects from configuration dataclasses.
 from pathlib import Path
 from typing import Optional
 import logging
+import numpy as np
 
 try:
     from rocketpy import Environment
@@ -14,6 +15,7 @@ except ImportError:
     Environment = None
 
 from src.config_loader import EnvironmentConfig
+from src.weather_fetcher import WeatherFetcher
 
 logger = logging.getLogger(__name__)
 
@@ -114,6 +116,12 @@ class EnvironmentBuilder:
             FileNotFoundError: If custom atmosphere file does not exist.
             ValueError: If atmospheric model type is not supported.
         """
+        # Check if new weather configuration is used
+        if hasattr(self.config, 'weather') and self.config.weather.source != "standard_atmosphere":
+            self._setup_weather_model()
+            return
+
+        # Fall back to old atmospheric_model field for backward compatibility
         model = self.config.atmospheric_model.lower()
 
         if model == "standard_atmosphere":
@@ -143,18 +151,85 @@ class EnvironmentBuilder:
             )
             logger.debug(f"Using custom atmosphere from {atm_file}")
 
-        elif model in ["forecast", "reanalysis", "ensemble"]:
-            # These require additional configuration (GFS, ERA5, etc.)
-            logger.warning(
-                f"Atmospheric model '{model}' requires additional configuration. "
-                "Falling back to standard atmosphere."
-            )
-            self.environment.set_atmospheric_model(type="standard_atmosphere")
-
         else:
             raise ValueError(
                 f"Unsupported atmospheric model: '{self.config.atmospheric_model}'. "
-                "Supported: standard_atmosphere, custom_atmosphere"
+                "Use weather.source for advanced models (wyoming, gfs, era5)"
+            )
+
+    def _setup_weather_model(self) -> None:
+        """Setup weather model using WeatherFetcher integration.
+
+        Supports Wyoming soundings, GFS forecasts, ERA5 reanalysis, and custom profiles.
+        Wind is included automatically in weather data sources.
+        """
+        weather_config = self.config.weather
+        source = weather_config.source.lower()
+
+        logger.info(f"Setting up weather from source: {source}")
+
+        if source == "wyoming":
+            # Wyoming sounding
+            if not weather_config.wyoming_station:
+                raise ValueError("Wyoming source requires wyoming_station ID")
+
+            date = None
+            if self.config.date:
+                from datetime import datetime, timezone
+                date = datetime(*self.config.date, tzinfo=timezone.utc)
+
+            url = WeatherFetcher.fetch_wyoming_sounding(
+                station=weather_config.wyoming_station,
+                date=date,
+            )
+
+            self.environment.set_atmospheric_model(
+                type='wyoming_sounding',
+                file=url
+            )
+            logger.info(f"Using Wyoming sounding from station {weather_config.wyoming_station}")
+
+        elif source == "gfs":
+            # GFS forecast
+            if not self.config.date:
+                raise ValueError("GFS forecast requires date to be set")
+
+            from datetime import datetime, timezone
+            forecast_date = datetime(*self.config.date, tzinfo=timezone.utc)
+
+            self.environment.set_atmospheric_model(type='Forecast', file='GFS')
+            logger.info(f"Using GFS forecast for {forecast_date}")
+
+        elif source == "era5":
+            # ERA5 reanalysis
+            if not self.config.date:
+                raise ValueError("ERA5 reanalysis requires date to be set")
+
+            from datetime import datetime, timezone
+            reanalysis_date = datetime(*self.config.date, tzinfo=timezone.utc)
+
+            self.environment.set_atmospheric_model(type='Reanalysis', file='ERA5')
+            logger.info(f"Using ERA5 reanalysis for {reanalysis_date}")
+
+        elif source == "custom":
+            # Custom atmospheric profile
+            if not weather_config.custom_file:
+                raise ValueError("Custom weather source requires custom_file path")
+
+            file_path = WeatherFetcher.load_custom_atmospheric_profile(
+                weather_config.custom_file
+            )
+
+            self.environment.set_atmospheric_model(
+                type='custom_atmosphere',
+                file=str(file_path)
+            )
+            logger.info(f"Using custom atmospheric profile: {file_path}")
+
+        else:
+            raise ValueError(
+                f"Unsupported weather source: '{source}'. "
+                "Supported: wyoming, gfs, era5, custom, standard_atmosphere"
             )
 
     def _setup_wind_model(self) -> None:
@@ -162,8 +237,13 @@ class EnvironmentBuilder:
 
         The wind model can be:
         - constant: Constant wind velocity and direction
+        - from_weather: Wind profile from weather data (Wyoming, GFS, ERA5)
         - function: Custom wind function (not yet implemented)
         - custom: Custom wind data (not yet implemented)
+
+        NOTE: Wind must be set when calling set_atmospheric_model() with wind_u and wind_v.
+        This method should be called AFTER _setup_atmospheric_model() and will update
+        the atmospheric model with wind if needed.
         """
         wind_model = self.config.wind.model.lower()
 
@@ -172,34 +252,45 @@ class EnvironmentBuilder:
             wind_velocity = self.config.wind.velocity_ms
             wind_direction = self.config.wind.direction_deg
 
-            # RocketPy uses wind heading in degrees
-            # Wind direction in meteorological convention: where wind comes FROM
-            # Convert to heading: where wind is going TO
-            wind_heading = (wind_direction + 180) % 360
-
             logger.debug(
-                f"Setting constant wind: {wind_velocity} m/s from {wind_direction}° "
-                f"(heading {wind_heading}°)"
+                f"Setting constant wind: {wind_velocity} m/s from {wind_direction}°"
             )
 
-            # Set constant wind velocity
-            # RocketPy Environment.set_atmospheric_model handles wind internally
-            # For constant wind, we can use the basic approach:
             if wind_velocity == 0:
-                # No wind - set wind velocity to zero function
-                self.environment.set_atmospheric_model(type="standard_atmosphere")
+                # No wind - already set by atmospheric model
                 logger.debug("No wind (velocity = 0)")
             else:
-                # For simplicity with constant wind, we set it after atmospheric model
-                # The wind will be applied uniformly
-                # Note: This is a simplified implementation
-                # Full implementation would require wind velocity functions
-                logger.info(
-                    f"Constant wind: {wind_velocity:.1f} m/s from {wind_direction}°"
+                # Convert meteorological direction to wind components
+                # Wind direction: where wind comes FROM (meteorological convention)
+                # Convert to radians for calculation
+                direction_rad = np.deg2rad(wind_direction)
+
+                # Wind components (negative because wind comes FROM direction)
+                wind_u = -wind_velocity * np.sin(direction_rad)  # East component
+                wind_v = -wind_velocity * np.cos(direction_rad)  # North component
+
+                # Get current atmospheric model settings
+                atm_type = self.environment.atmospheric_model_type
+                atm_file = self.environment.atmospheric_model_file
+
+                # Re-apply atmospheric model with wind
+                self.environment.set_atmospheric_model(
+                    type=atm_type,
+                    file=atm_file if atm_file else None,
+                    wind_u=lambda h: wind_u,  # Constant with altitude
+                    wind_v=lambda h: wind_v,  # Constant with altitude
                 )
-                # Store wind info for later use in flight setup
-                self.environment._wind_velocity_ms = wind_velocity
-                self.environment._wind_direction_deg = wind_direction
+
+                logger.info(
+                    f"Constant wind set: {wind_velocity:.1f} m/s from {wind_direction}° "
+                    f"(u={wind_u:.1f}, v={wind_v:.1f} m/s)"
+                )
+
+        elif wind_model == "from_weather":
+            # Wind profile comes from weather data source
+            # Wyoming, GFS, and ERA5 include wind profiles automatically
+            logger.info("Using wind profile from weather data source")
+            # Wind is already set by _setup_weather_model() for these sources
 
         elif wind_model in ["function", "custom"]:
             logger.warning(
@@ -210,7 +301,7 @@ class EnvironmentBuilder:
         else:
             raise ValueError(
                 f"Unsupported wind model: '{wind_model}'. "
-                "Supported: constant, function, custom"
+                "Supported: constant, from_weather, function, custom"
             )
 
     def get_atmospheric_conditions(self, altitude_m: float = 0.0) -> dict:

@@ -83,8 +83,15 @@ environment:
   date: null  # [year, month, day, hour_utc] or null for no specific date
   # date: [2023, 6, 15, 12]
 
+  # NEW: Weather data sources (replaces atmospheric_model for advanced models)
+  # weather:
+  #   source: "wyoming"  # Options: standard_atmosphere, wyoming, gfs, era5, custom
+  #   wyoming_station: "72340"  # Oakland, CA (required for wyoming)
+  #   # custom_file: "data/custom_atmosphere.txt"  # Required for custom source
+  #   fetch_real_time: false  # Use date vs. latest available
+
   wind:
-    model: "constant"  # Options: constant, function, custom
+    model: "constant"  # Options: constant, from_weather, function, custom
     velocity_ms: 5.0
     direction_deg: 90.0  # Meteorological convention (0=North, 90=East)
 

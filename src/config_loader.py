@@ -165,9 +165,19 @@ class MotorConfig:
 class WindConfig:
     """Wind configuration."""
 
-    model: str = "constant"  # constant, function, custom
+    model: str = "constant"  # constant, function, custom, from_weather
     velocity_ms: float = 0.0
     direction_deg: float = 0.0  # Meteorological convention (0=North, 90=East)
+
+
+@dataclass
+class WeatherSourceConfig:
+    """Weather data source configuration."""
+
+    source: str = "standard_atmosphere"  # standard_atmosphere, wyoming, gfs, era5, custom
+    wyoming_station: Optional[str] = None  # Wyoming station ID (e.g., "72340")
+    custom_file: Optional[str] = None  # Path to custom atmospheric profile
+    fetch_real_time: bool = False  # Fetch latest data vs. use specified date
 
 
 @dataclass
@@ -177,10 +187,11 @@ class EnvironmentConfig:
     latitude_deg: float
     longitude_deg: float
     elevation_m: float = 0.0
-    atmospheric_model: str = "standard_atmosphere"  # standard_atmosphere, custom, wyoming
-    atmospheric_model_file: Optional[str] = None
+    atmospheric_model: str = "standard_atmosphere"  # Deprecated: use weather.source instead
+    atmospheric_model_file: Optional[str] = None    # Deprecated: use weather.custom_file instead
     date: Optional[Tuple[int, int, int, int]] = None  # (year, month, day, hour_utc)
     wind: WindConfig = field(default_factory=WindConfig)
+    weather: WeatherSourceConfig = field(default_factory=WeatherSourceConfig)  # Weather data source
     gravity_ms2: float = 9.80665
     max_expected_height_m: float = 10000.0
 
@@ -455,6 +466,15 @@ class ConfigLoader:
             direction_deg=wind_data.get("direction_deg", 0.0),
         )
 
+        # Parse weather configuration
+        weather_data = env_data.get("weather", {})
+        weather = WeatherSourceConfig(
+            source=weather_data.get("source", "standard_atmosphere"),
+            wyoming_station=weather_data.get("wyoming_station"),
+            custom_file=weather_data.get("custom_file"),
+            fetch_real_time=weather_data.get("fetch_real_time", False),
+        )
+
         # Parse date if provided
         date = None
         if "date" in env_data:
@@ -470,6 +490,7 @@ class ConfigLoader:
             atmospheric_model_file=env_data.get("atmospheric_model_file"),
             date=date,
             wind=wind,
+            weather=weather,
             gravity_ms2=env_data.get("gravity_ms2", 9.80665),
             max_expected_height_m=env_data.get("max_expected_height_m", 10000.0),
         )
