@@ -71,15 +71,40 @@ class ParachuteConfig:
 
 
 @dataclass
+class AirBrakesControllerConfig:
+    """Air brakes controller configuration with hardware constraints."""
+
+    algorithm: str = "pid"  # Control algorithm: pid, bang_bang, model_predictive
+    target_apogee_m: float = 3000.0  # Target apogee altitude (m)
+
+    # PID parameters
+    kp: float = 0.001  # Proportional gain
+    ki: float = 0.0001  # Integral gain
+    kd: float = 0.01  # Derivative gain
+
+    # Hardware constraints
+    sampling_rate_hz: float = 20.0  # Controller update frequency (Hz)
+    computation_time_s: float = 0.005  # Microcontroller delay (s)
+    actuator_lag_s: float = 0.050  # Servo motor lag time constant (s)
+    max_deployment_rate: float = 2.0  # Max deployment speed (1/s)
+
+    # Safety constraints
+    min_activation_time_s: float = 3.5  # Don't deploy before motor burnout (s)
+    min_activation_altitude_m: float = 500.0  # Minimum activation altitude (m)
+
+
+@dataclass
 class AirBrakesConfig:
     """Air brakes configuration for active drag control."""
 
     enabled: bool = True
-    drag_coefficient: float = 1.5  # Drag coefficient when deployed
+    drag_coefficient_curve: Optional[str] = None  # Path to Cd curve CSV file
+    drag_coefficient: float = 1.5  # Drag coefficient when deployed (if no curve)
     reference_area_m2: float = 0.01  # Reference area in m²
     position_m: float = -0.5  # Position from nose (m)
-    deployment_level: float = 1.0  # Deployment level (0.0-1.0, 1.0=fully deployed)
+    deployment_level: float = 1.0  # Initial deployment level (0.0-1.0)
     override_cd_s: Optional[float] = None  # Override for cd_s calculation
+    controller: Optional[AirBrakesControllerConfig] = None  # Control law configuration
 
 
 @dataclass
@@ -328,13 +353,34 @@ class ConfigLoader:
         air_brakes = None
         if "air_brakes" in rocket_data:
             ab_data = rocket_data["air_brakes"]
+
+            # Parse controller if present
+            controller = None
+            if "controller" in ab_data:
+                ctrl_data = ab_data["controller"]
+                controller = AirBrakesControllerConfig(
+                    algorithm=ctrl_data.get("algorithm", "pid"),
+                    target_apogee_m=ctrl_data.get("target_apogee_m", 3000.0),
+                    kp=ctrl_data.get("kp", 0.001),
+                    ki=ctrl_data.get("ki", 0.0001),
+                    kd=ctrl_data.get("kd", 0.01),
+                    sampling_rate_hz=ctrl_data.get("sampling_rate_hz", 20.0),
+                    computation_time_s=ctrl_data.get("computation_time_s", 0.005),
+                    actuator_lag_s=ctrl_data.get("actuator_lag_s", 0.050),
+                    max_deployment_rate=ctrl_data.get("max_deployment_rate", 2.0),
+                    min_activation_time_s=ctrl_data.get("min_activation_time_s", 3.5),
+                    min_activation_altitude_m=ctrl_data.get("min_activation_altitude_m", 500.0),
+                )
+
             air_brakes = AirBrakesConfig(
                 enabled=ab_data.get("enabled", True),
+                drag_coefficient_curve=ab_data.get("drag_coefficient_curve"),
                 drag_coefficient=ab_data.get("drag_coefficient", 1.5),
                 reference_area_m2=ab_data.get("reference_area_m2", 0.01),
                 position_m=ab_data.get("position_m", -0.5),
                 deployment_level=ab_data.get("deployment_level", 1.0),
                 override_cd_s=ab_data.get("override_cd_s"),
+                controller=controller,
             )
 
         return RocketConfig(

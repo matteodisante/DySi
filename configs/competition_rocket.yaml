@@ -44,11 +44,32 @@ rocket:
   # Air brakes configuration for apogee targeting
   air_brakes:
     enabled: true
-    drag_coefficient: 1.8  # Drag coefficient when deployed
+    drag_coefficient_curve: null  # Optional: path to Cd(deployment, Mach) CSV file
+    drag_coefficient: 1.8  # Drag coefficient when fully deployed (if no curve)
     reference_area_m2: 0.012  # 12 cm² brake area
     position_m: -0.6  # Position from nose (negative = from tail)
-    deployment_level: 1.0  # Full deployment (0.0 = retracted, 1.0 = fully deployed)
+    deployment_level: 0.0  # Initial deployment (0.0 = retracted, controller will adjust)
     override_cd_s: null  # Optional: override cd*area calculation
+
+    # Controller configuration (PID control for apogee targeting)
+    controller:
+      algorithm: "pid"  # Options: pid, bang_bang, model_predictive
+      target_apogee_m: 3000.0  # Target apogee altitude (m)
+
+      # PID gains (tuned for typical competition rocket)
+      kp: 0.001  # Proportional gain
+      ki: 0.0001  # Integral gain (anti-windup included)
+      kd: 0.01  # Derivative gain
+
+      # Hardware constraints (realistic values)
+      sampling_rate_hz: 20.0  # Controller update frequency (20 Hz = 50ms)
+      computation_time_s: 0.005  # Microcontroller computation delay (5ms)
+      actuator_lag_s: 0.050  # Servo motor lag time constant (50ms first-order)
+      max_deployment_rate: 2.0  # Maximum deployment speed (1/s, 0 to 1 in 0.5s)
+
+      # Safety interlocks
+      min_activation_time_s: 3.5  # Don't deploy before motor burnout (s)
+      min_activation_altitude_m: 500.0  # Minimum safe altitude for deployment (m)
 
   power_off_drag: null
   power_on_drag: null

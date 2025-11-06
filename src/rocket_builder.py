@@ -329,22 +329,32 @@ class RocketBuilder:
         """Add air brakes to rocket based on configuration.
 
         Air brakes provide active drag control for apogee targeting in competitions.
-        This method adds aerodynamic brakes that can be deployed during flight.
+        This method adds aerodynamic brakes with optional controller for active deployment.
+
+        If a controller is configured, it will implement realistic hardware constraints:
+        - Servo motor lag (actuator delay)
+        - Microcontroller computation time
+        - Rate limiting (maximum deployment speed)
+        - Safety interlocks (minimum altitude, motor burnout)
 
         Returns:
             Self for method chaining.
 
         Raises:
             RuntimeError: If rocket has not been created yet.
-            ValueError: If air brakes configuration is missing.
+            ValueError: If air brakes configuration is missing or RocketPy not available.
 
         Example:
+            >>> # Static air brakes (no controller)
             >>> builder.build().add_air_brakes()
-
-        Note:
-            RocketPy's air brakes implementation may vary by version.
-            This method uses the add_air_brakes() API if available,
-            or adds as a generic surface with appropriate drag characteristics.
+            >>>
+            >>> # With PID controller
+            >>> config.air_brakes.controller = AirBrakesControllerConfig(
+            ...     algorithm="pid",
+            ...     target_apogee_m=3000,
+            ...     kp=0.001, ki=0.0001, kd=0.01
+            ... )
+            >>> builder.build().add_air_brakes()
         """
         if self.rocket is None:
             raise RuntimeError("Rocket not created yet. Call build() first.")
@@ -352,54 +362,94 @@ class RocketBuilder:
         if self.config.air_brakes is None:
             raise ValueError("Air brakes configuration is missing")
 
+        if not hasattr(self.rocket, 'add_air_brakes'):
+            raise ValueError(
+                "RocketPy air brakes not available. "
+                "Upgrade RocketPy to version 1.2+ for air brakes support."
+            )
+
         ab = self.config.air_brakes
 
-        # Calculate cd_s if not overridden
-        cd_s = ab.override_cd_s if ab.override_cd_s is not None else (
-            ab.drag_coefficient * ab.reference_area_m2 * ab.deployment_level
-        )
+        # Determine drag coefficient curve
+        if ab.drag_coefficient_curve:
+            # Use provided CSV file or data
+            drag_curve = ab.drag_coefficient_curve
+            logger.debug(f"Using drag coefficient curve from: {drag_curve}")
+        else:
+            # Use constant drag coefficient
+            # Create simple 2D function: cd(deployment, mach) = deployment * cd_max
+            drag_curve = lambda deployment, mach: ab.drag_coefficient * deployment
+            logger.debug(f"Using constant drag coefficient: {ab.drag_coefficient}")
 
-        # Try to use RocketPy's native air brakes if available
-        if hasattr(self.rocket, 'add_air_brakes'):
-            self.rocket.add_air_brakes(
-                drag_coefficient=ab.drag_coefficient,
-                reference_area=ab.reference_area_m2,
-                position=ab.position_m,
-                deployment_level=ab.deployment_level,
+        # Create controller function if configured
+        if ab.controller is not None:
+            from src.air_brakes_controller import AirBrakesController, ControllerConfig
+
+            # Convert config dataclass to ControllerConfig
+            ctrl_cfg = ControllerConfig(
+                algorithm=ab.controller.algorithm,
+                target_apogee_m=ab.controller.target_apogee_m,
+                kp=ab.controller.kp,
+                ki=ab.controller.ki,
+                kd=ab.controller.kd,
+                sampling_rate_hz=ab.controller.sampling_rate_hz,
+                computation_time_s=ab.controller.computation_time_s,
+                actuator_lag_s=ab.controller.actuator_lag_s,
+                max_deployment_rate=ab.controller.max_deployment_rate,
+                min_activation_time_s=ab.controller.min_activation_time_s,
+                min_activation_altitude_m=ab.controller.min_activation_altitude_m,
             )
-            logger.debug(
-                f"Air brakes added (native): cd={ab.drag_coefficient}, "
-                f"area={ab.reference_area_m2}m², position={ab.position_m}m, "
-                f"deployment={ab.deployment_level}"
+
+            controller = AirBrakesController(ctrl_cfg)
+            controller_function = controller.get_controller_function()
+            sampling_rate = ab.controller.sampling_rate_hz
+
+            logger.info(
+                f"Air brakes with {ab.controller.algorithm.upper()} controller: "
+                f"target={ab.controller.target_apogee_m}m, rate={sampling_rate}Hz"
             )
         else:
-            # Fallback: Add as generic surface with drag
-            # Note: This is a simplified implementation
-            # For full active control, use RocketPy's AirBrakes class directly
-            logger.warning(
-                "RocketPy air brakes not available. "
-                "Air brakes added as static drag component. "
-                "Consider upgrading RocketPy for full active control support."
+            # No controller: static deployment
+            controller_function = None
+            sampling_rate = 10.0  # Default for static
+            logger.info(
+                f"Air brakes without controller (static deployment={ab.deployment_level})"
             )
 
-            # Add air brakes effect as additional drag
-            # This modifies the rocket's drag coefficient
-            if hasattr(self.rocket, 'add_generic_surface'):
-                self.rocket.add_generic_surface(
-                    name="AirBrakes",
-                    cd=ab.drag_coefficient,
-                    reference_area=ab.reference_area_m2,
-                    position=ab.position_m,
-                )
-                logger.debug(
-                    f"Air brakes added (generic surface): cd={ab.drag_coefficient}, "
-                    f"area={ab.reference_area_m2}m², cd_s={cd_s}"
-                )
-            else:
-                logger.warning(
-                    "Could not add air brakes: RocketPy version does not support "
-                    "add_air_brakes() or add_generic_surface() methods."
-                )
+        # Add air brakes to rocket using RocketPy API
+        if controller_function is not None:
+            # With controller
+            air_brakes_instance = self.rocket.add_air_brakes(
+                drag_coefficient_curve=drag_curve,
+                controller_function=controller_function,
+                sampling_rate=sampling_rate,
+                clamp=True,  # Clamp deployment to [0, 1]
+                reference_area=ab.reference_area_m2,
+                override_rocket_drag=False,  # Add to rocket drag, don't replace
+                name="AirBrakes",
+            )
+        else:
+            # Static (no controller) - create dummy controller that does nothing
+            def static_controller(time, sampling_rate, state, state_history,
+                                observed_variables, air_brakes, sensors=None):
+                # Keep initial deployment level
+                air_brakes.deployment_level = ab.deployment_level
+                return None
+
+            air_brakes_instance = self.rocket.add_air_brakes(
+                drag_coefficient_curve=drag_curve,
+                controller_function=static_controller,
+                sampling_rate=sampling_rate,
+                clamp=True,
+                reference_area=ab.reference_area_m2,
+                override_rocket_drag=False,
+                name="AirBrakes",
+            )
+
+        logger.debug(
+            f"Air brakes added: area={ab.reference_area_m2}m², "
+            f"position={ab.position_m}m, initial_deployment={ab.deployment_level}"
+        )
 
         return self
 
