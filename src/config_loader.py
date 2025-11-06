@@ -71,6 +71,18 @@ class ParachuteConfig:
 
 
 @dataclass
+class AirBrakesConfig:
+    """Air brakes configuration for active drag control."""
+
+    enabled: bool = True
+    drag_coefficient: float = 1.5  # Drag coefficient when deployed
+    reference_area_m2: float = 0.01  # Reference area in m²
+    position_m: float = -0.5  # Position from nose (m)
+    deployment_level: float = 1.0  # Deployment level (0.0-1.0, 1.0=fully deployed)
+    override_cd_s: Optional[float] = None  # Override for cd_s calculation
+
+
+@dataclass
 class RocketConfig:
     """Complete rocket configuration."""
 
@@ -83,6 +95,7 @@ class RocketConfig:
     nose_cone: Optional[NoseConeConfig] = None
     fins: Optional[FinConfig] = None
     parachute: Optional[ParachuteConfig] = None
+    air_brakes: Optional[AirBrakesConfig] = None  # Air brakes for apogee targeting
     power_off_drag: Optional[str] = None  # Path to drag curve file
     power_on_drag: Optional[str] = None  # Path to drag curve file
     coordinate_system: str = "tail_to_nose"
@@ -311,6 +324,19 @@ class ConfigLoader:
                 noise_std=tuple(para_data.get("noise_std", [0.0, 0.0, 0.0])),
             )
 
+        # Parse air brakes
+        air_brakes = None
+        if "air_brakes" in rocket_data:
+            ab_data = rocket_data["air_brakes"]
+            air_brakes = AirBrakesConfig(
+                enabled=ab_data.get("enabled", True),
+                drag_coefficient=ab_data.get("drag_coefficient", 1.5),
+                reference_area_m2=ab_data.get("reference_area_m2", 0.01),
+                position_m=ab_data.get("position_m", -0.5),
+                deployment_level=ab_data.get("deployment_level", 1.0),
+                override_cd_s=ab_data.get("override_cd_s"),
+            )
+
         return RocketConfig(
             name=rocket_data.get("name", "Rocket"),
             dry_mass_kg=rocket_data.get("dry_mass_kg", 10.0),
@@ -321,6 +347,7 @@ class ConfigLoader:
             nose_cone=nose_cone,
             fins=fins,
             parachute=parachute,
+            air_brakes=air_brakes,
             power_off_drag=rocket_data.get("power_off_drag"),
             power_on_drag=rocket_data.get("power_on_drag"),
             coordinate_system=rocket_data.get("coordinate_system", "tail_to_nose"),

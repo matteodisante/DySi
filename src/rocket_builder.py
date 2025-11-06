@@ -70,6 +70,7 @@ class RocketBuilder:
         2. Nose cone (if configured)
         3. Fins (if configured)
         4. Parachute (if configured)
+        5. Air brakes (if configured)
 
         Returns:
             Configured RocketPy Rocket object.
@@ -102,6 +103,10 @@ class RocketBuilder:
         # Add parachute if configured
         if self.config.parachute is not None and self.config.parachute.enabled:
             self.add_parachute()
+
+        # Add air brakes if configured
+        if self.config.air_brakes is not None and self.config.air_brakes.enabled:
+            self.add_air_brakes()
 
         logger.info(
             f"Rocket '{self.config.name}' built successfully "
@@ -320,6 +325,84 @@ class RocketBuilder:
 
         return self
 
+    def add_air_brakes(self) -> "RocketBuilder":
+        """Add air brakes to rocket based on configuration.
+
+        Air brakes provide active drag control for apogee targeting in competitions.
+        This method adds aerodynamic brakes that can be deployed during flight.
+
+        Returns:
+            Self for method chaining.
+
+        Raises:
+            RuntimeError: If rocket has not been created yet.
+            ValueError: If air brakes configuration is missing.
+
+        Example:
+            >>> builder.build().add_air_brakes()
+
+        Note:
+            RocketPy's air brakes implementation may vary by version.
+            This method uses the add_air_brakes() API if available,
+            or adds as a generic surface with appropriate drag characteristics.
+        """
+        if self.rocket is None:
+            raise RuntimeError("Rocket not created yet. Call build() first.")
+
+        if self.config.air_brakes is None:
+            raise ValueError("Air brakes configuration is missing")
+
+        ab = self.config.air_brakes
+
+        # Calculate cd_s if not overridden
+        cd_s = ab.override_cd_s if ab.override_cd_s is not None else (
+            ab.drag_coefficient * ab.reference_area_m2 * ab.deployment_level
+        )
+
+        # Try to use RocketPy's native air brakes if available
+        if hasattr(self.rocket, 'add_air_brakes'):
+            self.rocket.add_air_brakes(
+                drag_coefficient=ab.drag_coefficient,
+                reference_area=ab.reference_area_m2,
+                position=ab.position_m,
+                deployment_level=ab.deployment_level,
+            )
+            logger.debug(
+                f"Air brakes added (native): cd={ab.drag_coefficient}, "
+                f"area={ab.reference_area_m2}m², position={ab.position_m}m, "
+                f"deployment={ab.deployment_level}"
+            )
+        else:
+            # Fallback: Add as generic surface with drag
+            # Note: This is a simplified implementation
+            # For full active control, use RocketPy's AirBrakes class directly
+            logger.warning(
+                "RocketPy air brakes not available. "
+                "Air brakes added as static drag component. "
+                "Consider upgrading RocketPy for full active control support."
+            )
+
+            # Add air brakes effect as additional drag
+            # This modifies the rocket's drag coefficient
+            if hasattr(self.rocket, 'add_generic_surface'):
+                self.rocket.add_generic_surface(
+                    name="AirBrakes",
+                    cd=ab.drag_coefficient,
+                    reference_area=ab.reference_area_m2,
+                    position=ab.position_m,
+                )
+                logger.debug(
+                    f"Air brakes added (generic surface): cd={ab.drag_coefficient}, "
+                    f"area={ab.reference_area_m2}m², cd_s={cd_s}"
+                )
+            else:
+                logger.warning(
+                    "Could not add air brakes: RocketPy version does not support "
+                    "add_air_brakes() or add_generic_surface() methods."
+                )
+
+        return self
+
     def get_stability_info(self) -> dict:
         """Get stability information for the rocket.
 
@@ -388,6 +471,9 @@ class RocketBuilder:
             "fin_count": self.config.fins.count if self.config.fins else 0,
             "has_parachute": (
                 self.config.parachute is not None and self.config.parachute.enabled
+            ),
+            "has_air_brakes": (
+                self.config.air_brakes is not None and self.config.air_brakes.enabled
             ),
         }
 
