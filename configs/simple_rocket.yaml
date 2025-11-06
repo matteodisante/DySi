@@ -31,7 +31,7 @@ rocket:
 
 motor:
   type: "SolidMotor"
-  thrust_source: "data/motors/Cesaroni_5880M1160-P.eng"
+  thrust_source: "data/motors/Cesaroni_5472M2250-P.eng"
   dry_mass_kg: 1.5
   position_m: -1.200
 
