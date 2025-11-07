@@ -1,6 +1,12 @@
 # Rocket Simulation Framework
 
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://TUO-USERNAME.github.io/rocket-sim/)
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations, Monte Carlo uncertainty analysis, and **variance-based sensitivity analysis**.
+
+📚 **[View Full Documentation](https://TUO-USERNAME.github.io/rocket-sim/)**
 
 ## Features
 
@@ -70,6 +76,24 @@ pip install -r requirements.txt
 4. **Verify installation**:
 ```bash
 python -c "import rocketpy; import statsmodels; print('✓ All dependencies installed')"
+```
+
+## Documentation
+
+📖 **Full documentation is available at: [https://TUO-USERNAME.github.io/rocket-sim/](https://TUO-USERNAME.github.io/rocket-sim/)**
+
+The documentation includes:
+- **User Guide**: Installation, quickstart, key concepts, and configuration reference
+- **Examples**: Detailed tutorials for basic simulations, Monte Carlo analysis, sensitivity studies, weather integration, and air brakes control
+- **API Reference**: Complete API documentation with examples
+- **Development Guide**: Contributing guidelines, architecture overview, testing guide, and code style standards
+
+### Building Documentation Locally
+
+```bash
+cd docs
+make html
+open _build/html/index.html  # Or: python -m http.server 8000 -d _build/html
 ```
 
 ## Quick Start
