@@ -6,7 +6,7 @@
 
 A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations, Monte Carlo uncertainty analysis, and **variance-based sensitivity analysis**.
 
-📚 **[View Full Documentation](https://TUO-USERNAME.github.io/rocket-sim/)**
+📚 **[View Full Documentation](https://matteodisante.github.io/rocket-sim/)**
 
 ## Features
 
