@@ -1,0 +1,28 @@
+/* Custom CSS for Rocket Simulation Framework Documentation */
+
+/* You can add custom styles here to override the theme */
+
+/* Example: Customize logo size */
+/*
+.navbar-brand img {
+    max-height: 50px;
+    width: auto;
+}
+*/
+
+/* Example: Customize sidebar logo */
+/*
+.sidebar-brand img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+*/
+
+/* Example: Add custom colors */
+/*
+:root {
+    --pst-color-primary: #0066cc;
+    --pst-color-secondary: #ff6600;
+}
+*/

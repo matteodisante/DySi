@@ -58,16 +58,15 @@ html_theme = 'pydata_sphinx_theme'  # NumPy/SciPy style theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    "github_url": "https://github.com/starpi/rocket-sim",  # Update with actual URL
+    "github_url": "https://github.com/matteodisante/rocket-sim",
     "collapse_navigation": False,
     "navigation_depth": 4,
     "show_prev_next": True,
     "navbar_end": ["navbar-icon-links", "search-field"],
-    "footer_items": ["copyright"],
     "logo": {
-        "text": "Rocket Sim",
-        "image_dark": "_static/logo_dark.png",  # Optional
-        "image_light": "_static/logo_light.png",  # Optional
+        "text": "Rocket Simulation Framework",
+        "image_light": "_static/logo.png",  # Your logo for light mode
+        "image_dark": "_static/logo_dark.png",  # Optional: logo for dark mode
     },
 }
 
@@ -75,6 +74,12 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# Favicon
+html_favicon = "_static/favicon.ico"  # Optional: add favicon
+
+# Logo in page title
+html_logo = "_static/logo.png"  # Logo in sidebar
 
 # -- Options for autodoc -----------------------------------------------------
 
