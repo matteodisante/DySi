@@ -75,11 +75,8 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-# Favicon
-html_favicon = "_static/favicon.ico"  # Optional: add favicon
-
-# Logo in page title
-html_logo = "_static/logo.png"  # Logo in sidebar
+# Logo in page title and sidebar
+html_logo = "_static/logo.png"
 
 # -- Options for autodoc -----------------------------------------------------
 
