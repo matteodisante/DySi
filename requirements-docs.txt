@@ -1,0 +1,19 @@
+# Documentation building requirements
+# Install with: pip install -r requirements-docs.txt
+
+# Sphinx and extensions
+sphinx>=6.0.0
+sphinx-autodoc-typehints>=1.24.0
+sphinx-copybutton>=0.5.2
+myst-parser>=2.0.0
+nbsphinx>=0.9.3
+
+# Theme (NumPy/SciPy style)
+pydata-sphinx-theme>=0.14.0
+
+# For autodoc
+numpydoc>=1.6.0
+
+# Additional utilities
+sphinx-design>=0.5.0  # For grid layouts
+sphinxcontrib-bibtex>=2.6.0  # For citations (optional)

@@ -87,3 +87,7 @@ outputs/reports/*.pdf
 data/
 results/
 outputs/
+
+# Documentation build output
+docs/_build/
+docs/source/api/generated/
