@@ -240,17 +240,16 @@ class StateExporter:
         return metadata
 
     def _extract_motor_state(self) -> Dict[str, Any]:
-        """Extract complete motor parameters.
+        """Extract complete motor parameters using comprehensive introspection.
 
         Returns:
-            Dictionary with all motor parameters
+            Dictionary with ALL motor parameters
         """
         motor_state = {
-            "type": type(self.motor).__name__,
-            "coordinate_system_orientation": self.motor.coordinate_system_orientation,
+            "_class_type": type(self.motor).__name__,
         }
 
-        # Use RocketPy's to_dict() method if available
+        # Use RocketPy's to_dict() as base (provides well-structured data)
         try:
             motor_dict = self.motor.to_dict(
                 include_outputs=False,
@@ -260,8 +259,13 @@ class StateExporter:
             motor_state.update(motor_dict)
         except Exception as e:
             logger.warning(f"Could not use motor.to_dict(): {e}")
-            # Fallback to manual extraction
-            motor_state.update(self._extract_motor_manual())
+
+        # Now add ALL remaining attributes via introspection
+        motor_state.update(self._introspect_all_attributes(
+            self.motor,
+            exclude_prefixes=['_'],
+            exclude_names=['plots', 'prints']  # Exclude plotting/printing utilities
+        ))
 
         return motor_state
 
@@ -308,16 +312,16 @@ class StateExporter:
         return params
 
     def _extract_rocket_state(self) -> Dict[str, Any]:
-        """Extract complete rocket parameters including all components.
+        """Extract complete rocket parameters using comprehensive introspection.
 
         Returns:
-            Dictionary with all rocket parameters
+            Dictionary with ALL rocket parameters
         """
         rocket_state = {
-            "coordinate_system_orientation": self.rocket.coordinate_system_orientation,
+            "_class_type": type(self.rocket).__name__,
         }
 
-        # Use RocketPy's to_dict() if available
+        # Use RocketPy's to_dict() as base (provides well-structured data)
         try:
             rocket_dict = self.rocket.to_dict(
                 include_outputs=False,
@@ -327,8 +331,13 @@ class StateExporter:
             rocket_state.update(rocket_dict)
         except Exception as e:
             logger.warning(f"Could not use rocket.to_dict(): {e}")
-            # Fallback to manual extraction
-            rocket_state.update(self._extract_rocket_manual())
+
+        # Add ALL remaining attributes via introspection
+        rocket_state.update(self._introspect_all_attributes(
+            self.rocket,
+            exclude_prefixes=['_'],
+            exclude_names=['plots', 'prints', 'motor']  # Motor is extracted separately
+        ))
 
         return rocket_state
 
@@ -451,14 +460,16 @@ class StateExporter:
         return params
 
     def _extract_environment_state(self) -> Dict[str, Any]:
-        """Extract complete environment parameters.
+        """Extract complete environment parameters using comprehensive introspection.
 
         Returns:
-            Dictionary with all environment parameters
+            Dictionary with ALL environment parameters
         """
-        env_state = {}
+        env_state = {
+            "_class_type": type(self.environment).__name__,
+        }
 
-        # Use RocketPy's to_dict() if available
+        # Use RocketPy's to_dict() as base (provides well-structured data)
         try:
             env_dict = self.environment.to_dict(
                 include_outputs=False,
@@ -467,8 +478,13 @@ class StateExporter:
             env_state.update(env_dict)
         except Exception as e:
             logger.warning(f"Could not use environment.to_dict(): {e}")
-            # Fallback to manual extraction
-            env_state.update(self._extract_environment_manual())
+
+        # Add ALL remaining attributes via introspection
+        env_state.update(self._introspect_all_attributes(
+            self.environment,
+            exclude_prefixes=['_'],
+            exclude_names=['plots', 'prints']
+        ))
 
         return env_state
 
@@ -589,6 +605,191 @@ class StateExporter:
                 summary['events'].append(event_data)
 
         return summary
+
+    def _introspect_all_attributes(
+        self,
+        obj,
+        exclude_prefixes: List[str] = None,
+        exclude_names: List[str] = None
+    ) -> Dict[str, Any]:
+        """Extract ALL non-callable attributes from an object via introspection.
+
+        This function performs comprehensive attribute extraction to ensure
+        that EVERY parameter is captured, not just those in to_dict().
+
+        Args:
+            obj: Object to introspect
+            exclude_prefixes: List of attribute name prefixes to exclude (e.g., ['_'])
+            exclude_names: List of specific attribute names to exclude
+
+        Returns:
+            Dictionary with all extracted attributes
+        """
+        exclude_prefixes = exclude_prefixes or []
+        exclude_names = exclude_names or []
+
+        attributes = {}
+
+        for name in dir(obj):
+            # Skip excluded prefixes (e.g., private attributes)
+            if any(name.startswith(prefix) for prefix in exclude_prefixes):
+                continue
+
+            # Skip excluded names
+            if name in exclude_names:
+                continue
+
+            try:
+                attr = getattr(obj, name)
+
+                # Skip callable methods (functions)
+                if callable(attr):
+                    continue
+
+                # Serialize the attribute value
+                serialized_value = self._serialize_attribute_value(attr, name)
+
+                # Only add if serialization was successful and not None
+                if serialized_value is not None:
+                    attributes[name] = serialized_value
+
+            except Exception as e:
+                # Some attributes might fail to access - log but continue
+                logger.debug(f"Could not extract attribute '{name}': {e}")
+                continue
+
+        return attributes
+
+    def _serialize_attribute_value(self, value, name: str = "unknown"):
+        """Serialize a single attribute value to JSON-compatible format.
+
+        Args:
+            value: The attribute value to serialize
+            name: Name of the attribute (for logging)
+
+        Returns:
+            Serialized value or None if not serializable
+        """
+        # Handle None
+        if value is None:
+            return None
+
+        # Handle basic types (int, float, str, bool)
+        if isinstance(value, (bool, int, float, str)):
+            return value
+
+        # Handle numpy types
+        if isinstance(value, (np.integer, np.floating)):
+            return float(value)
+        if isinstance(value, np.bool_):
+            return bool(value)
+        if isinstance(value, np.ndarray):
+            # Small arrays: convert to list
+            if value.size < 1000:
+                return value.tolist()
+            else:
+                # Large arrays: just store metadata
+                return {
+                    '_type': 'ndarray',
+                    '_shape': value.shape,
+                    '_dtype': str(value.dtype),
+                    '_note': 'Large array - not serialized (>1000 elements)'
+                }
+
+        # Handle tuples and lists
+        if isinstance(value, (tuple, list)):
+            try:
+                serialized_list = [self._serialize_attribute_value(item, f"{name}[{i}]") for i, item in enumerate(value)]
+                return serialized_list if isinstance(value, list) else tuple(serialized_list)
+            except:
+                return {
+                    '_type': type(value).__name__,
+                    '_length': len(value),
+                    '_note': 'Complex sequence - could not serialize'
+                }
+
+        # Handle dictionaries
+        if isinstance(value, dict):
+            try:
+                serialized_dict = {}
+                for k, v in value.items():
+                    # Convert keys to strings (YAML doesn't support object keys)
+                    if isinstance(k, (str, int, float, bool)):
+                        key_str = k
+                    else:
+                        # Convert complex keys to string representation
+                        key_str = f"{type(k).__name__}_{id(k)}"  # e.g., "TrapezoidalFins_140234567890"
+
+                    serialized_dict[key_str] = self._serialize_attribute_value(v, f"{name}.{key_str}")
+                return serialized_dict
+            except Exception as e:
+                logger.debug(f"Could not serialize dict '{name}': {e}")
+                return {
+                    '_type': 'dict',
+                    '_keys': [str(k) for k in list(value.keys())[:20]] if len(value.keys()) < 20 else f"{len(value)} keys",
+                    '_note': 'Complex dict - could not serialize'
+                }
+
+        # Handle RocketPy Function objects
+        if hasattr(value, '__class__') and value.__class__.__name__ == 'Function':
+            return self._serialize_function(value, name)
+
+        # Handle RocketPy Components (list of surfaces, etc.)
+        if hasattr(value, '__class__') and value.__class__.__name__ == 'Components':
+            try:
+                # Components is iterable
+                components_list = []
+                for i, component in enumerate(value):
+                    comp_data = {
+                        '_type': type(component).__name__,
+                        '_index': i
+                    }
+                    # Try to get basic info from component
+                    if hasattr(component, 'name'):
+                        comp_data['name'] = str(component.name)
+                    if hasattr(component, 'to_dict'):
+                        try:
+                            comp_data.update(component.to_dict(include_outputs=False, discretize=True, allow_pickle=False))
+                        except:
+                            pass
+                    components_list.append(comp_data)
+                return components_list
+            except:
+                return {
+                    '_type': 'Components',
+                    '_note': 'Components object - could not serialize contents'
+                }
+
+        # Handle other RocketPy objects (Motor, Rocket, Environment, etc.)
+        if hasattr(value, 'to_dict'):
+            try:
+                return value.to_dict(include_outputs=False, discretize=True, allow_pickle=False)
+            except:
+                pass
+
+        # Handle generic objects with __dict__
+        if hasattr(value, '__dict__'):
+            return {
+                '_type': type(value).__name__,
+                '_note': f'{type(value).__name__} object - see separate section or use string representation',
+                '_str': str(value) if len(str(value)) < 200 else str(value)[:200] + '...'
+            }
+
+        # Last resort: string representation
+        try:
+            str_value = str(value)
+            if len(str_value) < 200:
+                return str_value
+            else:
+                return {
+                    '_type': type(value).__name__,
+                    '_str_preview': str_value[:200] + '...'
+                }
+        except:
+            return {
+                '_type': type(value).__name__,
+                '_note': 'Could not serialize'
+            }
 
     def _serialize_function(self, func_obj, name: str = "function") -> Dict[str, Any]:
         """Serialize a RocketPy Function object to dictionary.
