@@ -3,7 +3,7 @@
 
 rocket:
   name: "Simple Rocket"
-  dry_mass_kg: 10.0
+  dry_mass_kg: 16.0
 
   inertia:
     ixx_kg_m2: 5.0
@@ -12,12 +12,12 @@ rocket:
 
   geometry:
     caliber_m: 0.100
-    length_m: 1.500
+    length_m: 3.440
 
   cg_location_m: 0.900
 
   fins:
-    count: 4
+    count: 3
     root_chord_m: 0.100
     tip_chord_m: 0.050
     span_m: 0.080
@@ -32,8 +32,21 @@ rocket:
 motor:
   type: "SolidMotor"
   thrust_source: "data/motors/Cesaroni_5472M2250-P.eng"
-  dry_mass_kg: 1.5
-  position_m: -1.200
+  burn_out_time_s: 3.9
+  dry_mass_kg: 3.000
+  position_m: -3.200
+  
+#  dry_mass_kg: 3.000
+#  nozzle_radius_m: 0.033
+#  grain_separation_m: 0.005
+#  grain_density_kg_m3: 1815
+#  grain_outer_radius_m: 0.033
+#  grain_initial_inner_radius_m: 0.015
+#  grain_initial_height_m: 0.12
+#  grains_center_of_dry_mass_position_m: 0.317
+#  nozzle_position_m: 0.0
+
+
 
 environment:
   latitude_deg: 40.0

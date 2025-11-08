@@ -87,6 +87,7 @@ outputs/reports/*.pdf
 data/
 results/
 outputs/
+notebooks/notebooks_outputs/
 
 # Documentation build output
 docs/_build/

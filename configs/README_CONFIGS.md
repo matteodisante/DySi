@@ -2,6 +2,43 @@
 
 This directory contains YAML configuration files for rocket simulations. Configuration files allow you to define rocket, motor, environment, and simulation parameters in a structured, readable format.
 
+## Directory Structure
+
+Configuration files are organized by use case:
+
+```
+configs/
+├── single_sim/         # Single flight simulations
+│   ├── 01_minimal.yaml      # Minimal configuration with essential parameters only
+│   └── 02_complete.yaml     # Complete configuration with all available options
+├── monte_carlo/        # Monte Carlo uncertainty quantification
+│   ├── 01_basic_mc.yaml     # Basic Monte Carlo with 3-4 parameter variations
+│   └── 02_competition_mc.yaml  # Advanced Monte Carlo with air brakes control
+├── templates/          # Template files for creating new configurations
+│   ├── template_basic.yaml     # Copy this for simple rockets
+│   └── template_advanced.yaml  # Copy this for competition rockets
+└── weather_example.yaml # Weather data configuration example
+```
+
+### When to Use Each Directory
+
+- **single_sim/**: Use these for:
+  - Initial design validation
+  - Single flight trajectory analysis
+  - Testing specific configurations
+  - Apogee and stability predictions
+
+- **monte_carlo/**: Use these for:
+  - Uncertainty quantification (e.g., "What's the apogee spread?")
+  - Robustness analysis (e.g., "How sensitive to wind?")
+  - Competition preparation (statistical landing predictions)
+  - Parameter optimization studies
+
+- **templates/**: Start here when:
+  - Creating a new rocket configuration
+  - You need a clean starting point
+  - You want to ensure all required fields are included
+
 ## Configuration File Structure
 
 A complete configuration file has four main sections:
@@ -13,8 +50,15 @@ A complete configuration file has four main sections:
 
 ## Example Configurations
 
-- **`complete_example.yaml`**: Comprehensive example with all available options and detailed comments
-- **`simple_rocket.yaml`**: Minimal configuration with only essential parameters
+### Single Simulations
+
+- **`single_sim/01_minimal.yaml`**: Minimal configuration with only essential parameters
+- **`single_sim/02_complete.yaml`**: Comprehensive example with all available options and detailed comments
+
+### Monte Carlo Simulations
+
+- **`monte_carlo/01_basic_mc.yaml`**: Basic Monte Carlo with 3 parameter variations (50 runs)
+- **`monte_carlo/02_competition_mc.yaml`**: Advanced Monte Carlo with air brakes and 5 parameter variations (100 runs)
 
 ## Configuration Schema
 
@@ -202,37 +246,70 @@ All configuration files are automatically validated when loaded. The validation 
 ```python
 from src.config_loader import ConfigLoader
 
-# Load complete configuration
+# Load single simulation configuration
 loader = ConfigLoader()
 rocket_cfg, motor_cfg, env_cfg, sim_cfg = loader.load_complete_config(
-    "configs/complete_example.yaml"
+    "configs/single_sim/02_complete.yaml"
 )
 
-# Load individual sections
-loader.load_from_yaml("configs/simple_rocket.yaml")
+# Load Monte Carlo configuration
+loader.load_from_yaml("configs/monte_carlo/01_basic_mc.yaml")
 rocket_cfg = loader.get_rocket_config()
+mc_cfg = loader.get_monte_carlo_config()
+```
+
+### From Jupyter Notebooks
+
+```python
+from pathlib import Path
+from src.config_loader import ConfigLoader
+
+# Single simulation
+config_path = Path("../configs/single_sim/01_minimal.yaml")
+loader = ConfigLoader()
+rocket_cfg, motor_cfg, env_cfg, sim_cfg = loader.load_complete_config(config_path)
+
+# Monte Carlo simulation
+config_path = Path("../configs/monte_carlo/01_basic_mc.yaml")
+loader.load_from_yaml(config_path)
 ```
 
 ### From Command Line
 
 ```bash
 # Single simulation
-python scripts/run_single_simulation.py --config configs/complete_example.yaml
+python scripts/run_single_simulation.py --config configs/single_sim/02_complete.yaml
 
 # Monte Carlo simulation
-python scripts/run_monte_carlo.py --config configs/simple_rocket.yaml --samples 1000
+python scripts/run_monte_carlo.py --config configs/monte_carlo/01_basic_mc.yaml
 ```
 
 ## Creating Custom Configurations
 
-1. **Start with an example**: Copy `simple_rocket.yaml` or `complete_example.yaml`
+1. **Start with a template**: Copy from `templates/` directory
+   ```bash
+   # For a simple rocket
+   cp configs/templates/template_basic.yaml configs/single_sim/my_rocket.yaml
+
+   # For a competition rocket
+   cp configs/templates/template_advanced.yaml configs/single_sim/my_competition_rocket.yaml
+   ```
+
 2. **Modify parameters**: Edit values to match your rocket design
+
 3. **Validate**: Run validation to check for errors:
    ```python
    from src.validators import validate_all_configs
    warnings = validate_all_configs(rocket_cfg, motor_cfg, env_cfg, sim_cfg)
    ```
-4. **Test**: Run a single simulation before Monte Carlo analysis
+
+4. **Test with single simulation**: Run a single simulation before Monte Carlo analysis
+   ```python
+   # Test your configuration
+   python scripts/run_single_simulation.py --config configs/single_sim/my_rocket.yaml
+   ```
+
+5. **Add Monte Carlo section** (if needed): Copy the `monte_carlo:` section from `monte_carlo/01_basic_mc.yaml` and adjust parameter variations
 
 ## Motor Thrust Curve Files
 

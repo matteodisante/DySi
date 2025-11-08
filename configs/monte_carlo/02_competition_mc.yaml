@@ -108,7 +108,7 @@ environment:
     direction_deg: 90.0  # From East
 
   gravity_ms2: 9.80665
-  max_expected_height_m: 4000.0
+  max_expected_height_m: 3500.0
 
 simulation:
   max_time_s: 600.0

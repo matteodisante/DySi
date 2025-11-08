@@ -111,3 +111,14 @@ simulation:
     length_m: 5.2
     inclination_deg: 85.0  # Degrees from vertical (0=horizontal, 90=vertical)
     heading_deg: 0.0  # Degrees from North (0=North, 90=East)
+
+
+monte_carlo:
+  num_simulations: 50
+  seed: 42
+
+  variations:
+    motor_thrust_std_pct: 5.0  # ±5% thrust variation
+    dry_mass_std_kg: 0.5  # ±0.5 kg mass uncertainty
+    wind_speed_std_ms: 2.0  # ±2 m/s wind variation
+    wind_direction_std_deg: 10.0  # ±10 degrees wind direction variation
