@@ -142,8 +142,18 @@ def main():
     )
 
     try:
-        flight = simulator.run()
+        # Run simulation with state export
+        flight = simulator.run(
+            export_state=True,
+            output_dir=str(args.output_dir),
+            export_formats=["json", "yaml"]
+        )
         print("✓ Simulation complete!")
+        print(f"✓ Complete state exported to {args.output_dir}")
+        print(f"  - initial_state.json/.yaml: All INPUT parameters")
+        print(f"  - final_state.json/.yaml: INPUT + OUTPUT summary")
+        print(f"  - trajectory.csv: Complete time series arrays")
+        print(f"  - curves/*.png: Plots of thrust, drag, wind, atmosphere")
     except Exception as e:
         print(f"✗ Simulation failed: {e}")
         sys.exit(1)

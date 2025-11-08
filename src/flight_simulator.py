@@ -16,6 +16,8 @@ except ImportError:
     Environment = None
 
 from src.config_loader import SimulationConfig
+from src.state_exporter import StateExporter
+from src.data_handler import DataHandler
 
 logger = logging.getLogger(__name__)
 
@@ -65,21 +67,79 @@ class FlightSimulator:
         self.config = config
         self.flight: Optional[Flight] = None
 
-    def run(self) -> "Flight":
-        """Execute flight simulation.
+    def run(
+        self,
+        export_state: bool = False,
+        output_dir: Optional[str] = None,
+        export_formats: list = ["json", "yaml"]
+    ) -> "Flight":
+        """Execute flight simulation with optional state export.
+
+        Args:
+            export_state: If True, export complete simulation state
+            output_dir: Directory for state export files (required if export_state=True)
+            export_formats: List of formats for state export ("json", "yaml")
 
         Returns:
             Flight instance with simulation results.
 
         Raises:
             RuntimeError: If simulation fails.
+            ValueError: If export_state=True but output_dir is None.
 
         Example:
             >>> simulator = FlightSimulator(rocket, env, sim_config)
             >>> flight = simulator.run()
             >>> print(f"Apogee: {flight.apogee} m")
+
+            >>> # With state export
+            >>> flight = simulator.run(export_state=True, output_dir="outputs/flight_001")
         """
+        if export_state and output_dir is None:
+            raise ValueError("output_dir must be specified when export_state=True")
+
         logger.info("Starting flight simulation...")
+
+        # Export initial state if requested
+        if export_state:
+            logger.info("Exporting initial state...")
+            output_path = Path(output_dir)
+            output_path.mkdir(parents=True, exist_ok=True)
+
+            # Extract motor from rocket (RocketPy stores motor in rocket.motor)
+            motor = getattr(self.rocket, 'motor', None)
+            if motor is None:
+                logger.warning("Could not find motor in rocket object")
+
+            # Create simulation config dict
+            sim_config_dict = {
+                "rail": {
+                    "length_m": self.config.rail.length_m,
+                    "inclination_deg": self.config.rail.inclination_deg,
+                    "heading_deg": self.config.rail.heading_deg,
+                },
+                "max_time_s": self.config.max_time_s,
+                "max_time_step_s": self.config.max_time_step_s,
+                "min_time_step_s": self.config.min_time_step_s,
+                "rtol": self.config.rtol,
+                "atol": self.config.atol,
+                "terminate_on_apogee": self.config.terminate_on_apogee,
+                "verbose": self.config.verbose,
+            }
+
+            # Create StateExporter and export initial state
+            state_exporter = StateExporter(
+                motor=motor,
+                rocket=self.rocket,
+                environment=self.environment,
+                sim_config=sim_config_dict,
+            )
+
+            for fmt in export_formats:
+                state_exporter.export_initial_state(
+                    str(output_path / f"initial_state.{fmt}"),
+                    format=fmt
+                )
 
         try:
             # Create Flight instance and run simulation
@@ -102,6 +162,40 @@ class FlightSimulator:
                 f"Simulation complete: Apogee = {self.flight.apogee:.0f} m, "
                 f"Flight time = {self.flight.t_final:.1f} s"
             )
+
+            # Export final state and trajectory if requested
+            if export_state:
+                logger.info("Exporting final state and trajectory...")
+
+                # Export final state (summary only, no arrays)
+                for fmt in export_formats:
+                    state_exporter.export_final_state(
+                        self.flight,
+                        str(output_path / f"final_state.{fmt}"),
+                        format=fmt
+                    )
+
+                # Export trajectory arrays to CSV
+                data_handler = DataHandler(output_dir=str(output_path))
+                trajectory_data = self.get_trajectory_data()
+                data_handler.export_trajectory_csv(
+                    trajectory_data,
+                    filename="trajectory.csv"
+                )
+
+                # Export summary for convenience
+                summary_data = self.get_summary()
+                data_handler.export_summary_json(
+                    summary_data,
+                    filename="summary.json"
+                )
+
+                # Generate curve plots
+                curves_dir = output_path / "curves"
+                curve_paths = state_exporter.export_curves_plots(str(curves_dir))
+                logger.info(f"Generated {len(curve_paths)} curve plots")
+
+                logger.info(f"State export complete: {output_path}")
 
             return self.flight
 

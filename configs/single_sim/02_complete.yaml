@@ -3,7 +3,7 @@
 
 rocket:
   name: "Calisto"
-  dry_mass_kg: 15.426
+  dry_mass_kg: 5.426
 
   inertia:
     ixx_kg_m2: 6.321
@@ -44,8 +44,8 @@ rocket:
     noise_std: [0, 8.3, 0.5]  # [x, y, z] noise standard deviations
 
   #Optional: Custom drag curves (if not provided, uses default Cd calculation)
-  power_off_drag: "data/drag_curves/polito_power_off_drag.csv"
-  power_on_drag: "data/drag_curves/polito_power_on_drag.csv"
+  power_off_drag: "data/drag_curves/polito_drag_coefficient_power_off.csv"
+  power_on_drag: "data/drag_curves/polito_drag_coefficient_power_on.csv"
 
 motor:
   type: "SolidMotor"
@@ -108,8 +108,8 @@ simulation:
   verbose: false
 
   rail:
-    length_m: 5.2
-    inclination_deg: 85.0  # Degrees from vertical (0=horizontal, 90=vertical)
+    length_m: 0.5 
+    inclination_deg: 10.0  # Degrees from vertical (0=horizontal, 90=vertical)
     heading_deg: 0.0  # Degrees from North (0=North, 90=East)
 
 
