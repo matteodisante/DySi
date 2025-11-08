@@ -89,15 +89,9 @@ def main():
     if all_warnings:
         print(f"  Found {len(all_warnings)} validation warnings:")
         for w in all_warnings:
-            print(f"    {w.level}: {w.message}")
+            print(f"    [{w.category}] {w.message}")
     else:
         print("✓ No validation warnings")
-
-    # Check for critical errors
-    errors = [w for w in all_warnings if w.level == "ERROR"]
-    if errors:
-        print("\nCRITICAL ERRORS FOUND - Cannot proceed with simulation")
-        sys.exit(1)
 
     # Step 3: Build Motor
     print(f"\n[3/6] Building motor...")
@@ -113,8 +107,8 @@ def main():
 
     # Step 5: Build Rocket
     print(f"\n[5/6] Building rocket...")
-    rocket_builder = RocketBuilder(rocket_cfg)
-    rocket = rocket_builder.build(motor)
+    rocket_builder = RocketBuilder(rocket_cfg, motor=motor, motor_config=motor_cfg)
+    rocket = rocket_builder.build()
 
     # Check stability
     stability_info = rocket_builder.get_stability_info()
@@ -134,11 +128,8 @@ def main():
     print(f"\n[6/6] Running flight simulation...")
     simulator = FlightSimulator(
         rocket=rocket,
-        motor=motor,
         environment=environment,
-        rail_length_m=sim_cfg.rail_length_m,
-        inclination_deg=sim_cfg.inclination_deg,
-        heading_deg=sim_cfg.heading_deg
+        config=sim_cfg
     )
 
     try:
@@ -193,7 +184,8 @@ def main():
 
         output_dir.mkdir(parents=True, exist_ok=True)
 
-        visualizer = Visualizer(flight)
+        visualizer = Visualizer(output_dir=str(output_dir))
+        trajectory_data = simulator.get_trajectory_data()
 
         plots = [
             ("trajectory_3d.png", "plot_trajectory_3d", "3D trajectory"),
@@ -204,7 +196,7 @@ def main():
         for filename, method_name, description in plots:
             plot_path = output_dir / filename
             print(f"  Creating {description}...")
-            getattr(visualizer, method_name)(output_path=str(plot_path))
+            getattr(visualizer, method_name)(trajectory_data, output_path=str(plot_path))
 
         print(f"\n✓ Plots saved to: {output_dir.absolute()}")
 

@@ -225,12 +225,18 @@ class FlightSimulator:
             "apogee_time_s": float(self.flight.apogee_time),
             "apogee_x_m": float(self.flight.apogee_x),
             "apogee_y_m": float(self.flight.apogee_y),
+            "apogee_lat": float(self.flight.latitude(self.flight.apogee_time)),
+            "apogee_lon": float(self.flight.longitude(self.flight.apogee_time)),
 
             # Velocity metrics
             "max_velocity_ms": float(self.flight.max_speed),
             "max_velocity_time_s": float(self.flight.max_speed_time),
             "out_of_rail_velocity_ms": float(self.flight.out_of_rail_velocity),
             "impact_velocity_ms": float(self.flight.impact_velocity),
+
+            # Acceleration metrics
+            "max_acceleration_ms2": float(self.flight.max_acceleration),
+            "max_acceleration_time_s": float(self.flight.max_acceleration_time),
 
             # Mach and dynamic pressure
             "max_mach_number": float(self.flight.max_mach_number),
@@ -240,7 +246,7 @@ class FlightSimulator:
             "x_impact_m": float(self.flight.x_impact),
             "y_impact_m": float(self.flight.y_impact),
             "impact_velocity_ms": float(self.flight.impact_velocity),
-            "t_final_s": float(self.flight.t_final),
+            "flight_time_s": float(self.flight.t_final),
 
             # Launch rail metrics
             "out_of_rail_time_s": float(self.flight.out_of_rail_time),

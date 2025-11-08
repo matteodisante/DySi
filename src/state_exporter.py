@@ -647,9 +647,10 @@ class StateExporter:
 
 
 class _NumpyEncoder(json.JSONEncoder):
-    """JSON encoder that handles numpy types."""
+    """JSON encoder that handles numpy types and complex objects."""
 
     def default(self, obj):
+        # Handle numpy types
         if isinstance(obj, np.integer):
             return int(obj)
         elif isinstance(obj, np.floating):
@@ -658,4 +659,27 @@ class _NumpyEncoder(json.JSONEncoder):
             return obj.tolist()
         elif isinstance(obj, (np.bool_, bool)):
             return bool(obj)
-        return super().default(obj)
+
+        # Try to use to_dict() if available (RocketPy objects)
+        if hasattr(obj, 'to_dict'):
+            try:
+                return obj.to_dict(include_outputs=False, discretize=True, allow_pickle=False)
+            except:
+                pass
+
+        # Try to convert to dict using __dict__
+        if hasattr(obj, '__dict__'):
+            try:
+                class_name = obj.__class__.__name__
+                return {
+                    '_type': class_name,
+                    '_note': f'{class_name} object - complex type simplified for export'
+                }
+            except:
+                pass
+
+        # Last resort: string representation
+        try:
+            return str(obj)
+        except:
+            return f"<non-serializable: {type(obj).__name__}>"
