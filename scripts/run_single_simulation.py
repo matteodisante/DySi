@@ -13,6 +13,7 @@ import argparse
 import sys
 from pathlib import Path
 import logging
+from dataclasses import asdict
 
 # Add parent directory to path to import src modules
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -25,6 +26,8 @@ from src.rocket_builder import RocketBuilder
 from src.flight_simulator import FlightSimulator
 from src.data_handler import DataHandler
 from src.visualizer import Visualizer
+from src.state_exporter import StateExporter
+from src.curve_plotter import CurvePlotter
 from src.utils import setup_logging
 
 
@@ -190,13 +193,54 @@ def main():
 
         # Determine output name
         output_name = args.name if args.name else rocket_cfg.name.replace(" ", "_").lower()
+        
+        # Create output directory path for this simulation
+        sim_output_dir = Path(args.output_dir) / output_name
+        sim_output_dir.mkdir(parents=True, exist_ok=True)
 
-        # 6. Export data (if not disabled)
+        # 6. Export state (initial and final) - NEW!
         if not args.no_export:
-            logger.info("\n--- EXPORTING DATA ---")
+            logger.info("\n--- EXPORTING STATE (JSON + TXT) ---")
+            
+            # Create state exporter
+            state_exporter = StateExporter(
+                motor=motor,
+                rocket=rocket,
+                environment=env,
+                sim_config=asdict(sim_cfg)
+            )
+            
+            # Export initial state
+            initial_json = state_exporter.export_initial_state(sim_output_dir / "initial_state")
+            logger.info(f"Initial state: {initial_json}")
+            logger.info(f"Initial state (readable): {initial_json.with_name('initial_state_READABLE.txt')}")
+            
+            # Export final state
+            final_json = state_exporter.export_final_state(flight, sim_output_dir / "final_state")
+            logger.info(f"Final state: {final_json}")
+            logger.info(f"Final state (readable): {final_json.with_name('final_state_READABLE.txt')}")
+
+        # 7. Generate curve plots (motor/rocket/environment) - NEW!
+        if not args.no_plots:
+            logger.info("\n--- GENERATING CURVE PLOTS ---")
+            
+            # Create curve plotter
+            curve_plotter = CurvePlotter(motor, rocket, env)
+            
+            # Plot all curves (organized in motor/, rocket/, environment/ subdirectories)
+            curves_dir = sim_output_dir / "curves"
+            plot_paths = curve_plotter.plot_all_curves(curves_dir)
+            
+            logger.info(f"Generated {len(plot_paths)} curve plots:")
+            for plot_name, plot_path in sorted(plot_paths.items()):
+                logger.info(f"  {plot_name}: {plot_path}")
+
+        # 8. Export trajectory data (if not disabled)
+        if not args.no_export:
+            logger.info("\n--- EXPORTING TRAJECTORY DATA ---")
 
             # Create data handler
-            data_handler = DataHandler(output_dir=f"{args.output_dir}/results")
+            data_handler = DataHandler(output_dir=str(sim_output_dir / "trajectory"))
 
             # Get data
             trajectory_data = simulator.get_trajectory_data()
@@ -213,13 +257,13 @@ def main():
             for format_type, path in export_paths.items():
                 logger.info(f"  {format_type}: {path}")
 
-        # 7. Create plots (if not disabled)
+        # 9. Create trajectory plots (if not disabled)
         if not args.no_plots:
-            logger.info("\n--- CREATING PLOTS ---")
+            logger.info("\n--- CREATING TRAJECTORY PLOTS ---")
 
             try:
                 # Create visualizer
-                visualizer = Visualizer(output_dir=f"{args.output_dir}/plots")
+                visualizer = Visualizer(output_dir=str(sim_output_dir / "plots"))
 
                 # Create standard plots
                 trajectory_data = simulator.get_trajectory_data()
@@ -235,11 +279,23 @@ def main():
             except ImportError as e:
                 logger.warning(f"Plotting skipped: {e}")
 
-        # 8. Success message
+        # 10. Success message
         logger.info("\n" + "=" * 60)
         logger.info("SIMULATION COMPLETED SUCCESSFULLY")
         logger.info("=" * 60)
-        logger.info(f"\nResults saved to: {args.output_dir}/")
+        logger.info(f"\nResults saved to: {sim_output_dir}/")
+        logger.info("\nOutput structure:")
+        logger.info(f"  {sim_output_dir}/")
+        logger.info("    ├── initial_state.json / .txt")
+        logger.info("    ├── final_state.json / .txt")
+        logger.info("    ├── curves/")
+        logger.info("    │   ├── motor/       (11 motor curve plots)")
+        logger.info("    │   ├── rocket/      (drag curves)")
+        logger.info("    │   └── environment/ (wind, atmosphere)")
+        logger.info("    ├── trajectory/")
+        logger.info("    │   └── *.csv        (time series data)")
+        logger.info("    └── plots/")
+        logger.info("        └── *.png        (trajectory visualizations)")
 
         return 0
 
