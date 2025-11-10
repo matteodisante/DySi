@@ -70,6 +70,11 @@ motor:
 
   burn_time_s: null  # Computed from thrust curve if null
 
+  # Advanced parameters
+  interpolation_method: "linear"  # Options: linear, spline, akima
+  coordinate_system_orientation: "nozzle_to_combustion_chamber"  # or "combustion_chamber_to_nozzle"
+  reference_pressure: null  # Atmospheric pressure (Pa) at which thrust was recorded
+
   position_m: -1.373  # Motor position on rocket
 
 environment:

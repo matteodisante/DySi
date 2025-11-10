@@ -36,6 +36,11 @@ motor:
   dry_mass_kg: 3.000
   position_m: -3.200
   
+  # Optional advanced parameters (use defaults if not specified)
+  # interpolation_method: "linear"
+  # coordinate_system_orientation: "nozzle_to_combustion_chamber"
+  # reference_pressure: null
+  
 #  dry_mass_kg: 3.000
 #  nozzle_radius_m: 0.033
 #  grain_separation_m: 0.005

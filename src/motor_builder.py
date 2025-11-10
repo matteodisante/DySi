@@ -105,7 +105,9 @@ class MotorBuilder:
             nozzle_position=self.config.nozzle_position_m,
             burn_time=self.config.burn_time_s,
             throat_radius=self.config.throat_radius_m,
-            coordinate_system_orientation="nozzle_to_combustion_chamber",
+            interpolation_method=self.config.interpolation_method,
+            coordinate_system_orientation=self.config.coordinate_system_orientation,
+            reference_pressure=self.config.reference_pressure,
         )
 
         logger.info(

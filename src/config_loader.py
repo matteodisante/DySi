@@ -158,6 +158,9 @@ class MotorConfig:
     nozzle_position_m: float = 0.0
     burn_time_s: Optional[float] = None
     throat_radius_m: float = 0.011
+    interpolation_method: str = "linear"  # Options: 'linear', 'spline', 'akima'
+    coordinate_system_orientation: str = "nozzle_to_combustion_chamber"
+    reference_pressure: Optional[float] = None  # Atmospheric pressure (Pa) at which thrust was recorded
     position_m: float = -1.373  # Position on rocket
 
 

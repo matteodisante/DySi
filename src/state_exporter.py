@@ -240,32 +240,69 @@ class StateExporter:
         return metadata
 
     def _extract_motor_state(self) -> Dict[str, Any]:
-        """Extract complete motor parameters using comprehensive introspection.
-
+        """Extract complete motor parameters (ONLY scalar/static values).
+        
+        Function attributes (time-dependent curves) are handled separately 
+        by plot generation in CurvePlotter.
+        
         Returns:
-            Dictionary with ALL motor parameters
+            Dictionary with ALL scalar motor parameters (Category A)
         """
         motor_state = {
             "_class_type": type(self.motor).__name__,
         }
 
-        # Use RocketPy's to_dict() as base (provides well-structured data)
-        try:
-            motor_dict = self.motor.to_dict(
-                include_outputs=False,
-                discretize=True,
-                allow_pickle=False
-            )
-            motor_state.update(motor_dict)
-        except Exception as e:
-            logger.warning(f"Could not use motor.to_dict(): {e}")
-
-        # Now add ALL remaining attributes via introspection
-        motor_state.update(self._introspect_all_attributes(
-            self.motor,
-            exclude_prefixes=['_'],
-            exclude_names=['plots', 'prints']  # Exclude plotting/printing utilities
-        ))
+        # Define scalar attributes to extract (Category A)
+        # These are numeric/string values, NOT Function objects
+        SCALAR_ATTRIBUTES = [
+            # Geometry
+            'coordinate_system_orientation',
+            'nozzle_radius', 'nozzle_area', 'nozzle_position',
+            'throat_radius', 'throat_area',
+            
+            # Grain parameters
+            'grain_number', 'grains_center_of_mass_position',
+            'grain_separation', 'grain_density',
+            'grain_outer_radius', 'grain_initial_inner_radius',
+            'grain_initial_height', 'grain_initial_volume', 'grain_initial_mass',
+            'grain_burn_out',
+            
+            # Mass
+            'dry_mass', 'propellant_initial_mass', 'structural_mass_ratio',
+            
+            # Dry Inertia
+            'dry_I_11', 'dry_I_22', 'dry_I_33',
+            'dry_I_12', 'dry_I_13', 'dry_I_23',
+            
+            # Center of mass positions
+            'center_of_dry_mass_position',
+            
+            # Performance metrics
+            'total_impulse', 'max_thrust', 'max_thrust_time', 'average_thrust',
+            'burn_start_time', 'burn_out_time', 'burn_duration', 'burn_time',
+            
+            # Configuration metadata
+            'interpolate', 'reference_pressure',
+        ]
+        
+        # Extract scalar attributes
+        for attr_name in SCALAR_ATTRIBUTES:
+            if hasattr(self.motor, attr_name):
+                value = getattr(self.motor, attr_name)
+                # Skip if it's a Function object (these should be plotted, not exported)
+                if hasattr(value, '__class__') and value.__class__.__name__ == 'Function':
+                    logger.debug(f"Skipping Function attribute '{attr_name}' (will be plotted)")
+                    continue
+                # Serialize the value
+                motor_state[attr_name] = self._serialize_attribute_value(value, attr_name)
+            else:
+                logger.debug(f"Motor attribute '{attr_name}' not found")
+        
+        # Add note about time-dependent attributes
+        motor_state['_note'] = (
+            "Time-dependent attributes (thrust, mass, inertia curves, etc.) "
+            "are visualized in curve plots, not included in this export."
+        )
 
         return motor_state
 
