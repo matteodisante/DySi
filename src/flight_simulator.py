@@ -70,15 +70,13 @@ class FlightSimulator:
     def run(
         self,
         export_state: bool = False,
-        output_dir: Optional[str] = None,
-        export_formats: list = ["json", "yaml"]
+        output_dir: Optional[str] = None
     ) -> "Flight":
         """Execute flight simulation with optional state export.
 
         Args:
-            export_state: If True, export complete simulation state
+            export_state: If True, export complete simulation state (JSON + TXT)
             output_dir: Directory for state export files (required if export_state=True)
-            export_formats: List of formats for state export ("json", "yaml")
 
         Returns:
             Flight instance with simulation results.
@@ -135,11 +133,9 @@ class FlightSimulator:
                 sim_config=sim_config_dict,
             )
 
-            for fmt in export_formats:
-                state_exporter.export_initial_state(
-                    str(output_path / f"initial_state.{fmt}"),
-                    format=fmt
-                )
+            state_exporter.export_initial_state(
+                str(output_path / "initial_state.json")
+            )
 
         try:
             # Create Flight instance and run simulation
@@ -168,12 +164,10 @@ class FlightSimulator:
                 logger.info("Exporting final state and trajectory...")
 
                 # Export final state (summary only, no arrays)
-                for fmt in export_formats:
-                    state_exporter.export_final_state(
-                        self.flight,
-                        str(output_path / f"final_state.{fmt}"),
-                        format=fmt
-                    )
+                state_exporter.export_final_state(
+                    self.flight,
+                    str(output_path / "final_state.json")
+                )
 
                 # Export trajectory arrays to CSV
                 data_handler = DataHandler(output_dir=str(output_path))

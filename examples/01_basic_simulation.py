@@ -136,13 +136,14 @@ def main():
         # Run simulation with state export
         flight = simulator.run(
             export_state=True,
-            output_dir=str(args.output_dir),
-            export_formats=["json", "yaml"]
+            output_dir=str(args.output_dir)
         )
         print("✓ Simulation complete!")
         print(f"✓ Complete state exported to {args.output_dir}")
-        print(f"  - initial_state.json/.yaml: All INPUT parameters")
-        print(f"  - final_state.json/.yaml: INPUT + OUTPUT summary")
+        print(f"  - initial_state.json: All INPUT parameters (machine-readable)")
+        print(f"  - initial_state_READABLE.txt: All INPUT parameters (human-readable)")
+        print(f"  - final_state.json: INPUT + OUTPUT summary (machine-readable)")
+        print(f"  - final_state_READABLE.txt: INPUT + OUTPUT summary (human-readable)")
         print(f"  - trajectory.csv: Complete time series arrays")
         print(f"  - curves/*.png: Plots of thrust, drag, wind, atmosphere")
     except Exception as e:

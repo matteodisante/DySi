@@ -13,7 +13,6 @@ import logging
 from datetime import datetime
 
 import numpy as np
-import yaml
 
 from src.curve_plotter import CurvePlotter
 
@@ -68,20 +67,22 @@ class StateExporter:
 
     def export_initial_state(
         self,
-        output_path: str,
-        format: str = "json"
+        output_path: str
     ) -> Path:
         """Export all input parameters before simulation starts.
 
         Captures complete state of motor, rocket, environment, and simulation
         configuration BEFORE calling flight.simulate().
 
+        Exports two files:
+        - {output_path}.json: Machine-readable JSON format
+        - {output_path}_READABLE.txt: Human-readable text format
+
         Args:
-            output_path: Path for output file
-            format: "json" or "yaml"
+            output_path: Path for output file (without extension)
 
         Returns:
-            Path to created file
+            Path to created JSON file
         """
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -97,15 +98,9 @@ class StateExporter:
             "simulation_config": self._extract_simulation_config(),
         }
 
-        # Save in requested format
-        if format == "json":
-            with open(output_path, 'w') as f:
-                json.dump(state, f, indent=2, cls=_NumpyEncoder)
-        elif format == "yaml":
-            with open(output_path, 'w') as f:
-                yaml.dump(state, f, default_flow_style=False, sort_keys=False)
-        else:
-            raise ValueError(f"Unsupported format: {format}")
+        # Save JSON (machine-readable)
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(state, f, indent=2, cls=_NumpyEncoder)
 
         # Also create human-readable version
         readable_path = output_path.parent / f"{output_path.stem}_READABLE.txt"
@@ -117,21 +112,23 @@ class StateExporter:
     def export_final_state(
         self,
         flight,
-        output_path: str,
-        format: str = "json"
+        output_path: str
     ) -> Path:
         """Export input parameters + output summary after simulation.
 
         Includes all initial state PLUS flight results summary.
         Does NOT include time series arrays (those go in trajectory.csv).
 
+        Exports two files:
+        - {output_path}.json: Machine-readable JSON format
+        - {output_path}_READABLE.txt: Human-readable text format
+
         Args:
             flight: RocketPy Flight object (after simulation)
-            output_path: Path for output file
-            format: "json" or "yaml"
+            output_path: Path for output file (without extension)
 
         Returns:
-            Path to created file
+            Path to created JSON file
         """
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -148,15 +145,9 @@ class StateExporter:
             "flight_results": self._extract_flight_summary(flight),
         }
 
-        # Save in requested format
-        if format == "json":
-            with open(output_path, 'w') as f:
-                json.dump(state, f, indent=2, cls=_NumpyEncoder)
-        elif format == "yaml":
-            with open(output_path, 'w') as f:
-                yaml.dump(state, f, default_flow_style=False, sort_keys=False)
-        else:
-            raise ValueError(f"Unsupported format: {format}")
+        # Save JSON (machine-readable)
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(state, f, indent=2, cls=_NumpyEncoder)
 
         # Also create human-readable version
         readable_path = output_path.parent / f"{output_path.stem}_READABLE.txt"
@@ -169,15 +160,15 @@ class StateExporter:
         self,
         flight,
         output_dir: str,
-        formats: List[str] = ["json", "yaml"],
         include_plots: bool = True
     ) -> Dict[str, Path]:
-        """Export both initial and final states in multiple formats.
+        """Export both initial and final states.
+
+        Exports JSON (machine-readable) + TXT (human-readable) for both states.
 
         Args:
             flight: RocketPy Flight object (after simulation)
             output_dir: Directory for output files
-            formats: List of formats to export ("json", "yaml")
             include_plots: If True, also generate curve plots
 
         Returns:
@@ -188,16 +179,17 @@ class StateExporter:
 
         paths = {}
 
-        for fmt in formats:
-            # Export initial state
-            initial_path = output_dir / f"initial_state.{fmt}"
-            self.export_initial_state(str(initial_path), format=fmt)
-            paths[f"initial_{fmt}"] = initial_path
+        # Export initial state (JSON + TXT)
+        initial_path = output_dir / "initial_state.json"
+        self.export_initial_state(str(initial_path))
+        paths["initial_json"] = initial_path
+        paths["initial_txt"] = output_dir / "initial_state_READABLE.txt"
 
-            # Export final state
-            final_path = output_dir / f"final_state.{fmt}"
-            self.export_final_state(flight, str(final_path), format=fmt)
-            paths[f"final_{fmt}"] = final_path
+        # Export final state (JSON + TXT)
+        final_path = output_dir / "final_state.json"
+        self.export_final_state(flight, str(final_path))
+        paths["final_json"] = final_path
+        paths["final_txt"] = output_dir / "final_state_READABLE.txt"
 
         # Generate curve plots if requested
         if include_plots and self.motor:
