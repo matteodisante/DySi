@@ -107,6 +107,10 @@ class StateExporter:
         else:
             raise ValueError(f"Unsupported format: {format}")
 
+        # Also create human-readable version
+        readable_path = output_path.parent / f"{output_path.stem}_READABLE.txt"
+        self._export_human_readable(state, readable_path, include_flight=False)
+
         logger.info(f"Initial state exported to {output_path}")
         return output_path
 
@@ -153,6 +157,10 @@ class StateExporter:
                 yaml.dump(state, f, default_flow_style=False, sort_keys=False)
         else:
             raise ValueError(f"Unsupported format: {format}")
+
+        # Also create human-readable version
+        readable_path = output_path.parent / f"{output_path.stem}_READABLE.txt"
+        self._export_human_readable(state, readable_path, include_flight=True)
 
         logger.info(f"Final state exported to {output_path}")
         return output_path
@@ -845,6 +853,439 @@ class StateExporter:
             func_data['error'] = str(e)
 
         return func_data
+
+    def _export_human_readable(self, state: Dict[str, Any], output_path: Path, include_flight: bool = False):
+        """Export state in human-readable text format with units and descriptions.
+
+        Args:
+            state: Complete state dictionary
+            output_path: Path for output text file
+            include_flight: Whether flight results are included
+        """
+        with open(output_path, 'w', encoding='utf-8') as f:
+            # Header
+            f.write("=" * 80 + "\n")
+            if include_flight:
+                f.write("ROCKET SIMULATION - FINAL STATE (INPUT PARAMETERS + RESULTS)\n")
+            else:
+                f.write("ROCKET SIMULATION - INITIAL STATE (INPUT PARAMETERS)\n")
+            f.write("=" * 80 + "\n\n")
+
+            # Metadata
+            if 'metadata' in state:
+                f.write("METADATA\n")
+                f.write("-" * 80 + "\n")
+                meta = state['metadata']
+                f.write(f"Export Time:      {meta.get('timestamp', 'N/A')}\n")
+                f.write(f"RocketPy Version: {meta.get('rocketpy_version', 'N/A')}\n")
+                f.write(f"Export Type:      {meta.get('export_type', 'N/A')}\n")
+                f.write("\n")
+
+            # Motor
+            if 'motor' in state:
+                self._write_motor_section(f, state['motor'])
+
+            # Rocket
+            if 'rocket' in state:
+                self._write_rocket_section(f, state['rocket'])
+
+            # Environment
+            if 'environment' in state:
+                self._write_environment_section(f, state['environment'])
+
+            # Simulation Config
+            if 'simulation_config' in state:
+                self._write_simulation_config_section(f, state['simulation_config'])
+
+            # Flight Results
+            if include_flight and 'flight_results' in state:
+                self._write_flight_results_section(f, state['flight_results'])
+
+            # Footer
+            f.write("=" * 80 + "\n")
+            f.write("END OF STATE EXPORT\n")
+            f.write("=" * 80 + "\n")
+
+        logger.info(f"Human-readable state exported to {output_path}")
+
+    def _format_value(self, value, fmt: str = ".4f", unit: str = "") -> str:
+        """Format a value safely, handling non-numeric types.
+
+        Args:
+            value: Value to format
+            fmt: Format string (e.g., ".4f", ".2f")
+            unit: Unit string to append (e.g., " kg", " m")
+
+        Returns:
+            Formatted string
+        """
+        if value == 'N/A' or value is None:
+            return 'N/A'
+
+        # Handle dict (complex objects)
+        if isinstance(value, dict):
+            if '_type' in value:
+                return f"{value['_type']} object"
+            return "Complex object"
+
+        # Handle numeric types
+        try:
+            if isinstance(value, (int, float)):
+                return f"{value:{fmt}}{unit}"
+            # Try converting to float
+            return f"{float(value):{fmt}}{unit}"
+        except (ValueError, TypeError):
+            return str(value)
+
+    def _write_motor_section(self, f, motor: Dict[str, Any]):
+        """Write motor section in human-readable format."""
+        f.write("MOTOR PARAMETERS\n")
+        f.write("=" * 80 + "\n\n")
+
+        # Basic Info
+        f.write("Basic Properties:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Type:                        {motor.get('_class_type', 'N/A')}\n")
+        f.write(f"  Coordinate System:           {motor.get('coordinate_system_orientation', 'N/A')}\n")
+        f.write("\n")
+
+        # Mass Properties
+        f.write("Mass Properties:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Dry Mass:                    {self._format_value(motor.get('dry_mass'), '.4f', ' kg')}\n")
+        f.write(f"  Propellant Initial Mass:     {self._format_value(motor.get('propellant_initial_mass'), '.4f', ' kg')}\n")
+        f.write(f"  Structural Mass Ratio:       {self._format_value(motor.get('structural_mass_ratio'), '.4f')}\n")
+        f.write("\n")
+
+        # Geometry
+        f.write("Geometry:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Nozzle Radius:               {self._format_value(motor.get('nozzle_radius'), '.4f', ' m')}\n")
+        f.write(f"  Nozzle Area:                 {self._format_value(motor.get('nozzle_area'), '.6f', ' m²')}\n")
+        f.write(f"  Throat Radius:               {self._format_value(motor.get('throat_radius'), '.4f', ' m')}\n")
+        f.write(f"  Throat Area:                 {self._format_value(motor.get('throat_area'), '.6f', ' m²')}\n")
+        f.write(f"  Nozzle Position:             {self._format_value(motor.get('nozzle_position'), '.4f', ' m')}\n")
+        f.write("\n")
+
+        # Grain (for solid motors)
+        if 'grain_number' in motor:
+            f.write("Grain Properties (Solid Motor):\n")
+            f.write("-" * 40 + "\n")
+            f.write(f"  Number of Grains:            {motor.get('grain_number', 'N/A')}\n")
+            f.write(f"  Grain Density:               {self._format_value(motor.get('grain_density'), '.2f', ' kg/m³')}\n")
+            f.write(f"  Grain Outer Radius:          {self._format_value(motor.get('grain_outer_radius'), '.4f', ' m')}\n")
+            f.write(f"  Grain Initial Inner Radius:  {self._format_value(motor.get('grain_initial_inner_radius'), '.4f', ' m')}\n")
+            f.write(f"  Grain Initial Height:        {self._format_value(motor.get('grain_initial_height'), '.4f', ' m')}\n")
+            f.write(f"  Grain Separation:            {self._format_value(motor.get('grain_separation'), '.4f', ' m')}\n")
+            f.write(f"  Grain Initial Mass:          {self._format_value(motor.get('grain_initial_mass'), '.4f', ' kg')}\n")
+            f.write(f"  Grain Initial Volume:        {self._format_value(motor.get('grain_initial_volume'), '.6f', ' m³')}\n")
+            f.write("\n")
+
+        # Performance
+        f.write("Performance:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Total Impulse:               {self._format_value(motor.get('total_impulse'), '.2f', ' N·s')}\n")
+        f.write(f"  Average Thrust:              {self._format_value(motor.get('average_thrust'), '.2f', ' N')}\n")
+        f.write(f"  Max Thrust:                  {self._format_value(motor.get('max_thrust'), '.2f', ' N')}\n")
+        f.write(f"  Max Thrust Time:             {self._format_value(motor.get('max_thrust_time'), '.3f', ' s')}\n")
+        f.write(f"  Burn Duration:               {self._format_value(motor.get('burn_duration'), '.3f', ' s')}\n")
+        f.write(f"  Burn Start Time:             {self._format_value(motor.get('burn_start_time'), '.3f', ' s')}\n")
+        f.write(f"  Burn Out Time:               {self._format_value(motor.get('burn_out_time'), '.3f', ' s')}\n")
+        f.write("\n")
+
+        # Inertia
+        f.write("Inertia Tensor (Dry, kg·m²):\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  I_11:  {self._format_value(motor.get('dry_I_11'), '.6f')}    I_12:  {self._format_value(motor.get('dry_I_12'), '.6f')}    I_13:  {self._format_value(motor.get('dry_I_13'), '.6f')}\n")
+        f.write(f"  I_22:  {self._format_value(motor.get('dry_I_22'), '.6f')}    I_23:  {self._format_value(motor.get('dry_I_23'), '.6f')}\n")
+        f.write(f"  I_33:  {self._format_value(motor.get('dry_I_33'), '.6f')}\n")
+        f.write("\n")
+
+        # Thrust curve info
+        if 'thrust_source' in motor:
+            f.write("Thrust Curve:\n")
+            f.write("-" * 40 + "\n")
+            thrust_src = motor.get('thrust_source', [])
+            if isinstance(thrust_src, list) and len(thrust_src) > 0:
+                f.write(f"  Source Type:                 Array with {len(thrust_src)} points\n")
+                f.write(f"  Interpolation:               {motor.get('interpolate', 'N/A')}\n")
+            else:
+                f.write(f"  Source:                      {thrust_src}\n")
+        f.write("\n")
+
+    def _write_rocket_section(self, f, rocket: Dict[str, Any]):
+        """Write rocket section in human-readable format."""
+        f.write("ROCKET PARAMETERS\n")
+        f.write("=" * 80 + "\n\n")
+
+        # Basic Properties
+        f.write("Basic Properties:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Type:                        {rocket.get('_class_type', 'N/A')}\n")
+        f.write(f"  Coordinate System:           {rocket.get('coordinate_system_orientation', 'N/A')}\n")
+        f.write(f"  Radius:                      {self._format_value(rocket.get('radius'), '.4f')} m\n")
+        f.write(f"  Cross-sectional Area:        {self._format_value(rocket.get('area'), '.6f')} m²\n")
+        f.write("\n")
+
+        # Mass
+        f.write("Mass Properties:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Total Mass (with motor):     {self._format_value(rocket.get('mass'), '.4f')} kg\n")
+        f.write(f"  Dry Mass (without motor):    {self._format_value(rocket.get('dry_mass'), '.4f')} kg\n")
+        f.write(f"  Structural Mass Ratio:       {self._format_value(rocket.get('structural_mass_ratio'), '.4f')}\n")
+        f.write("\n")
+
+        # Positions
+        f.write("Reference Positions (from nose, m):\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Motor Position:              {self._format_value(rocket.get('motor_position'), '.4f')} m\n")
+        f.write(f"  Nozzle Position:             {self._format_value(rocket.get('nozzle_position'), '.4f')} m\n")
+        f.write(f"  Center of Mass (no motor):   {self._format_value(rocket.get('center_of_mass_without_motor'), '.4f')} m\n")
+        f.write(f"  Center of Dry Mass:          {self._format_value(rocket.get('center_of_dry_mass_position'), '.4f')} m\n")
+        f.write(f"  Motor Center of Dry Mass:    {self._format_value(rocket.get('motor_center_of_dry_mass_position'), '.4f')} m\n")
+        f.write(f"  Nozzle to CDM:               {self._format_value(rocket.get('nozzle_to_cdm'), '.4f')} m\n")
+        f.write("\n")
+
+        # Inertia
+        f.write("Inertia Tensor (without motor, kg·m²):\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  I_11:  {self._format_value(rocket.get('I_11_without_motor'), '.6f')}    I_12:  {self._format_value(rocket.get('I_12_without_motor'), '.6f')}    I_13:  {self._format_value(rocket.get('I_13_without_motor'), '.6f')}\n")
+        f.write(f"  I_22:  {self._format_value(rocket.get('I_22_without_motor'), '.6f')}    I_23:  {self._format_value(rocket.get('I_23_without_motor'), '.6f')}\n")
+        f.write(f"  I_33:  {self._format_value(rocket.get('I_33_without_motor'), '.6f')}\n")
+        f.write("\n")
+
+        # Eccentricities
+        f.write("Eccentricities (m):\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Center of Mass:              X={self._format_value(rocket.get('cm_eccentricity_x'), '.6f')}, Y={self._format_value(rocket.get('cm_eccentricity_y'), '.6f')}\n")
+        f.write(f"  Center of Pressure:          X={self._format_value(rocket.get('cp_eccentricity_x'), '.6f')}, Y={self._format_value(rocket.get('cp_eccentricity_y'), '.6f')}\n")
+        f.write(f"  Thrust:                      X={self._format_value(rocket.get('thrust_eccentricity_x'), '.6f')}, Y={self._format_value(rocket.get('thrust_eccentricity_y'), '.6f')}\n")
+        f.write("\n")
+
+        # Components
+        f.write("Components:\n")
+        f.write("-" * 40 + "\n")
+
+        # Fins
+        fins = rocket.get('fins', [])
+        if isinstance(fins, list):
+            f.write(f"  Fins:                        {len(fins)} set(s)\n")
+
+        # Nosecones
+        nosecones = rocket.get('nosecones', [])
+        if isinstance(nosecones, list):
+            f.write(f"  Nosecones:                   {len(nosecones)}\n")
+
+        # Tails
+        tails = rocket.get('tails', [])
+        if isinstance(tails, list):
+            f.write(f"  Tails:                       {len(tails)}\n")
+
+        # Parachutes
+        parachutes = rocket.get('parachutes', [])
+        if isinstance(parachutes, list):
+            f.write(f"  Parachutes:                  {len(parachutes)}\n")
+
+        # Air brakes
+        air_brakes = rocket.get('air_brakes', [])
+        if isinstance(air_brakes, list):
+            f.write(f"  Air Brakes:                  {len(air_brakes)}\n")
+
+        # Sensors
+        sensors = rocket.get('sensors', [])
+        if isinstance(sensors, dict) and '_type' in sensors:
+            f.write(f"  Sensors:                     {sensors.get('_type', 'N/A')}\n")
+
+        f.write("\n")
+
+        # Drag curves info
+        if 'power_off_drag' in rocket:
+            f.write("Aerodynamics:\n")
+            f.write("-" * 40 + "\n")
+            f.write(f"  Power-Off Drag Curve:        Available (Function object)\n")
+        if 'power_on_drag' in rocket:
+            f.write(f"  Power-On Drag Curve:         Available (Function object)\n")
+        f.write("\n")
+
+    def _write_environment_section(self, f, env: Dict[str, Any]):
+        """Write environment section in human-readable format."""
+        f.write("ENVIRONMENT PARAMETERS\n")
+        f.write("=" * 80 + "\n\n")
+
+        # Location
+        f.write("Location:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Latitude:                    {self._format_value(env.get('latitude'), '.6f')}°\n")
+        f.write(f"  Longitude:                   {self._format_value(env.get('longitude'), '.6f')}°\n")
+        f.write(f"  Elevation:                   {self._format_value(env.get('elevation'), '.2f')} m\n")
+        f.write(f"  Datum:                       {env.get('datum', 'N/A')}\n")
+        f.write(f"  Timezone:                    {env.get('timezone', 'N/A')}\n")
+        f.write(f"  Date:                        {env.get('date', 'N/A')}\n")
+        f.write("\n")
+
+        # UTM Coordinates
+        f.write("UTM Coordinates:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Zone:                        {env.get('initial_utm_zone', 'N/A')}\n")
+        f.write(f"  Letter:                      {env.get('initial_utm_letter', 'N/A')}\n")
+        f.write(f"  Hemisphere:                  {env.get('initial_hemisphere', 'N/A')}\n")
+        f.write(f"  Easting:                     {self._format_value(env.get('initial_east'), '.2f')} m\n")
+        f.write(f"  Northing:                    {self._format_value(env.get('initial_north'), '.2f')} m\n")
+        f.write("\n")
+
+        # Earth Properties
+        f.write("Earth Properties:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Earth Radius (at location):  {self._format_value(env.get('earth_radius'), '.2f')} m\n")
+        f.write(f"  Standard Gravity:            {self._format_value(env.get('standard_g'), '.5f')} m/s²\n")
+        gravity = env.get('gravity', 'N/A')
+        if isinstance(gravity, dict) and 'value' in gravity:
+            f.write(f"  Local Gravity:               {gravity['value']:.5f} m/s²\n")
+        else:
+            f.write(f"  Local Gravity:               {gravity} m/s²\n")
+        f.write("\n")
+
+        # Atmosphere
+        f.write("Atmospheric Model:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Model Type:                  {env.get('atmospheric_model_type', 'N/A')}\n")
+        f.write(f"  Max Expected Height:         {self._format_value(env.get('max_expected_height'), '.2f')} m\n")
+
+        # Surface conditions
+        if 'pressure' in env:
+            pressure = env.get('pressure')
+            if isinstance(pressure, dict) and 'source' in pressure:
+                src = pressure['source']
+                if isinstance(src, list) and len(src) > 0 and len(src[0]) == 2:
+                    f.write(f"  Surface Pressure:            {src[0][1]:.2f} Pa\n")
+            else:
+                f.write(f"  Surface Pressure:            {pressure} Pa\n")
+
+        if 'temperature' in env:
+            temp = env.get('temperature')
+            if isinstance(temp, dict) and 'source' in temp:
+                src = temp['source']
+                if isinstance(src, list) and len(src) > 0 and len(src[0]) == 2:
+                    f.write(f"  Surface Temperature:         {src[0][1]:.2f} K ({src[0][1]-273.15:.2f} °C)\n")
+            else:
+                f.write(f"  Surface Temperature:         {temp} K\n")
+
+        f.write(f"  Air Gas Constant:            {self._format_value(env.get('air_gas_constant'), '.2f')} J/(kg·K)\n")
+        f.write("\n")
+
+        # Wind
+        f.write("Wind Conditions:\n")
+        f.write("-" * 40 + "\n")
+        wind_speed = env.get('wind_speed', {})
+        if isinstance(wind_speed, dict) and 'source' in wind_speed:
+            src = wind_speed['source']
+            if isinstance(src, list) and len(src) > 0:
+                f.write(f"  Wind Profile:                Variable with altitude ({len(src)} points)\n")
+                f.write(f"  Surface Wind Speed:          {src[0][1]:.2f} m/s\n")
+        else:
+            f.write(f"  Wind Speed:                  {wind_speed} m/s\n")
+
+        f.write(f"  Wind Velocity X:             {self._format_value(env.get('wind_velocity_x'), '.2f')} m/s\n")
+        f.write(f"  Wind Velocity Y:             {self._format_value(env.get('wind_velocity_y'), '.2f')} m/s\n")
+        f.write(f"  Wind Direction:              {self._format_value(env.get('wind_direction'), '.2f')}°\n")
+        f.write(f"  Wind Heading:                {self._format_value(env.get('wind_heading'), '.2f')}°\n")
+        f.write("\n")
+
+    def _write_simulation_config_section(self, f, sim_config: Dict[str, Any]):
+        """Write simulation configuration section."""
+        f.write("SIMULATION CONFIGURATION\n")
+        f.write("=" * 80 + "\n\n")
+
+        # Rail
+        if 'rail' in sim_config:
+            f.write("Launch Rail:\n")
+            f.write("-" * 40 + "\n")
+            rail = sim_config['rail']
+            f.write(f"  Length:                      {self._format_value(rail.get('length_m'), '.2f')} m\n")
+            f.write(f"  Inclination:                 {self._format_value(rail.get('inclination_deg'), '.2f')}°\n")
+            f.write(f"  Heading:                     {self._format_value(rail.get('heading_deg'), '.2f')}°\n")
+            f.write("\n")
+
+        # Integration parameters
+        f.write("Numerical Integration:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Max Time:                    {self._format_value(sim_config.get('max_time_s'), '.2f')} s\n")
+        f.write(f"  Max Time Step:               {sim_config.get('max_time_step_s', 'N/A')} s\n")
+        f.write(f"  Min Time Step:               {sim_config.get('min_time_step_s', 'N/A')} s\n")
+        f.write(f"  Relative Tolerance (rtol):   {sim_config.get('rtol', 'N/A')}\n")
+        f.write(f"  Absolute Tolerance (atol):   {sim_config.get('atol', 'N/A')}\n")
+        f.write(f"  Terminate on Apogee:         {sim_config.get('terminate_on_apogee', 'N/A')}\n")
+        f.write(f"  Verbose Output:              {sim_config.get('verbose', 'N/A')}\n")
+        f.write("\n")
+
+    def _write_flight_results_section(self, f, results: Dict[str, Any]):
+        """Write flight results section."""
+        f.write("FLIGHT RESULTS\n")
+        f.write("=" * 80 + "\n\n")
+
+        # Apogee
+        if 'apogee' in results:
+            f.write("Apogee:\n")
+            f.write("-" * 40 + "\n")
+            apogee = results['apogee']
+            f.write(f"  Altitude:                    {self._format_value(apogee.get('altitude_m'), '.2f')} m ({apogee.get('altitude_m', 0)*3.28084:.2f} ft)\n")
+            f.write(f"  Time:                        {self._format_value(apogee.get('time_s'), '.2f')} s\n")
+            f.write(f"  Position X:                  {self._format_value(apogee.get('x_m'), '.2f')} m\n")
+            f.write(f"  Position Y:                  {self._format_value(apogee.get('y_m'), '.2f')} m\n")
+            f.write("\n")
+
+        # Max Values
+        if 'max_values' in results:
+            f.write("Maximum Values:\n")
+            f.write("-" * 40 + "\n")
+            max_vals = results['max_values']
+            f.write(f"  Velocity:                    {self._format_value(max_vals.get('velocity_ms'), '.2f')} m/s\n")
+            f.write(f"  Mach Number:                 {self._format_value(max_vals.get('mach_number'), '.3f')}\n")
+            f.write(f"  Acceleration:                {self._format_value(max_vals.get('acceleration_ms2'), '.2f')} m/s² ({max_vals.get('acceleration_ms2', 0)/9.80665:.2f} g)\n")
+            f.write("\n")
+
+        # Rail Exit
+        if 'rail_exit' in results:
+            f.write("Rail Exit:\n")
+            f.write("-" * 40 + "\n")
+            rail_exit = results['rail_exit']
+            f.write(f"  Velocity:                    {self._format_value(rail_exit.get('velocity_ms'), '.2f')} m/s\n")
+            f.write(f"  Time:                        {self._format_value(rail_exit.get('time_s'), '.2f')} s\n")
+            f.write("\n")
+
+        # Impact
+        if 'impact' in results:
+            f.write("Impact:\n")
+            f.write("-" * 40 + "\n")
+            impact = results['impact']
+            f.write(f"  Velocity:                    {self._format_value(impact.get('velocity_ms'), '.2f')} m/s\n")
+            f.write(f"  Position X:                  {self._format_value(impact.get('x_m'), '.2f')} m\n")
+            f.write(f"  Position Y:                  {self._format_value(impact.get('y_m'), '.2f')} m\n")
+
+            # Calculate distance from launch
+            x = impact.get('x_m', 0)
+            y = impact.get('y_m', 0)
+            distance = (x**2 + y**2)**0.5
+            f.write(f"  Distance from Launch:        {distance:.2f} m\n")
+            f.write("\n")
+
+        # Flight Time
+        if 'flight_time_s' in results:
+            f.write("Flight Duration:\n")
+            f.write("-" * 40 + "\n")
+            flight_time = results['flight_time_s']
+            f.write(f"  Total Flight Time:           {flight_time:.2f} s ({flight_time/60:.2f} min)\n")
+            f.write("\n")
+
+        # Events
+        if 'events' in results:
+            f.write("Events:\n")
+            f.write("-" * 40 + "\n")
+            for event in results['events']:
+                event_name = event.get('name', 'Unknown')
+                event_time = event.get('time_s', 'N/A')
+                f.write(f"  {event_name}: {event_time} s\n")
+            f.write("\n")
 
 
 class _NumpyEncoder(json.JSONEncoder):

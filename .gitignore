@@ -92,3 +92,4 @@ notebooks/notebooks_outputs/
 # Documentation build output
 docs/_build/
 docs/source/api/generated/
+main_classes_attributes/
