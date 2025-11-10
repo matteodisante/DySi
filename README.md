@@ -19,8 +19,12 @@ A modular, production-ready rocket dynamics simulation framework built on [Rocke
 - 🔍 **Validation Layer**: Automatic physical plausibility checks and stability analysis
 - 📈 **Visualization Suite**: Publication-quality plots (3D trajectory, altitude, velocity, acceleration)
 - 💾 **Multiple Export Formats**: CSV, JSON, KML, RocketPy-compatible formats
+- 🎯 **Complete Motor State Export**: 35+ scalar attributes + 11 time-dependent curve plots ⭐ NEW
 
 ### Advanced Features
+- **Motor State Export System**: Export complete motor state (initial/final) with scalars in JSON/TXT and functions as high-quality plots
+- **Smart Dual Y-Axis Plots**: Intelligent dual y-axis detection for plots with different scales (>10x difference)
+- **Organized Output Structure**: Automatic organization in `motor/`, `rocket/`, `environment/` subdirectories
 - **Variance-Based Sensitivity**: Statistical sensitivity coefficients with Linear Approximation Error (LAE)
 - **OAT Screening**: Quick parameter screening with tornado diagrams
 - **Parallel Execution**: Multi-core Monte Carlo simulations
@@ -80,13 +84,18 @@ python -c "import rocketpy; import statsmodels; print('✓ All dependencies inst
 
 ## Documentation
 
-📖 **Full documentation is available at: [https://TUO-USERNAME.github.io/rocket-sim/](https://TUO-USERNAME.github.io/rocket-sim/)**
+📖 **Comprehensive documentation available in [`docs/`](docs/)**
 
-The documentation includes:
-- **User Guide**: Installation, quickstart, key concepts, and configuration reference
-- **Examples**: Detailed tutorials for basic simulations, Monte Carlo analysis, sensitivity studies, weather integration, and air brakes control
-- **API Reference**: Complete API documentation with examples
-- **Development Guide**: Contributing guidelines, architecture overview, testing guide, and code style standards
+The documentation is organized as follows:
+- **[User Guides](docs/user/)**: Motor state export guide, troubleshooting
+- **[Developer Documentation](docs/developer/)**: Architecture, API reference, motor attributes classification, contributing
+- **[Implementation Details](docs/implementation/)**: Technical implementation summaries
+
+### Quick Links
+- [Motor State Export Guide](docs/user/MOTOR_STATE_EXPORT_GUIDE.md) - Complete guide to new export system ⭐
+- [Motor Attributes Classification](docs/developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md) - All 61 SolidMotor attributes classified
+- [Architecture](docs/developer/ARCHITECTURE.md) - System architecture and design decisions
+- [CHANGELOG](CHANGELOG.md) - Recent changes and updates
 
 ### Building Documentation Locally
 

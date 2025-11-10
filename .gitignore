@@ -56,19 +56,9 @@ dmypy.json
 .ipynb_checkpoints
 *.ipynb_checkpoints/
 
-# Output files
-outputs/results/*.csv
-outputs/results/*.txt
-outputs/results/*.json
-outputs/plots/*.png
-outputs/plots/*.pdf
-outputs/reports/*.html
-outputs/reports/*.pdf
-
-# Keep directory structure
-!outputs/results/.gitkeep
-!outputs/plots/.gitkeep
-!outputs/reports/.gitkeep
+# Output files - ignore entire outputs directory except .gitkeep
+outputs/
+!outputs/.gitkeep
 
 # Data files (large)
 *.nc
@@ -82,15 +72,23 @@ outputs/reports/*.pdf
 
 # Logs
 *.log
+single_sim_log
+test_*.log
 
-# Custom data and results directories
-data/
+# Custom data and results directories (avoid tracking large data)
+# data/ directory is tracked but large files excluded by extension rules above
 results/
-outputs/
 notebooks/notebooks_outputs/
+notebooks/outputs/
 
 # Documentation build output
 docs/_build/
 docs/source/api/generated/
-main_classes_attributes/
-single_sim_log
+
+# macOS
+.DS_Store
+Thumbs.db
+
+# Word temporary files
+~$*.docx
+~$*.doc
