@@ -2,8 +2,8 @@
 # This file demonstrates all available configuration options
 
 rocket:
-  name: "Calisto"
-  dry_mass_kg: 5.426
+  name: "Hermes"
+  dry_mass_kg: 16.426
 
   inertia:
     ixx_kg_m2: 6.321
@@ -11,26 +11,26 @@ rocket:
     izz_kg_m2: 0.034
 
   geometry:
-    caliber_m: 0.127  # 127 mm diameter
-    length_m: 2.031   # 2.031 m total length
+    caliber_m: 0.127  # diameter
+    length_m: 2.0   # total length
 
   cg_location_m: 1.255  # Center of gravity from nose (without motor)
-  cp_location_m: 1.700  # Center of pressure from nose (will be computed if omitted)
+  cp_location_m: null # Center of pressure from nose (will be computed if omitted)
 
-  coordinate_system: "tail_to_nose"  # or "nose_to_tail"
+  coordinate_system: "nose_to_tail"  # ✅ Origine al NASO, positivo verso CODA
 
   nose_cone:
-    length_m: 0.550
+    length_m: 0.5
     kind: "vonKarman"  # Options: vonKarman, conical, ogive, elliptical
-    position_m: 1.481  # Position from coordinate system origin
+    position_m: 0.0  # ✅ Position at nose (0.0 m from nose)
 
   fins:
-    count: 4
+    count: 1
     root_chord_m: 0.120
     tip_chord_m: 0.060
     span_m: 0.100
     thickness_m: 0.003
-    position_m: -1.168  # Position from coordinate system origin
+    position_m: 1.95  # ✅ Leading edge a 1.95 m dal naso (5 cm dalla coda, vicino alla tail)
     cant_angle_deg: 0.0  # Cant angle for spin stabilization
     airfoil: null  # Path to airfoil file (optional)
 
@@ -64,18 +64,23 @@ motor:
   grain_initial_height_m: 0.120
   grain_separation_m: 0.005
 
-  grains_center_of_mass_position_m: -0.850
-  center_of_dry_mass_position_m: 0.317
-  nozzle_position_m: 0.0
+  # ✅ Posizioni corrette nel sistema di riferimento del MOTOR
+  # Motor coordinate system: nozzle_to_combustion_chamber
+  # Nozzle è all'origine (0), camera di combustione in positivo
+  grains_center_of_mass_position_m: 0.317  # ✅ Grains center a ~31 cm dal nozzle
+  center_of_dry_mass_position_m: 0.317     # ✅ Dry mass center
+  nozzle_position_m: 0.0                   # ✅ Nozzle all'origine del motor
 
   burn_time_s: null  # Computed from thrust curve if null
 
   # Advanced parameters
-  interpolation_method: "linear"  # Options: linear, spline, akima
-  coordinate_system_orientation: "nozzle_to_combustion_chamber"  # or "combustion_chamber_to_nozzle"
+  interpolation_method: "spline"  # Options: linear, spline, akima
+  coordinate_system_orientation: "nozzle_to_combustion_chamber"  # nozzle at origin, combustion chamber in positive direction
   reference_pressure: null  # Atmospheric pressure (Pa) at which thrust was recorded
 
-  position_m: -1.373  # Motor position on rocket
+  # ✅ Motor position nel sistema del ROCKET (nose_to_tail)
+  # Il nozzle del motor sporge 0.5 m oltre la coda (tail a 2.0 m dal nose)
+  position_m: 2.0  # Motor nozzle exit position from nose (2.5 m = 0.5 m beyond tail)
 
 environment:
   latitude_deg: 39.3897
@@ -97,7 +102,7 @@ environment:
 
   wind:
     model: "constant"  # Options: constant, from_weather, function, custom
-    velocity_ms: 5.0
+    velocity_ms: 0.0
     direction_deg: 90.0  # Meteorological convention (0=North, 90=East)
 
   gravity_ms2: 9.80665
@@ -107,14 +112,14 @@ simulation:
   max_time_s: 600.0
   max_time_step_s: .inf  # Use inf for automatic
   min_time_step_s: 0.0
-  rtol: 0.000001  # Relative tolerance
-  atol: 0.000001  # Absolute tolerance
+  rtol: 1e-6  # Relative tolerance
+  atol: 1e-6  # Absolute tolerance
   terminate_on_apogee: false
   verbose: false
 
   rail:
     length_m: 0.5 
-    inclination_deg: 10.0  # Degrees from vertical (0=horizontal, 90=vertical)
+    inclination_deg: 85.0  # Degrees from vertical (0=horizontal, 90=vertical)
     heading_deg: 0.0  # Degrees from North (0=North, 90=East)
 
 

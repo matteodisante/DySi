@@ -219,31 +219,32 @@ def setup_logging(level: str = "INFO", log_file: str = None) -> None:
     """
     numeric_level = getattr(logging, level.upper(), logging.INFO)
 
+    # Get root logger
+    root_logger = logging.getLogger()
+    root_logger.setLevel(numeric_level)
+    
+    # Remove existing handlers to allow reconfiguration
+    for handler in root_logger.handlers[:]:
+        root_logger.removeHandler(handler)
+
     # Create formatter
     formatter = logging.Formatter(
         "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
     )
 
-    # Setup handlers
-    handlers = []
-
     # Console handler
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(formatter)
-    handlers.append(console_handler)
+    console_handler.setLevel(numeric_level)
+    root_logger.addHandler(console_handler)
 
     # File handler if specified
     if log_file:
         file_handler = logging.FileHandler(log_file)
         file_handler.setFormatter(formatter)
-        handlers.append(file_handler)
-
-    # Configure root logger
-    logging.basicConfig(
-        level=numeric_level,
-        handlers=handlers,
-    )
+        file_handler.setLevel(numeric_level)
+        root_logger.addHandler(file_handler)
 
     # Silence verbose third-party libraries
     # These libraries produce excessive DEBUG messages that clutter logs

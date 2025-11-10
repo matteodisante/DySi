@@ -14,6 +14,8 @@ import sys
 from pathlib import Path
 import logging
 from dataclasses import asdict
+import signal
+from datetime import datetime
 
 # Add parent directory to path to import src modules
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -103,7 +105,15 @@ Examples:
         "--log-file",
         type=str,
         default=None,
-        help="Log file path (default: no file logging)",
+        help="Log file path (default: auto-generated in outputs/<name>/simulation.log)",
+    )
+
+    parser.add_argument(
+        "--timeout",
+        "-t",
+        type=int,
+        default=300,
+        help="Simulation timeout in seconds (default: 300). Set to 0 to disable timeout.",
     )
 
     return parser.parse_args()
@@ -114,9 +124,19 @@ def main():
     # Parse arguments
     args = parse_arguments()
 
-    # Setup logging
+    # Determine output name early for log file
+    output_name = None
+    sim_output_dir = None
+    
+    # Setup logging with auto-generated log file if not specified
     log_level = "DEBUG" if args.verbose else "INFO"
-    setup_logging(level=log_level, log_file=args.log_file)
+    
+    # If log file not specified, we'll set it after loading config
+    if args.log_file:
+        setup_logging(level=log_level, log_file=args.log_file)
+    else:
+        # Setup without file logging initially
+        setup_logging(level=log_level, log_file=None)
 
     logger = logging.getLogger(__name__)
 
@@ -125,6 +145,12 @@ def main():
     logger.info("=" * 60)
     logger.info(f"Configuration file: {args.config}")
     logger.info(f"Output directory: {args.output_dir}")
+    if args.timeout > 0:
+        logger.info(f"Simulation timeout: {args.timeout}s")
+
+    # Flag to track if simulation timed out
+    simulation_timed_out = False
+    flight = None
 
     try:
         # 1. Load configurations
@@ -134,6 +160,19 @@ def main():
             args.config
         )
         logger.info(f"Loaded configuration for rocket: {rocket_cfg.name}")
+
+        # Now we know the rocket name, setup log file if not provided
+        output_name = args.name if args.name else rocket_cfg.name.replace(" ", "_").lower()
+        sim_output_dir = Path(args.output_dir) / output_name
+        sim_output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Setup log file if not already specified
+        if not args.log_file:
+            log_file = sim_output_dir / f"simulation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+            # Re-setup logging with file
+            setup_logging(level=log_level, log_file=str(log_file))
+            logger = logging.getLogger(__name__)  # Refresh logger
+            logger.info(f"Log file: {log_file}")
 
         # 2. Validate configurations
         logger.info("\n--- VALIDATING CONFIGURATION ---")
@@ -182,23 +221,54 @@ def main():
             f"static margin={rocket_summary['static_margin_calibers']:.2f} cal"
         )
 
-        # 4. Run simulation
+        # Check for unstable rocket
+        if rocket_summary['static_margin_calibers'] < 0:
+            logger.warning("⚠️  UNSTABLE ROCKET DETECTED!")
+            logger.warning(f"   Static margin = {rocket_summary['static_margin_calibers']:.2f} cal (negative = unstable)")
+            logger.warning("   The simulation may be slow or fail to converge.")
+            logger.warning(f"   Timeout is set to {args.timeout}s - partial results will be saved if timeout occurs.")
+
+        # 4. Run simulation with timeout
         logger.info("\n--- RUNNING SIMULATION ---")
         simulator = FlightSimulator(rocket, env, sim_cfg)
-        flight = simulator.run()
-
-        # 5. Print summary
-        logger.info("\n--- SIMULATION RESULTS ---")
-        simulator.print_summary()
-
-        # Determine output name
-        output_name = args.name if args.name else rocket_cfg.name.replace(" ", "_").lower()
         
-        # Create output directory path for this simulation
-        sim_output_dir = Path(args.output_dir) / output_name
-        sim_output_dir.mkdir(parents=True, exist_ok=True)
+        # Setup timeout handler if timeout is enabled
+        def timeout_handler(signum, frame):
+            raise TimeoutError(f"Simulation exceeded timeout of {args.timeout} seconds")
+        
+        if args.timeout > 0:
+            # Set alarm for timeout
+            signal.signal(signal.SIGALRM, timeout_handler)
+            signal.alarm(args.timeout)
+        
+        try:
+            flight = simulator.run()
+            
+            # Cancel alarm if simulation completed
+            if args.timeout > 0:
+                signal.alarm(0)
+                
+        except TimeoutError as e:
+            logger.error(f"\n⏱️  SIMULATION TIMEOUT: {e}")
+            logger.warning("Simulation did not complete within the time limit.")
+            logger.warning("This usually indicates an unstable rocket (negative static margin).")
+            logger.warning("Attempting to save partial results...")
+            simulation_timed_out = True
+            
+            # Cancel alarm
+            if args.timeout > 0:
+                signal.alarm(0)
 
-        # 6. Export state (initial and final) - NEW!
+        # 5. Print summary (if simulation completed)
+        if not simulation_timed_out and flight:
+            logger.info("\n--- SIMULATION RESULTS ---")
+            simulator.print_summary()
+        else:
+            logger.warning("\n--- PARTIAL RESULTS (TIMEOUT) ---")
+            logger.warning("Simulation did not complete successfully.")
+            logger.warning("State data (motor, rocket, environment) will still be exported.")
+
+        # 6. Export state (initial and final) - ALWAYS export, even on timeout
         if not args.no_export:
             logger.info("\n--- EXPORTING STATE (JSON + TXT) ---")
             
@@ -215,12 +285,15 @@ def main():
             logger.info(f"Initial state: {initial_json}")
             logger.info(f"Initial state (readable): {initial_json.with_name('initial_state_READABLE.txt')}")
             
-            # Export final state
-            final_json = state_exporter.export_final_state(flight, sim_output_dir / "final_state")
-            logger.info(f"Final state: {final_json}")
-            logger.info(f"Final state (readable): {final_json.with_name('final_state_READABLE.txt')}")
+            # Export final state only if simulation completed
+            if not simulation_timed_out and flight:
+                final_json = state_exporter.export_final_state(flight, sim_output_dir / "final_state")
+                logger.info(f"Final state: {final_json}")
+                logger.info(f"Final state (readable): {final_json.with_name('final_state_READABLE.txt')}")
+            else:
+                logger.warning("Final state export skipped (simulation timed out)")
 
-        # 7. Generate curve plots (motor/rocket/environment) - NEW!
+        # 7. Generate curve plots (motor/rocket/environment) - ALWAYS plot, even on timeout
         if not args.no_plots:
             logger.info("\n--- GENERATING CURVE PLOTS ---")
             
@@ -235,8 +308,8 @@ def main():
             for plot_name, plot_path in sorted(plot_paths.items()):
                 logger.info(f"  {plot_name}: {plot_path}")
 
-        # 8. Export trajectory data (if not disabled)
-        if not args.no_export:
+        # 8. Export trajectory data (only if simulation completed)
+        if not args.no_export and not simulation_timed_out and flight:
             logger.info("\n--- EXPORTING TRAJECTORY DATA ---")
 
             # Create data handler
@@ -256,9 +329,11 @@ def main():
             logger.info("Exported data files:")
             for format_type, path in export_paths.items():
                 logger.info(f"  {format_type}: {path}")
+        elif simulation_timed_out:
+            logger.warning("Trajectory data export skipped (simulation timed out)")
 
-        # 9. Create trajectory plots (if not disabled)
-        if not args.no_plots:
+        # 9. Create trajectory plots (only if simulation completed)
+        if not args.no_plots and not simulation_timed_out and flight:
             logger.info("\n--- CREATING TRAJECTORY PLOTS ---")
 
             try:
@@ -278,26 +353,50 @@ def main():
 
             except ImportError as e:
                 logger.warning(f"Plotting skipped: {e}")
+        elif simulation_timed_out:
+            logger.warning("Trajectory plots skipped (simulation timed out)")
 
-        # 10. Success message
+        # 10. Success/Partial success message
         logger.info("\n" + "=" * 60)
-        logger.info("SIMULATION COMPLETED SUCCESSFULLY")
-        logger.info("=" * 60)
-        logger.info(f"\nResults saved to: {sim_output_dir}/")
-        logger.info("\nOutput structure:")
-        logger.info(f"  {sim_output_dir}/")
-        logger.info("    ├── initial_state.json / .txt")
-        logger.info("    ├── final_state.json / .txt")
-        logger.info("    ├── curves/")
-        logger.info("    │   ├── motor/       (11 motor curve plots)")
-        logger.info("    │   ├── rocket/      (drag curves)")
-        logger.info("    │   └── environment/ (wind, atmosphere)")
-        logger.info("    ├── trajectory/")
-        logger.info("    │   └── *.csv        (time series data)")
-        logger.info("    └── plots/")
-        logger.info("        └── *.png        (trajectory visualizations)")
-
-        return 0
+        if simulation_timed_out:
+            logger.warning("SIMULATION TIMED OUT - PARTIAL RESULTS SAVED")
+            logger.warning("=" * 60)
+            logger.warning(f"\nPartial results saved to: {sim_output_dir}/")
+            logger.warning("\nAvailable outputs:")
+            logger.warning(f"  {sim_output_dir}/")
+            logger.warning("    ├── simulation_YYYYMMDD_HHMMSS.log (this log file)")
+            logger.warning("    ├── initial_state.json / .txt")
+            logger.warning("    └── curves/")
+            logger.warning("        ├── motor/       (11 motor curve plots)")
+            logger.warning("        ├── rocket/      (drag curves)")
+            logger.warning("        └── environment/ (wind, atmosphere)")
+            logger.warning("\n⚠️  Missing outputs (simulation did not complete):")
+            logger.warning("    ├── final_state.json / .txt")
+            logger.warning("    ├── trajectory/ (CSV data)")
+            logger.warning("    └── plots/ (trajectory visualizations)")
+            logger.warning("\n💡 Suggestions:")
+            logger.warning("   - Check static margin (should be positive, typically 1.5-2.5 calibers)")
+            logger.warning("   - Add more fins or adjust fin position if margin is negative")
+            logger.warning("   - Increase timeout with --timeout <seconds> if rocket is stable")
+            return 2  # Exit code 2 for timeout
+        else:
+            logger.info("SIMULATION COMPLETED SUCCESSFULLY")
+            logger.info("=" * 60)
+            logger.info(f"\nResults saved to: {sim_output_dir}/")
+            logger.info("\nOutput structure:")
+            logger.info(f"  {sim_output_dir}/")
+            logger.info("    ├── simulation_YYYYMMDD_HHMMSS.log (this log file)")
+            logger.info("    ├── initial_state.json / .txt")
+            logger.info("    ├── final_state.json / .txt")
+            logger.info("    ├── curves/")
+            logger.info("    │   ├── motor/       (11 motor curve plots)")
+            logger.info("    │   ├── rocket/      (drag curves)")
+            logger.info("    │   └── environment/ (wind, atmosphere)")
+            logger.info("    ├── trajectory/")
+            logger.info("    │   └── *.csv        (time series data)")
+            logger.info("    └── plots/")
+            logger.info("        └── *.png        (trajectory visualizations)")
+            return 0
 
     except FileNotFoundError as e:
         logger.error(f"File not found: {e}")

@@ -213,14 +213,33 @@ class FlightSimulator:
         if self.flight is None:
             raise RuntimeError("Simulation not run yet. Call run() first.")
 
+        # Get apogee position - handle different RocketPy versions
+        try:
+            apogee_x = float(self.flight.apogee_x)
+        except AttributeError:
+            try:
+                # x is a Function object, call it with time
+                apogee_x = float(self.flight.x.get_value_opt(self.flight.apogee_time))
+            except (AttributeError, TypeError):
+                apogee_x = 0.0
+        
+        try:
+            apogee_y = float(self.flight.apogee_y)
+        except AttributeError:
+            try:
+                # y is a Function object, call it with time
+                apogee_y = float(self.flight.y.get_value_opt(self.flight.apogee_time))
+            except (AttributeError, TypeError):
+                apogee_y = 0.0
+
         return {
             # Altitude metrics
             "apogee_m": float(self.flight.apogee),
             "apogee_time_s": float(self.flight.apogee_time),
-            "apogee_x_m": float(self.flight.apogee_x),
-            "apogee_y_m": float(self.flight.apogee_y),
-            "apogee_lat": float(self.flight.latitude(self.flight.apogee_time)),
-            "apogee_lon": float(self.flight.longitude(self.flight.apogee_time)),
+            "apogee_x_m": apogee_x,
+            "apogee_y_m": apogee_y,
+            "apogee_lat": float(self.flight.latitude.get_value_opt(self.flight.apogee_time)),
+            "apogee_lon": float(self.flight.longitude.get_value_opt(self.flight.apogee_time)),
 
             # Velocity metrics
             "max_velocity_ms": float(self.flight.max_speed),
