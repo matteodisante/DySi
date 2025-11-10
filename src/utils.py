@@ -245,6 +245,13 @@ def setup_logging(level: str = "INFO", log_file: str = None) -> None:
         handlers=handlers,
     )
 
+    # Silence verbose third-party libraries
+    # These libraries produce excessive DEBUG messages that clutter logs
+    logging.getLogger('matplotlib').setLevel(logging.WARNING)
+    logging.getLogger('matplotlib.font_manager').setLevel(logging.WARNING)
+    logging.getLogger('PIL').setLevel(logging.WARNING)
+    logging.getLogger('urllib3').setLevel(logging.WARNING)
+
     logger.info(f"Logging configured with level={level}")
 
 
