@@ -373,7 +373,7 @@ class FlightSimulator:
         print("\n--- IMPACT METRICS ---")
         print(f"  Impact Location:       ({summary['x_impact_m']:.1f}, {summary['y_impact_m']:.1f}) m")
         print(f"  Lateral Distance:      {summary['lateral_distance_m']:.1f} m")
-        print(f"  Flight Duration:       {summary['t_final_s']:.2f} s")
+        print(f"  Flight Duration:       {summary['flight_time_s']:.2f} s")
 
         print("\n--- STABILITY ---")
         print(f"  Initial Margin:        {summary['initial_stability_margin_calibers']:.2f} calibers")

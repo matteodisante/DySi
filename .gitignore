@@ -93,3 +93,4 @@ notebooks/notebooks_outputs/
 docs/_build/
 docs/source/api/generated/
 main_classes_attributes/
+single_sim_log
