@@ -258,6 +258,22 @@ def main():
             # Cancel alarm
             if args.timeout > 0:
                 signal.alarm(0)
+        
+        except RuntimeError as e:
+            # FlightSimulator may wrap TimeoutError in RuntimeError
+            if "timeout" in str(e).lower():
+                logger.error(f"\n⏱️  SIMULATION TIMEOUT: {e}")
+                logger.warning("Simulation did not complete within the time limit.")
+                logger.warning("This usually indicates an unstable rocket (negative static margin).")
+                logger.warning("Attempting to save partial results...")
+                simulation_timed_out = True
+                
+                # Cancel alarm
+                if args.timeout > 0:
+                    signal.alarm(0)
+            else:
+                # Re-raise if it's not a timeout error
+                raise
 
         # 5. Print summary (if simulation completed)
         if not simulation_timed_out and flight:

@@ -25,7 +25,7 @@ rocket:
     position_m: 0.0  # ✅ Position at nose (0.0 m from nose)
 
   fins:
-    count: 1
+    count: 4  # ✅ FIXED: 4 pinne per stabilità! (margine statico positivo ~2.0 cal)
     root_chord_m: 0.120
     tip_chord_m: 0.060
     span_m: 0.100
@@ -118,7 +118,7 @@ simulation:
   verbose: false
 
   rail:
-    length_m: 0.5 
+    length_m: 1.5 
     inclination_deg: 85.0  # Degrees from vertical (0=horizontal, 90=vertical)
     heading_deg: 0.0  # Degrees from North (0=North, 90=East)
 
