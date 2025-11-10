@@ -138,6 +138,11 @@ motor:
 
   burn_time_s: float              # Total burn time (s) [optional, computed from curve]
   position_m: float               # Motor position on rocket (m)
+
+  # Advanced motor parameters [optional, see docs/user/MOTOR_STATE_EXPORT_GUIDE.md]:
+  interpolation_method: string    # "linear", "spline", "akima" [default: "linear"]
+  coordinate_system_orientation: string  # "nozzle_to_combustion_chamber" or reverse [default: "nozzle_to_combustion_chamber"]
+  reference_pressure: float       # Reference pressure (Pa) [optional, default: atmospheric]
 ```
 
 ### Environment Section
