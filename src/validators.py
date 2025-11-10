@@ -474,11 +474,14 @@ class SimulationValidator:
         if config.min_time_step_s > config.max_time_step_s:
             raise ValidationError("Min time step cannot exceed max time step")
 
-        # Tolerance validation
-        if config.rtol <= 0 or config.atol <= 0:
+        # Tolerance validation - convert to float if string (e.g., "1e-6" from YAML)
+        rtol = float(config.rtol) if isinstance(config.rtol, str) else config.rtol
+        atol = float(config.atol) if isinstance(config.atol, str) else config.atol
+        
+        if rtol <= 0 or atol <= 0:
             raise ValidationError("Tolerances must be positive")
 
-        if config.rtol > 1e-3 or config.atol > 1e-3:
+        if rtol > 1e-3 or atol > 1e-3:
             warnings.append(
                 ValidationWarning(
                     "simulation",

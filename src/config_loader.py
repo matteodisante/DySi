@@ -518,8 +518,8 @@ class ConfigLoader:
             max_time_s=sim_data.get("max_time_s", 600.0),
             max_time_step_s=sim_data.get("max_time_step_s", float('inf')),
             min_time_step_s=sim_data.get("min_time_step_s", 0.0),
-            rtol=sim_data.get("rtol", 1e-6),
-            atol=sim_data.get("atol", 1e-6),
+            rtol=float(sim_data.get("rtol", 1e-6)),  # Convert to float (YAML may load "1e-6" as string)
+            atol=float(sim_data.get("atol", 1e-6)),  # Convert to float (YAML may load "1e-6" as string)
             terminate_on_apogee=sim_data.get("terminate_on_apogee", False),
             verbose=sim_data.get("verbose", False),
             rail=rail,
