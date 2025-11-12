@@ -763,6 +763,344 @@ position_m
 
 --------
 
+base_radius_m
+-------------
+
+:Type: ``float`` or ``null``
+:Required: No
+:Default: ``null`` (uses ``geometry.caliber_m / 2``)
+:Unit: meters (m)
+
+**Radius of nose cone base** where it meets the body tube.
+
+.. code-block:: yaml
+
+    rocket:
+      geometry:
+        caliber_m: 0.127  # Body tube diameter: 127 mm
+      nose_cone:
+        base_radius_m: null  # Uses caliber_m/2 = 0.0635 m
+
+.. tab-set::
+
+    .. tab-item:: null (Standard - Recommended)
+
+        **Nose cone matches body tube diameter** (most common)
+        
+        Set to ``null`` to automatically use rocket's caliber:
+        
+        .. code-block:: yaml
+        
+            rocket:
+              geometry:
+                caliber_m: 0.127
+              nose_cone:
+                base_radius_m: null  # Auto: uses 0.0635 m radius
+        
+        ✅ **Use when:**
+        
+        - Nose cone and body tube have same diameter
+        - Standard rocket design (no transitions)
+        - 99% of rockets
+
+    .. tab-item:: Custom Radius
+
+        **Nose cone base differs from body tube** (transitions)
+        
+        Specify exact base radius for diameter transitions:
+        
+        .. code-block:: yaml
+        
+            rocket:
+              geometry:
+                caliber_m: 0.150  # 150 mm body tube
+              nose_cone:
+                base_radius_m: 0.065  # 130 mm nose cone base
+                # Creates shoulder/transition section
+        
+        ✅ **Use when:**
+        
+        - Nose cone has shoulder that fits inside body tube
+        - Transitioning from larger body to smaller nose
+        - Competition rockets with optimized nose/body ratio
+
+.. admonition:: Example: Nose Cone with Shoulder
+   :class: dropdown
+
+   **Scenario:** 6" (152 mm) body tube with 5" (127 mm) nose cone that has a shoulder.
+   
+   .. code-block:: yaml
+   
+       rocket:
+         geometry:
+           caliber_m: 0.152  # 6" outer diameter body tube
+         
+         nose_cone:
+           length_m: 0.450
+           kind: "vonKarman"
+           base_radius_m: 0.0635  # 5" nose cone base (shoulder fits inside 6" tube)
+   
+   **Physical Design:**
+   
+   .. code-block:: text
+   
+          ╱╲  ← Nose cone tip
+         ╱  ╲
+        ╱    ╲
+       │      │ ← Nose cone body (127 mm diameter)
+       │      │
+       ├──────┤ ← Shoulder (fits inside)
+       │██████│ ← Body tube (152 mm OD, ~146 mm ID)
+       │██████│
+   
+   The shoulder section (between nose cone and body tube) provides structural connection.
+
+.. warning::
+   **Aerodynamic considerations:**
+   
+   - Discontinuities in diameter create drag
+   - For minimum drag, keep ``base_radius_m = null`` (matched diameters)
+   - Only use custom radius when structurally necessary
+
+--------
+
+bluffness
+---------
+
+:Type: ``float`` or ``null``
+:Required: No
+:Default: ``null`` (sharp tip)
+:Range: 0.0 to 1.0
+:Unit: dimensionless
+
+**Nose cone tip bluffness ratio** - ratio between tip radius and base radius.
+
+Controls how rounded (bluff) vs. sharp (pointed) the nose tip is.
+
+.. code-block:: yaml
+
+    rocket:
+      nose_cone:
+        kind: "ogive"
+        bluffness: null  # Sharp pointed tip (default)
+
+.. tab-set::
+
+    .. tab-item:: null or 0.0 (Sharp Tip)
+
+        **Perfectly sharp nose cone tip** (theoretical)
+        
+        .. code-block:: yaml
+        
+            rocket:
+              nose_cone:
+                kind: "vonKarman"
+                bluffness: null  # or 0.0
+        
+        .. code-block:: text
+        
+                 •  ← Sharp point
+                ╱│╲
+               ╱ │ ╲
+              ╱  │  ╲
+             ╱   │   ╲
+            ╱────┴────╲
+        
+        ✅ **Characteristics:**
+        
+        - Minimum drag (theoretical)
+        - Maximum stress concentration at tip
+        - Unrealistic for real rockets (tip would be infinitely thin)
+        
+        ✅ **Use for:**
+        
+        - Initial design simulations
+        - Maximum performance estimates
+        - When exact tip geometry is unknown
+
+    .. tab-item:: 0.1 - 0.3 (Realistic)
+
+        **Slightly rounded tip** (typical manufactured nose cones)
+        
+        .. code-block:: yaml
+        
+            rocket:
+              nose_cone:
+                kind: "ogive"
+                bluffness: 0.2  # 20% bluffness
+        
+        .. code-block:: text
+        
+                ╭─╮  ← Rounded tip (radius = 0.2 × base_radius)
+               ╱   ╲
+              ╱     ╲
+             ╱       ╲
+            ╱─────────╲
+        
+        ✅ **Characteristics:**
+        
+        - Minimal drag increase (~1-3%)
+        - Reduced stress concentration
+        - Manufacturing-friendly
+        - Structurally stronger tip
+        
+        ✅ **Use for:**
+        
+        - **Realistic flight predictions**
+        - Fiberglass/composite nose cones
+        - Competition rockets (as-manufactured)
+        - Structural analysis
+        
+        **Recommended values:**
+        
+        - ``0.15``: Slight rounding (molded plastic/fiberglass)
+        - ``0.20``: Moderate rounding (typical manufactured)
+        - ``0.25``: More rounded (wooden turned cones)
+
+    .. tab-item:: > 0.3 (Highly Bluff)
+
+        **Significantly rounded tip**
+        
+        .. code-block:: yaml
+        
+            rocket:
+              nose_cone:
+                kind: "elliptical"
+                bluffness: 0.5  # Very rounded
+        
+        .. code-block:: text
+        
+               ╭───╮  ← Large radius
+              ╱     ╲
+             ╱       ╲
+            ╱─────────╲
+        
+        ⚠️ **Characteristics:**
+        
+        - Notable drag increase (5-15%)
+        - Very low stress concentration
+        - Uncommon in high-performance rockets
+        
+        ⚠️ **Use when:**
+        
+        - Payload protection is critical
+        - Nose cone designed for very high impact loads
+        - Unusual nose cone geometries
+
+.. admonition:: Physical Meaning
+   :class: dropdown
+
+   **Bluffness ratio definition:**
+   
+   .. math::
+   
+       \text{bluffness} = \frac{r_{tip}}{r_{base}}
+   
+   Where:
+   
+   - :math:`r_{tip}` = radius of spherical cap at nose tip
+   - :math:`r_{base}` = base radius of nose cone
+   
+   **Example:** For a nose cone with ``base_radius_m = 0.0635`` m and ``bluffness = 0.2``:
+   
+   .. math::
+   
+       r_{tip} = 0.2 \times 0.0635 = 0.0127 \text{ m} = 12.7 \text{ mm}
+   
+   The nose cone tip is rounded with a 12.7 mm radius sphere.
+
+.. admonition:: Effect on Nose Cone Length
+   :class: dropdown
+
+   **Important:** Setting a non-zero bluffness **slightly reduces** the effective nose cone length.
+   
+   RocketPy automatically adjusts the nose cone profile to accommodate the rounded tip:
+   
+   .. code-block:: text
+   
+       Original sharp cone:        With bluffness:
+       
+       •                           ╭─╮ ← Spherical cap
+       │\                          │  \
+       │ \                         │   \
+       │  \                        │    \
+       │   \                       │     \
+       ├────                       ├──────
+       
+       length_m = 0.50            Effective length ≈ 0.495 m
+   
+   **What happens:**
+   
+   1. You specify ``length_m = 0.50``
+   2. RocketPy adds spherical cap of radius :math:`r_{tip}`
+   3. Nose cone profile is adjusted to maintain smooth tangency
+   4. **Actual geometric length may be 1-2% shorter**
+   
+   RocketPy will print a message if length is adjusted:
+   
+   .. code-block:: text
+   
+       Due to the chosen bluffness ratio, the nose cone length 
+       was reduced to 0.495 m.
+   
+   ⚠️ **For accurate simulations:**
+   
+   - Use bluffness that matches your actual nose cone
+   - Re-measure final length after manufacturing if critical
+
+.. warning::
+   **Compatibility restriction:**
+   
+   **bluffness is NOT compatible with** ``kind: "powerseries"``
+   
+   .. code-block:: yaml
+   
+       # ❌ INVALID - will raise error
+       nose_cone:
+         kind: "powerseries"
+         bluffness: 0.2  # Error!
+   
+   .. code-block:: yaml
+   
+       # ✅ VALID
+       nose_cone:
+         kind: "powerseries"
+         bluffness: null  # Must be null or 0
+   
+   Power series nose cones have built-in control over tip shape via the ``power`` parameter (see RocketPy documentation).
+
+.. tip::
+   **How to determine bluffness for your nose cone:**
+   
+   **Method 1: Measure tip radius**
+   
+   1. Use radius gauge or calipers on manufactured cone
+   2. Measure radius of curvature at tip: :math:`r_{tip}`
+   3. Measure base radius: :math:`r_{base}`
+   4. Calculate: :math:`\text{bluffness} = r_{tip} / r_{base}`
+   
+   **Method 2: CAD/Design drawings**
+   
+   If nose cone was designed in CAD, check:
+   
+   - Fillet radius at tip
+   - Nose cone base radius
+   - Compute ratio
+   
+   **Method 3: Default assumptions**
+   
+   - Molded fiberglass: ``0.15 - 0.20``
+   - Turned wood/plastic: ``0.20 - 0.30``
+   - Sharp theoretical design: ``null`` or ``0.0``
+   - 3D printed: ``0.10 - 0.20`` (depends on resolution)
+
+.. seealso::
+   - `Barrowman Equations (RocketPy Theory) <https://docs.rocketpy.org/en/latest/technical/aerodynamics.html>`_
+   - `Nose Cone Stress Analysis <https://www.apogeerockets.com/Tech/Rocket_Nose_Cone_Design>`_
+   - :ref:`how-to-measure-nose-cone` for measurement techniques
+
+--------
+
 Fins
 ====
 
