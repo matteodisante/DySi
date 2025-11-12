@@ -14,6 +14,11 @@ project = 'Rocket Simulation Framework'
 copyright = '2025, STARPI Team'
 author = 'STARPI Team'
 release = '1.0.0'
+version = '1.0'
+
+# Project tagline
+html_title = f"{project} v{version}"
+html_short_title = "rocket-sim"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -42,7 +47,20 @@ html_theme_options = {
     "github_url": "https://github.com/matteodisante/rocket-sim",
     "navbar_end": ["navbar-icon-links"],
     "show_nav_level": 2,
-    "navigation_depth": 3,
+    "navigation_depth": 4,
+    "show_toc_level": 2,
+    "logo": {
+        "text": "rocket-sim",
+    },
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/matteodisante/rocket-sim",
+            "icon": "fab fa-github-square",
+        },
+    ],
+    "collapse_navigation": False,
+    "navigation_with_keys": True,
 }
 
 # -- Extension configuration -------------------------------------------------

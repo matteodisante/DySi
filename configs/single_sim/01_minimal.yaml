@@ -10,11 +10,18 @@ rocket:
     iyy_kg_m2: 5.0
     izz_kg_m2: 0.03
 
-  geometry:
-    caliber_m: 0.100
-    length_m: 3.440
+  coordinate_system: "nose_to_tail"
 
-  cg_location_m: 0.900
+  geometry:
+    caliber_m: 0.200
+    length_m: 3.2
+
+  cg_location_m: 1
+
+  nose_cone:
+    length_m: 1
+    kind: "ogive"
+    position_m: 0.0
 
   fins:
     count: 3
@@ -22,7 +29,7 @@ rocket:
     tip_chord_m: 0.050
     span_m: 0.080
     thickness_m: 0.003
-    position_m: -0.700
+    position_m: 1
 
   parachute:
     enabled: true
@@ -31,26 +38,16 @@ rocket:
 
 motor:
   type: "SolidMotor"
-  thrust_source: "data/motors/Cesaroni_5472M2250-P.eng"
-  burn_out_time_s: 3.9
+  thrust_source: "data/motors/Cesaroni_7579M1520-P.eng"
   dry_mass_kg: 3.000
-  position_m: -3.200
+  # ✅ Motor position in ROCKET coordinate system (nose_to_tail)
+  # Position of motor nozzle exit measured from rocket nose
+  position_m: 3.0  # Nozzle exit at 2.0 m from nose (at tail end)
+  coordinate_system_orientation: "nozzle_to_combustion_chamber"
+  grains_center_of_mass_position_m: 0.4  #  Grains CoM from nozzle (m)
+  center_of_dry_mass_position_m: 0.317     #  Dry mass CoM from nozzle (m)
+  nozzle_position_m: 0.0 
   
-  # Optional advanced parameters (use defaults if not specified)
-  # interpolation_method: "linear"
-  # coordinate_system_orientation: "nozzle_to_combustion_chamber"
-  # reference_pressure: null
-  
-#  dry_mass_kg: 3.000
-#  nozzle_radius_m: 0.033
-#  grain_separation_m: 0.005
-#  grain_density_kg_m3: 1815
-#  grain_outer_radius_m: 0.033
-#  grain_initial_inner_radius_m: 0.015
-#  grain_initial_height_m: 0.12
-#  grains_center_of_dry_mass_position_m: 0.317
-#  nozzle_position_m: 0.0
-
 
 
 environment:
@@ -59,8 +56,8 @@ environment:
   elevation_m: 50.0
 
   wind:
-    velocity_ms: 3.0
-    direction_deg: 0.0
+    velocity_ms: 15.0
+    direction_deg: 45.0
 
 simulation:
   max_time_s: 600.0
