@@ -6,81 +6,130 @@ rocket:
   dry_mass_kg: 16.426
 
   inertia:
-    ixx_kg_m2: 6.321
-    iyy_kg_m2: 6.321
-    izz_kg_m2: 0.034
+    ixx_kg_m2: 6.321  # Lateral moment of inertia (kg·m²)
+    iyy_kg_m2: 6.321  # Lateral moment of inertia (kg·m²)
+    izz_kg_m2: 0.034  # Axial moment of inertia (kg·m²)
+    # Products of inertia (optional, default 0 for symmetric rockets)
+    ixy_kg_m2: 0.0  # Product of inertia I_12 (kg·m²)
+    ixz_kg_m2: 0.0  # Product of inertia I_13 (kg·m²)
+    iyz_kg_m2: 0.0  # Product of inertia I_23 (kg·m²)
 
   geometry:
-    caliber_m: 0.127  # diameter
-    length_m: 2.0   # total length
+    caliber_m: 0.127  # Rocket diameter (m)
+    length_m: 2.0     # Total rocket length (m)
 
-  cg_location_m: 1.255  # Center of gravity from nose (without motor)
-  cp_location_m: null # Center of pressure from nose (will be computed if omitted)
+  cg_location_m: 1.255  # Center of gravity from nose (without motor) (m)
+  cp_location_m: null   # Center of pressure from nose (will be computed if omitted) (m)
+
+  # Eccentricities: offsets from centerline (optional, default 0 for symmetric rockets)
+  eccentricities:
+    cm_x_m: 0.0  # Center of mass offset in x-direction (m)
+    cm_y_m: 0.0  # Center of mass offset in y-direction (m)
+    cp_x_m: 0.0  # Center of pressure offset in x-direction (m)
+    cp_y_m: 0.0  # Center of pressure offset in y-direction (m)
+    thrust_x_m: 0.0  # Thrust eccentricity in x-direction (m)
+    thrust_y_m: 0.0  # Thrust eccentricity in y-direction (m)
 
   coordinate_system: "nose_to_tail"  # ✅ Origine al NASO, positivo verso CODA
 
   nose_cone:
     length_m: 0.5
-    kind: "vonKarman"  # Options: vonKarman, conical, ogive, elliptical
+    kind: "vonKarman"  # Options: vonKarman, conical, ogive, elliptical, lvhaack, tangent
     position_m: 0.0  # ✅ Position at nose (0.0 m from nose)
 
   fins:
-    count: 4  # ✅ FIXED: 4 pinne per stabilità! (margine statico positivo ~2.0 cal)
-    root_chord_m: 0.120
-    tip_chord_m: 0.060
-    span_m: 0.100
-    thickness_m: 0.003
-    position_m: 1.95  # ✅ Leading edge a 1.95 m dal naso (5 cm dalla coda, vicino alla tail)
-    cant_angle_deg: 0.0  # Cant angle for spin stabilization
-    airfoil: null  # Path to airfoil file (optional)
+    count: 4  # ✅ Number of fins (typically 3 or 4 for stability)
+    root_chord_m: 0.120  # Length of fin at rocket body (m)
+    tip_chord_m: 0.060   # Length of fin at tip (m)
+    span_m: 0.100        # Distance from body to fin tip (m)
+    thickness_m: 0.003   # Fin thickness (m)
+    position_m: 1.95     # ✅ Leading edge position from nose (m)
+    cant_angle_deg: 0.0  # Cant angle for spin stabilization (degrees)
+    airfoil: null        # Path to airfoil file (optional, null for flat plate)
+    # sweep_angle_deg: null  # Sweep angle (optional, computed from geometry if null)
+
+  # Tail section (optional, for boat tail or tapered sections)
+  tail:
+    enabled: false
+    top_radius_m: 0.0635    # Radius at top of tail (m)
+    bottom_radius_m: 0.055  # Radius at bottom of tail (m)
+    length_m: 0.060         # Length of tail section (m)
+    position_m: 1.940       # Position from nose (m)
+
+  # Rail buttons configuration
+  rail_buttons:
+    enabled: false
+    upper_button_position_m: 0.5   # Distance from nose to upper button (m)
+    lower_button_position_m: 1.8   # Distance from nose to lower button (m)
+    angular_position_deg: 45.0     # Angular position around rocket (degrees)
 
   parachute:
     enabled: true
     name: "Main"
     cd_s: 10.0  # Drag coefficient × area (m²)
     trigger: "apogee"  # "apogee" or altitude in meters (e.g., 800)
-    sampling_rate_hz: 105.0
-    lag_s: 1.5  # Deployment lag time
-    noise_std: [0, 8.3, 0.5]  # [x, y, z] noise standard deviations
+    sampling_rate_hz: 105.0  # Sampling rate for trigger condition (Hz)
+    lag_s: 1.5  # Deployment lag time after trigger (s)
+    noise_std: [0, 8.3, 0.5]  # [x, y, z] noise standard deviations in measurements (m)
 
-  #Optional: Custom drag curves (if not provided, uses default Cd calculation)
+  # Air brakes configuration (optional)
+  air_brakes:
+    enabled: false
+    reference_area_m2: 0.01      # Reference area when deployed (m²)
+    drag_coefficient: 1.5        # Drag coefficient when deployed
+    position_m: 1.0              # Position from nose (m)
+    # Controller parameters (PID, bang-bang, etc.)
+    controller:
+      type: "pid"  # Options: pid, bang_bang
+      target_apogee_m: 3000.0
+      kp: 0.1
+      ki: 0.01
+      kd: 0.05
+
+  # Custom drag curves (optional - if not provided, uses default Cd calculation)
   power_off_drag: "data/drag_curves/polito_drag_coefficient_power_off.csv"
   power_on_drag: "data/drag_curves/polito_drag_coefficient_power_on.csv"
 
 motor:
-  type: "SolidMotor"
-  thrust_source: "data/motors/Cesaroni_5472M2250-P.eng"  # Path to thrust curve file
+  type: "SolidMotor"  # Options: SolidMotor, HybridMotor, LiquidMotor
+  thrust_source: "data/motors/Cesaroni_7579M1520-P.eng"  # Path to thrust curve file (.eng or .csv)
 
-  dry_mass_kg: 1.815
-  dry_inertia: [0.125, 0.125, 0.002]  # [Ixx, Iyy, Izz] in kg·m²
+  dry_mass_kg: 1.815  # Mass of motor without propellant (kg)
+  dry_inertia: [0.125, 0.125, 0.002]  # [Ixx, Iyy, Izz] dry inertia tensor (kg·m²)
 
-  nozzle_radius_m: 0.033
-  throat_radius_m: 0.011
+  nozzle_radius_m: 0.033   # Radius of nozzle exit (m)
+  throat_radius_m: 0.011   # Radius of nozzle throat (m)
 
-  grain_number: 5
-  grain_density_kg_m3: 1815.0
-  grain_outer_radius_m: 0.033
-  grain_initial_inner_radius_m: 0.015
-  grain_initial_height_m: 0.120
-  grain_separation_m: 0.005
+  # Propellant grain configuration (for SolidMotor)
+  grain_number: 5                      # Number of propellant grains
+  grain_density_kg_m3: 1815.0          # Propellant density (kg/m³)
+  grain_outer_radius_m: 0.033          # Outer radius of grain (m)
+  grain_initial_inner_radius_m: 0.015  # Initial inner radius (bore) (m)
+  grain_initial_height_m: 0.120        # Initial height of each grain (m)
+  grain_separation_m: 0.005            # Spacing between grains (m)
 
-  # ✅ Posizioni corrette nel sistema di riferimento del MOTOR
+  # ✅ Posizioni nel sistema di riferimento del MOTOR
   # Motor coordinate system: nozzle_to_combustion_chamber
   # Nozzle è all'origine (0), camera di combustione in positivo
-  grains_center_of_mass_position_m: 0.317  # ✅ Grains center a ~31 cm dal nozzle
-  center_of_dry_mass_position_m: 0.317     # ✅ Dry mass center
-  nozzle_position_m: 0.0                   # ✅ Nozzle all'origine del motor
+  grains_center_of_mass_position_m: 0.317  # ✅ Grains CoM from nozzle (m)
+  center_of_dry_mass_position_m: 0.317     # ✅ Dry mass CoM from nozzle (m)
+  nozzle_position_m: 0.0                   # ✅ Nozzle position (always 0 in motor frame)
 
-  burn_time_s: null  # Computed from thrust curve if null
+  burn_time_s: null  # Burn time (s) - computed from thrust curve if null
 
   # Advanced parameters
-  interpolation_method: "spline"  # Options: linear, spline, akima
-  coordinate_system_orientation: "nozzle_to_combustion_chamber"  # nozzle at origin, combustion chamber in positive direction
-  reference_pressure: null  # Atmospheric pressure (Pa) at which thrust was recorded
+  interpolation_method: "spline"  # Thrust curve interpolation: linear, spline, akima
+  coordinate_system_orientation: "nozzle_to_combustion_chamber"  # Motor reference frame
+  
+  # ⚠️ CRITICAL: Reference pressure for thrust curve correction
+  # If thrust curve was measured at sea level (standard atmosphere), set to 101325 Pa
+  # RocketPy will automatically adjust thrust for altitude using:
+  #   F_total = F_curve + (P_ref - P_ambient) × A_nozzle
+  reference_pressure: 101325  # Atmospheric pressure at which thrust was measured (Pa)
 
-  # ✅ Motor position nel sistema del ROCKET (nose_to_tail)
-  # Il nozzle del motor sporge 0.5 m oltre la coda (tail a 2.0 m dal nose)
-  position_m: 2.0  # Motor nozzle exit position from nose (2.5 m = 0.5 m beyond tail)
+  # ✅ Motor position in ROCKET coordinate system (nose_to_tail)
+  # Position of motor nozzle exit measured from rocket nose
+  position_m: 2.0  # Nozzle exit at 2.0 m from nose (at tail end)
 
 environment:
   latitude_deg: 39.3897
