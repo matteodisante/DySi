@@ -1043,7 +1043,7 @@ class StateExporter:
         f.write("\n")
 
     def _write_rocket_section(self, f, rocket: Dict[str, Any]):
-        """Write rocket section in human-readable format."""
+        """Write COMPLETE rocket section in human-readable format with ALL attributes."""
         f.write("ROCKET PARAMETERS\n")
         f.write("=" * 80 + "\n\n")
 
@@ -1052,36 +1052,66 @@ class StateExporter:
         f.write("-" * 40 + "\n")
         f.write(f"  Type:                        {rocket.get('_class_type', 'N/A')}\n")
         f.write(f"  Coordinate System:           {rocket.get('coordinate_system_orientation', 'N/A')}\n")
-        f.write(f"  Radius:                      {self._format_value(rocket.get('radius'), '.4f')} m\n")
-        f.write(f"  Cross-sectional Area:        {self._format_value(rocket.get('area'), '.6f')} m²\n")
+        f.write(f"  Radius:                      {self._format_value(rocket.get('radius'), '.4f', ' m')}\n")
+        f.write(f"  Cross-sectional Area:        {self._format_value(rocket.get('area'), '.6f', ' m²')}\n")
         f.write("\n")
 
-        # Mass
-        f.write("Mass Properties:\n")
+        # Mass Properties - Static
+        f.write("Mass Properties (Static):\n")
         f.write("-" * 40 + "\n")
-        f.write(f"  Total Mass (with motor):     {self._format_value(rocket.get('mass'), '.4f')} kg\n")
-        f.write(f"  Dry Mass (without motor):    {self._format_value(rocket.get('dry_mass'), '.4f')} kg\n")
+        f.write(f"  Mass (without motor):        {self._format_value(rocket.get('mass'), '.4f', ' kg')}\n")
+        f.write(f"  Dry Mass (with motor):       {self._format_value(rocket.get('dry_mass'), '.4f', ' kg')}\n")
         f.write(f"  Structural Mass Ratio:       {self._format_value(rocket.get('structural_mass_ratio'), '.4f')}\n")
         f.write("\n")
 
-        # Positions
-        f.write("Reference Positions (from nose, m):\n")
+        # Center of Mass - Static Positions
+        f.write("Center of Mass (Static Positions):\n")
         f.write("-" * 40 + "\n")
-        f.write(f"  Motor Position:              {self._format_value(rocket.get('motor_position'), '.4f')} m\n")
-        f.write(f"  Nozzle Position:             {self._format_value(rocket.get('nozzle_position'), '.4f')} m\n")
-        f.write(f"  Center of Mass (no motor):   {self._format_value(rocket.get('center_of_mass_without_motor'), '.4f')} m\n")
-        f.write(f"  Center of Dry Mass:          {self._format_value(rocket.get('center_of_dry_mass_position'), '.4f')} m\n")
-        f.write(f"  Motor Center of Dry Mass:    {self._format_value(rocket.get('motor_center_of_dry_mass_position'), '.4f')} m\n")
-        f.write(f"  Nozzle to CDM:               {self._format_value(rocket.get('nozzle_to_cdm'), '.4f')} m\n")
+        f.write(f"  CoM without Motor:           {self._format_value(rocket.get('center_of_mass_without_motor'), '.4f', ' m')}\n")
+        f.write(f"  Center of Dry Mass:          {self._format_value(rocket.get('center_of_dry_mass_position'), '.4f', ' m')}\n")
+        f.write(f"  Motor Center of Dry Mass:    {self._format_value(rocket.get('motor_center_of_dry_mass_position'), '.4f', ' m')}\n")
         f.write("\n")
 
-        # Inertia
-        f.write("Inertia Tensor (without motor, kg·m²):\n")
+        # Motor Integration
+        f.write("Motor Integration:\n")
         f.write("-" * 40 + "\n")
-        f.write(f"  I_11:  {self._format_value(rocket.get('I_11_without_motor'), '.6f')}    I_12:  {self._format_value(rocket.get('I_12_without_motor'), '.6f')}    I_13:  {self._format_value(rocket.get('I_13_without_motor'), '.6f')}\n")
-        f.write(f"  I_22:  {self._format_value(rocket.get('I_22_without_motor'), '.6f')}    I_23:  {self._format_value(rocket.get('I_23_without_motor'), '.6f')}\n")
-        f.write(f"  I_33:  {self._format_value(rocket.get('I_33_without_motor'), '.6f')}\n")
+        f.write(f"  Motor Position:              {self._format_value(rocket.get('motor_position'), '.4f', ' m')}\n")
+        f.write(f"  Nozzle Position:             {self._format_value(rocket.get('nozzle_position'), '.4f', ' m')}\n")
+        f.write(f"  Nozzle to CDM:               {self._format_value(rocket.get('nozzle_to_cdm'), '.4f', ' m')}\n")
         f.write("\n")
+
+        # Inertia Tensor - WITHOUT Motor
+        f.write("Inertia Tensor - Without Motor (kg·m²):\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  I_11:  {self._format_value(rocket.get('I_11_without_motor'), '.6f')}\n")
+        f.write(f"  I_22:  {self._format_value(rocket.get('I_22_without_motor'), '.6f')}\n")
+        f.write(f"  I_33:  {self._format_value(rocket.get('I_33_without_motor'), '.6f')}\n")
+        f.write(f"  I_12:  {self._format_value(rocket.get('I_12_without_motor'), '.6f')}\n")
+        f.write(f"  I_13:  {self._format_value(rocket.get('I_13_without_motor'), '.6f')}\n")
+        f.write(f"  I_23:  {self._format_value(rocket.get('I_23_without_motor'), '.6f')}\n")
+        f.write("\n")
+
+        # Inertia Tensor - DRY (with unloaded motor)
+        f.write("Inertia Tensor - Dry (with unloaded motor) (kg·m²):\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  dry_I_11:  {self._format_value(rocket.get('dry_I_11'), '.6f')}\n")
+        f.write(f"  dry_I_22:  {self._format_value(rocket.get('dry_I_22'), '.6f')}\n")
+        f.write(f"  dry_I_33:  {self._format_value(rocket.get('dry_I_33'), '.6f')}\n")
+        f.write(f"  dry_I_12:  {self._format_value(rocket.get('dry_I_12'), '.6f')}\n")
+        f.write(f"  dry_I_13:  {self._format_value(rocket.get('dry_I_13'), '.6f')}\n")
+        f.write(f"  dry_I_23:  {self._format_value(rocket.get('dry_I_23'), '.6f')}\n")
+        f.write("\n")
+
+        # Nozzle Gyration Tensor
+        if 'nozzle_gyration_tensor' in rocket:
+            f.write("Nozzle Gyration Tensor (kg·m²):\n")
+            f.write("-" * 40 + "\n")
+            ngt = rocket.get('nozzle_gyration_tensor')
+            if isinstance(ngt, dict) and '_type' in ngt:
+                f.write(f"  Type: {ngt['_type']}\n")
+            else:
+                f.write(f"  {ngt}\n")
+            f.write("\n")
 
         # Eccentricities
         f.write("Eccentricities (m):\n")
@@ -1091,49 +1121,197 @@ class StateExporter:
         f.write(f"  Thrust:                      X={self._format_value(rocket.get('thrust_eccentricity_x'), '.6f')}, Y={self._format_value(rocket.get('thrust_eccentricity_y'), '.6f')}\n")
         f.write("\n")
 
-        # Components
-        f.write("Components:\n")
+        # Aerodynamic Surfaces
+        f.write("Aerodynamic Surfaces:\n")
         f.write("-" * 40 + "\n")
+        
+        # Access aerodynamic surfaces directly from rocket object for accurate position data
+        nosecones = []
+        fins = []
+        tails = []
+        
+        # Extract from rocket.aerodynamic_surfaces (contains position info)
+        if hasattr(self.rocket, 'aerodynamic_surfaces'):
+            for component in self.rocket.aerodynamic_surfaces:
+                # component is a tuple: (surface_object, (x, y, z_position))
+                surface = component[0]
+                position_tuple = component[1]
+                # Position is the z-coordinate (third element)
+                # Handle different position formats (tuple, list, Vector, or scalar)
+                if hasattr(position_tuple, '__getitem__'):
+                    try:
+                        position = float(position_tuple[2]) if len(position_tuple) >= 3 else float(position_tuple)
+                    except (IndexError, TypeError):
+                        position = float(position_tuple) if position_tuple else None
+                else:
+                    position = float(position_tuple) if position_tuple is not None else None
+                
+                surface_type = type(surface).__name__
+                
+                # Create dict with surface data
+                surface_dict = {
+                    'position': position,
+                    'name': getattr(surface, 'name', 'N/A'),
+                }
+                
+                # Extract attributes based on type
+                if 'NoseCone' in surface_type:
+                    surface_dict['length'] = getattr(surface, 'length', None)
+                    surface_dict['kind'] = getattr(surface, 'kind', None)
+                    surface_dict['base_radius'] = getattr(surface, 'base_radius', None)
+                    nosecones.append(surface_dict)
+                    
+                elif 'Fins' in surface_type or 'Fin' in surface_type:
+                    surface_dict['n'] = getattr(surface, 'n', None)
+                    surface_dict['root_chord'] = getattr(surface, 'root_chord', None)
+                    surface_dict['tip_chord'] = getattr(surface, 'tip_chord', None)
+                    surface_dict['span'] = getattr(surface, 'span', None)
+                    surface_dict['cant_angle'] = getattr(surface, 'cant_angle', None)
+                    surface_dict['sweep_angle'] = getattr(surface, 'sweep_angle', None)
+                    fins.append(surface_dict)
+                    
+                elif 'Tail' in surface_type:
+                    surface_dict['top_radius'] = getattr(surface, 'top_radius', None)
+                    surface_dict['bottom_radius'] = getattr(surface, 'bottom_radius', None)
+                    surface_dict['length'] = getattr(surface, 'length', None)
+                    tails.append(surface_dict)
+        
+        # Write Nose Cones
+        if len(nosecones) > 0:
+            f.write(f"\n  NOSE CONES ({len(nosecones)}):\n")
+            for i, nc in enumerate(nosecones):
+                f.write(f"  --- Nose Cone #{i+1} ---\n")
+                f.write(f"    Length:     {self._format_value(nc.get('length'), '.4f', ' m')}\n")
+                f.write(f"    Kind:       {nc.get('kind', 'N/A')}\n")
+                f.write(f"    Position:   {self._format_value(nc.get('position'), '.4f', ' m')}\n")
+        else:
+            f.write(f"  Nose Cones:                  0\n")
 
-        # Fins
-        fins = rocket.get('fins', [])
-        if isinstance(fins, list):
-            f.write(f"  Fins:                        {len(fins)} set(s)\n")
+        # Write Fins
+        if len(fins) > 0:
+            f.write(f"\n  FINS ({len(fins)} set(s)):\n")
+            for i, fin_set in enumerate(fins):
+                f.write(f"  --- Fin Set #{i+1} ---\n")
+                f.write(f"    Name:         {fin_set.get('name', 'N/A')}\n")
+                f.write(f"    Number:       {fin_set.get('n', 'N/A')}\n")
+                f.write(f"    Root Chord:   {self._format_value(fin_set.get('root_chord'), '.4f', ' m')}\n")
+                f.write(f"    Tip Chord:    {self._format_value(fin_set.get('tip_chord'), '.4f', ' m')}\n")
+                f.write(f"    Span:         {self._format_value(fin_set.get('span'), '.4f', ' m')}\n")
+                f.write(f"    Position:     {self._format_value(fin_set.get('position'), '.4f', ' m')}\n")
+                f.write(f"    Cant Angle:   {self._format_value(fin_set.get('cant_angle'), '.2f', '°')}\n")
+        else:
+            f.write(f"  Fins:                        0 set(s)\n")
 
-        # Nosecones
-        nosecones = rocket.get('nosecones', [])
-        if isinstance(nosecones, list):
-            f.write(f"  Nosecones:                   {len(nosecones)}\n")
-
-        # Tails
-        tails = rocket.get('tails', [])
-        if isinstance(tails, list):
-            f.write(f"  Tails:                       {len(tails)}\n")
-
-        # Parachutes
-        parachutes = rocket.get('parachutes', [])
-        if isinstance(parachutes, list):
-            f.write(f"  Parachutes:                  {len(parachutes)}\n")
-
-        # Air brakes
-        air_brakes = rocket.get('air_brakes', [])
-        if isinstance(air_brakes, list):
-            f.write(f"  Air Brakes:                  {len(air_brakes)}\n")
-
-        # Sensors
-        sensors = rocket.get('sensors', [])
-        if isinstance(sensors, dict) and '_type' in sensors:
-            f.write(f"  Sensors:                     {sensors.get('_type', 'N/A')}\n")
+        # Write Tails
+        if len(tails) > 0:
+            f.write(f"\n  TAILS ({len(tails)}):\n")
+            for i, tail in enumerate(tails):
+                f.write(f"  --- Tail #{i+1} ---\n")
+                f.write(f"    Top Radius:    {self._format_value(tail.get('top_radius'), '.4f', ' m')}\n")
+                f.write(f"    Bottom Radius: {self._format_value(tail.get('bottom_radius'), '.4f', ' m')}\n")
+                f.write(f"    Length:        {self._format_value(tail.get('length'), '.4f', ' m')}\n")
+                f.write(f"    Position:      {self._format_value(tail.get('position'), '.4f', ' m')}\n")
+        else:
+            f.write(f"  Tails:                       0\n")
 
         f.write("\n")
 
-        # Drag curves info
-        if 'power_off_drag' in rocket:
-            f.write("Aerodynamics:\n")
+        # Rail Buttons
+        rail_buttons = rocket.get('rail_buttons', {})
+        if rail_buttons and isinstance(rail_buttons, dict):
+            f.write("Rail Buttons:\n")
             f.write("-" * 40 + "\n")
-            f.write(f"  Power-Off Drag Curve:        Available (Function object)\n")
+            f.write(f"  Upper Button Position:       {self._format_value(rail_buttons.get('upper_button_position'), '.4f', ' m')}\n")
+            f.write(f"  Lower Button Position:       {self._format_value(rail_buttons.get('lower_button_position'), '.4f', ' m')}\n")
+            f.write(f"  Angular Position:            {self._format_value(rail_buttons.get('angular_position'), '.2f', '°')}\n")
+            f.write("\n")
+
+        # Parachutes
+        parachutes = rocket.get('parachutes', [])
+        if isinstance(parachutes, list) and len(parachutes) > 0:
+            f.write(f"Parachutes ({len(parachutes)}):\n")
+            f.write("-" * 40 + "\n")
+            for i, para in enumerate(parachutes):
+                f.write(f"  --- Parachute #{i+1}: {para.get('name', 'N/A')} ---\n")
+                if isinstance(para, dict):
+                    f.write(f"    cd_s:          {self._format_value(para.get('cd_s'), '.4f', ' m²')}\n")
+                    f.write(f"    Trigger:       {para.get('trigger', 'N/A')}\n")
+                    f.write(f"    Sampling Rate: {self._format_value(para.get('sampling_rate'), '.1f', ' Hz')}\n")
+                    f.write(f"    Lag:           {self._format_value(para.get('lag'), '.2f', ' s')}\n")
+            f.write("\n")
+
+        # Air Brakes
+        air_brakes = rocket.get('air_brakes', [])
+        if isinstance(air_brakes, list) and len(air_brakes) > 0:
+            f.write(f"Air Brakes ({len(air_brakes)}):\n")
+            f.write("-" * 40 + "\n")
+            for i, ab in enumerate(air_brakes):
+                f.write(f"  --- Air Brake #{i+1} ---\n")
+                if isinstance(ab, dict):
+                    f.write(f"    Reference Area:      {self._format_value(ab.get('reference_area'), '.6f', ' m²')}\n")
+                    f.write(f"    Drag Coefficient:    {self._format_value(ab.get('drag_coefficient'), '.4f')}\n")
+                    f.write(f"    Position:            {self._format_value(ab.get('position'), '.4f', ' m')}\n")
+            f.write("\n")
+
+        # Controllers
+        controllers = rocket.get('_controllers', [])
+        if isinstance(controllers, list) and len(controllers) > 0:
+            f.write(f"Controllers ({len(controllers)}):\n")
+            f.write("-" * 40 + "\n")
+            for i, ctrl in enumerate(controllers):
+                ctrl_type = ctrl.get('_type', 'N/A') if isinstance(ctrl, dict) else type(ctrl).__name__
+                f.write(f"  #{i+1}: {ctrl_type}\n")
+            f.write("\n")
+
+        # Sensors
+        sensors = rocket.get('sensors', [])
+        if sensors:
+            f.write("Sensors:\n")
+            f.write("-" * 40 + "\n")
+            if isinstance(sensors, dict) and '_type' in sensors:
+                f.write(f"  Type: {sensors.get('_type', 'N/A')}\n")
+            elif isinstance(sensors, list):
+                f.write(f"  Count: {len(sensors)}\n")
+            else:
+                f.write(f"  {sensors}\n")
+            f.write("\n")
+
+        # Aerodynamics
+        f.write("Aerodynamics:\n")
+        f.write("-" * 40 + "\n")
+        if 'power_off_drag' in rocket:
+            drag_off = rocket.get('power_off_drag')
+            if isinstance(drag_off, dict):
+                f.write(f"  Power-Off Drag:              {drag_off.get('_type', 'Function')} (see plots)\n")
+            else:
+                f.write(f"  Power-Off Drag:              {drag_off}\n")
+        
         if 'power_on_drag' in rocket:
-            f.write(f"  Power-On Drag Curve:         Available (Function object)\n")
+            drag_on = rocket.get('power_on_drag')
+            if isinstance(drag_on, dict):
+                f.write(f"  Power-On Drag:               {drag_on.get('_type', 'Function')} (see plots)\n")
+            else:
+                f.write(f"  Power-On Drag:               {drag_on}\n")
+        
+        if 'cp_position' in rocket:
+            f.write(f"  Center of Pressure:          Function (see plots)\n")
+        
+        if 'total_lift_coeff_der' in rocket:
+            f.write(f"  Lift Coefficient Derivative: Function (see plots)\n")
+        f.write("\n")
+
+        # Stability
+        f.write("Stability:\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"  Static Margin:               Function (see plots)\n")
+        f.write(f"  Stability Margin:            Function (see plots)\n")
+        f.write("\n")
+
+        # Note about time-dependent attributes
+        f.write("Note:\n")
+        f.write("-" * 40 + "\n")
+        f.write("  Time-dependent attributes (total_mass, center_of_mass, inertia I_11-I_33,\n")
+        f.write("  reduced_mass, thrust_to_weight, etc.) are visualized in curve plots.\n")
         f.write("\n")
 
     def _write_environment_section(self, f, env: Dict[str, Any]):
