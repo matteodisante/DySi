@@ -3,7 +3,7 @@
 Module Quick Reference
 ======================
 
-One-page reference for all 13 core modules in the rocket simulation framework.
+One-page reference for all 11 core modules in the rocket simulation framework.
 
 Module Overview
 ---------------
@@ -24,6 +24,11 @@ Quick lookup table showing purpose, key classes, and I/O for each module:
      - ``ConfigLoader``
      - YAML file path
      - Config dataclasses
+   * - **validators**
+     - Configuration validation
+     - ``RocketValidator``, ``MotorValidator``, etc.
+     - Config objects
+     - List of warnings
    * - **motor_builder**
      - Build RocketPy motor objects
      - ``MotorBuilder``
@@ -45,45 +50,30 @@ Quick lookup table showing purpose, key classes, and I/O for each module:
      - ``Rocket``, ``Environment``, rail params
      - ``Flight``
    * - **visualizer**
-     - Generate plots and visualizations
+     - Generate flight trajectory plots
      - ``Visualizer``
      - ``Flight``
      - PNG/PDF plots
    * - **data_handler**
-     - Export simulation data
+     - Export summary data
      - ``DataHandler``
      - ``Flight``, summary dict
      - CSV/JSON files
-   * - **monte_carlo_runner**
-     - Run ensemble simulations
-     - ``MonteCarloRunner``
-     - Configs, param variations
-     - List of results
-   * - **sensitivity_analyzer**
-     - OAT sensitivity analysis
-     - ``OATSensitivityAnalyzer``
-     - Configs, param list
-     - Sensitivity indices
-   * - **variance_sensitivity**
-     - Variance-based sensitivity
-     - ``VarianceBasedSensitivityAnalyzer``
-     - MC data
-     - Sensitivity coefficients
-   * - **sensitivity_utils**
-     - Sensitivity helper functions
-     - Various utility functions
-     - Sensitivity data
-     - Formatted outputs
-   * - **validators**
-     - Configuration validation
-     - ``RocketValidator``, ``MotorValidator``, etc.
-     - Config objects
-     - List of warnings
-   * - **air_brakes_controller**
-     - Air brakes control logic
-     - ``AirBrakesController``
-     - Controller config, target apogee
-     - Deployment level
+   * - **state_exporter**
+     - Export complete simulation state
+     - ``StateExporter``
+     - ``Flight``, configs, objects
+     - Full state JSON/CSV
+   * - **curve_plotter**
+     - Plot input curves (thrust, drag, etc.)
+     - ``CurvePlotter``
+     - Motor, Rocket, Environment
+     - Curve plots PNG
+   * - **weather_fetcher**
+     - Fetch real-world atmospheric data
+     - ``WeatherFetcher``
+     - Station ID, date
+     - Wyoming/GFS data URL
 
 Dependency Levels
 -----------------
@@ -101,12 +91,12 @@ Level 1 (Depends on config_loader only)
 - **validators**: Validate configuration objects
 - **motor_builder**: Build motors from configs
 - **environment_setup**: Build environments from configs
+- **weather_fetcher**: Fetch atmospheric data (can work standalone or with configs)
 
 Level 2 (Depends on Level 0-1)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **rocket_builder**: Needs config_loader + motor_builder
-- **air_brakes_controller**: Needs config_loader for controller config
 
 Level 3 (Depends on Level 0-2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -116,16 +106,10 @@ Level 3 (Depends on Level 0-2)
 Level 4 (Depends on Level 0-3)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **visualizer**: Needs flight_simulator output
+- **visualizer**: Needs flight_simulator output (Flight object)
 - **data_handler**: Needs flight_simulator output
-- **monte_carlo_runner**: Orchestrates flight_simulator for ensemble runs
-
-Level 5 (Depends on Level 0-4)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-- **sensitivity_analyzer**: Needs monte_carlo_runner for data
-- **variance_sensitivity**: Needs monte_carlo_runner for data
-- **sensitivity_utils**: Needs sensitivity analyzers
+- **state_exporter**: Needs Flight object + all config objects
+- **curve_plotter**: Needs motor, rocket, environment objects
 
 Typical Workflows
 -----------------
@@ -135,24 +119,24 @@ Single Flight Simulation
 
 .. code-block:: text
 
-   config_loader → motor_builder → environment_setup → rocket_builder → 
-   flight_simulator → visualizer/data_handler
+   config_loader → validators → motor_builder → environment_setup → 
+   rocket_builder → flight_simulator → visualizer/data_handler/state_exporter
 
-Monte Carlo Analysis
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: text
-
-   config_loader → monte_carlo_runner → (many flight_simulator runs) → 
-   statistics → visualizer/data_handler
-
-Sensitivity Analysis
-~~~~~~~~~~~~~~~~~~~~
+With Real Weather Data
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: text
 
-   config_loader → monte_carlo_runner → variance_sensitivity → 
-   sensitivity_utils → visualizer
+   config_loader → weather_fetcher → environment_setup (with real data) → 
+   rocket_builder → flight_simulator → outputs
+
+Comprehensive Analysis
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: text
+
+   config_loader → build objects → flight_simulator → 
+   [visualizer, data_handler, state_exporter, curve_plotter] in parallel
 
 Module Details
 --------------
@@ -311,10 +295,10 @@ visualizer
 data_handler
 ~~~~~~~~~~~~
 
-**Purpose**: Export simulation data in standard formats
+**Purpose**: Export simulation summary data in standard formats
 
 **Key Classes**:
-   - ``DataHandler``: Multi-format export
+   - ``DataHandler``: Multi-format export for summary data
 
 **Key Methods**:
 
@@ -330,182 +314,176 @@ data_handler
 
 **Input**: ``Flight`` object, summary dict
 
-**Output**: CSV, JSON, HDF5 files
+**Output**: CSV, JSON files
 
 **Export Formats**:
-   - **CSV**: Trajectory time series
-   - **JSON**: Flight summary and metadata
-   - **HDF5**: Full dataset for large ensembles
+   - **CSV**: Trajectory time series (time, position, velocity, etc.)
+   - **JSON**: Flight summary and metadata (apogee, max velocity, etc.)
 
-monte_carlo_runner
-~~~~~~~~~~~~~~~~~~
+**Note**: For comprehensive state export including all configurations and intermediate objects, use ``state_exporter`` instead.
 
-**Purpose**: Run ensemble simulations with parameter variations
+state_exporter
+~~~~~~~~~~~~~~
+
+**Purpose**: Export complete simulation state with all configurations and objects
 
 **Key Classes**:
-   - ``MonteCarloRunner``: Parallel ensemble execution
+   - ``StateExporter``: Comprehensive state serialization
 
 **Key Methods**:
 
 .. code-block:: python
 
-   runner = MonteCarloRunner(
-       rocket_cfg, motor_cfg, env_cfg, sim_cfg, 
-       num_simulations=100
+   exporter = StateExporter(
+       flight=flight,
+       rocket_config=rocket_cfg,
+       motor_config=motor_cfg,
+       environment_config=env_cfg,
+       simulation_config=sim_cfg,
+       motor=motor,
+       rocket=rocket,
+       environment=environment
    )
-   runner.add_parameter_variation(
-       "rocket.dry_mass_kg", 
-       mean=16.0, std=0.5, 
-       distribution="normal"
-   )
-   results = runner.run(parallel=True, max_workers=4)
-   stats = runner.get_statistics()
-   runner.print_statistics_summary()
+   
+   # Export everything
+   exporter.export_all(output_dir="outputs/my_sim")
+   
+   # Or export selectively
+   exporter.export_final_state_readable("final_state.txt")
+   exporter.export_config_summary("config_summary.json")
+   exporter.export_flight_data_csv("flight_data.csv")
 
-**Input**: Base configs, parameter variations
+**Input**: Flight, all config objects, RocketPy objects
 
-**Output**: List of result dicts with statistics
+**Output**: Multiple files including:
+   - ``final_state_READABLE.txt``: Human-readable final state
+   - ``config_summary.json``: All input configurations
+   - ``flight_data.csv``: Complete trajectory
+   - ``flight_summary.json``: Key metrics
+   - KML files for Google Earth visualization
 
-**Features**:
-   - Parallel execution with multiprocessing
-   - Automatic parameter sampling (normal, uniform, truncated normal)
-   - Statistical summaries (mean, std, percentiles)
-   - Export in RocketPy format for sensitivity analysis
+**Use Case**: Complete archival of simulation results with full reproducibility
 
-sensitivity_analyzer (OAT)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+curve_plotter
+~~~~~~~~~~~~~
 
-**Purpose**: One-At-a-Time sensitivity analysis for parameter screening
+**Purpose**: Generate plots of simulation input curves (thrust, drag, atmospheric profiles)
 
 **Key Classes**:
-   - ``OATSensitivityAnalyzer``: Traditional sensitivity indices
+   - ``CurvePlotter``: Input curve visualization
 
 **Key Methods**:
 
 .. code-block:: python
 
-   analyzer = OATSensitivityAnalyzer(
-       rocket_cfg, motor_cfg, env_cfg, sim_cfg
-   )
-   analyzer.add_parameter(
-       "rocket.dry_mass_kg", 
-       variation_percent=10.0
-   )
-   analyzer.run(output_metric="apogee_m")
-   analyzer.print_summary()
-   analyzer.plot_tornado_diagram("tornado.png")
+   plotter = CurvePlotter(motor, rocket, environment)
+   
+   # Generate all curves at once
+   paths = plotter.plot_all_curves(output_dir="outputs/curves")
+   
+   # Or plot individually
+   plotter.plot_thrust_curve("thrust.png")
+   plotter.plot_drag_curves("drag.png")
+   plotter.plot_atmospheric_profile("atmosphere.png")
+   plotter.plot_wind_profile("wind.png")
 
-**Input**: Configs, parameter list with variation percentages
+**Input**: RocketPy Motor, Rocket, Environment objects
 
-**Output**: Sensitivity indices, tornado diagram
+**Output**: PNG plots showing:
+   - Motor thrust curve over time
+   - Drag coefficient vs Mach number
+   - Atmospheric pressure/temperature/density vs altitude
+   - Wind speed/direction vs altitude
+   - Center of pressure evolution
 
-**Use Case**: Quick screening to identify most influential parameters
+**Use Case**: Visual verification of input parameters before running simulation
 
-variance_sensitivity
-~~~~~~~~~~~~~~~~~~~~
+weather_fetcher
+~~~~~~~~~~~~~~~
 
-**Purpose**: Variance-based sensitivity analysis (RocketPy standard method)
+**Purpose**: Fetch real-world atmospheric data from online sources
 
 **Key Classes**:
-   - ``VarianceBasedSensitivityAnalyzer``: Statistical variance decomposition
+   - ``WeatherFetcher``: Interface to atmospheric data providers
+   - ``WeatherConfig``: Configuration for data source
 
 **Key Methods**:
 
 .. code-block:: python
 
-   analyzer = VarianceBasedSensitivityAnalyzer(
-       parameter_names, target_names
+   from datetime import datetime
+   
+   config = WeatherConfig(
+       source="wyoming",
+       wyoming_station="72340",  # Oakland, CA
+       fetch_real_time=False
    )
-   analyzer.set_nominal_parameters(means, stds)
-   analyzer.fit(parameters_df, targets_df)
-   analyzer.print_summary()
-   analyzer.plot_sensitivity_bars(
-       "sensitivity.png", 
-       target_name="apogee_m"
+   
+   fetcher = WeatherFetcher(config)
+   
+   # Fetch Wyoming radiosonde data
+   sounding_url = fetcher.fetch_wyoming_sounding(
+       date=datetime(2024, 6, 15, 12, 0)
+   )
+   
+   # Use with RocketPy Environment
+   environment.set_atmospheric_model(
+       type='wyoming_sounding', 
+       file=sounding_url
    )
 
-**Input**: Monte Carlo parameter samples and target values
+**Data Sources**:
+   - **Wyoming**: Real radiosonde (weather balloon) data
+   - **GFS**: Global Forecast System forecasts
+   - **ERA5**: Historical reanalysis data (planned)
+   - **Standard Atmosphere**: ISA model fallback
 
-**Output**: Sensitivity coefficients (%), Linear Approximation Error (LAE)
+**Input**: Station ID, date/time
 
-**Key Metrics**:
-   - **Sensitivity coefficient**: % variance contribution
-   - **LAE**: Model linearity validation (<10% = excellent)
-   - **Effect per std**: Practical impact magnitude
+**Output**: URL or file path for atmospheric profile
 
-**Use Case**: Rigorous quantitative sensitivity analysis with statistical validation
-
-sensitivity_utils
-~~~~~~~~~~~~~~~~~
-
-**Purpose**: Helper functions for sensitivity analysis workflows
-
-**Key Functions**:
-   - ``estimate_parameter_statistics()``: Compute means and std devs
-   - ``create_sensitivity_comparison()``: Compare OAT vs variance-based
-   - ``filter_significant_parameters()``: Remove params with sensitivity < LAE
-   - ``calculate_variance_reduction()``: Estimate variance reduction from control
-   - ``export_sensitivity_to_json()``: Save results in JSON format
-
-**Use Case**: Post-processing and interpretation of sensitivity results
+**Use Case**: High-fidelity simulations using actual atmospheric conditions
 
 validators
 ~~~~~~~~~~
 
-**Purpose**: Validate configurations for physical correctness
+**Purpose**: Validate configurations for physical correctness before simulation
 
 **Key Classes**:
    - ``RocketValidator``: Rocket physics validation
    - ``MotorValidator``: Motor parameter validation
    - ``EnvironmentValidator``: Environment validation
    - ``SimulationValidator``: Simulation parameter validation
+   - ``ValidationWarning``: Warning/error data structure
 
 **Key Methods**:
 
 .. code-block:: python
 
+   from src.validators import validate_all_configs
+   
+   # Validate all configs at once
+   warnings = validate_all_configs(
+       rocket_cfg, motor_cfg, env_cfg, sim_cfg
+   )
+   
+   # Or validate individually
+   from src.validators import RocketValidator
    warnings = RocketValidator.validate(rocket_cfg)
+   
+   # Check for critical errors
    for w in warnings:
-       print(f"{w.level}: {w.message}")
+       if w.level == "ERROR":
+           print(f"CRITICAL: {w.message}")
+       elif w.level == "WARNING":
+           print(f"Warning: {w.message}")
 
 **Validation Checks**:
-   - **Critical**: Positive masses, valid coordinates, stability
+   - **Critical**: Positive masses, valid coordinates, stability margin
    - **Warning**: Unusual values, potential design issues
-   - **Info**: Recommendations and suggestions
+   - **Info**: Recommendations and optimization suggestions
 
-**Use Case**: Catch configuration errors before running simulations
-
-air_brakes_controller
-~~~~~~~~~~~~~~~~~~~~~
-
-**Purpose**: Active control system for air brakes deployment
-
-**Key Classes**:
-   - ``AirBrakesController``: PID/bang-bang/MPC controllers
-
-**Key Methods**:
-
-.. code-block:: python
-
-   controller = AirBrakesController(
-       controller_config, 
-       target_apogee_m=3000.0
-   )
-   deployment = controller.compute_deployment(
-       current_state, current_time
-   )
-
-**Controller Types**:
-   - **PID**: Classic proportional-integral-derivative control
-   - **Bang-bang**: Simple on/off control
-   - **MPC**: Model predictive control (advanced)
-
-**Features**:
-   - Realistic actuator lag and computation delay
-   - Safety interlocks (min altitude, min time)
-   - Deployment rate limiting
-
-**Use Case**: Competition rockets with apogee targeting requirements
+**Use Case**: Catch configuration errors before running expensive simulations
 
 Quick Tips
 ----------
@@ -516,13 +494,15 @@ Finding the Right Module
 **Need to...**
 
 - Parse a YAML file? → ``config_loader``
+- Validate configurations? → ``validators``
 - Build simulation objects? → ``motor_builder``, ``environment_setup``, ``rocket_builder``
+- Get real weather data? → ``weather_fetcher``
 - Run a simulation? → ``flight_simulator``
-- Create plots? → ``visualizer``
-- Export data? → ``data_handler``
-- Uncertainty analysis? → ``monte_carlo_runner``
-- Identify critical parameters? → ``sensitivity_analyzer`` or ``variance_sensitivity``
-- Check config validity? → ``validators``
+- Create flight plots? → ``visualizer``
+- Plot input curves (thrust, drag)? → ``curve_plotter``
+- Export summary data? → ``data_handler``
+- Export complete state for archival? → ``state_exporter``
+- Generate KML for Google Earth? → ``state_exporter``
 
 Import Patterns
 ~~~~~~~~~~~~~~~
