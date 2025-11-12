@@ -105,9 +105,9 @@ Contents
    user_guide/quickstart
    user_guide/key_concepts
    user_guide/configuration
-   ../user/README
-   ../user/CONFIGURATION_REFERENCE
-   ../user/PLOTS_AND_OUTPUT_REFERENCE
+   user_guide/documentation_index
+   user_guide/configuration_reference
+   user_guide/plots_and_output_reference
 
 .. toctree::
    :maxdepth: 2
