@@ -1,278 +1,553 @@
-# Rocket Simulation Framework
+# Rocket Simulation Framework# Rocket Simulation Framework
 
-[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/rocket-sim/)
-[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations, Monte Carlo uncertainty analysis, and **variance-based sensitivity analysis**.
 
-📚 **[View Full Documentation](https://matteodisante.github.io/rocket-sim/)**
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/rocket-sim/)[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/rocket-sim/)
 
-## Features
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 
-### Core Capabilities
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+
+
+A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations with advanced features like air brakes control and real-time weather data integration.A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations, Monte Carlo uncertainty analysis, and **variance-based sensitivity analysis**.
+
+
+
+📚 **[View Full Documentation](https://matteodisante.github.io/rocket-sim/)**📚 **[View Full Documentation](https://matteodisante.github.io/rocket-sim/)**
+
+
+
+---## Features
+
+
+
+## ✨ Features### Core Capabilities
+
 - 🚀 **Complete Simulation Pipeline**: End-to-end rocket flight simulation with RocketPy integration
-- 📊 **Monte Carlo Analysis**: Uncertainty quantification with 100+ parallel simulations
-- 🔬 **Sensitivity Analysis**: Variance-based and OAT methods for parameter importance ranking
-- 📁 **YAML Configuration**: Human-readable configuration files with comprehensive validation
-- ✅ **Type Safety**: Full type hints and dataclass-based configuration objects
-- 🔍 **Validation Layer**: Automatic physical plausibility checks and stability analysis
-- 📈 **Visualization Suite**: Publication-quality plots (3D trajectory, altitude, velocity, acceleration)
-- 💾 **Multiple Export Formats**: CSV, JSON, KML, RocketPy-compatible formats
+
+### Core Capabilities- 📊 **Monte Carlo Analysis**: Uncertainty quantification with 100+ parallel simulations
+
+- 🚀 **Complete Flight Simulation** - 6-DOF trajectory analysis with RocketPy integration- 🔬 **Sensitivity Analysis**: Variance-based and OAT methods for parameter importance ranking
+
+- 📁 **YAML Configuration** - Type-safe configuration files with comprehensive validation- 📁 **YAML Configuration**: Human-readable configuration files with comprehensive validation
+
+- ✅ **Validation Layer** - Automatic physical plausibility checks and stability analysis- ✅ **Type Safety**: Full type hints and dataclass-based configuration objects
+
+- 📈 **Publication-Quality Plots** - 3D trajectories, altitude, velocity, acceleration profiles- 🔍 **Validation Layer**: Automatic physical plausibility checks and stability analysis
+
+- 💾 **Multiple Export Formats** - CSV, JSON, KML, and RocketPy-compatible formats- 📈 **Visualization Suite**: Publication-quality plots (3D trajectory, altitude, velocity, acceleration)
+
+- 🎯 **Complete Motor State Export** - 35+ scalar attributes + 11 time-dependent curve plots- 💾 **Multiple Export Formats**: CSV, JSON, KML, RocketPy-compatible formats
+
 - 🎯 **Complete Motor State Export**: 35+ scalar attributes + 11 time-dependent curve plots ⭐ NEW
 
 ### Advanced Features
-- **Motor State Export System**: Export complete motor state (initial/final) with scalars in JSON/TXT and functions as high-quality plots
-- **Smart Dual Y-Axis Plots**: Intelligent dual y-axis detection for plots with different scales (>10x difference)
-- **Organized Output Structure**: Automatic organization in `motor/`, `rocket/`, `environment/` subdirectories
-- **Variance-Based Sensitivity**: Statistical sensitivity coefficients with Linear Approximation Error (LAE)
+
+- **🎯 Air Brakes Control** - PID, bang-bang, and model-predictive controllers for active apogee targeting### Advanced Features
+
+- **🌤️ Weather Integration** - Real atmospheric data from Wyoming soundings, GFS forecasts, and ERA5 reanalysis- **Motor State Export System**: Export complete motor state (initial/final) with scalars in JSON/TXT and functions as high-quality plots
+
+- **📊 Smart Dual Y-Axis Plots** - Intelligent dual y-axis detection for plots with different scales- **Smart Dual Y-Axis Plots**: Intelligent dual y-axis detection for plots with different scales (>10x difference)
+
+- **📂 Organized Output Structure** - Automatic organization in `motor/`, `rocket/`, `environment/` subdirectories- **Organized Output Structure**: Automatic organization in `motor/`, `rocket/`, `environment/` subdirectories
+
+- **🔧 CLI Tools** - Command-line scripts for batch processing- **Variance-Based Sensitivity**: Statistical sensitivity coefficients with Linear Approximation Error (LAE)
+
 - **OAT Screening**: Quick parameter screening with tornado diagrams
-- **Parallel Execution**: Multi-core Monte Carlo simulations
-- **Data Pipeline**: Seamless integration Monte Carlo → Sensitivity Analysis
+
+### 🚧 In Development- **Parallel Execution**: Multi-core Monte Carlo simulations
+
+- **📊 Monte Carlo Analysis** - Uncertainty quantification with parallel simulations *(coming soon)*- **Data Pipeline**: Seamless integration Monte Carlo → Sensitivity Analysis
+
 - **CLI Tools**: Command-line scripts for batch processing
+
+---
 
 ## Project Status
 
+## 🚀 Quick Start
+
 ✅ **Phases 1-5 Complete**: Full simulation pipeline with advanced sensitivity analysis
 
+### Installation
+
 **Completed:**
-- ✅ Phase 1: Configuration system and validation layer
-- ✅ Phase 2: Builder pattern implementations (Motor, Environment, Rocket)
-- ✅ Phase 3: Core simulation engine with visualization
+
+#### Prerequisites- ✅ Phase 1: Configuration system and validation layer
+
+- Python 3.8 or higher- ✅ Phase 2: Builder pattern implementations (Motor, Environment, Rocket)
+
+- pip package manager- ✅ Phase 3: Core simulation engine with visualization
+
 - ✅ Phase 4: Monte Carlo analysis framework
-- ✅ **Phase 5: Variance-based sensitivity analysis** ⭐ NEW
+
+#### Setup- ✅ **Phase 5: Variance-based sensitivity analysis** ⭐ NEW
+
 - ✅ Complete test suite (150+ tests passing)
-- ✅ CLI scripts for single, Monte Carlo, and sensitivity analysis
-- ✅ 4 comprehensive Jupyter notebooks
 
-**Production Ready:**
-- 🎯 Single flight simulations
+1. **Clone the repository**:- ✅ CLI scripts for single, Monte Carlo, and sensitivity analysis
+
+```bash- ✅ 4 comprehensive Jupyter notebooks
+
+git clone <repository-url>
+
+cd rocket-sim**Production Ready:**
+
+```- 🎯 Single flight simulations
+
 - 🎲 Monte Carlo uncertainty quantification
-- 📊 Variance-based sensitivity analysis
-- 📝 Complete API documentation (inline)
 
-## Installation
+2. **Create virtual environment** (recommended):- 📊 Variance-based sensitivity analysis
+
+```bash- 📝 Complete API documentation (inline)
+
+python -m venv venv
+
+source venv/bin/activate  # On Windows: venv\Scripts\activate## Installation
+
+```
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- pip package manager
+3. **Install dependencies**:
+
+```bash- Python 3.8 or higher
+
+pip install -r requirements.txt- pip package manager
+
+```
 
 ### Setup
 
-1. **Clone the repository**:
-```bash
-git clone <repository-url>
-cd rocket-simulation
-```
+4. **Verify installation**:
 
-2. **Create a virtual environment** (recommended):
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+```bash1. **Clone the repository**:
+
+python -c "import rocketpy; print('✓ Dependencies installed')"```bash
+
+```git clone <repository-url>
+
+cd rocket-simulation
+
+### Run Your First Simulation```
+
+
+
+```bash2. **Create a virtual environment** (recommended):
+
+python scripts/run_single_simulation.py \```bash
+
+    --config configs/single_sim/01_minimal.yaml \python -m venv venv
+
+    --name my_first_rocket \source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+    --plots```
+
 ```
 
 3. **Install dependencies**:
-```bash
+
+**Output**: Results will be in `outputs/my_first_rocket/` with plots, data files, and motor curves.```bash
+
 pip install -r requirements.txt
-```
 
-4. **Verify installation**:
+---```
+
+
+
+## 📋 Usage Examples4. **Verify installation**:
+
 ```bash
-python -c "import rocketpy; import statsmodels; print('✓ All dependencies installed')"
+
+### Single Flight Simulationpython -c "import rocketpy; import statsmodels; print('✓ All dependencies installed')"
+
 ```
 
-## Documentation
+**Basic usage:**
 
-📖 **Comprehensive documentation available in [`docs/`](docs/)**
+```bash## Documentation
 
-The documentation is organized as follows:
+python scripts/run_single_simulation.py \
+
+    --config configs/single_sim/01_minimal.yaml \📖 **Comprehensive documentation available in [`docs/`](docs/)**
+
+    --name test_flight
+
+```The documentation is organized as follows:
+
 - **[User Guides](docs/user/)**: Motor state export guide, troubleshooting
-- **[Developer Documentation](docs/developer/)**: Architecture, API reference, motor attributes classification, contributing
-- **[Implementation Details](docs/implementation/)**: Technical implementation summaries
 
-### Quick Links
-- [Motor State Export Guide](docs/user/MOTOR_STATE_EXPORT_GUIDE.md) - Complete guide to new export system ⭐
-- [Motor Attributes Classification](docs/developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md) - All 61 SolidMotor attributes classified
-- [Architecture](docs/developer/ARCHITECTURE.md) - System architecture and design decisions
-- [CHANGELOG](CHANGELOG.md) - Recent changes and updates
+**With all features:**- **[Developer Documentation](docs/developer/)**: Architecture, API reference, motor attributes classification, contributing
+
+```bash- **[Implementation Details](docs/implementation/)**: Technical implementation summaries
+
+python scripts/run_single_simulation.py \
+
+    --config configs/single_sim/02_complete.yaml \### Quick Links
+
+    --name artemis \- [Motor State Export Guide](docs/user/MOTOR_STATE_EXPORT_GUIDE.md) - Complete guide to new export system ⭐
+
+    --plots \- [Motor Attributes Classification](docs/developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md) - All 61 SolidMotor attributes classified
+
+    --verbose \- [Architecture](docs/developer/ARCHITECTURE.md) - System architecture and design decisions
+
+    --log-file simulation.log- [CHANGELOG](CHANGELOG.md) - Recent changes and updates
+
+```
 
 ### Building Documentation Locally
 
+### Configuration Files
+
 ```bash
-cd docs
-make html
-open _build/html/index.html  # Or: python -m http.server 8000 -d _build/html
-```
 
-## Quick Start
+Available configurations in `configs/`:cd docs
 
-### 1. Run Your First Simulation (5 minutes)
+- `single_sim/01_minimal.yaml` - Minimal configuration for quick testsmake html
 
-See the [Getting Started Notebook](notebooks/00_getting_started.ipynb) for an interactive tutorial.
+- `single_sim/02_complete.yaml` - Complete configuration with all featuresopen _build/html/index.html  # Or: python -m http.server 8000 -d _build/html
 
-```python
-from src.config_loader import ConfigLoader
-from src.motor_builder import MotorBuilder
-from src.environment_setup import EnvironmentBuilder
-from src.rocket_builder import RocketBuilder
-from src.flight_simulator import FlightSimulator
+- `monte_carlo/` - Monte Carlo configurations *(in development)*```
 
-# Load configuration
-config_loader = ConfigLoader()
-config_loader.load_from_yaml('configs/simple_rocket.yaml')
+- `templates/template_complete_documented.yaml` - Fully documented template
 
-rocket_cfg = config_loader.get_rocket_config()
-motor_cfg = config_loader.get_motor_config()
-env_cfg = config_loader.get_environment_config()
-sim_cfg = config_loader.get_simulation_config()
+- `weather_example.yaml` - Weather integration example## Quick Start
 
-# Build components
-motor = MotorBuilder(motor_cfg).build()
-environment = EnvironmentBuilder(env_cfg).build()
-rocket = RocketBuilder(rocket_cfg).build(motor)
 
-# Run simulation
-simulator = FlightSimulator(rocket, motor, environment)
-flight = simulator.run()
 
-# View results
-simulator.print_summary()
-# Output:
-#   Apogee: 1247.3 m
-#   Max velocity: 145.2 m/s (Mach 0.42)
-#   Flight time: 87.4 s
-```
+---### 1. Run Your First Simulation (5 minutes)
 
-### 2. Monte Carlo Uncertainty Analysis
 
-```python
+
+## 📂 Project StructureSee the [Getting Started Notebook](notebooks/00_getting_started.ipynb) for an interactive tutorial.
+
+
+
+``````python
+
+rocket-sim/from src.config_loader import ConfigLoader
+
+├── configs/                    # YAML configuration filesfrom src.motor_builder import MotorBuilder
+
+│   ├── single_sim/            # Single flight configurationsfrom src.environment_setup import EnvironmentBuilder
+
+│   ├── monte_carlo/           # Monte Carlo configurations (in dev)from src.rocket_builder import RocketBuilder
+
+│   └── templates/             # Configuration templatesfrom src.flight_simulator import FlightSimulator
+
+│
+
+├── src/                       # Source code (~3500 lines)# Load configuration
+
+│   ├── config_loader.py       # Configuration loadingconfig_loader = ConfigLoader()
+
+│   ├── validators.py          # Validation frameworkconfig_loader.load_from_yaml('configs/simple_rocket.yaml')
+
+│   ├── motor_builder.py       # Motor construction
+
+│   ├── environment_setup.py   # Environment setuprocket_cfg = config_loader.get_rocket_config()
+
+│   ├── rocket_builder.py      # Rocket constructionmotor_cfg = config_loader.get_motor_config()
+
+│   ├── flight_simulator.py    # Flight simulationenv_cfg = config_loader.get_environment_config()
+
+│   ├── data_handler.py        # Data exportsim_cfg = config_loader.get_simulation_config()
+
+│   ├── state_exporter.py      # Complete state export
+
+│   ├── curve_plotter.py       # Motor curve plotting# Build components
+
+│   ├── visualizer.py          # Result visualizationmotor = MotorBuilder(motor_cfg).build()
+
+│   ├── air_brakes_controller.py  # Air brakes controlenvironment = EnvironmentBuilder(env_cfg).build()
+
+│   ├── weather_fetcher.py     # Weather data integrationrocket = RocketBuilder(rocket_cfg).build(motor)
+
+│   ├── monte_carlo_runner.py  # Monte Carlo (in development)
+
+│   └── utils.py               # Utilities# Run simulation
+
+│simulator = FlightSimulator(rocket, motor, environment)
+
+├── scripts/                   # Command-line scriptsflight = simulator.run()
+
+│   ├── run_single_simulation.py
+
+│   └── run_monte_carlo.py     # (in development)# View results
+
+│simulator.print_summary()
+
+├── docs/                      # Documentation# Output:
+
+│   ├── user/                  # User guides#   Apogee: 1247.3 m
+
+│   └── developer/             # Developer docs#   Max velocity: 145.2 m/s (Mach 0.42)
+
+│#   Flight time: 87.4 s
+
+├── examples/                  # Example scripts```
+
+├── notebooks/                 # Jupyter notebooks
+
+├── tests/                     # Test suite### 2. Monte Carlo Uncertainty Analysis
+
+└── outputs/                   # Simulation outputs
+
+``````python
+
 from src.monte_carlo_runner import MonteCarloRunner
 
+---
+
 # Create Monte Carlo runner
-mc_runner = MonteCarloRunner(
+
+## 📚 Documentationmc_runner = MonteCarloRunner(
+
     base_rocket_config=rocket_cfg,
-    base_motor_config=motor_cfg,
-    base_environment_config=env_cfg,
-    base_simulation_config=sim_cfg,
-    num_simulations=200
-)
 
-# Add parameter uncertainties
-mc_runner.add_parameter_variation(
-    "rocket.dry_mass_kg",
+### User Guides    base_motor_config=motor_cfg,
+
+- [Installation Guide](docs/user/installation.md) *(to be created)*    base_environment_config=env_cfg,
+
+- [Quick Start Tutorial](docs/user/quickstart.md) *(to be created)*    base_simulation_config=sim_cfg,
+
+- [Configuration Reference](docs/user/CONFIGURATION_REFERENCE.md)    num_simulations=200
+
+- [Motor State Export Guide](docs/user/MOTOR_STATE_EXPORT_GUIDE.md))
+
+- [Plots and Output Reference](docs/user/PLOTS_AND_OUTPUT_REFERENCE.md)
+
+- [Air Brakes Control](docs/user/air-brakes.md) *(to be created)*# Add parameter uncertainties
+
+- [Weather Integration](docs/user/weather.md) *(to be created)*mc_runner.add_parameter_variation(
+
+- [Troubleshooting](docs/user/TROUBLESHOOTING.md)    "rocket.dry_mass_kg",
+
     mean=10.0,
-    std=0.5,  # ±0.5 kg uncertainty
-    distribution="normal"
-)
 
-mc_runner.add_parameter_variation(
-    "environment.wind.velocity_ms",
+### Developer Documentation    std=0.5,  # ±0.5 kg uncertainty
+
+- [Architecture](docs/developer/ARCHITECTURE.md)    distribution="normal"
+
+- [API Reference](docs/developer/API_REFERENCE.md))
+
+- [Module Reference](docs/developer/MODULE_REFERENCE.md)
+
+- [Motor Attributes Classification](docs/developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md)mc_runner.add_parameter_variation(
+
+- [Contributing](docs/developer/CONTRIBUTING.md)    "environment.wind.velocity_ms",
+
     mean=5.0,
-    std=2.0,  # ±2 m/s wind variation
-    distribution="normal"
-)
+
+### Additional Resources    std=2.0,  # ±2 m/s wind variation
+
+- [CHANGELOG](CHANGELOG.md) - Recent changes and updates    distribution="normal"
+
+- [RocketPy Documentation](https://docs.rocketpy.org/))
+
+- [RocketPy GitHub](https://github.com/RocketPy-Team/RocketPy)
 
 # Run ensemble
-results = mc_runner.run(parallel=True, max_workers=4)
 
-# Analyze statistics
+---results = mc_runner.run(parallel=True, max_workers=4)
+
+
+
+## 🛠️ Development# Analyze statistics
+
 stats = mc_runner.get_statistics()
-print(f"Apogee: {stats['apogee_m']['mean']:.1f} ± {stats['apogee_m']['std']:.1f} m")
+
+### Running Testsprint(f"Apogee: {stats['apogee_m']['mean']:.1f} ± {stats['apogee_m']['std']:.1f} m")
+
 print(f"90% prediction interval: [{stats['apogee_m']['p05']:.1f}, {stats['apogee_m']['p95']:.1f}] m")
+
+```bash```
+
+# Run all tests
+
+pytest### 3. Variance-Based Sensitivity Analysis ⭐ NEW
+
+
+
+# Run with coverage```python
+
+pytest --cov=src --cov-report=htmlfrom src.variance_sensitivity import VarianceBasedSensitivityAnalyzer
+
+
+
+# Run with verbose output# Export Monte Carlo data
+
+pytest -vparams_df, targets_df = mc_runner.export_for_sensitivity()
+
 ```
-
-### 3. Variance-Based Sensitivity Analysis ⭐ NEW
-
-```python
-from src.variance_sensitivity import VarianceBasedSensitivityAnalyzer
-
-# Export Monte Carlo data
-params_df, targets_df = mc_runner.export_for_sensitivity()
 
 # Create sensitivity analyzer
-analyzer = VarianceBasedSensitivityAnalyzer(
+
+### Code Qualityanalyzer = VarianceBasedSensitivityAnalyzer(
+
     parameter_names=["rocket.dry_mass_kg", "environment.wind.velocity_ms"],
-    target_names=["apogee_m"]
-)
+
+```bash    target_names=["apogee_m"]
+
+# Format code)
+
+black src/ tests/
 
 # Set nominal parameters
-metadata = mc_runner.get_parameter_metadata()
-analyzer.set_nominal_parameters(
+
+# Check stylemetadata = mc_runner.get_parameter_metadata()
+
+flake8 src/ tests/analyzer.set_nominal_parameters(
+
     means={p: m['mean'] for p, m in metadata.items()},
-    stds={p: m['std'] for p, m in metadata.items()}
-)
 
-# Fit regression models and calculate sensitivities
-analyzer.fit(params_df, targets_df)
+# Type checking    stds={p: m['std'] for p, m in metadata.items()}
 
-# Print results
-analyzer.print_summary()
-# Output:
-#   Sensitivity Analysis Summary: apogee_m
-#   ====================================
-#   Parameter              Sensitivity(%) Nominal mean  Nominal sd  Effect per sd
-#   rocket.dry_mass_kg            71.20        10.000       0.500         -98.70
-#   wind.velocity_ms              23.40         5.000       2.000          42.30
-#   ====================================
-#   Linear Approx Error (LAE)      5.40
-#
-#   ✓ LAE < 10%: Linear approximation is excellent
+mypy src/)
 
-# Generate sensitivity bar plot
-analyzer.plot_sensitivity_bars('outputs/sensitivity_bars.png')
 ```
 
-**Interpretation**: 71% of apogee variance is due to mass uncertainty. Improving mass measurement accuracy would reduce prediction uncertainty significantly.
+# Fit regression models and calculate sensitivities
+
+### Contributinganalyzer.fit(params_df, targets_df)
+
+
+
+We welcome contributions! See [CONTRIBUTING.md](docs/developer/CONTRIBUTING.md) for guidelines.# Print results
+
+analyzer.print_summary()
+
+**Code Style:**# Output:
+
+- Follow PEP 8 style guide#   Sensitivity Analysis Summary: apogee_m
+
+- Use type hints for all function signatures#   ====================================
+
+- Write docstrings in NumPy/Google style#   Parameter              Sensitivity(%) Nominal mean  Nominal sd  Effect per sd
+
+- Keep line length ≤ 100 characters#   rocket.dry_mass_kg            71.20        10.000       0.500         -98.70
+
+- Use SI units exclusively: `mass_kg`, `velocity_ms`, `force_n`#   wind.velocity_ms              23.40         5.000       2.000          42.30
+
+#   ====================================
+
+---#   Linear Approx Error (LAE)      5.40
+
+#
+
+## 📦 Dependencies#   ✓ LAE < 10%: Linear approximation is excellent
+
+
+
+### Core Dependencies# Generate sensitivity bar plot
+
+- **rocketpy** >= 1.2.0 - Rocket physics simulation engineanalyzer.plot_sensitivity_bars('outputs/sensitivity_bars.png')
+
+- **numpy** >= 1.21.0 - Numerical computing```
+
+- **scipy** >= 1.7.0 - Scientific computing
+
+- **matplotlib** >= 3.4.0 - Plotting and visualization**Interpretation**: 71% of apogee variance is due to mass uncertainty. Improving mass measurement accuracy would reduce prediction uncertainty significantly.
+
+- **pyyaml** >= 6.0 - YAML configuration parsing
 
 ## CLI Scripts
 
-### Single Flight Simulation
+### Data Handling
+
+- **pandas** >= 1.3.0 - Data analysis### Single Flight Simulation
+
+- **h5py** >= 3.6.0 - HDF5 file format
 
 ```bash
-python scripts/run_single_simulation.py \
-  --config configs/complete_example.yaml \
-  --output-dir outputs/single_flight \
-  --verbose
-```
 
-### Monte Carlo Ensemble
+### Developmentpython scripts/run_single_simulation.py \
 
-```bash
+- **pytest** >= 7.0.0 - Testing framework  --config configs/complete_example.yaml \
+
+- **black** >= 22.0.0 - Code formatting  --output-dir outputs/single_flight \
+
+- **flake8** >= 4.0.0 - Linting  --verbose
+
+- **mypy** >= 0.950 - Type checking```
+
+
+
+See [requirements.txt](requirements.txt) for complete list.### Monte Carlo Ensemble
+
+
+
+---```bash
+
 python scripts/run_monte_carlo.py \
-  --config configs/complete_example.yaml \
-  --samples 200 \
-  --parallel \
-  --workers 4 \
-  --output-dir outputs/monte_carlo
-```
 
-### Sensitivity Analysis ⭐ NEW
+## 🎯 Project Status  --config configs/complete_example.yaml \
+
+  --samples 200 \
+
+### ✅ Production Ready  --parallel \
+
+- Single flight simulations with comprehensive validation  --workers 4 \
+
+- Motor state export system (35+ attributes, 11 plots)  --output-dir outputs/monte_carlo
+
+- Air brakes control (PID, bang-bang, MPC)```
+
+- Weather data integration (Wyoming, GFS, ERA5)
+
+- Publication-quality visualization### Sensitivity Analysis ⭐ NEW
+
+- Complete test suite
 
 ```bash
-# Variance-based method (recommended)
-python scripts/run_sensitivity.py \
-  --method variance \
-  --monte-carlo-dir outputs/monte_carlo \
-  --parameters rocket.dry_mass_kg,environment.wind.velocity_ms \
-  --targets apogee_m \
-  --plot \
-  --output-dir outputs/sensitivity
 
-# OAT method (quick screening)
+### 🚧 In Development# Variance-based method (recommended)
+
+- Monte Carlo uncertainty analysispython scripts/run_sensitivity.py \
+
+- Parallel execution framework  --method variance \
+
+- Advanced statistical analysis  --monte-carlo-dir outputs/monte_carlo \
+
+  --parameters rocket.dry_mass_kg,environment.wind.velocity_ms \
+
+---  --targets apogee_m \
+
+  --plot \
+
+## 📝 License  --output-dir outputs/sensitivity
+
+
+
+MIT License - see [LICENSE](LICENSE) file for details.# OAT method (quick screening)
+
 python scripts/run_sensitivity.py \
-  --method oat \
+
+---  --method oat \
+
   --config configs/complete_example.yaml \
-  --parameters rocket.dry_mass_kg,environment.wind.velocity_ms \
+
+## 🙏 Acknowledgments  --parameters rocket.dry_mass_kg,environment.wind.velocity_ms \
+
   --targets apogee_m \
-  --variation 10 \
-  --plot \
+
+- **RocketPy Team** - For the excellent rocket simulation library  --variation 10 \
+
+- **STARPI Team** - For project requirements and aerospace expertise  --plot \
+
   --output-dir outputs/sensitivity_oat
-```
 
-## Project Structure
+Built for the **STARPI rocket team** 🚀```
 
-```
+
+
+---## Project Structure
+
+
+
+**Status**: Production-ready for single flight simulations with advanced features ✅```
+
 rocket-simulation/
 ├── README.md                 # This file
 ├── requirements.txt          # Python dependencies

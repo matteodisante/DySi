@@ -232,7 +232,7 @@ def main():
     print("Interpretation:")
     print("  • Apogee spread (90% interval) indicates uncertainty in altitude prediction")
     print("  • Landing dispersion shows how far the rocket might drift")
-    print("  • Use output files for sensitivity analysis (see 03_sensitivity_analysis.py)")
+    print("  • Statistical analysis tools can be added for parameter importance")
     print()
 
 

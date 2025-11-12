@@ -84,6 +84,10 @@ notebooks/outputs/
 # Documentation build output
 docs/_build/
 docs/source/api/generated/
+docs/source/_build/
+
+# Backup files
+*.backup
 
 # macOS
 .DS_Store

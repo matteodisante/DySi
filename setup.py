@@ -60,8 +60,6 @@ setup(
         "console_scripts": [
             "rocket-sim=scripts.run_single_simulation:main",
             "rocket-mc=scripts.run_monte_carlo:main",
-            "rocket-sensitivity=scripts.run_sensitivity:main",
-            "rocket-report=scripts.generate_report:main",
         ],
     },
 )
