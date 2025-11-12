@@ -8,6 +8,7 @@ Documentation for developers working on the rocket simulation framework.
    :caption: Developer Guides
    
    architecture
+   module_reference
    
 Overview
 --------
@@ -32,6 +33,19 @@ Key topics covered:
 - Output generation (CSV, JSON, plots)
 - Performance considerations
 - Testing strategy
+
+Module Quick Reference
+----------------------
+
+The :ref:`developer-module-reference` page is a practical cheat sheet for all 13 core modules:
+
+- **Quick lookup table** showing each module's purpose, inputs, and outputs
+- **Dependency hierarchy** (Level 0-5) to understand module relationships
+- **Code examples** for common tasks with each module
+- **Typical workflows** showing how modules work together
+- **Quick tips** for finding the right module for your task
+
+This is your go-to reference when you need to quickly remember "which module does what" or see practical code examples.
 
 Additional Resources
 --------------------
