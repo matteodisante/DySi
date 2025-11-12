@@ -242,8 +242,10 @@ Expand minimal config with important parameters:
    
    nose_cone:
      length_m: 0.3
-     kind: vonkarman  # Options: vonkarman, conical, elliptical, ogive, lvhaack
+     kind: vonkarman  # Options: vonkarman, conical, elliptical, ogive, lvhaack, tangent, parabolic, powerseries
      position_m: 1.1
+     base_radius_m: null  # Optional: nose cone base radius (m). If null, uses rocket radius
+     bluffness: null  # Optional: tip bluffness ratio (0-1). null = sharp tip
    
    parachutes:
      drogue:
@@ -413,7 +415,9 @@ Use Interactive Script
            'nose_cone': {
                'length_m': nc_length,
                'kind': nc_kind,
-               'position_m': length_m - nc_length
+               'position_m': length_m - nc_length,
+               'base_radius_m': None,
+               'bluffness': None
            },
            'parachutes': parachutes,
            'rail': {
@@ -573,6 +577,57 @@ Units Documentation
    length: 1.4  # m? cm? inches?
    inclination: 85  # deg? rad?
 
+Advanced Nose Cone Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The nose cone section supports advanced optional parameters:
+
+.. code-block:: yaml
+
+   nose_cone:
+     # Required parameters
+     length_m: 0.5
+     kind: "vonKarman"  # vonkarman, conical, ogive, elliptical, lvhaack, tangent, parabolic, powerseries
+     position_m: 0.0
+     
+     # Optional parameters
+     base_radius_m: null  # If null, uses rocket radius. Set to specific value for transitions
+     bluffness: null  # Tip bluffness ratio (0-1). null = sharp tip, 0.2 = slightly rounded
+
+**When to use optional parameters:**
+
+1. **base_radius_m**: When nose cone base diameter differs from body tube diameter (e.g., nose cone transitions)
+
+   .. code-block:: yaml
+   
+      # Example: Smaller nose cone on larger body tube
+      rocket:
+        radius_m: 0.075  # Body tube: 150mm diameter
+      
+      nose_cone:
+        base_radius_m: 0.065  # Nose cone base: 130mm diameter
+        # Creates a shoulder/transition
+
+2. **bluffness**: For realistic nose cones with rounded tips (reduces stress concentration)
+
+   .. code-block:: yaml
+   
+      # Sharp tip (default)
+      nose_cone:
+        kind: "ogive"
+        bluffness: null  # or 0
+      
+      # Rounded tip (more realistic)
+      nose_cone:
+        kind: "ogive"
+        bluffness: 0.15  # 15% of base radius
+
+.. note::
+
+   - **bluffness** is NOT compatible with ``kind: "powerseries"``
+   - Setting bluffness may slightly reduce effective nose cone length
+   - Typical bluffness values: 0.1-0.3 for realistic designs
+
 Validation After Creation
 --------------------------
 
@@ -654,6 +709,8 @@ Absolute Minimum
      length_m: <float>
      kind: <string>
      position_m: <float>
+     base_radius_m: <float>  # Optional
+     bluffness: <float>  # Optional (0-1)
    rail:
      length_m: <float>
 

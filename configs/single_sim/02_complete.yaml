@@ -34,8 +34,14 @@ rocket:
 
   nose_cone:
     length_m: 0.5
-    kind: "vonKarman"  # Options: vonKarman, conical, ogive, elliptical, lvhaack, tangent
+    kind: "vonKarman"  # Options: vonKarman, conical, ogive, elliptical, lvhaack, tangent, parabolic, powerseries
     position_m: 0.0  # ✅ Position at nose (0.0 m from nose)
+    
+    # Advanced nose cone parameters (optional)
+    base_radius_m: null  # Base radius (m). If null, uses rocket radius
+    bluffness: null  # Tip bluffness ratio (0-1). null = sharp tip. Not for powerseries
+    power: null  # Power factor for 'powerseries' kind only (0-1). Controls bluntness
+    name: "Nose Cone"  # Display name
 
   fins:
     count: 4  # ✅ Number of fins (typically 3 or 4 for stability)
