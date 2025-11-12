@@ -1,274 +1,545 @@
-# Rocket Simulation Framework# Rocket Simulation Framework
+# Rocket Simulation Framework# Rocket Simulation Framework# Rocket Simulation Framework
 
 
 
-[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/rocket-sim/)[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/rocket-sim/)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/rocket-sim/)
 
-[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-
-
-
-A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations with advanced features like air brakes control and real-time weather data integration.A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations, Monte Carlo uncertainty analysis, and **variance-based sensitivity analysis**.
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/rocket-sim/)[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/rocket-sim/)
 
 
 
-📚 **[View Full Documentation](https://matteodisante.github.io/rocket-sim/)**📚 **[View Full Documentation](https://matteodisante.github.io/rocket-sim/)**
+A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations with advanced features like air brakes control and real-time weather data integration.[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 
 
 
----## Features
+📚 **[View Full Documentation](docs/)**[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 
-
-## ✨ Features### Core Capabilities
-
-- 🚀 **Complete Simulation Pipeline**: End-to-end rocket flight simulation with RocketPy integration
-
-### Core Capabilities- 📊 **Monte Carlo Analysis**: Uncertainty quantification with 100+ parallel simulations
-
-- 🚀 **Complete Flight Simulation** - 6-DOF trajectory analysis with RocketPy integration- 🔬 **Sensitivity Analysis**: Variance-based and OAT methods for parameter importance ranking
-
-- 📁 **YAML Configuration** - Type-safe configuration files with comprehensive validation- 📁 **YAML Configuration**: Human-readable configuration files with comprehensive validation
-
-- ✅ **Validation Layer** - Automatic physical plausibility checks and stability analysis- ✅ **Type Safety**: Full type hints and dataclass-based configuration objects
-
-- 📈 **Publication-Quality Plots** - 3D trajectories, altitude, velocity, acceleration profiles- 🔍 **Validation Layer**: Automatic physical plausibility checks and stability analysis
-
-- 💾 **Multiple Export Formats** - CSV, JSON, KML, and RocketPy-compatible formats- 📈 **Visualization Suite**: Publication-quality plots (3D trajectory, altitude, velocity, acceleration)
-
-- 🎯 **Complete Motor State Export** - 35+ scalar attributes + 11 time-dependent curve plots- 💾 **Multiple Export Formats**: CSV, JSON, KML, RocketPy-compatible formats
-
-- 🎯 **Complete Motor State Export**: 35+ scalar attributes + 11 time-dependent curve plots ⭐ NEW
-
-### Advanced Features
-
-- **🎯 Air Brakes Control** - PID, bang-bang, and model-predictive controllers for active apogee targeting### Advanced Features
-
-- **🌤️ Weather Integration** - Real atmospheric data from Wyoming soundings, GFS forecasts, and ERA5 reanalysis- **Motor State Export System**: Export complete motor state (initial/final) with scalars in JSON/TXT and functions as high-quality plots
-
-- **📊 Smart Dual Y-Axis Plots** - Intelligent dual y-axis detection for plots with different scales- **Smart Dual Y-Axis Plots**: Intelligent dual y-axis detection for plots with different scales (>10x difference)
-
-- **📂 Organized Output Structure** - Automatic organization in `motor/`, `rocket/`, `environment/` subdirectories- **Organized Output Structure**: Automatic organization in `motor/`, `rocket/`, `environment/` subdirectories
-
-- **🔧 CLI Tools** - Command-line scripts for batch processing- **Variance-Based Sensitivity**: Statistical sensitivity coefficients with Linear Approximation Error (LAE)
-
-- **OAT Screening**: Quick parameter screening with tornado diagrams
-
-### 🚧 In Development- **Parallel Execution**: Multi-core Monte Carlo simulations
-
-- **📊 Monte Carlo Analysis** - Uncertainty quantification with parallel simulations *(coming soon)*- **Data Pipeline**: Seamless integration Monte Carlo → Sensitivity Analysis
-
-- **CLI Tools**: Command-line scripts for batch processing
 
 ---
 
-## Project Status
 
-## 🚀 Quick Start
 
-✅ **Phases 1-5 Complete**: Full simulation pipeline with advanced sensitivity analysis
+## ✨ FeaturesA modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations with advanced features like air brakes control and real-time weather data integration.A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations, Monte Carlo uncertainty analysis, and **variance-based sensitivity analysis**.
 
-### Installation
 
-**Completed:**
 
-#### Prerequisites- ✅ Phase 1: Configuration system and validation layer
+### Core Capabilities
 
-- Python 3.8 or higher- ✅ Phase 2: Builder pattern implementations (Motor, Environment, Rocket)
+- 🚀 **Complete Flight Simulation** - 6-DOF trajectory analysis with RocketPy integration
 
-- pip package manager- ✅ Phase 3: Core simulation engine with visualization
+- 📁 **YAML Configuration** - Type-safe configuration files with comprehensive validation📚 **[View Full Documentation](https://matteodisante.github.io/rocket-sim/)**📚 **[View Full Documentation](https://matteodisante.github.io/rocket-sim/)**
 
-- ✅ Phase 4: Monte Carlo analysis framework
+- ✅ **Validation Layer** - Automatic physical plausibility checks and stability analysis
 
-#### Setup- ✅ **Phase 5: Variance-based sensitivity analysis** ⭐ NEW
+- 📈 **Publication-Quality Plots** - 3D trajectories, altitude, velocity, acceleration profiles
 
-- ✅ Complete test suite (150+ tests passing)
+- 💾 **Multiple Export Formats** - CSV, JSON, KML, and RocketPy-compatible formats
 
-1. **Clone the repository**:- ✅ CLI scripts for single, Monte Carlo, and sensitivity analysis
+- 🎯 **Complete Motor State Export** - 35+ scalar attributes + 11 time-dependent curve plots---## Features
 
-```bash- ✅ 4 comprehensive Jupyter notebooks
 
-git clone <repository-url>
 
-cd rocket-sim**Production Ready:**
+### Advanced Features
 
-```- 🎯 Single flight simulations
+- **🎯 Air Brakes Control** - PID, bang-bang, and model-predictive controllers for active apogee targeting
 
-- 🎲 Monte Carlo uncertainty quantification
+- **🌤️ Weather Integration** - Real atmospheric data from Wyoming soundings, GFS forecasts, and ERA5 reanalysis## ✨ Features### Core Capabilities
 
-2. **Create virtual environment** (recommended):- 📊 Variance-based sensitivity analysis
+- **📊 Smart Dual Y-Axis Plots** - Intelligent dual y-axis detection for plots with different scales
 
-```bash- 📝 Complete API documentation (inline)
+- **📂 Organized Output Structure** - Automatic organization in `motor/`, `rocket/`, `environment/` subdirectories- 🚀 **Complete Simulation Pipeline**: End-to-end rocket flight simulation with RocketPy integration
 
-python -m venv venv
+- **🔧 CLI Tools** - Command-line scripts for batch processing
 
-source venv/bin/activate  # On Windows: venv\Scripts\activate## Installation
+### Core Capabilities- 📊 **Monte Carlo Analysis**: Uncertainty quantification with 100+ parallel simulations
+
+### 🚧 In Development
+
+- **📊 Monte Carlo Analysis** - Uncertainty quantification with parallel simulations *(coming soon)*- 🚀 **Complete Flight Simulation** - 6-DOF trajectory analysis with RocketPy integration- 🔬 **Sensitivity Analysis**: Variance-based and OAT methods for parameter importance ranking
+
+
+
+---- 📁 **YAML Configuration** - Type-safe configuration files with comprehensive validation- 📁 **YAML Configuration**: Human-readable configuration files with comprehensive validation
+
+
+
+## 🚀 Quick Start- ✅ **Validation Layer** - Automatic physical plausibility checks and stability analysis- ✅ **Type Safety**: Full type hints and dataclass-based configuration objects
+
+
+
+### Installation- 📈 **Publication-Quality Plots** - 3D trajectories, altitude, velocity, acceleration profiles- 🔍 **Validation Layer**: Automatic physical plausibility checks and stability analysis
+
+
+
+#### Prerequisites- 💾 **Multiple Export Formats** - CSV, JSON, KML, and RocketPy-compatible formats- 📈 **Visualization Suite**: Publication-quality plots (3D trajectory, altitude, velocity, acceleration)
+
+- Python 3.8 or higher
+
+- pip package manager- 🎯 **Complete Motor State Export** - 35+ scalar attributes + 11 time-dependent curve plots- 💾 **Multiple Export Formats**: CSV, JSON, KML, RocketPy-compatible formats
+
+
+
+#### Setup- 🎯 **Complete Motor State Export**: 35+ scalar attributes + 11 time-dependent curve plots ⭐ NEW
+
+
+
+1. **Clone the repository**:### Advanced Features
+
+```bash
+
+git clone https://github.com/matteodisante/rocket-sim.git- **🎯 Air Brakes Control** - PID, bang-bang, and model-predictive controllers for active apogee targeting### Advanced Features
+
+cd rocket-sim
+
+```- **🌤️ Weather Integration** - Real atmospheric data from Wyoming soundings, GFS forecasts, and ERA5 reanalysis- **Motor State Export System**: Export complete motor state (initial/final) with scalars in JSON/TXT and functions as high-quality plots
+
+
+
+2. **Create virtual environment** (recommended):- **📊 Smart Dual Y-Axis Plots** - Intelligent dual y-axis detection for plots with different scales- **Smart Dual Y-Axis Plots**: Intelligent dual y-axis detection for plots with different scales (>10x difference)
+
+```bash
+
+python -m venv venv- **📂 Organized Output Structure** - Automatic organization in `motor/`, `rocket/`, `environment/` subdirectories- **Organized Output Structure**: Automatic organization in `motor/`, `rocket/`, `environment/` subdirectories
+
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+```- **🔧 CLI Tools** - Command-line scripts for batch processing- **Variance-Based Sensitivity**: Statistical sensitivity coefficients with Linear Approximation Error (LAE)
+
+
+
+3. **Install dependencies**:- **OAT Screening**: Quick parameter screening with tornado diagrams
+
+```bash
+
+pip install -r requirements.txt### 🚧 In Development- **Parallel Execution**: Multi-core Monte Carlo simulations
 
 ```
 
-### Prerequisites
-
-3. **Install dependencies**:
-
-```bash- Python 3.8 or higher
-
-pip install -r requirements.txt- pip package manager
-
-```
-
-### Setup
+- **📊 Monte Carlo Analysis** - Uncertainty quantification with parallel simulations *(coming soon)*- **Data Pipeline**: Seamless integration Monte Carlo → Sensitivity Analysis
 
 4. **Verify installation**:
 
-```bash1. **Clone the repository**:
+```bash- **CLI Tools**: Command-line scripts for batch processing
 
-python -c "import rocketpy; print('✓ Dependencies installed')"```bash
+python -c "import rocketpy; print('✓ Dependencies installed')"
 
-```git clone <repository-url>
-
-cd rocket-simulation
-
-### Run Your First Simulation```
+```---
 
 
 
-```bash2. **Create a virtual environment** (recommended):
-
-python scripts/run_single_simulation.py \```bash
-
-    --config configs/single_sim/01_minimal.yaml \python -m venv venv
-
-    --name my_first_rocket \source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-    --plots```
-
-```
-
-3. **Install dependencies**:
-
-**Output**: Results will be in `outputs/my_first_rocket/` with plots, data files, and motor curves.```bash
-
-pip install -r requirements.txt
-
----```
+### Run Your First Simulation## Project Status
 
 
 
-## 📋 Usage Examples4. **Verify installation**:
+```bash## 🚀 Quick Start
 
-```bash
+python scripts/run_single_simulation.py \
 
-### Single Flight Simulationpython -c "import rocketpy; import statsmodels; print('✓ All dependencies installed')"
+    --config configs/single_sim/01_minimal.yaml \✅ **Phases 1-5 Complete**: Full simulation pipeline with advanced sensitivity analysis
+
+    --name my_first_rocket \
+
+    --plots### Installation
 
 ```
+
+**Completed:**
+
+**Output**: Results will be in `outputs/my_first_rocket/` with plots, data files, and motor curves.
+
+#### Prerequisites- ✅ Phase 1: Configuration system and validation layer
+
+---
+
+- Python 3.8 or higher- ✅ Phase 2: Builder pattern implementations (Motor, Environment, Rocket)
+
+## 📋 Usage Examples
+
+- pip package manager- ✅ Phase 3: Core simulation engine with visualization
+
+### Single Flight Simulation
+
+- ✅ Phase 4: Monte Carlo analysis framework
 
 **Basic usage:**
 
-```bash## Documentation
+```bash#### Setup- ✅ **Phase 5: Variance-based sensitivity analysis** ⭐ NEW
 
 python scripts/run_single_simulation.py \
 
-    --config configs/single_sim/01_minimal.yaml \📖 **Comprehensive documentation available in [`docs/`](docs/)**
+    --config configs/single_sim/01_minimal.yaml \- ✅ Complete test suite (150+ tests passing)
 
     --name test_flight
 
-```The documentation is organized as follows:
+```1. **Clone the repository**:- ✅ CLI scripts for single, Monte Carlo, and sensitivity analysis
 
-- **[User Guides](docs/user/)**: Motor state export guide, troubleshooting
 
-**With all features:**- **[Developer Documentation](docs/developer/)**: Architecture, API reference, motor attributes classification, contributing
 
-```bash- **[Implementation Details](docs/implementation/)**: Technical implementation summaries
-
-python scripts/run_single_simulation.py \
-
-    --config configs/single_sim/02_complete.yaml \### Quick Links
-
-    --name artemis \- [Motor State Export Guide](docs/user/MOTOR_STATE_EXPORT_GUIDE.md) - Complete guide to new export system ⭐
-
-    --plots \- [Motor Attributes Classification](docs/developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md) - All 61 SolidMotor attributes classified
-
-    --verbose \- [Architecture](docs/developer/ARCHITECTURE.md) - System architecture and design decisions
-
-    --log-file simulation.log- [CHANGELOG](CHANGELOG.md) - Recent changes and updates
-
-```
-
-### Building Documentation Locally
-
-### Configuration Files
+**With all features:**```bash- ✅ 4 comprehensive Jupyter notebooks
 
 ```bash
 
-Available configurations in `configs/`:cd docs
+python scripts/run_single_simulation.py \git clone <repository-url>
 
-- `single_sim/01_minimal.yaml` - Minimal configuration for quick testsmake html
+    --config configs/single_sim/02_complete.yaml \
 
-- `single_sim/02_complete.yaml` - Complete configuration with all featuresopen _build/html/index.html  # Or: python -m http.server 8000 -d _build/html
+    --name artemis \cd rocket-sim**Production Ready:**
 
-- `monte_carlo/` - Monte Carlo configurations *(in development)*```
+    --plots \
 
-- `templates/template_complete_documented.yaml` - Fully documented template
+    --verbose \```- 🎯 Single flight simulations
 
-- `weather_example.yaml` - Weather integration example## Quick Start
+    --log-file simulation.log
 
-
-
----### 1. Run Your First Simulation (5 minutes)
+```- 🎲 Monte Carlo uncertainty quantification
 
 
 
-## 📂 Project StructureSee the [Getting Started Notebook](notebooks/00_getting_started.ipynb) for an interactive tutorial.
+### Configuration Files2. **Create virtual environment** (recommended):- 📊 Variance-based sensitivity analysis
 
 
 
-``````python
+Available configurations in `configs/`:```bash- 📝 Complete API documentation (inline)
 
-rocket-sim/from src.config_loader import ConfigLoader
+- `single_sim/01_minimal.yaml` - Minimal configuration for quick tests
 
-├── configs/                    # YAML configuration filesfrom src.motor_builder import MotorBuilder
+- `single_sim/02_complete.yaml` - Complete configuration with all featurespython -m venv venv
 
-│   ├── single_sim/            # Single flight configurationsfrom src.environment_setup import EnvironmentBuilder
+- `monte_carlo/` - Monte Carlo configurations *(in development)*
 
-│   ├── monte_carlo/           # Monte Carlo configurations (in dev)from src.rocket_builder import RocketBuilder
+- `templates/template_complete_documented.yaml` - Fully documented templatesource venv/bin/activate  # On Windows: venv\Scripts\activate## Installation
 
-│   └── templates/             # Configuration templatesfrom src.flight_simulator import FlightSimulator
+- `weather_example.yaml` - Weather integration example
+
+```
+
+---
+
+### Prerequisites
+
+## 📂 Project Structure
+
+3. **Install dependencies**:
+
+```
+
+rocket-sim/```bash- Python 3.8 or higher
+
+├── configs/                    # YAML configuration files
+
+│   ├── single_sim/            # Single flight configurationspip install -r requirements.txt- pip package manager
+
+│   ├── monte_carlo/           # Monte Carlo configurations (in dev)
+
+│   └── templates/             # Configuration templates```
 
 │
 
-├── src/                       # Source code (~3500 lines)# Load configuration
+├── src/                       # Source code (~3500 lines)### Setup
 
-│   ├── config_loader.py       # Configuration loadingconfig_loader = ConfigLoader()
+│   ├── config_loader.py       # Configuration loading
 
-│   ├── validators.py          # Validation frameworkconfig_loader.load_from_yaml('configs/simple_rocket.yaml')
+│   ├── validators.py          # Validation framework4. **Verify installation**:
 
 │   ├── motor_builder.py       # Motor construction
 
-│   ├── environment_setup.py   # Environment setuprocket_cfg = config_loader.get_rocket_config()
+│   ├── environment_setup.py   # Environment setup```bash1. **Clone the repository**:
 
-│   ├── rocket_builder.py      # Rocket constructionmotor_cfg = config_loader.get_motor_config()
+│   ├── rocket_builder.py      # Rocket construction
 
-│   ├── flight_simulator.py    # Flight simulationenv_cfg = config_loader.get_environment_config()
+│   ├── flight_simulator.py    # Flight simulationpython -c "import rocketpy; print('✓ Dependencies installed')"```bash
 
-│   ├── data_handler.py        # Data exportsim_cfg = config_loader.get_simulation_config()
+│   ├── data_handler.py        # Data export
 
-│   ├── state_exporter.py      # Complete state export
+│   ├── state_exporter.py      # Complete state export```git clone <repository-url>
 
-│   ├── curve_plotter.py       # Motor curve plotting# Build components
+│   ├── curve_plotter.py       # Motor curve plotting
 
-│   ├── visualizer.py          # Result visualizationmotor = MotorBuilder(motor_cfg).build()
+│   ├── visualizer.py          # Result visualizationcd rocket-simulation
 
-│   ├── air_brakes_controller.py  # Air brakes controlenvironment = EnvironmentBuilder(env_cfg).build()
+│   ├── air_brakes_controller.py  # Air brakes control
 
-│   ├── weather_fetcher.py     # Weather data integrationrocket = RocketBuilder(rocket_cfg).build(motor)
+│   ├── weather_fetcher.py     # Weather data integration### Run Your First Simulation```
 
 │   ├── monte_carlo_runner.py  # Monte Carlo (in development)
 
-│   └── utils.py               # Utilities# Run simulation
+│   └── utils.py               # Utilities
 
-│simulator = FlightSimulator(rocket, motor, environment)
+│
+
+├── scripts/                   # Command-line scripts```bash2. **Create a virtual environment** (recommended):
+
+│   ├── run_single_simulation.py
+
+│   └── run_monte_carlo.py     # (in development)python scripts/run_single_simulation.py \```bash
+
+│
+
+├── docs/                      # Documentation    --config configs/single_sim/01_minimal.yaml \python -m venv venv
+
+│   ├── user/                  # User guides
+
+│   └── developer/             # Developer docs    --name my_first_rocket \source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+│
+
+├── examples/                  # Example scripts    --plots```
+
+├── notebooks/                 # Jupyter notebooks
+
+├── tests/                     # Test suite```
+
+└── outputs/                   # Simulation outputs
+
+```3. **Install dependencies**:
+
+
+
+---**Output**: Results will be in `outputs/my_first_rocket/` with plots, data files, and motor curves.```bash
+
+
+
+## 📚 Documentationpip install -r requirements.txt
+
+
+
+### User Guides---```
+
+- [Configuration Reference](docs/user/CONFIGURATION_REFERENCE.md)
+
+- [Motor State Export Guide](docs/user/MOTOR_STATE_EXPORT_GUIDE.md)
+
+- [Plots and Output Reference](docs/user/PLOTS_AND_OUTPUT_REFERENCE.md)
+
+- [Troubleshooting](docs/user/TROUBLESHOOTING.md)## 📋 Usage Examples4. **Verify installation**:
+
+
+
+### Developer Documentation```bash
+
+- [Architecture](docs/developer/ARCHITECTURE.md)
+
+- [API Reference](docs/developer/API_REFERENCE.md)### Single Flight Simulationpython -c "import rocketpy; import statsmodels; print('✓ All dependencies installed')"
+
+- [Module Reference](docs/developer/MODULE_REFERENCE.md)
+
+- [Motor Attributes Classification](docs/developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md)```
+
+- [Contributing](docs/developer/CONTRIBUTING.md)
+
+**Basic usage:**
+
+### Additional Resources
+
+- [CHANGELOG](CHANGELOG.md) - Recent changes and updates```bash## Documentation
+
+- [RocketPy Documentation](https://docs.rocketpy.org/)
+
+- [RocketPy GitHub](https://github.com/RocketPy-Team/RocketPy)python scripts/run_single_simulation.py \
+
+
+
+---    --config configs/single_sim/01_minimal.yaml \📖 **Comprehensive documentation available in [`docs/`](docs/)**
+
+
+
+## 🛠️ Development    --name test_flight
+
+
+
+### Running Tests```The documentation is organized as follows:
+
+
+
+```bash- **[User Guides](docs/user/)**: Motor state export guide, troubleshooting
+
+# Run all tests
+
+pytest**With all features:**- **[Developer Documentation](docs/developer/)**: Architecture, API reference, motor attributes classification, contributing
+
+
+
+# Run with coverage```bash- **[Implementation Details](docs/implementation/)**: Technical implementation summaries
+
+pytest --cov=src --cov-report=html
+
+python scripts/run_single_simulation.py \
+
+# Run with verbose output
+
+pytest -v    --config configs/single_sim/02_complete.yaml \### Quick Links
+
+```
+
+    --name artemis \- [Motor State Export Guide](docs/user/MOTOR_STATE_EXPORT_GUIDE.md) - Complete guide to new export system ⭐
+
+### Code Quality
+
+    --plots \- [Motor Attributes Classification](docs/developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md) - All 61 SolidMotor attributes classified
+
+```bash
+
+# Format code    --verbose \- [Architecture](docs/developer/ARCHITECTURE.md) - System architecture and design decisions
+
+black src/ tests/
+
+    --log-file simulation.log- [CHANGELOG](CHANGELOG.md) - Recent changes and updates
+
+# Check style
+
+flake8 src/ tests/```
+
+
+
+# Type checking### Building Documentation Locally
+
+mypy src/
+
+```### Configuration Files
+
+
+
+### Contributing```bash
+
+
+
+We welcome contributions! See [CONTRIBUTING.md](docs/developer/CONTRIBUTING.md) for guidelines.Available configurations in `configs/`:cd docs
+
+
+
+**Code Style:**- `single_sim/01_minimal.yaml` - Minimal configuration for quick testsmake html
+
+- Follow PEP 8 style guide
+
+- Use type hints for all function signatures- `single_sim/02_complete.yaml` - Complete configuration with all featuresopen _build/html/index.html  # Or: python -m http.server 8000 -d _build/html
+
+- Write docstrings in NumPy/Google style
+
+- Keep line length ≤ 100 characters- `monte_carlo/` - Monte Carlo configurations *(in development)*```
+
+- Use SI units exclusively: `mass_kg`, `velocity_ms`, `force_n`
+
+- `templates/template_complete_documented.yaml` - Fully documented template
+
+---
+
+- `weather_example.yaml` - Weather integration example## Quick Start
+
+## 📦 Dependencies
+
+
+
+### Core Dependencies
+
+- **rocketpy** >= 1.2.0 - Rocket physics simulation engine---### 1. Run Your First Simulation (5 minutes)
+
+- **numpy** >= 1.21.0 - Numerical computing
+
+- **scipy** >= 1.7.0 - Scientific computing
+
+- **matplotlib** >= 3.4.0 - Plotting and visualization
+
+- **pyyaml** >= 6.0 - YAML configuration parsing## 📂 Project StructureSee the [Getting Started Notebook](notebooks/00_getting_started.ipynb) for an interactive tutorial.
+
+
+
+### Data Handling
+
+- **pandas** >= 1.3.0 - Data analysis
+
+- **h5py** >= 3.6.0 - HDF5 file format``````python
+
+
+
+### Developmentrocket-sim/from src.config_loader import ConfigLoader
+
+- **pytest** >= 7.0.0 - Testing framework
+
+- **black** >= 22.0.0 - Code formatting├── configs/                    # YAML configuration filesfrom src.motor_builder import MotorBuilder
+
+- **flake8** >= 4.0.0 - Linting
+
+- **mypy** >= 0.950 - Type checking│   ├── single_sim/            # Single flight configurationsfrom src.environment_setup import EnvironmentBuilder
+
+
+
+See [requirements.txt](requirements.txt) for complete list.│   ├── monte_carlo/           # Monte Carlo configurations (in dev)from src.rocket_builder import RocketBuilder
+
+
+
+---│   └── templates/             # Configuration templatesfrom src.flight_simulator import FlightSimulator
+
+
+
+## 🎯 Project Status│
+
+
+
+### ✅ Production Ready├── src/                       # Source code (~3500 lines)# Load configuration
+
+- Single flight simulations with comprehensive validation
+
+- Motor state export system (35+ attributes, 11 plots)│   ├── config_loader.py       # Configuration loadingconfig_loader = ConfigLoader()
+
+- Air brakes control (PID, bang-bang, MPC)
+
+- Weather data integration (Wyoming, GFS, ERA5)│   ├── validators.py          # Validation frameworkconfig_loader.load_from_yaml('configs/simple_rocket.yaml')
+
+- Publication-quality visualization
+
+- Complete test suite│   ├── motor_builder.py       # Motor construction
+
+
+
+### 🚧 In Development│   ├── environment_setup.py   # Environment setuprocket_cfg = config_loader.get_rocket_config()
+
+- Monte Carlo uncertainty analysis
+
+- Parallel execution framework│   ├── rocket_builder.py      # Rocket constructionmotor_cfg = config_loader.get_motor_config()
+
+- Advanced statistical analysis
+
+│   ├── flight_simulator.py    # Flight simulationenv_cfg = config_loader.get_environment_config()
+
+---
+
+│   ├── data_handler.py        # Data exportsim_cfg = config_loader.get_simulation_config()
+
+## 📝 License
+
+│   ├── state_exporter.py      # Complete state export
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+│   ├── curve_plotter.py       # Motor curve plotting# Build components
+
+---
+
+│   ├── visualizer.py          # Result visualizationmotor = MotorBuilder(motor_cfg).build()
+
+## 🙏 Acknowledgments
+
+│   ├── air_brakes_controller.py  # Air brakes controlenvironment = EnvironmentBuilder(env_cfg).build()
+
+- **RocketPy Team** - For the excellent rocket simulation library
+
+- **STARPI Team** - For project requirements and aerospace expertise│   ├── weather_fetcher.py     # Weather data integrationrocket = RocketBuilder(rocket_cfg).build(motor)
+
+
+
+Built for the **STARPI rocket team** 🚀│   ├── monte_carlo_runner.py  # Monte Carlo (in development)
+
+
+
+---│   └── utils.py               # Utilities# Run simulation
+
+
+
+**Status**: Production-ready for single flight simulations with advanced features ✅│simulator = FlightSimulator(rocket, motor, environment)
+
 
 ├── scripts/                   # Command-line scriptsflight = simulator.run()
 
