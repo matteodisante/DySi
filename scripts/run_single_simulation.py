@@ -131,12 +131,8 @@ def main():
     # Setup logging with auto-generated log file if not specified
     log_level = "DEBUG" if args.verbose else "INFO"
     
-    # If log file not specified, we'll set it after loading config
-    if args.log_file:
-        setup_logging(level=log_level, log_file=args.log_file)
-    else:
-        # Setup without file logging initially
-        setup_logging(level=log_level, log_file=None)
+    # Setup without file logging initially (will be configured after loading config)
+    setup_logging(level=log_level, log_file=None)
 
     logger = logging.getLogger(__name__)
 
@@ -166,13 +162,18 @@ def main():
         sim_output_dir = Path(args.output_dir) / output_name
         sim_output_dir.mkdir(parents=True, exist_ok=True)
         
-        # Setup log file if not already specified
-        if not args.log_file:
+        # Setup log file in the simulation output directory
+        if args.log_file:
+            # If user provided a log file name, place it in the output directory
+            log_file = sim_output_dir / args.log_file
+        else:
+            # Auto-generate log file name with timestamp
             log_file = sim_output_dir / f"simulation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-            # Re-setup logging with file
-            setup_logging(level=log_level, log_file=str(log_file))
-            logger = logging.getLogger(__name__)  # Refresh logger
-            logger.info(f"Log file: {log_file}")
+        
+        # Re-setup logging with file
+        setup_logging(level=log_level, log_file=str(log_file))
+        logger = logging.getLogger(__name__)  # Refresh logger
+        logger.info(f"Log file: {log_file}")
 
         # 2. Validate configurations
         logger.info("\n--- VALIDATING CONFIGURATION ---")
