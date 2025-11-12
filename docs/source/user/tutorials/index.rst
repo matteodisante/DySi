@@ -25,7 +25,7 @@ Tutorial Path
       **Time**: 15 minutes  
       **Level**: Beginner
 
-   .. grid-item-card:: 2️⃣ Understanding Outputs
+   .. grid-item-card:: 2️⃣ Understanding Outputs ✅
       :link: 02_understanding_outputs
       :link-type: doc
       :class-header: bg-light
@@ -40,7 +40,7 @@ Tutorial Path
       :link-type: doc
       :class-header: bg-light
 
-      Import your own thrust curves
+      Import your own thrust curves (Coming Soon)
       
       **Time**: 15 minutes  
       **Level**: Beginner
