@@ -35,14 +35,14 @@ Tutorial Path
       **Time**: 20 minutes  
       **Level**: Beginner
 
-   .. grid-item-card:: 3️⃣ Custom Motor Data
+   .. grid-item-card:: 3️⃣ Custom Motor Data ✅
       :link: 03_custom_motor
       :link-type: doc
       :class-header: bg-light
 
-      Import your own thrust curves (Coming Soon)
+      Import your own thrust curves
       
-      **Time**: 15 minutes  
+      **Time**: 25 minutes  
       **Level**: Beginner
 
    .. grid-item-card:: 4️⃣ Adding Fins
