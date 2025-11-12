@@ -189,6 +189,12 @@ class FlightSimulator:
                 curve_paths = state_exporter.export_curves_plots(str(curves_dir))
                 logger.info(f"Generated {len(curve_paths)} curve plots")
 
+                # Generate technical schematics (rocket.draw() and motor.draw())
+                from src.curve_plotter import CurvePlotter
+                plotter = CurvePlotter(self.rocket.motor, self.rocket, self.environment)
+                schematic_paths = plotter.save_all_schematics(str(output_path))
+                logger.info(f"Saved {len(schematic_paths)} technical schematics")
+
                 logger.info(f"State export complete: {output_path}")
 
             return self.flight
