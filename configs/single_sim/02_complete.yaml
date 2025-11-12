@@ -151,11 +151,11 @@ environment:
 
   wind:
     model: "constant"  # Options: constant, from_weather, function, custom
-    velocity_ms: 0.0
+    velocity_ms: 15.0
     direction_deg: 90.0  # Meteorological convention (0=North, 90=East)
 
   gravity_ms2: 9.80665
-  max_expected_height_m: 5000.0
+  max_expected_height_m: 4000.0
 
 simulation:
   max_time_s: 600.0
@@ -170,14 +170,3 @@ simulation:
     length_m: 1.5 
     inclination_deg: 85.0  # Degrees from vertical (0=horizontal, 90=vertical)
     heading_deg: 0.0  # Degrees from North (0=North, 90=East)
-
-
-monte_carlo:
-  num_simulations: 50
-  seed: 42
-
-  variations:
-    motor_thrust_std_pct: 5.0  # ±5% thrust variation
-    dry_mass_std_kg: 0.5  # ±0.5 kg mass uncertainty
-    wind_speed_std_ms: 2.0  # ±2 m/s wind variation
-    wind_direction_std_deg: 10.0  # ±10 degrees wind direction variation

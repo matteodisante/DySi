@@ -1,0 +1,144 @@
+# Tutorial Rocket Configuration
+# This is the example configuration from Tutorial 01: Basic Flight
+# All parameters are documented with inline comments
+
+rocket:
+  # === BASIC PROPERTIES ===
+  name: "Tutorial Rocket"
+  dry_mass_kg: 8.5  # Rocket mass WITHOUT motor propellant
+  
+  # Coordinate system: tail_to_nose (origin at tail, positive toward nose)
+  coordinate_system: "tail_to_nose"
+  
+  # Center of gravity (dry) measured from tail
+  cg_location_m: 1.0  # 1.0 m from tail
+  
+  # Center of pressure (auto-calculated from fin geometry)
+  cp_location_m: null
+  
+  # === GEOMETRY ===
+  geometry:
+    caliber_m: 0.127  # 127 mm diameter (5 inch)
+    length_m: 1.8     # Total rocket length from nose to tail
+  
+  # === INERTIA (about center of mass) ===
+  inertia:
+    ixx_kg_m2: 3.5   # Transverse moment of inertia
+    iyy_kg_m2: 3.5   # Transverse moment of inertia
+    izz_kg_m2: 0.02  # Axial moment of inertia (spin axis)
+  
+  # === NOSE CONE ===
+  nose_cone:
+    length_m: 0.35       # Nose cone length
+    kind: "vonKarman"    # Low-drag profile
+    position_m: 1.8      # At rocket nose (tail_to_nose system)
+  
+  # === FINS ===
+  fins:
+    count: 4                  # 4 fins, 90° apart
+    root_chord_m: 0.15        # Fin root length (at body tube)
+    tip_chord_m: 0.05         # Fin tip length
+    span_m: 0.10              # Fin height (perpendicular from body)
+    thickness_m: 0.003        # 3 mm fin material thickness
+    position_m: 0.3           # 0.3 m from tail (tail_to_nose)
+    cant_angle_deg: 0.0       # No cant (no induced spin)
+    airfoil: null             # Flat plate (default)
+  
+  # === PARACHUTE ===
+  parachute:
+    enabled: true
+    name: "Main Chute"
+    cd_s: 8.0                 # Drag coefficient × area (m²)
+    trigger: "apogee"         # Deploy at apogee
+    sampling_rate_hz: 105.0   # Altimeter sampling rate
+    lag_s: 1.5                # Deployment lag (ejection + inflation)
+    noise_std: [0.0, 0.0, 0.0]  # No sensor noise
+
+motor:
+  # === MOTOR TYPE ===
+  type: "SolidMotor"
+  
+  # === THRUST CURVE ===
+  thrust_source: "data/motors/Cesaroni_M1670.eng"  # .eng format
+  
+  # === MOTOR MASS PROPERTIES ===
+  dry_mass_kg: 1.286  # Empty motor casing mass
+  dry_inertia: [0.125, 0.125, 0.002]  # [Ixx, Iyy, Izz] of empty motor
+  
+  # === NOZZLE GEOMETRY ===
+  nozzle_radius_m: 0.033    # Nozzle exit radius (33 mm)
+  throat_radius_m: 0.011    # Nozzle throat radius (11 mm)
+  
+  # === PROPELLANT GRAIN GEOMETRY (BATES grains) ===
+  grain_number: 5                      # 5 cylindrical grains
+  grain_density_kg_m3: 1815.0          # APCP propellant density
+  grain_outer_radius_m: 0.033          # Grain outer radius
+  grain_initial_inner_radius_m: 0.015  # Initial bore radius
+  grain_initial_height_m: 0.120        # Each grain height (120 mm)
+  grain_separation_m: 0.005            # 5 mm gap between grains
+  
+  # === MOTOR COORDINATE SYSTEM ===
+  # Motor uses nozzle_to_combustion_chamber orientation
+  coordinate_system_orientation: "nozzle_to_combustion_chamber"
+  nozzle_position_m: 0.0                      # Nozzle at origin
+  grains_center_of_mass_position_m: 0.317     # Grains CoM from nozzle
+  center_of_dry_mass_position_m: 0.317        # Dry motor CoM from nozzle
+  
+  # === BURN CHARACTERISTICS ===
+  burn_time_s: null  # Auto-detect from thrust curve
+  
+  # === ADVANCED PARAMETERS ===
+  interpolation_method: "spline"  # Smooth thrust interpolation
+  reference_pressure: 101325      # Sea level (thrust curve test pressure)
+  
+  # === MOTOR POSITION IN ROCKET ===
+  # Position of nozzle exit in rocket coordinate system (tail_to_nose)
+  position_m: 0.0  # Nozzle at tail (0.0 m from tail)
+
+environment:
+  # === LAUNCH SITE LOCATION ===
+  latitude_deg: 39.3897   # Alcochete, Portugal (North)
+  longitude_deg: -8.2889  # West
+  elevation_m: 100.0      # 100 m above sea level
+  
+  # === ATMOSPHERIC MODEL ===
+  atmospheric_model: "standard_atmosphere"
+  
+  # === WEATHER DATA (optional - using standard atmosphere) ===
+  weather:
+    source: "standard_atmosphere"
+  
+  # === WIND ===
+  wind:
+    model: "constant"      # Constant wind at all altitudes
+    velocity_ms: 3.0       # 3 m/s wind speed (light breeze)
+    direction_deg: 90.0    # Wind FROM East (easterly)
+  
+  # === DATE/TIME (optional) ===
+  date: null  # No specific date (using standard atmosphere)
+  
+  # === GRAVITY ===
+  gravity_ms2: 9.80665  # Standard gravity
+  
+  # === SIMULATION LIMITS ===
+  max_expected_height_m: 3500.0  # Pre-allocate atmosphere to 3500 m
+
+simulation:
+  # === LAUNCH RAIL ===
+  rail:
+    length_m: 5.0           # 5 meter rail
+    inclination_deg: 85.0   # 5° from vertical (nearly vertical)
+    heading_deg: 0.0        # Pointing North
+  
+  # === INTEGRATION PARAMETERS ===
+  max_time_s: 300.0         # Max 5 minutes simulation time
+  max_time_step_s: .inf     # Automatic time step (recommended)
+  min_time_step_s: 0.0      # No minimum limit
+  rtol: 1e-6                # Relative tolerance (0.0001% error)
+  atol: 1e-6                # Absolute tolerance
+  
+  # === TERMINATION CONDITIONS ===
+  terminate_on_apogee: false  # Simulate full flight (ascent + descent)
+  
+  # === OUTPUT CONTROL ===
+  verbose: false  # Minimal output (quiet mode)
