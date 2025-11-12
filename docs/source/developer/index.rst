@@ -1,34 +1,50 @@
 Developer Documentation
 =======================
 
+Documentation for developers working on the rocket simulation framework.
+
 .. toctree::
    :maxdepth: 2
+   :caption: Developer Guides
    
    architecture
-   api
-   contributing
+   
+Overview
+--------
 
-Architecture
-------------
+This section contains technical documentation for understanding and contributing to the codebase.
 
-See the `Architecture Documentation <../developer/ARCHITECTURE.md>`_ for system design and architecture details.
+System Architecture
+-------------------
 
-API Reference
--------------
+The :ref:`developer-architecture` page provides a comprehensive overview of the system design:
 
-See the `API Reference <../developer/API_REFERENCE.md>`_ for complete API documentation.
+- **Layered architecture** from YAML config to simulation outputs
+- **Data flow diagrams** showing the complete pipeline
+- **Design patterns** used throughout the codebase
+- **Module responsibilities** and extension points
 
-Module Reference
-----------------
+Key topics covered:
 
-See the `Module Reference <../developer/MODULE_REFERENCE.md>`_ for detailed module documentation.
+- Configuration loading and validation
+- Builder pattern for object construction
+- Flight simulation execution
+- Output generation (CSV, JSON, plots)
+- Performance considerations
+- Testing strategy
 
-Contributing
-------------
+Additional Resources
+--------------------
 
-See the `Contributing Guide <../developer/CONTRIBUTING.md>`_ for guidelines on contributing to the project.
+For additional developer documentation, see the files in ``docs/developer/``:
 
-Motor Attributes
-----------------
+- ``ARCHITECTURE.md`` - Original detailed architecture document
+- ``API_REFERENCE.md`` - Complete API documentation
+- ``MODULE_REFERENCE.md`` - Module-level documentation
+- ``CONTRIBUTING.md`` - Contributing guidelines
+- ``MOTOR_ATTRIBUTES_CLASSIFICATION.md`` - RocketPy motor attributes
 
-See the `Motor Attributes Classification <../developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md>`_ for complete RocketPy SolidMotor attributes documentation.
+.. note::
+   
+   The architecture documentation in this section provides a high-level overview.
+   For low-level implementation details, refer to the Markdown files in ``docs/developer/``.
