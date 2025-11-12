@@ -55,14 +55,14 @@ Tutorial Path
       **Time**: 30 minutes  
       **Level**: Intermediate
 
-   .. grid-item-card:: 5️⃣ Recovery System
+   .. grid-item-card:: 5️⃣ Recovery System ✅
       :link: 05_recovery_system
       :link-type: doc
       :class-header: bg-light
 
       Configure parachutes and deployment
       
-      **Time**: 20 minutes  
+      **Time**: 35 minutes  
       **Level**: Intermediate
 
    .. grid-item-card:: 6️⃣ Weather Integration
