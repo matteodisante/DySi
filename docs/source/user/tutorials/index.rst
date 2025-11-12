@@ -45,14 +45,14 @@ Tutorial Path
       **Time**: 25 minutes  
       **Level**: Beginner
 
-   .. grid-item-card:: 4️⃣ Adding Fins
+   .. grid-item-card:: 4️⃣ Adding Fins ✅
       :link: 04_adding_fins
       :link-type: doc
       :class-header: bg-light
 
       Design fin configurations
       
-      **Time**: 25 minutes  
+      **Time**: 30 minutes  
       **Level**: Intermediate
 
    .. grid-item-card:: 5️⃣ Recovery System
