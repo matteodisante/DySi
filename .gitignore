@@ -88,6 +88,8 @@ docs/source/_build/
 
 # Backup files
 *.backup
+*.old
+*.tmp
 
 # macOS
 .DS_Store

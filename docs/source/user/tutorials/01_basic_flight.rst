@@ -516,7 +516,7 @@ Complete Example File
 
 Here's the complete ``tutorial_rocket.yaml`` configuration:
 
-.. literalinclude:: /../../configs/tutorial_rocket.yaml
+.. literalinclude:: /../../configs/templates/tutorial_rocket.yaml
    :language: yaml
    :caption: configs/tutorial_rocket.yaml
 
