@@ -1,0 +1,1064 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Export Simulation Data &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/how_to_guides/export_data';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Configuration Reference" href="../configuration/index.html" />
+    <link rel="prev" title="Select the Optimal Motor" href="motor_selection.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">How-To Guides</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Export Simulation Data</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="export-simulation-data">
+<span id="howto-export-data"></span><h1>Export Simulation Data<a class="headerlink" href="#export-simulation-data" title="Link to this heading">#</a></h1>
+<p>This guide shows you how to export simulation results in various formats for analysis, reporting, and sharing.</p>
+<div class="tip admonition">
+<p class="admonition-title">Quick Answer</p>
+<p>Simulation data is automatically exported to <code class="docutils literal notranslate"><span class="pre">outputs/&lt;rocket_name&gt;/</span></code> in multiple formats (CSV, JSON, plots).</p>
+</div>
+<section id="available-export-formats">
+<h2>Available Export Formats<a class="headerlink" href="#available-export-formats" title="Link to this heading">#</a></h2>
+<section id="automatic-exports">
+<h3>Automatic Exports<a class="headerlink" href="#automatic-exports" title="Link to this heading">#</a></h3>
+<p>Every simulation automatically creates:</p>
+<ol class="arabic simple">
+<li><p><strong>JSON Summary</strong> - <code class="docutils literal notranslate"><span class="pre">trajectory/&lt;name&gt;_summary.json</span></code></p></li>
+<li><p><strong>CSV Trajectory</strong> - <code class="docutils literal notranslate"><span class="pre">trajectory/&lt;name&gt;_trajectory.csv</span></code></p></li>
+<li><p><strong>Readable State</strong> - <code class="docutils literal notranslate"><span class="pre">final_state_READABLE.txt</span></code></p></li>
+<li><p><strong>Binary State</strong> - <code class="docutils literal notranslate"><span class="pre">final_state</span></code> (Python pickle)</p></li>
+<li><p><strong>PNG Plots</strong> - <code class="docutils literal notranslate"><span class="pre">plots/&lt;name&gt;_*.png</span></code></p></li>
+</ol>
+</section>
+</section>
+<section id="export-locations">
+<h2>Export Locations<a class="headerlink" href="#export-locations" title="Link to this heading">#</a></h2>
+<section id="default-structure">
+<h3>Default Structure<a class="headerlink" href="#default-structure" title="Link to this heading">#</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>outputs/
+└── my_rocket/
+    ├── final_state                           # Binary (pickle)
+    ├── final_state_READABLE.txt              # Human-readable
+    ├── initial_state
+    ├── initial_state_READABLE.txt
+    ├── my_rocket_log                         # Log file (if --log-file)
+    ├── curves/                               # Motor/rocket curves
+    ├── plots/                                # Visualization
+    │   ├── my_rocket_altitude.png
+    │   ├── my_rocket_velocity.png
+    │   ├── my_rocket_acceleration.png
+    │   ├── my_rocket_trajectory_2d.png
+    │   └── my_rocket_trajectory_3d.png
+    └── trajectory/                           # Numerical data
+        ├── my_rocket_summary.json
+        └── my_rocket_trajectory.csv
+</pre></div>
+</div>
+</section>
+</section>
+<section id="exporting-specific-data">
+<h2>Exporting Specific Data<a class="headerlink" href="#exporting-specific-data" title="Link to this heading">#</a></h2>
+<section id="method-1-use-json-summary">
+<h3>Method 1: Use JSON Summary<a class="headerlink" href="#method-1-use-json-summary" title="Link to this heading">#</a></h3>
+<p><strong>Best for:</strong> Reports, dashboards, quick analysis</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="c1"># Load summary</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_summary.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Extract specific results</span>
+<span class="n">apogee</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">][</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span>
+<span class="n">max_velocity</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">][</span><span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Apogee: </span><span class="si">{</span><span class="n">apogee</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max velocity: </span><span class="si">{</span><span class="n">max_velocity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Available fields:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simulation configuration</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;simulation_config&#39;</span><span class="p">]</span>  <span class="c1"># Rail, integration params</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;environment&#39;</span><span class="p">]</span>         <span class="c1"># Launch site</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;rocket&#39;</span><span class="p">]</span>              <span class="c1"># Basic rocket info</span>
+
+<span class="c1"># Flight results</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">]</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;apogee_time_s&#39;</span><span class="p">]</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">]</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_acceleration_ms2&#39;</span><span class="p">]</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">]</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;x_impact_m&#39;</span><span class="p">]</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;y_impact_m&#39;</span><span class="p">]</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;lateral_distance_m&#39;</span><span class="p">]</span>
+<span class="c1"># ... and more</span>
+</pre></div>
+</div>
+</section>
+<section id="method-2-use-csv-trajectory">
+<h3>Method 2: Use CSV Trajectory<a class="headerlink" href="#method-2-use-csv-trajectory" title="Link to this heading">#</a></h3>
+<p><strong>Best for:</strong> Detailed analysis, custom plots, spreadsheets</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Load trajectory</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_trajectory.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Available columns:</span>
+<span class="c1"># time_s, altitude_m, x_m, y_m,</span>
+<span class="c1"># vx_ms, vy_ms, vz_ms,</span>
+<span class="c1"># ax_ms2, ay_ms2, az_ms2</span>
+
+<span class="c1"># Plot altitude vs. time</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time_s&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Altitude (m)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Rocket Trajectory&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;my_custom_plot.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="method-3-parse-readable-state">
+<h3>Method 3: Parse Readable State<a class="headerlink" href="#method-3-parse-readable-state" title="Link to this heading">#</a></h3>
+<p><strong>Best for:</strong> Human review, reports</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract specific sections</span>
+grep<span class="w"> </span>-A<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="s2">&quot;FLIGHT RESULTS&quot;</span><span class="w"> </span>outputs/my_rocket/final_state_READABLE.txt<span class="w"> </span>&gt;<span class="w"> </span>flight_summary.txt
+
+<span class="c1"># Get apogee info</span>
+grep<span class="w"> </span><span class="s2">&quot;Apogee:&quot;</span><span class="w"> </span>outputs/my_rocket/final_state_READABLE.txt
+
+<span class="c1"># Get motor performance</span>
+grep<span class="w"> </span>-A<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s2">&quot;Performance:&quot;</span><span class="w"> </span>outputs/my_rocket/final_state_READABLE.txt
+</pre></div>
+</div>
+</section>
+</section>
+<section id="custom-export-formats">
+<h2>Custom Export Formats<a class="headerlink" href="#custom-export-formats" title="Link to this heading">#</a></h2>
+<section id="export-to-excel">
+<h3>Export to Excel<a class="headerlink" href="#export-to-excel" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load trajectory</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_trajectory.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Calculate additional fields</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;velocity_mag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;vx_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vy_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vz_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;acceleration_mag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ax_ms2&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ay_ms2&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;az_ms2&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+<span class="c1"># Export to Excel</span>
+<span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="s1">&#39;trajectory_analysis.xlsx&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;Trajectory&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Add summary sheet</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Metric&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Apogee (m)&#39;</span><span class="p">,</span> <span class="s1">&#39;Max Velocity (m/s)&#39;</span><span class="p">,</span> <span class="s1">&#39;Flight Time (s)&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;velocity_mag&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;time_s&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span>
+    <span class="p">}</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;Summary&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="export-to-kml-google-earth">
+<h3>Export to KML (Google Earth)<a class="headerlink" href="#export-to-kml-google-earth" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">simplekml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="c1"># Load data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_trajectory.csv&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_summary.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Create KML</span>
+<span class="n">kml</span> <span class="o">=</span> <span class="n">simplekml</span><span class="o">.</span><span class="n">Kml</span><span class="p">()</span>
+
+<span class="c1"># Launch site</span>
+<span class="n">launch_lat</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;environment&#39;</span><span class="p">][</span><span class="s1">&#39;latitude_deg&#39;</span><span class="p">]</span>
+<span class="n">launch_lon</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;environment&#39;</span><span class="p">][</span><span class="s1">&#39;longitude_deg&#39;</span><span class="p">]</span>
+<span class="n">launch_elev</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;environment&#39;</span><span class="p">][</span><span class="s1">&#39;elevation_m&#39;</span><span class="p">]</span>
+
+<span class="n">kml</span><span class="o">.</span><span class="n">newpoint</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Launch Site&quot;</span><span class="p">,</span>
+             <span class="n">coords</span><span class="o">=</span><span class="p">[(</span><span class="n">launch_lon</span><span class="p">,</span> <span class="n">launch_lat</span><span class="p">,</span> <span class="n">launch_elev</span><span class="p">)])</span>
+
+<span class="c1"># Trajectory path (simplified - every 10th point)</span>
+<span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="c1"># Convert x,y to lat/lon (approximate)</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">launch_lat</span> <span class="o">+</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;y_m&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">111320</span><span class="p">)</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">launch_lon</span> <span class="o">+</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;x_m&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">111320</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">launch_lat</span><span class="p">))))</span>
+    <span class="n">alt</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span>
+    <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">alt</span><span class="p">))</span>
+
+<span class="n">linestring</span> <span class="o">=</span> <span class="n">kml</span><span class="o">.</span><span class="n">newlinestring</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Flight Path&quot;</span><span class="p">)</span>
+<span class="n">linestring</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span>
+<span class="n">linestring</span><span class="o">.</span><span class="n">altitudemode</span> <span class="o">=</span> <span class="n">simplekml</span><span class="o">.</span><span class="n">AltitudeMode</span><span class="o">.</span><span class="n">absolute</span>
+<span class="n">linestring</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">linestyle</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">simplekml</span><span class="o">.</span><span class="n">Color</span><span class="o">.</span><span class="n">red</span>
+<span class="n">linestring</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">linestyle</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># Apogee marker</span>
+<span class="n">apogee_idx</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="n">apogee_row</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">apogee_idx</span><span class="p">]</span>
+<span class="n">apogee_lat</span> <span class="o">=</span> <span class="n">launch_lat</span> <span class="o">+</span> <span class="p">(</span><span class="n">apogee_row</span><span class="p">[</span><span class="s1">&#39;y_m&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">111320</span><span class="p">)</span>
+<span class="n">apogee_lon</span> <span class="o">=</span> <span class="n">launch_lon</span> <span class="o">+</span> <span class="p">(</span><span class="n">apogee_row</span><span class="p">[</span><span class="s1">&#39;x_m&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">111320</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">launch_lat</span><span class="p">))))</span>
+
+<span class="n">pnt</span> <span class="o">=</span> <span class="n">kml</span><span class="o">.</span><span class="n">newpoint</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Apogee&quot;</span><span class="p">,</span>
+                   <span class="n">coords</span><span class="o">=</span><span class="p">[(</span><span class="n">apogee_lon</span><span class="p">,</span> <span class="n">apogee_lat</span><span class="p">,</span> <span class="n">apogee_row</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">])])</span>
+<span class="n">pnt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">iconstyle</span><span class="o">.</span><span class="n">icon</span><span class="o">.</span><span class="n">href</span> <span class="o">=</span> <span class="s1">&#39;http://maps.google.com/mapfiles/kml/shapes/flag.png&#39;</span>
+
+<span class="c1"># Save</span>
+<span class="n">kml</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;trajectory.kml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="export-for-reports">
+<h3>Export for Reports<a class="headerlink" href="#export-for-reports" title="Link to this heading">#</a></h3>
+<p>Create publication-quality output:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_report</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">report_file</span><span class="o">=</span><span class="s1">&#39;flight_report.md&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Markdown report from simulation.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Load data</span>
+    <span class="n">summary_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s1">/trajectory/</span><span class="si">{</span><span class="n">output_dir</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">_summary.json&#39;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">summary_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Create report</span>
+    <span class="n">report</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2"># Flight Simulation Report</span>
+
+<span class="s2">**Date:** </span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">)</span><span class="si">}</span>
+
+<span class="s2">## Rocket Configuration</span>
+
+<span class="s2">- Mass: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;rocket&#39;</span><span class="p">][</span><span class="s1">&#39;mass_kg&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> kg</span>
+<span class="s2">- Diameter: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;rocket&#39;</span><span class="p">][</span><span class="s1">&#39;radius_m&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> mm</span>
+
+<span class="s2">## Launch Site</span>
+
+<span class="s2">- Latitude: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;environment&#39;</span><span class="p">][</span><span class="s1">&#39;latitude_deg&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°</span>
+<span class="s2">- Longitude: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;environment&#39;</span><span class="p">][</span><span class="s1">&#39;longitude_deg&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">°</span>
+<span class="s2">- Elevation: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;environment&#39;</span><span class="p">][</span><span class="s1">&#39;elevation_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m ASL</span>
+
+<span class="s2">## Flight Performance</span>
+
+<span class="s2">| Metric | Value |</span>
+<span class="s2">|--------|-------|</span>
+<span class="s2">| **Apogee** | </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m (</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">3.28084</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft) |</span>
+<span class="s2">| **Apogee Time** | </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;apogee_time_s&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s |</span>
+<span class="s2">| **Max Velocity** | </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s (Mach </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_mach_number&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">) |</span>
+<span class="s2">| **Max Acceleration** | </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_acceleration_ms2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s² (</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_acceleration_ms2&#39;</span><span class="p">]</span><span class="o">/</span><span class="mf">9.81</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> g) |</span>
+<span class="s2">| **Flight Time** | </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s (</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">60</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> min) |</span>
+<span class="s2">| **Landing Distance** | </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;lateral_distance_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m |</span>
+
+<span class="s2">## Stability</span>
+
+<span class="s2">- Initial Stability Margin: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;initial_stability_margin_calibers&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> calibers</span>
+<span class="s2">- Rail Exit Velocity: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;out_of_rail_velocity_ms&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s</span>
+
+<span class="s2">## Recovery</span>
+
+<span class="s2">- Impact Velocity: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;impact_velocity_ms&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s</span>
+<span class="s2">- Landing Position: (</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;x_impact_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;y_impact_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">) m</span>
+
+<span class="s2">---</span>
+
+<span class="s2">*Generated by rocket-sim*</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">report_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Report saved to </span><span class="si">{</span><span class="n">report_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Usage</span>
+<span class="n">generate_report</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="batch-export">
+<h2>Batch Export<a class="headerlink" href="#batch-export" title="Link to this heading">#</a></h2>
+<section id="export-multiple-simulations">
+<h3>Export Multiple Simulations<a class="headerlink" href="#export-multiple-simulations" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">batch_export</span><span class="p">(</span><span class="n">output_dirs</span><span class="p">,</span> <span class="n">export_file</span><span class="o">=</span><span class="s1">&#39;comparison.csv&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export multiple simulation results to CSV.&quot;&quot;&quot;</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">output_dir</span> <span class="ow">in</span> <span class="n">output_dirs</span><span class="p">:</span>
+        <span class="c1"># Get simulation name</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="c1"># Load summary</span>
+        <span class="n">summary_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;trajectory&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_summary.json&#39;</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">summary_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="n">flight</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">]</span>
+
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;Apogee (m)&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Max Velocity (m/s)&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Max Accel (g)&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;max_acceleration_ms2&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">9.81</span><span class="p">,</span>
+            <span class="s1">&#39;Flight Time (s)&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Landing Distance (m)&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;lateral_distance_m&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Stability Margin&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;initial_stability_margin_calibers&#39;</span><span class="p">]</span>
+        <span class="p">})</span>
+
+    <span class="c1"># Create DataFrame</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+    <span class="c1"># Export</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">export_file</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exported </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> simulations to </span><span class="si">{</span><span class="n">export_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="c1"># Usage</span>
+<span class="n">simulations</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;outputs/baseline&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;outputs/motor_test_1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;outputs/motor_test_2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;outputs/fin_test_1&#39;</span>
+<span class="p">]</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">batch_export</span><span class="p">(</span><span class="n">simulations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="export-for-external-tools">
+<h2>Export for External Tools<a class="headerlink" href="#export-for-external-tools" title="Link to this heading">#</a></h2>
+<section id="openrocket-format">
+<h3>OpenRocket Format<a class="headerlink" href="#openrocket-format" title="Link to this heading">#</a></h3>
+<p>Convert simulation to OpenRocket-compatible CSV:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load trajectory</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_trajectory.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># OpenRocket format</span>
+<span class="n">openrocket</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Time (s)&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;time_s&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Altitude (m)&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Vertical velocity (m/s)&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vz_ms&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Vertical acceleration (m/s²)&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;az_ms2&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Total velocity (m/s)&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;vx_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vy_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vz_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="n">openrocket</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;openrocket_export.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="matlab-octave-format">
+<h3>MATLAB/Octave Format<a class="headerlink" href="#matlab-octave-format" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_trajectory.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create MATLAB structure</span>
+<span class="n">matlab_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;time_s&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s1">&#39;altitude&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s1">&#39;velocity&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;vx_ms&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vy_ms&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vz_ms&#39;</span><span class="p">]]),</span>
+    <span class="s1">&#39;acceleration&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ax_ms2&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ay_ms2&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;az_ms2&#39;</span><span class="p">]]),</span>
+    <span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;x_m&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;y_m&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">]])</span>
+<span class="p">}</span>
+
+<span class="c1"># Save as .mat file</span>
+<span class="n">scipy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">savemat</span><span class="p">(</span><span class="s1">&#39;trajectory.mat&#39;</span><span class="p">,</span> <span class="n">matlab_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="common-export-tasks">
+<h2>Common Export Tasks<a class="headerlink" href="#common-export-tasks" title="Link to this heading">#</a></h2>
+<section id="task-1-create-quick-summary">
+<h3>Task 1: Create Quick Summary<a class="headerlink" href="#task-1-create-quick-summary" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># One-liner summary</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">import json</span>
+<span class="s2">with open(&#39;outputs/my_rocket/trajectory/my_rocket_summary.json&#39;) as f:</span>
+<span class="s2">    r = json.load(f)[&#39;flight_results&#39;]</span>
+<span class="s2">print(f\&quot;Apogee: {r[&#39;apogee_m&#39;]:.0f}m, Max V: {r[&#39;max_velocity_ms&#39;]:.0f}m/s, Time: {r[&#39;flight_time_s&#39;]:.0f}s\&quot;)</span>
+<span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="task-2-extract-time-at-apogee">
+<h3>Task 2: Extract Time at Apogee<a class="headerlink" href="#task-2-extract-time-at-apogee" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_trajectory.csv&#39;</span><span class="p">)</span>
+<span class="n">apogee_idx</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="n">apogee_time</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">apogee_idx</span><span class="p">,</span> <span class="s1">&#39;time_s&#39;</span><span class="p">]</span>
+<span class="n">apogee_alt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">apogee_idx</span><span class="p">,</span> <span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Apogee: </span><span class="si">{</span><span class="n">apogee_alt</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m at t=</span><span class="si">{</span><span class="n">apogee_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="task-3-export-flight-phases">
+<h3>Task 3: Export Flight Phases<a class="headerlink" href="#task-3-export-flight-phases" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_trajectory.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Calculate velocity magnitude</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;v_mag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;vx_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vy_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vz_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+<span class="c1"># Find phase transitions</span>
+<span class="n">apogee_idx</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+
+<span class="c1"># Export phases</span>
+<span class="n">phases</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ascent&#39;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">apogee_idx</span><span class="p">],</span>
+    <span class="s1">&#39;descent&#39;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">apogee_idx</span><span class="p">:]</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">phase_name</span><span class="p">,</span> <span class="n">phase_data</span> <span class="ow">in</span> <span class="n">phases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">phase_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">phase_name</span><span class="si">}</span><span class="s1">_phase.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exported </span><span class="si">{</span><span class="n">phase_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">phase_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../tutorials/02_understanding_outputs.html#tutorial-understanding-outputs"><span class="std std-ref">Understanding Simulation Outputs</span></a> - Understanding output files</p></li>
+<li><p><span class="xref std std-ref">howto_custom_plots</span> - Creating custom visualizations</p></li>
+<li><p><span class="xref std std-ref">howto_data_analysis</span> - Advanced data analysis</p></li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="motor_selection.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Select the Optimal Motor</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../configuration/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Configuration Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#available-export-formats">Available Export Formats</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-exports">Automatic Exports</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-locations">Export Locations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#default-structure">Default Structure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-specific-data">Exporting Specific Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-1-use-json-summary">Method 1: Use JSON Summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2-use-csv-trajectory">Method 2: Use CSV Trajectory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-3-parse-readable-state">Method 3: Parse Readable State</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-export-formats">Custom Export Formats</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-to-excel">Export to Excel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-to-kml-google-earth">Export to KML (Google Earth)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-for-reports">Export for Reports</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-export">Batch Export</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#export-multiple-simulations">Export Multiple Simulations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-for-external-tools">Export for External Tools</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#openrocket-format">OpenRocket Format</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matlab-octave-format">MATLAB/Octave Format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-export-tasks">Common Export Tasks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-create-quick-summary">Task 1: Create Quick Summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-2-extract-time-at-apogee">Task 2: Extract Time at Apogee</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task-3-export-flight-phases">Task 3: Export Flight Phases</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/how_to_guides/export_data.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

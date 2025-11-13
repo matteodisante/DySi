@@ -1,0 +1,1066 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Select the Optimal Motor &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/how_to_guides/motor_selection';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Export Simulation Data" href="export_data.html" />
+    <link rel="prev" title="Validate Your Rocket Design" href="validate_design.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">How-To Guides</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Select the Optimal Motor</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="select-the-optimal-motor">
+<span id="howto-motor-selection"></span><h1>Select the Optimal Motor<a class="headerlink" href="#select-the-optimal-motor" title="Link to this heading">#</a></h1>
+<p>This guide helps you choose the right motor to achieve your target apogee while maintaining safe flight characteristics.</p>
+<div class="tip admonition">
+<p class="admonition-title">Quick Answer</p>
+<p>Use the impulse-to-weight ratio method: Target I/W ratio of 80-120 N·s/kg for sport flights.</p>
+</div>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Know your rocket’s dry mass (without motor)</p></li>
+<li><p>Know your target apogee</p></li>
+<li><p>Have access to motor specifications</p></li>
+</ul>
+</section>
+<section id="method-1-target-apogee-approach">
+<h2>Method 1: Target Apogee Approach<a class="headerlink" href="#method-1-target-apogee-approach" title="Link to this heading">#</a></h2>
+<section id="step-1-estimate-required-impulse">
+<h3>Step 1: Estimate Required Impulse<a class="headerlink" href="#step-1-estimate-required-impulse" title="Link to this heading">#</a></h3>
+<p>Use this empirical formula for sport rockets:</p>
+<div class="math notranslate nohighlight">
+\[I_{\text{required}} \approx 100 \times m_{\text{dry}} \times \sqrt{\frac{h_{\text{target}}}{1000}}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(I_{\text{required}}\)</span> = Total impulse (N·s)</p></li>
+<li><p><span class="math notranslate nohighlight">\(m_{\text{dry}}\)</span> = Rocket dry mass (kg)</p></li>
+<li><p><span class="math notranslate nohighlight">\(h_{\text{target}}\)</span> = Target apogee (m)</p></li>
+</ul>
+<p><strong>Example calculation:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="c1"># Rocket parameters</span>
+<span class="n">dry_mass_kg</span> <span class="o">=</span> <span class="mf">8.5</span>
+<span class="n">target_apogee_m</span> <span class="o">=</span> <span class="mi">2500</span>
+
+<span class="c1"># Estimate required impulse</span>
+<span class="n">impulse_required</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">dry_mass_kg</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">target_apogee_m</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required total impulse: </span><span class="si">{</span><span class="n">impulse_required</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> N·s&quot;</span><span class="p">)</span>
+<span class="c1"># Output: Required total impulse: 4250 N·s</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-find-motors-in-range">
+<h3>Step 2: Find Motors in Range<a class="headerlink" href="#step-2-find-motors-in-range" title="Link to this heading">#</a></h3>
+<p>Search ThrustCurve.org or your motor inventory for motors with:</p>
+<ul class="simple">
+<li><p>Total impulse: 0.8× to 1.2× required (3400 - 5100 N·s in example)</p></li>
+<li><p>Diameter: Fits your motor mount</p></li>
+<li><p>Length: Fits your airframe</p></li>
+</ul>
+<p><strong>Example candidates:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Cesaroni M1670:  Total Impulse = 5467 N·s  ✓
+AeroTech M1315:  Total Impulse = 4392 N·s  ✓
+Loki M2020:      Total Impulse = 5280 N·s  ✓
+</pre></div>
+</div>
+</section>
+<section id="step-3-simulate-each-option">
+<h3>Step 3: Simulate Each Option<a class="headerlink" href="#step-3-simulate-each-option" title="Link to this heading">#</a></h3>
+<p>Create test configs for each motor:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test motor 1</span>
+cp<span class="w"> </span>configs/my_rocket.yaml<span class="w"> </span>configs/test_m1670.yaml
+<span class="c1"># Edit thrust_source to Cesaroni_M1670.eng</span>
+python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span>configs/test_m1670.yaml<span class="w"> </span>--name<span class="w"> </span>m1670_test
+
+<span class="c1"># Test motor 2</span>
+cp<span class="w"> </span>configs/my_rocket.yaml<span class="w"> </span>configs/test_m1315.yaml
+<span class="c1"># Edit thrust_source to AeroTech_M1315.eng</span>
+python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span>configs/test_m1315.yaml<span class="w"> </span>--name<span class="w"> </span>m1315_test
+</pre></div>
+</div>
+</section>
+<section id="step-4-compare-results">
+<h3>Step 4: Compare Results<a class="headerlink" href="#step-4-compare-results" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Quick comparison script</span>
+<span class="k">for</span><span class="w"> </span>motor<span class="w"> </span><span class="k">in</span><span class="w"> </span>m1670_test<span class="w"> </span>m1315_test<span class="w"> </span>m2020_test<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;=== </span><span class="nv">$motor</span><span class="s2"> ===&quot;</span>
+<span class="w">    </span>grep<span class="w"> </span><span class="s2">&quot;Apogee:&quot;</span><span class="w"> </span>outputs/<span class="nv">$motor</span>/final_state_READABLE.txt
+<span class="w">    </span>grep<span class="w"> </span><span class="s2">&quot;Max Velocity:&quot;</span><span class="w"> </span>outputs/<span class="nv">$motor</span>/final_state_READABLE.txt
+<span class="w">    </span>grep<span class="w"> </span><span class="s2">&quot;Max Acceleration:&quot;</span><span class="w"> </span>outputs/<span class="nv">$motor</span>/final_state_READABLE.txt
+<span class="k">done</span>
+</pre></div>
+</div>
+<p><strong>Example output:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>=== m1670_test ===
+Apogee:           2605 m  (13m over target)
+Max Velocity:     248 m/s
+Max Acceleration: 132 m/s² (13.5g)
+
+=== m1315_test ===
+Apogee:           2485 m  (15m under target)
+Max Velocity:     232 m/s
+Max Acceleration: 105 m/s² (10.7g)  ← Best match!
+
+=== m2020_test ===
+Apogee:           2680 m  (180m over target)
+Max Velocity:     265 m/s
+Max Acceleration: 175 m/s² (17.8g)  ← Too aggressive
+</pre></div>
+</div>
+<p><strong>Selection:</strong> AeroTech M1315 is closest to target with safe acceleration.</p>
+</section>
+</section>
+<section id="method-2-impulse-to-weight-ratio">
+<h2>Method 2: Impulse-to-Weight Ratio<a class="headerlink" href="#method-2-impulse-to-weight-ratio" title="Link to this heading">#</a></h2>
+<section id="quick-calculation">
+<h3>Quick Calculation<a class="headerlink" href="#quick-calculation" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Motor specifications</span>
+<span class="n">total_impulse_ns</span> <span class="o">=</span> <span class="mi">4392</span>  <span class="c1"># N·s</span>
+<span class="n">propellant_mass_kg</span> <span class="o">=</span> <span class="mf">2.8</span>  <span class="c1"># kg</span>
+
+<span class="c1"># Rocket</span>
+<span class="n">dry_mass_kg</span> <span class="o">=</span> <span class="mf">8.5</span>
+<span class="n">total_mass</span> <span class="o">=</span> <span class="n">dry_mass_kg</span> <span class="o">+</span> <span class="n">propellant_mass_kg</span>
+
+<span class="c1"># Calculate I/W ratio</span>
+<span class="n">iw_ratio</span> <span class="o">=</span> <span class="n">total_impulse_ns</span> <span class="o">/</span> <span class="n">total_mass</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;I/W Ratio: </span><span class="si">{</span><span class="n">iw_ratio</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> N·s/kg&quot;</span><span class="p">)</span>
+<span class="c1"># Output: I/W Ratio: 388.7 N·s/kg</span>
+</pre></div>
+</div>
+<p><strong>I/W Ratio Guidelines:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>I/W Ratio</p></th>
+<th class="head"><p>Flight Type</p></th>
+<th class="head"><p>Typical Apogee</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>50-80 N·s/kg</p></td>
+<td><p>Low altitude</p></td>
+<td><p>300-800 m</p></td>
+</tr>
+<tr class="row-odd"><td><p>80-120 N·s/kg</p></td>
+<td><p>Sport flight</p></td>
+<td><p>800-1500 m</p></td>
+</tr>
+<tr class="row-even"><td><p>120-180 N·s/kg</p></td>
+<td><p>High altitude</p></td>
+<td><p>1500-3000 m</p></td>
+</tr>
+<tr class="row-odd"><td><p>180-300 N·s/kg</p></td>
+<td><p>Very high</p></td>
+<td><p>3000-6000 m</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt; 300 N·s/kg</p></td>
+<td><p>Extreme</p></td>
+<td><p>&gt; 6000 m</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="motor-selection-constraints">
+<h2>Motor Selection Constraints<a class="headerlink" href="#motor-selection-constraints" title="Link to this heading">#</a></h2>
+<section id="physical-constraints">
+<h3>Physical Constraints<a class="headerlink" href="#physical-constraints" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>Diameter</strong>: Motor must fit motor mount</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check motor diameter vs. rocket diameter</span>
+<span class="nt">rocket_diameter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127 mm</span>
+<span class="nt">motor_diameter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">98 mm</span><span class="w">  </span><span class="c1"># Fits with centering rings</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Length</strong>: Motor must fit airframe</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Motor length: 548 mm
+Available space: 600 mm  ✓
+</pre></div>
+</div>
+</li>
+<li><p><strong>Mass</strong>: Total mass must be reasonable</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loaded_mass</span> <span class="o">=</span> <span class="n">dry_mass</span> <span class="o">+</span> <span class="n">motor_propellant</span>
+<span class="c1"># Should be &lt; 25 kg for amateur flights</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="performance-constraints">
+<h3>Performance Constraints<a class="headerlink" href="#performance-constraints" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Acceleration limits</strong>:</p>
+<ul class="simple">
+<li><p>Electronics: &lt; 30g</p></li>
+<li><p>Airframe: &lt; 40g</p></li>
+<li><p>Comfortable: &lt; 15g</p></li>
+</ul>
+</li>
+<li><p><strong>Velocity limits</strong>:</p>
+<ul class="simple">
+<li><p>Subsonic: &lt; 300 m/s (Mach 0.88)</p></li>
+<li><p>Transonic: Avoid unless designed for it</p></li>
+</ul>
+</li>
+<li><p><strong>Stability throughout burn</strong>:</p>
+<ul class="simple">
+<li><p>Check CoM shift as propellant burns</p></li>
+<li><p>Ensure stability margin stays &gt; 1.0</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="cost-optimization">
+<h3>Cost Optimization<a class="headerlink" href="#cost-optimization" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compare cost per meter of altitude</span>
+
+<span class="n">motors</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;M1315&#39;</span><span class="p">,</span> <span class="s1">&#39;cost&#39;</span><span class="p">:</span> <span class="mi">180</span><span class="p">,</span> <span class="s1">&#39;apogee&#39;</span><span class="p">:</span> <span class="mi">2485</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;M1670&#39;</span><span class="p">,</span> <span class="s1">&#39;cost&#39;</span><span class="p">:</span> <span class="mi">220</span><span class="p">,</span> <span class="s1">&#39;apogee&#39;</span><span class="p">:</span> <span class="mi">2605</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;M2020&#39;</span><span class="p">,</span> <span class="s1">&#39;cost&#39;</span><span class="p">:</span> <span class="mi">250</span><span class="p">,</span> <span class="s1">&#39;apogee&#39;</span><span class="p">:</span> <span class="mi">2680</span><span class="p">},</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">motors</span><span class="p">:</span>
+    <span class="n">cost_per_m</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s1">&#39;cost&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">m</span><span class="p">[</span><span class="s1">&#39;apogee&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">m</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: €</span><span class="si">{</span><span class="n">cost_per_m</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">/meter&quot;</span><span class="p">)</span>
+
+<span class="c1"># Output:</span>
+<span class="c1"># M1315: €0.072/meter  ← Most efficient</span>
+<span class="c1"># M1670: €0.084/meter</span>
+<span class="c1"># M2020: €0.093/meter</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="motor-comparison-script">
+<h2>Motor Comparison Script<a class="headerlink" href="#motor-comparison-script" title="Link to this heading">#</a></h2>
+<p>Create <code class="docutils literal notranslate"><span class="pre">scripts/compare_motors.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;Compare multiple motors for target apogee.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">simulate_motor</span><span class="p">(</span><span class="n">base_config</span><span class="p">,</span> <span class="n">motor_file</span><span class="p">,</span> <span class="n">motor_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simulate rocket with specific motor.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Create temp config</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">base_config</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;motor&#39;</span><span class="p">][</span><span class="s1">&#39;thrust_source&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">motor_file</span>
+
+    <span class="n">temp_config</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/tmp/test_</span><span class="si">{</span><span class="n">motor_name</span><span class="si">}</span><span class="s1">.yaml&#39;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">temp_config</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="c1"># Run simulation</span>
+    <span class="n">output_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;motor_test_</span><span class="si">{</span><span class="n">motor_name</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;scripts/run_single_simulation.py&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="n">temp_config</span><span class="p">,</span>
+        <span class="s1">&#39;--name&#39;</span><span class="p">,</span> <span class="n">output_name</span>
+    <span class="p">]</span>
+
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Load results</span>
+    <span class="n">summary_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;outputs/</span><span class="si">{</span><span class="n">output_name</span><span class="si">}</span><span class="s1">/trajectory/</span><span class="si">{</span><span class="n">output_name</span><span class="si">}</span><span class="s1">_summary.json&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">summary_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compare_motors</span><span class="p">(</span><span class="n">base_config</span><span class="p">,</span> <span class="n">motors</span><span class="p">,</span> <span class="n">target_apogee</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compare list of motors.&quot;&quot;&quot;</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">motor_name</span><span class="p">,</span> <span class="n">motor_file</span> <span class="ow">in</span> <span class="n">motors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Simulating </span><span class="si">{</span><span class="n">motor_name</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">simulate_motor</span><span class="p">(</span><span class="n">base_config</span><span class="p">,</span> <span class="n">motor_file</span><span class="p">,</span> <span class="n">motor_name</span><span class="p">)</span>
+
+        <span class="n">flight</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">]</span>
+
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">motor_name</span><span class="p">,</span>
+            <span class="s1">&#39;apogee&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;apogee_error&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">target_apogee</span><span class="p">),</span>
+            <span class="s1">&#39;max_velocity&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;max_accel&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;max_acceleration_ms2&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;flight_time&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="p">[</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">]</span>
+        <span class="p">})</span>
+
+    <span class="c1"># Sort by apogee error (closest to target)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;apogee_error&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Print comparison</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MOTOR COMPARISON (Target: </span><span class="si">{</span><span class="n">target_apogee</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Motor&#39;</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Apogee&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Error&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Max V&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Max A&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;&#39;</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;(m)&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;(m)&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;(m/s)&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;(g)&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="n">accel_g</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;max_accel&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">9.81</span>
+        <span class="n">error_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;+</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;apogee_error&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;apogee&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">target_apogee</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;apogee_error&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;apogee&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;10.0f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">error_str</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;max_velocity&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;10.1f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">accel_g</span><span class="si">:</span><span class="s2">&gt;10.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RECOMMENDED: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> (closest to target)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">motors</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;M1315&#39;</span><span class="p">:</span> <span class="s1">&#39;data/motors/AeroTech_M1315.eng&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;M1670&#39;</span><span class="p">:</span> <span class="s1">&#39;data/motors/Cesaroni_M1670.eng&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;M2020&#39;</span><span class="p">:</span> <span class="s1">&#39;data/motors/Loki_M2020.eng&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">compare_motors</span><span class="p">(</span><span class="s1">&#39;configs/my_rocket.yaml&#39;</span><span class="p">,</span> <span class="n">motors</span><span class="p">,</span> <span class="n">target_apogee</span><span class="o">=</span><span class="mi">2500</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Usage:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/compare_motors.py
+</pre></div>
+</div>
+</section>
+<section id="motor-safety-checks">
+<h2>Motor Safety Checks<a class="headerlink" href="#motor-safety-checks" title="Link to this heading">#</a></h2>
+<section id="before-final-selection">
+<h3>Before Final Selection<a class="headerlink" href="#before-final-selection" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>Verify certification</strong>:</p>
+<ul class="simple">
+<li><p>Check motor is certified for your organization (NAR/TRA)</p></li>
+<li><p>Verify you have appropriate certification level</p></li>
+</ul>
+</li>
+<li><p><strong>Check availability</strong>:</p>
+<ul class="simple">
+<li><p>Motor in stock at vendors</p></li>
+<li><p>Shipping restrictions to your location</p></li>
+</ul>
+</li>
+<li><p><strong>Structural analysis</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check max thrust vs. airframe strength</span>
+<span class="n">max_thrust_n</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># From motor specs</span>
+<span class="n">airframe_area_m2</span> <span class="o">=</span> <span class="mf">0.0127</span>  <span class="c1"># π × (0.0635)²</span>
+
+<span class="n">thrust_stress_pa</span> <span class="o">=</span> <span class="n">max_thrust_n</span> <span class="o">/</span> <span class="n">airframe_area_m2</span>
+
+<span class="c1"># Compare to material strength</span>
+<span class="c1"># Fiberglass: ~300 MPa (300,000,000 Pa)</span>
+<span class="n">safety_factor</span> <span class="o">=</span> <span class="mi">300_000_000</span> <span class="o">/</span> <span class="n">thrust_stress_pa</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Safety factor: </span><span class="si">{</span><span class="n">safety_factor</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Should be &gt; 5 for amateur rocketry</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Thermal analysis</strong>:</p>
+<ul class="simple">
+<li><p>Check motor ejection charge won’t damage recovery system</p></li>
+<li><p>Verify motor mount can handle heat</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="common-motor-selection-mistakes">
+<h2>Common Motor Selection Mistakes<a class="headerlink" href="#common-motor-selection-mistakes" title="Link to this heading">#</a></h2>
+<section id="mistake-1-choosing-too-powerful">
+<h3>Mistake 1: Choosing Too Powerful<a class="headerlink" href="#mistake-1-choosing-too-powerful" title="Link to this heading">#</a></h3>
+<p><strong>Problem:</strong> M2500 motor in 5 kg rocket → 50g acceleration → electronics failure</p>
+<p><strong>Solution:</strong> Calculate max acceptable acceleration BEFORE selecting motor</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">max_safe_accel_g</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># For your electronics</span>
+<span class="n">rocket_mass_kg</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">max_thrust_n</span> <span class="o">=</span> <span class="n">max_safe_accel_g</span> <span class="o">*</span> <span class="mf">9.81</span> <span class="o">*</span> <span class="n">rocket_mass_kg</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max thrust: </span><span class="si">{</span><span class="n">max_thrust_n</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> N&quot;</span><span class="p">)</span>
+<span class="c1"># Don&#39;t exceed this thrust!</span>
+</pre></div>
+</div>
+</section>
+<section id="mistake-2-ignoring-burn-time">
+<h3>Mistake 2: Ignoring Burn Time<a class="headerlink" href="#mistake-2-ignoring-burn-time" title="Link to this heading">#</a></h3>
+<p><strong>Problem:</strong> Very short burn (&lt; 1s) → all acceleration near pad → unstable</p>
+<p><strong>Solution:</strong> Prefer moderate thrust, longer burn (1.5-3s typical)</p>
+</section>
+<section id="mistake-3-not-accounting-for-wind">
+<h3>Mistake 3: Not Accounting for Wind<a class="headerlink" href="#mistake-3-not-accounting-for-wind" title="Link to this heading">#</a></h3>
+<p><strong>Problem:</strong> High apogee + long descent = 2 km drift</p>
+<p><strong>Solution:</strong> Consider dual-deploy or choose motor for lower apogee on windy days</p>
+</section>
+</section>
+<section id="quick-reference-chart">
+<h2>Quick Reference Chart<a class="headerlink" href="#quick-reference-chart" title="Link to this heading">#</a></h2>
+<p><strong>Rocket Mass vs. Motor Class:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Rocket Mass</p></th>
+<th class="head"><p>Low Flight (500m)</p></th>
+<th class="head"><p>Sport (1500m)</p></th>
+<th class="head"><p>High (3000m)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.5 kg</p></td>
+<td><p>F-G</p></td>
+<td><p>H-I</p></td>
+<td><p>J-K</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.0 kg</p></td>
+<td><p>H-I</p></td>
+<td><p>J-K</p></td>
+<td><p>L-M</p></td>
+</tr>
+<tr class="row-even"><td><p>5.0 kg</p></td>
+<td><p>I-J</p></td>
+<td><p>K-L</p></td>
+<td><p>M-N</p></td>
+</tr>
+<tr class="row-odd"><td><p>10.0 kg</p></td>
+<td><p>J-K</p></td>
+<td><p>L-M</p></td>
+<td><p>N-O</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.thrustcurve.org/motorsearch.jsp">ThrustCurve.org Motor Search</a></p></li>
+<li><p><a class="reference internal" href="../tutorials/03_custom_motor.html#tutorial-custom-motor"><span class="std std-ref">Using Custom Motor Data</span></a> - Using motor data files</p></li>
+<li><p><a class="reference internal" href="validate_design.html#howto-validate-design"><span class="std std-ref">Validate Your Rocket Design</span></a> - Verify your selection</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="validate_design.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Validate Your Rocket Design</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="export_data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Export Simulation Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-1-target-apogee-approach">Method 1: Target Apogee Approach</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-estimate-required-impulse">Step 1: Estimate Required Impulse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-find-motors-in-range">Step 2: Find Motors in Range</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-simulate-each-option">Step 3: Simulate Each Option</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-compare-results">Step 4: Compare Results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2-impulse-to-weight-ratio">Method 2: Impulse-to-Weight Ratio</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-calculation">Quick Calculation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-selection-constraints">Motor Selection Constraints</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physical-constraints">Physical Constraints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-constraints">Performance Constraints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-optimization">Cost Optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-comparison-script">Motor Comparison Script</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-safety-checks">Motor Safety Checks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#before-final-selection">Before Final Selection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-motor-selection-mistakes">Common Motor Selection Mistakes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mistake-1-choosing-too-powerful">Mistake 1: Choosing Too Powerful</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mistake-2-ignoring-burn-time">Mistake 2: Ignoring Burn Time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mistake-3-not-accounting-for-wind">Mistake 3: Not Accounting for Wind</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference-chart">Quick Reference Chart</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/how_to_guides/motor_selection.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1652 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Simulation Parameters Reference &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/configuration/simulation_params';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Technical Documentation" href="../technical/index.html" />
+    <link rel="prev" title="Environment Parameters Reference" href="environment_params.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Configuration Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Simulation Parameters Reference</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="simulation-parameters-reference">
+<span id="config-simulation-params"></span><h1>Simulation Parameters Reference<a class="headerlink" href="#simulation-parameters-reference" title="Link to this heading">#</a></h1>
+<p>This reference documents all parameters in the <code class="docutils literal notranslate"><span class="pre">simulation</span></code> configuration section.
+The simulation section defines numerical integration settings, launch rail configuration, and termination conditions.</p>
+<nav class="contents local" id="on-this-page">
+<p class="topic-title">On this page</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#launch-rail-configuration" id="id2">Launch Rail Configuration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rail-length-m" id="id3">rail.length_m</a></p></li>
+<li><p><a class="reference internal" href="#rail-inclination-deg" id="id4">rail.inclination_deg</a></p></li>
+<li><p><a class="reference internal" href="#rail-heading-deg" id="id5">rail.heading_deg</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#integration-parameters" id="id6">Integration Parameters</a></p>
+<ul>
+<li><p><a class="reference internal" href="#max-time-s" id="id7">max_time_s</a></p></li>
+<li><p><a class="reference internal" href="#max-time-step-s" id="id8">max_time_step_s</a></p></li>
+<li><p><a class="reference internal" href="#min-time-step-s" id="id9">min_time_step_s</a></p></li>
+<li><p><a class="reference internal" href="#rtol" id="id10">rtol</a></p></li>
+<li><p><a class="reference internal" href="#atol" id="id11">atol</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#termination-conditions" id="id12">Termination Conditions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#terminate-on-apogee" id="id13">terminate_on_apogee</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#output-control" id="id14">Output Control</a></p>
+<ul>
+<li><p><a class="reference internal" href="#verbose" id="id15">verbose</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#complete-examples" id="id16">Complete Examples</a></p>
+<ul>
+<li><p><a class="reference internal" href="#standard-high-power-launch" id="id17">Standard High-Power Launch</a></p></li>
+<li><p><a class="reference internal" href="#high-accuracy-competition-simulation" id="id18">High-Accuracy Competition Simulation</a></p></li>
+<li><p><a class="reference internal" href="#fast-design-iteration" id="id19">Fast Design Iteration</a></p></li>
+<li><p><a class="reference internal" href="#debugging-simulation" id="id20">Debugging Simulation</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#rail-length-calculator" id="id21">Rail Length Calculator</a></p></li>
+<li><p><a class="reference internal" href="#common-issues" id="id22">Common Issues</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rail-exit-velocity-too-low" id="id23">Rail Exit Velocity Too Low</a></p></li>
+<li><p><a class="reference internal" href="#simulation-fails-to-converge" id="id24">Simulation Fails to Converge</a></p></li>
+<li><p><a class="reference internal" href="#rocket-doesn-t-land" id="id25">Rocket Doesn’t Land</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#see-also" id="id26">See Also</a></p></li>
+</ul>
+</nav>
+<hr class="docutils" />
+<section id="overview">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The simulation configuration controls:</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Launch Rail</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Rail length</p></li>
+<li><p class="sd-card-text">Inclination angle</p></li>
+<li><p class="sd-card-text">Heading direction</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Integration</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Time step sizes</p></li>
+<li><p class="sd-card-text">Numerical tolerances</p></li>
+<li><p class="sd-card-text">Solver accuracy</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Termination</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Maximum simulation time</p></li>
+<li><p class="sd-card-text">Stop conditions</p></li>
+<li><p class="sd-card-text">Apogee detection</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Output</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Verbose logging</p></li>
+<li><p class="sd-card-text">Diagnostic messages</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="launch-rail-configuration">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Launch Rail Configuration</a><a class="headerlink" href="#launch-rail-configuration" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">rail</span></code> subsection defines the launch rail geometry and orientation.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85.0</span>
+<span class="w">    </span><span class="nt">heading_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Launch rail provides initial guidance</strong> until rocket reaches sufficient velocity for aerodynamic stability.</p>
+<p>Rocket exits rail when it has traveled <code class="docutils literal notranslate"><span class="pre">length_m</span></code> along the rail.</p>
+</div>
+<section id="rail-length-m">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">rail.length_m</a><a class="headerlink" href="#rail-length-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">5.2</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Length of launch rail</strong> from base to end.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Choose Rail Length</p>
+<p><strong>Rule of thumb:</strong> Exit rail at <strong>≥ 20 m/s</strong> (45 mph) for stable flight.</p>
+<p><strong>Method 1: Quick estimate</strong></p>
+<p>For typical high-power rockets:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Rocket Mass</p></th>
+<th class="head"><p>Motor Class</p></th>
+<th class="head"><p>Min Rail Length</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt; 5 kg (11 lb)</p></td>
+<td><p>H - J</p></td>
+<td><p>1.5 - 2.5 m</p></td>
+</tr>
+<tr class="row-odd"><td><p>5 - 15 kg (11-33 lb)</p></td>
+<td><p>K - L</p></td>
+<td><p>3.0 - 5.0 m</p></td>
+</tr>
+<tr class="row-even"><td><p>15 - 30 kg (33-66 lb)</p></td>
+<td><p>M - N</p></td>
+<td><p>5.0 - 8.0 m</p></td>
+</tr>
+<tr class="row-odd"><td><p>&gt; 30 kg (&gt; 66 lb)</p></td>
+<td><p>O+</p></td>
+<td><p>8.0+ m</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Method 2: Iterative simulation</strong></p>
+<ol class="arabic simple">
+<li><p>Run simulation with current rail length</p></li>
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">rail_exit_velocity</span></code> in results</p></li>
+<li><p>If &lt; 20 m/s, increase rail length</p></li>
+<li><p>Repeat until exit velocity ≥ 20 m/s</p></li>
+</ol>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check rail exit velocity</span>
+<span class="n">flight</span><span class="o">.</span><span class="n">rail_exit_velocity</span>  <span class="c1"># Should be ≥ 20 m/s</span>
+</pre></div>
+</div>
+<p>If output shows <code class="docutils literal notranslate"><span class="pre">rail_exit_velocity</span> <span class="pre">=</span> <span class="pre">15.2</span> <span class="pre">m/s</span></code>, increase rail length.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Insufficient rail length</strong> → low exit velocity → unstable flight!</p>
+<ul class="simple">
+<li><p>Rocket may weathercock excessively</p></li>
+<li><p>Risk of instability during rail departure</p></li>
+<li><p>Potential crash</p></li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Practical considerations:</strong></p>
+<ul class="simple">
+<li><p>Standard high-power rails: 1.5 m, 3.0 m, 5.0 m, 8.0 m</p></li>
+<li><p>Longer rail = more stable departure, but heavier/harder to transport</p></li>
+<li><p>Competition rules may specify max rail length</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="rail-inclination-deg">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">rail.inclination_deg</a><a class="headerlink" href="#rail-inclination-deg" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">85.0</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>degrees (°)</p>
+</dd>
+</dl>
+<p><strong>Rail inclination angle</strong> from <strong>horizontal</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85.0</span><span class="w">  </span><span class="c1"># Nearly vertical (5° from vertical)</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Angle measured from HORIZONTAL</strong>, not vertical!</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>90° = Perfectly vertical (straight up)
+85° = 5° from vertical (slight tilt)
+80° = 10° from vertical
+0°  = Horizontal
+</pre></div>
+</div>
+<p><strong>NOT</strong> “degrees from vertical” (opposite convention).</p>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Vertical (90°)</label><div class="sd-tab-content docutils">
+<p><strong>Perfectly vertical launch</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90.0</span>
+</pre></div>
+</div>
+<p>✅ <strong>Pros:</strong></p>
+<ul class="simple">
+<li><p>Maximum altitude</p></li>
+<li><p>Simplest trajectory</p></li>
+<li><p>Minimal drift</p></li>
+</ul>
+<p>⚠️ <strong>Cons:</strong></p>
+<ul class="simple">
+<li><p>Sensitive to wind</p></li>
+<li><p>Harder to set up precisely</p></li>
+</ul>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Nearly vertical (85°)</label><div class="sd-tab-content docutils">
+<p><strong>Standard high-power launch</strong> (5° from vertical)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85.0</span>
+</pre></div>
+</div>
+<p>✅ <strong>Pros:</strong></p>
+<ul class="simple">
+<li><p>Reduces weathercocking</p></li>
+<li><p>Easier to align</p></li>
+<li><p>Still achieves high altitude</p></li>
+</ul>
+<p>Typical for competition launches.</p>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Angled (75-80°)</label><div class="sd-tab-content docutils">
+<p><strong>Intentional tilt</strong> (10-15° from vertical)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80.0</span><span class="w">  </span><span class="c1"># 10° from vertical</span>
+</pre></div>
+</div>
+<p>✅ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Strong crosswind (tilt into wind)</p></li>
+<li><p>Landing zone constraints</p></li>
+<li><p>Demonstration launches</p></li>
+</ul>
+<p>⚠️ <strong>Reduces apogee</strong> significantly!</p>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Inclination vs. Altitude Loss</p>
+<p><strong>Approximate altitude loss</strong> from non-vertical launch:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>inclination_deg</p></th>
+<th class="head"><p>Angle from vertical</p></th>
+<th class="head"><p>Altitude loss</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>90°</p></td>
+<td><p>0° (vertical)</p></td>
+<td><p>0% (reference)</p></td>
+</tr>
+<tr class="row-odd"><td><p>85°</p></td>
+<td><p>5°</p></td>
+<td><p>~1-2%</p></td>
+</tr>
+<tr class="row-even"><td><p>80°</p></td>
+<td><p>10°</p></td>
+<td><p>~3-5%</p></td>
+</tr>
+<tr class="row-odd"><td><p>75°</p></td>
+<td><p>15°</p></td>
+<td><p>~7-10%</p></td>
+</tr>
+<tr class="row-even"><td><p>60°</p></td>
+<td><p>30°</p></td>
+<td><p>~25-30%</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For max altitude, use 85-90°.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="rail-heading-deg">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">rail.heading_deg</a><a class="headerlink" href="#rail-heading-deg" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>degrees (°)</p>
+</dd>
+</dl>
+<p><strong>Rail azimuth heading</strong> direction (compass bearing).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">heading_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># Pointing North</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Compass convention:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>heading_deg = 0°   → North
+heading_deg = 90°  → East
+heading_deg = 180° → South
+heading_deg = 270° → West
+</pre></div>
+</div>
+</div>
+<a class="reference internal image-reference" href="_static/images/rail_heading_compass.png"><img alt="Rail heading compass rose" class="align-center" src="_static/images/rail_heading_compass.png" style="width: 300px;" />
+</a>
+<div class="dropdown admonition">
+<p class="admonition-title">Choosing Heading for Wind</p>
+<p><strong>Strategy: Launch into the wind</strong> to minimize drift.</p>
+<p><strong>Example scenario:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Wind from West (direction_deg = 270°)
+→ Wind blowing toward East
+→ Point rail toward West to counter drift
+
+Solution:
+  rail.heading_deg = 270.0  # Toward West (into wind)
+</pre></div>
+</div>
+<p><strong>General rule:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># If wind from direction D:</span>
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">D</span><span class="w">  </span><span class="c1"># Wind FROM this direction</span>
+
+<span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">heading_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">D</span><span class="w">  </span><span class="c1"># Point INTO wind (same angle)</span>
+</pre></div>
+</div>
+<p><strong>Crosswind component:</strong></p>
+<p>If wind is oblique, you can tilt rail slightly upwind to compensate for drift.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Landing zone constraints:</strong></p>
+<ul class="simple">
+<li><p>Adjust heading to aim rocket toward safe landing area</p></li>
+<li><p>Account for wind drift during descent</p></li>
+<li><p>Use Monte Carlo simulations to predict impact dispersion</p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="integration-parameters">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Integration Parameters</a><a class="headerlink" href="#integration-parameters" title="Link to this heading">#</a></h2>
+<section id="max-time-s">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">max_time_s</a><a class="headerlink" href="#max-time-s" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">600.0</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>seconds (s)</p>
+</dd>
+</dl>
+<p><strong>Maximum simulation time</strong> before automatic termination.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600.0</span><span class="w">  </span><span class="c1"># 10 minutes</span>
+</pre></div>
+</div>
+<p>Simulation stops when:</p>
+<ul class="simple">
+<li><p>Rocket lands (altitude = 0), <strong>OR</strong></p></li>
+<li><p>Time reaches <code class="docutils literal notranslate"><span class="pre">max_time_s</span></code></p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Choose max_time_s</p>
+<p><strong>Rule of thumb:</strong> Set to <strong>3-5× expected flight time</strong>.</p>
+<p><strong>Typical flight times:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Rocket Type</p></th>
+<th class="head"><p>Total Flight Time</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Small model rocket (300 m)</p></td>
+<td><p>30 - 60 s</p></td>
+</tr>
+<tr class="row-odd"><td><p>High-power L motor (1500 m)</p></td>
+<td><p>90 - 150 s</p></td>
+</tr>
+<tr class="row-even"><td><p>Competition M motor (3000 m)</p></td>
+<td><p>150 - 300 s</p></td>
+</tr>
+<tr class="row-odd"><td><p>High-altitude O motor (10 km)</p></td>
+<td><p>300 - 600 s</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Recommended max_time_s:</strong></p>
+<ul class="simple">
+<li><p>Small flights: 120 s</p></li>
+<li><p>Medium flights: 300 s</p></li>
+<li><p>Large flights: 600 s</p></li>
+<li><p>Extreme altitude: 900 s</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Too low max_time_s</strong> → simulation terminates before landing!</p>
+<p>Check results: if <code class="docutils literal notranslate"><span class="pre">final_time</span> <span class="pre">≈</span> <span class="pre">max_time_s</span></code> and rocket still airborne, increase <code class="docutils literal notranslate"><span class="pre">max_time_s</span></code>.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="max-time-step-s">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">max_time_step_s</a><a class="headerlink" href="#max-time-step-s" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">inf</span></code> (automatic)</p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>seconds (s)</p>
+</dd>
+</dl>
+<p><strong>Maximum time step</strong> for numerical integrator.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.inf</span><span class="w">  </span><span class="c1"># Automatic (recommended)</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+inf (Automatic - Recommended)</label><div class="sd-tab-content docutils">
+<p><strong>Let RocketPy choose optimal time step</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.inf</span>
+</pre></div>
+</div>
+<p>✅ <strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>Adaptive step size for accuracy</p></li>
+<li><p>Fast integration</p></li>
+<li><p>Handles stiff dynamics</p></li>
+</ul>
+<p>Use this for <strong>almost all simulations</strong>.</p>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+Manual limit</label><div class="sd-tab-content docutils">
+<p><strong>Force maximum time step</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">  </span><span class="c1"># Max 10 ms steps</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Debugging integration issues</p></li>
+<li><p>Very high sampling rate output</p></li>
+<li><p>Custom event detection</p></li>
+</ul>
+<p>Slower simulations!</p>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">max_time_step_s</span></code> is an <strong>upper limit</strong>. RocketPy may use smaller steps when needed (e.g., near apogee, motor burnout, parachute deployment).</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="min-time-step-s">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">min_time_step_s</a><a class="headerlink" href="#min-time-step-s" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>seconds (s)</p>
+</dd>
+</dl>
+<p><strong>Minimum time step</strong> for numerical integrator.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">min_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># No lower limit</span>
+</pre></div>
+</div>
+<p>Rarely needs to be changed. Leave at default <code class="docutils literal notranslate"><span class="pre">0.0</span></code> for automatic behavior.</p>
+</section>
+<hr class="docutils" />
+<section id="rtol">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">rtol</a><a class="headerlink" href="#rtol" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">1e-6</span></code></p>
+</dd>
+</dl>
+<p><strong>Relative tolerance</strong> for numerical integrator.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rtol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span><span class="w">  </span><span class="c1"># 0.0001% relative error</span>
+</pre></div>
+</div>
+<p>Controls <strong>relative error</strong> in integrated state variables (position, velocity).</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Tolerance Explanation</p>
+<p><strong>Relative tolerance (rtol):</strong></p>
+<p>Acceptable error relative to variable magnitude:</p>
+<div class="math notranslate nohighlight">
+\[\text{Relative Error} = \frac{|\text{Estimated Error}|}{|\text{State Variable}|} &lt; \text{rtol}\]</div>
+<p><strong>Example:</strong> <code class="docutils literal notranslate"><span class="pre">rtol</span> <span class="pre">=</span> <span class="pre">1e-6</span></code> means:</p>
+<ul class="simple">
+<li><p>For velocity = 100 m/s, accept error &lt; 0.0001 m/s</p></li>
+<li><p>For altitude = 1000 m, accept error &lt; 0.001 m</p></li>
+</ul>
+<p><strong>Smaller rtol</strong> → more accurate, slower simulation</p>
+<p><strong>Larger rtol</strong> → less accurate, faster simulation</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Recommended values:</strong></p>
+<ul class="simple">
+<li><p><strong>``1e-6``</strong>: Default, good for most simulations</p></li>
+<li><p><strong>``1e-8``</strong>: High accuracy (competition, research)</p></li>
+<li><p><strong>``1e-4``</strong>: Fast preliminary design</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="atol">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">atol</a><a class="headerlink" href="#atol" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">1e-6</span></code></p>
+</dd>
+</dl>
+<p><strong>Absolute tolerance</strong> for numerical integrator.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+</pre></div>
+</div>
+<p>Controls <strong>absolute error</strong> in integrated state variables.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Absolute vs. Relative Tolerance</p>
+<p><strong>Absolute tolerance (atol):</strong></p>
+<p>Acceptable error in absolute units:</p>
+<div class="math notranslate nohighlight">
+\[|\text{Estimated Error}| &lt; \text{atol}\]</div>
+<p><strong>When it matters:</strong></p>
+<ul class="simple">
+<li><p>Near zero crossings (e.g., apogee, vertical velocity = 0)</p></li>
+<li><p>State variables approaching zero</p></li>
+</ul>
+<p><strong>Combined tolerance check:</strong></p>
+<p>RocketPy accepts step if:</p>
+<div class="math notranslate nohighlight">
+\[|\text{Error}| &lt; \text{atol} + \text{rtol} \times |\text{State}|\]</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Typical pairing:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rtol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+<span class="w">  </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span><span class="w">  </span><span class="c1"># Same order of magnitude</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="termination-conditions">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Termination Conditions</a><a class="headerlink" href="#termination-conditions" title="Link to this heading">#</a></h2>
+<section id="terminate-on-apogee">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">terminate_on_apogee</a><a class="headerlink" href="#terminate-on-apogee" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+</dd>
+</dl>
+<p><strong>Stop simulation at apogee</strong> instead of simulating full descent.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">terminate_on_apogee</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Simulate full flight</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-5">
+false (Default)</label><div class="sd-tab-content docutils">
+<p><strong>Simulate complete flight</strong> (ascent + descent + landing)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">terminate_on_apogee</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<p>✅ <strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>Full trajectory data</p></li>
+<li><p>Descent rate analysis</p></li>
+<li><p>Landing location prediction</p></li>
+<li><p>Recovery system validation</p></li>
+</ul>
+<p>Use for <strong>complete flight analysis</strong>.</p>
+</div>
+<input id="sd-tab-item-6" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-6">
+true</label><div class="sd-tab-content docutils">
+<p><strong>Terminate at apogee</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">terminate_on_apogee</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<p>✅ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Only care about max altitude</p></li>
+<li><p>Faster simulations (50% time savings)</p></li>
+<li><p>Apogee optimization studies</p></li>
+</ul>
+<p>⚠️ <strong>Limitations:</strong></p>
+<ul class="simple">
+<li><p>No descent data</p></li>
+<li><p>No landing location</p></li>
+<li><p>Cannot validate parachute sizing</p></li>
+</ul>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For <strong>design iterations</strong> (optimizing fins, motor selection): use <code class="docutils literal notranslate"><span class="pre">terminate_on_apogee:</span> <span class="pre">true</span></code> for speed.</p>
+<p>For <strong>flight validation</strong>: use <code class="docutils literal notranslate"><span class="pre">terminate_on_apogee:</span> <span class="pre">false</span></code> for complete analysis.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="output-control">
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Output Control</a><a class="headerlink" href="#output-control" title="Link to this heading">#</a></h2>
+<section id="verbose">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">verbose</a><a class="headerlink" href="#verbose" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+</dd>
+</dl>
+<p><strong>Enable verbose logging</strong> during simulation.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-7">
+false (Default)</label><div class="sd-tab-content docutils">
+<p><strong>Minimal output</strong> (quiet mode)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<p>Only critical messages and errors printed.</p>
+</div>
+<input id="sd-tab-item-8" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-8">
+true</label><div class="sd-tab-content docutils">
+<p><strong>Detailed diagnostic output</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<p>Prints:</p>
+<ul class="simple">
+<li><p>Integration step information</p></li>
+<li><p>Event detection (rail exit, apogee, parachute deployment)</p></li>
+<li><p>Convergence details</p></li>
+<li><p>Performance metrics</p></li>
+</ul>
+<p>✅ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Debugging simulation issues</p></li>
+<li><p>Understanding solver behavior</p></li>
+<li><p>Diagnosing slow convergence</p></li>
+</ul>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>verbose = true</strong> produces <strong>extensive output</strong> (hundreds of lines)!</p>
+<ul class="simple">
+<li><p>Slows down simulation slightly</p></li>
+<li><p>Clutters logs in batch runs</p></li>
+</ul>
+<p>Use only when debugging.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="complete-examples">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Complete Examples</a><a class="headerlink" href="#complete-examples" title="Link to this heading">#</a></h2>
+<section id="standard-high-power-launch">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Standard High-Power Launch</a><a class="headerlink" href="#standard-high-power-launch" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Standard 5 m rail, nearly vertical</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85.0</span>
+<span class="w">    </span><span class="nt">heading_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># North</span>
+
+<span class="w">  </span><span class="c1"># Default integration settings</span>
+<span class="w">  </span><span class="nt">max_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300.0</span>
+<span class="w">  </span><span class="nt">max_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.inf</span>
+<span class="w">  </span><span class="nt">min_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">rtol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+<span class="w">  </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+
+<span class="w">  </span><span class="c1"># Full flight simulation</span>
+<span class="w">  </span><span class="nt">terminate_on_apogee</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</section>
+<section id="high-accuracy-competition-simulation">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">High-Accuracy Competition Simulation</a><a class="headerlink" href="#high-accuracy-competition-simulation" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Long rail for stable departure</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.0</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">87.0</span><span class="w">  </span><span class="c1"># 3° from vertical</span>
+<span class="w">    </span><span class="nt">heading_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">270.0</span><span class="w">  </span><span class="c1"># Launching into westerly wind</span>
+
+<span class="w">  </span><span class="c1"># Tight tolerances for accuracy</span>
+<span class="w">  </span><span class="nt">max_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600.0</span>
+<span class="w">  </span><span class="nt">rtol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-8</span><span class="w">  </span><span class="c1"># Higher accuracy</span>
+<span class="w">  </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-8</span>
+
+<span class="w">  </span><span class="c1"># Complete flight analysis</span>
+<span class="w">  </span><span class="nt">terminate_on_apogee</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</section>
+<section id="fast-design-iteration">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Fast Design Iteration</a><a class="headerlink" href="#fast-design-iteration" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Minimal rail for quick sim</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90.0</span><span class="w">  </span><span class="c1"># Vertical</span>
+<span class="w">    </span><span class="nt">heading_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+
+<span class="w">  </span><span class="c1"># Relaxed tolerances for speed</span>
+<span class="w">  </span><span class="nt">max_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200.0</span>
+<span class="w">  </span><span class="nt">rtol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-4</span><span class="w">  </span><span class="c1"># Faster, less accurate</span>
+<span class="w">  </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-4</span>
+
+<span class="w">  </span><span class="c1"># Stop at apogee (skip descent)</span>
+<span class="w">  </span><span class="nt">terminate_on_apogee</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</section>
+<section id="debugging-simulation">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Debugging Simulation</a><a class="headerlink" href="#debugging-simulation" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85.0</span>
+<span class="w">    </span><span class="nt">heading_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+
+<span class="w">  </span><span class="c1"># Force small time steps for detailed output</span>
+<span class="w">  </span><span class="nt">max_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300.0</span>
+<span class="w">  </span><span class="nt">max_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">  </span><span class="c1"># 10 ms max steps</span>
+<span class="w">  </span><span class="nt">rtol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+<span class="w">  </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+
+<span class="w">  </span><span class="c1"># Full diagnostics</span>
+<span class="w">  </span><span class="nt">terminate_on_apogee</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Enable detailed logging</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="rail-length-calculator">
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">Rail Length Calculator</a><a class="headerlink" href="#rail-length-calculator" title="Link to this heading">#</a></h2>
+<p>Use this formula to estimate minimum rail length:</p>
+<div class="math notranslate nohighlight">
+\[L_{rail} = \frac{v_{exit}^2 \cdot m}{2 \cdot F_{avg}}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(v_{exit}\)</span> = target exit velocity (≥ 20 m/s)</p></li>
+<li><p><span class="math notranslate nohighlight">\(m\)</span> = rocket mass (kg)</p></li>
+<li><p><span class="math notranslate nohighlight">\(F_{avg}\)</span> = average motor thrust (N)</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Target: 20 m/s exit velocity</span>
+<span class="n">v_exit</span> <span class="o">=</span> <span class="mf">20.0</span>  <span class="c1"># m/s</span>
+<span class="n">mass</span> <span class="o">=</span> <span class="mf">15.0</span>    <span class="c1"># kg</span>
+<span class="n">thrust_avg</span> <span class="o">=</span> <span class="mf">1500.0</span>  <span class="c1"># N (from motor data)</span>
+
+<span class="n">L_rail</span> <span class="o">=</span> <span class="p">(</span><span class="n">v_exit</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">thrust_avg</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Minimum rail length: </span><span class="si">{</span><span class="n">L_rail</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+<span class="c1"># Output: Minimum rail length: 2.00 m</span>
+</pre></div>
+</div>
+<p>Add 20-30% safety margin:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L_rail_safe</span> <span class="o">=</span> <span class="n">L_rail</span> <span class="o">*</span> <span class="mf">1.25</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recommended rail length: </span><span class="si">{</span><span class="n">L_rail_safe</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+<span class="c1"># Output: Recommended rail length: 2.50 m</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="common-issues">
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">Common Issues</a><a class="headerlink" href="#common-issues" title="Link to this heading">#</a></h2>
+<section id="rail-exit-velocity-too-low">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Rail Exit Velocity Too Low</a><a class="headerlink" href="#rail-exit-velocity-too-low" title="Link to this heading">#</a></h3>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">rail_exit_velocity</span> <span class="pre">&lt;</span> <span class="pre">20</span> <span class="pre">m/s</span></code> → unstable flight</p>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Increase rail length</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.0</span><span class="w">  </span><span class="c1"># Increased from 4.0 m</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Use higher-thrust motor</strong> (faster acceleration)</p></li>
+<li><p><strong>Reduce rocket mass</strong> (faster acceleration)</p></li>
+</ol>
+</section>
+<section id="simulation-fails-to-converge">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">Simulation Fails to Converge</a><a class="headerlink" href="#simulation-fails-to-converge" title="Link to this heading">#</a></h3>
+<p><strong>Problem:</strong> “Integration tolerance error” or very slow simulation</p>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Tighten tolerances</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rtol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-8</span><span class="w">  </span><span class="c1"># From 1e-6</span>
+<span class="w">  </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-8</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Limit max time step</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">  </span><span class="c1"># Force smaller steps</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Enable verbose output</strong> to diagnose issue:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="rocket-doesn-t-land">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Rocket Doesn’t Land</a><a class="headerlink" href="#rocket-doesn-t-land" title="Link to this heading">#</a></h3>
+<p><strong>Problem:</strong> Simulation ends before rocket lands</p>
+<p><strong>Solution:</strong></p>
+<p>Increase <code class="docutils literal notranslate"><span class="pre">max_time_s</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">900.0</span><span class="w">  </span><span class="c1"># Increased from 300 s</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="see-also">
+<h2><a class="toc-backref" href="#id26" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><strong>Configuration References:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="rocket_params.html#config-rocket-params"><span class="std std-ref">Rocket Parameters Reference</span></a> - Rocket physical properties</p></li>
+<li><p><a class="reference internal" href="motor_params.html#config-motor-params"><span class="std std-ref">Motor Parameters Reference</span></a> - Motor configuration</p></li>
+<li><p><a class="reference internal" href="environment_params.html#config-environment-params"><span class="std std-ref">Environment Parameters Reference</span></a> - Launch site and weather</p></li>
+</ul>
+<p><strong>Tutorials:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">tutorial-basic-flight</span> - First complete simulation</p></li>
+<li><p><span class="xref std std-ref">tutorial-rail-optimization</span> - Choosing rail length</p></li>
+</ul>
+<p><strong>How-To Guides:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">how-to-calculate-rail-length</span> - Rail length estimation</p></li>
+<li><p><span class="xref std std-ref">how-to-launch-heading</span> - Optimizing launch direction for wind</p></li>
+<li><p><span class="xref std std-ref">how-to-integration-accuracy</span> - Balancing speed vs. accuracy</p></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">example-rail-sensitivity</span> - Impact of rail length on stability</p></li>
+<li><p><span class="xref std std-ref">example-heading-optimization</span> - Wind drift minimization</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<p><strong>Configuration Reference Complete</strong></p>
+<p>You now have complete documentation for all four configuration sections:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="rocket_params.html#config-rocket-params"><span class="std std-ref">Rocket Parameters Reference</span></a> - Rocket geometry, mass, components</p></li>
+<li><p><a class="reference internal" href="motor_params.html#config-motor-params"><span class="std std-ref">Motor Parameters Reference</span></a> - Motor and propulsion system</p></li>
+<li><p><a class="reference internal" href="environment_params.html#config-environment-params"><span class="std std-ref">Environment Parameters Reference</span></a> - Launch site, atmosphere, wind</p></li>
+<li><p><a class="reference internal" href="#config-simulation-params"><span class="std std-ref">Simulation Parameters Reference</span></a> - Integration and rail settings</p></li>
+</ol>
+<p><strong>Next steps:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">tutorial-basic-flight</span> - Put it all together in your first simulation</p></li>
+<li><p><span class="xref std std-ref">how-to-guides</span> - Practical guides for common tasks</p></li>
+<li><p><span class="xref std std-ref">examples</span> - Real-world configuration examples</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="environment_params.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Environment Parameters Reference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../technical/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Technical Documentation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-rail-configuration">Launch Rail Configuration</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rail-length-m">rail.length_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rail-inclination-deg">rail.inclination_deg</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rail-heading-deg">rail.heading_deg</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-parameters">Integration Parameters</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-time-s">max_time_s</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-time-step-s">max_time_step_s</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-time-step-s">min_time_step_s</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rtol">rtol</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#atol">atol</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#termination-conditions">Termination Conditions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminate-on-apogee">terminate_on_apogee</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-control">Output Control</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verbose">verbose</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-examples">Complete Examples</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-high-power-launch">Standard High-Power Launch</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-accuracy-competition-simulation">High-Accuracy Competition Simulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-design-iteration">Fast Design Iteration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debugging-simulation">Debugging Simulation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rail-length-calculator">Rail Length Calculator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-issues">Common Issues</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rail-exit-velocity-too-low">Rail Exit Velocity Too Low</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-fails-to-converge">Simulation Fails to Converge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rocket-doesn-t-land">Rocket Doesn’t Land</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See Also</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/configuration/simulation_params.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1022 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Next Steps &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started/next_steps';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="User Guide" href="../user/index.html" />
+    <link rel="prev" title="Key Concepts" href="key_concepts.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart: Your First Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="key_concepts.html">Key Concepts</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Next Steps</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Getting Started</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Next Steps</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="next-steps">
+<h1>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h1>
+<p>Congratulations on completing the Getting Started guide! You now have a solid foundation
+in rocket-sim. This page will help you decide where to go next based on your goals.</p>
+<section id="choose-your-path">
+<h2>Choose Your Path<a class="headerlink" href="#choose-your-path" title="Link to this heading">#</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🎓 I’m Learning Rocket Simulation</div>
+<p class="sd-card-text">New to rocketry or trajectory simulation</p>
+</div>
+<span class="sd-stretched-link sd-hide-link-text">#path-learning</span></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🏆 I’m Building a Competition Rocket</div>
+<p class="sd-card-text">Need to design and validate for competition</p>
+</div>
+<span class="sd-stretched-link sd-hide-link-text">#path-competition</span></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🔬 I’m Doing Research</div>
+<p class="sd-card-text">Advanced analysis and custom modifications</p>
+</div>
+<span class="sd-stretched-link sd-hide-link-text">#path-research</span></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+💻 I’m Contributing Code</div>
+<p class="sd-card-text">Want to extend or improve rocket-sim</p>
+</div>
+<span class="sd-stretched-link sd-hide-link-text">#path-development</span></div>
+</div>
+</div>
+</div>
+</section>
+<section id="path-1-learning-rocket-simulation">
+<span id="path-learning"></span><h2>Path 1: Learning Rocket Simulation<a class="headerlink" href="#path-1-learning-rocket-simulation" title="Link to this heading">#</a></h2>
+<p><strong>Your Goal</strong>: Understand how rocket simulations work and learn best practices.</p>
+<section id="recommended-learning-path">
+<h3>Recommended Learning Path<a class="headerlink" href="#recommended-learning-path" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>Complete the Tutorials</strong> (TODO)</p>
+<p>Follow step-by-step tutorials building from simple to complex:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../user/tutorials/01_basic_flight.html"><span class="doc">Tutorial 1: Basic Flight Simulation</span></a> - Minimal rocket</p></li>
+<li><p><span class="xref std std-doc">/user/tutorials/02_adding_fins</span> - Aerodynamic surfaces</p></li>
+<li><p><a class="reference internal" href="../user/tutorials/03_custom_motor.html"><span class="doc">Using Custom Motor Data</span></a> - Use your own motor data</p></li>
+<li><p><span class="xref std std-doc">/user/tutorials/04_parachute_recovery</span> - Recovery system</p></li>
+<li><p><span class="xref std std-doc">/user/tutorials/05_weather_data</span> - Real atmospheric conditions</p></li>
+</ul>
+</li>
+<li><p><strong>Study Example Rockets</strong></p>
+<p>Analyze pre-configured rockets in <code class="docutils literal notranslate"><span class="pre">data/rockets/</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Explore example configurations</span>
+ls<span class="w"> </span>data/rockets/
+<span class="c1"># calisto, prometheus, valetudo, etc.</span>
+</pre></div>
+</div>
+<p>Each includes complete YAML config and explanation.</p>
+</li>
+<li><p><strong>Understand the Physics</strong> (TODO)</p>
+<p>Read background theory:</p>
+<ul class="simple">
+<li><p><span class="xref std std-doc">/background/rocket_physics</span> - Forces and motion</p></li>
+<li><p><span class="xref std std-doc">/background/aerodynamics</span> - Drag and stability</p></li>
+<li><p><span class="xref std std-doc">/background/simulation_theory</span> - Numerical methods</p></li>
+</ul>
+</li>
+<li><p><strong>Experiment with Parameters</strong></p>
+<p>Create <code class="docutils literal notranslate"><span class="pre">configs/learning/experiments.yaml</span></code> and try:</p>
+<ul class="simple">
+<li><p>Varying launch angles (60°, 75°, 85°, 90°)</p></li>
+<li><p>Different motor sizes (impulse classes H, I, J, K, L, M)</p></li>
+<li><p>Fin configurations (3 vs 4 fins, different spans)</p></li>
+<li><p>Mass variations (simulate payload changes)</p></li>
+</ul>
+</li>
+<li><p><strong>Master the Tools</strong></p>
+<p>Learn advanced features:</p>
+<ul class="simple">
+<li><p><span class="xref std std-doc">/user/how_to_guides/custom_plots</span> - Visualization (TODO)</p></li>
+<li><p><span class="xref std std-doc">/user/how_to_guides/data_analysis</span> - Processing results (TODO)</p></li>
+<li><p><span class="xref std std-doc">/user/how_to_guides/parameter_study</span> - Sensitivity analysis (TODO)</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Estimated Time</strong>: 2-3 weeks of occasional practice</p>
+</section>
+</section>
+<section id="path-2-building-a-competition-rocket">
+<span id="path-competition"></span><h2>Path 2: Building a Competition Rocket<a class="headerlink" href="#path-2-building-a-competition-rocket" title="Link to this heading">#</a></h2>
+<p><strong>Your Goal</strong>: Design, simulate, and validate a rocket for competition (IREC, EuRoC, etc.).</p>
+<section id="competition-workflow">
+<h3>Competition Workflow<a class="headerlink" href="#competition-workflow" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>Start with Similar Rocket</strong> (TODO)</p>
+<p>Find a similar competition rocket as baseline:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy competition template</span>
+cp<span class="w"> </span>configs/templates/competition_rocket.yaml<span class="w"> </span>configs/my_team_rocket.yaml
+</pre></div>
+</div>
+<p>Study examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data/rockets/prometheus/</span></code> - EuRoC 9km category</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data/rockets/valetudo/</span></code> - IREC 10k SRAD</p></li>
+</ul>
+</li>
+<li><p><strong>Input Your Design Parameters</strong> (TODO)</p>
+<p>Follow the guide:</p>
+<ul class="simple">
+<li><p><span class="xref std std-doc">/user/how_to_guides/measure_rocket_params</span> - How to measure your actual rocket (TODO)</p></li>
+<li><p><a class="reference internal" href="../user/how_to_guides/motor_selection.html"><span class="doc">Select the Optimal Motor</span></a> - Choose optimal motor (TODO)</p></li>
+<li><p><a class="reference internal" href="../user/configuration/index.html"><span class="doc">Configuration Reference</span></a> - Complete parameter reference (TODO)</p></li>
+</ul>
+</li>
+<li><p><strong>Validate Design</strong></p>
+<p>Check critical parameters:</p>
+<ul class="simple">
+<li><p><strong>Static margin</strong> ≥ 2.0 calibers (validator enforces this)</p></li>
+<li><p><strong>Apogee</strong> within competition requirements ± 10%</p></li>
+<li><p><strong>Max velocity</strong> &lt; Mach 0.8 (unless designed for transonic)</p></li>
+<li><p><strong>Landing impact</strong> &lt; 10 m/s (safe recovery)</p></li>
+</ul>
+</li>
+<li><p><strong>Optimize with Parameter Sweeps</strong> (TODO)</p>
+<p>Find optimal configuration:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/parameter_sweep.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>configs/my_team_rocket.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--vary<span class="w"> </span><span class="s2">&quot;simulation.inclination&quot;</span><span class="w"> </span>--range<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="m">90</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--vary<span class="w"> </span><span class="s2">&quot;rocket.mass&quot;</span><span class="w"> </span>--range<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--target-apogee<span class="w"> </span><span class="m">3000</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-doc">/user/how_to_guides/optimization</span> (TODO)</p>
+</li>
+<li><p><strong>Account for Uncertainty</strong> (TODO - Monte Carlo)</p>
+<p>Run Monte Carlo analysis to quantify uncertainty:</p>
+<ul class="simple">
+<li><p>Manufacturing tolerances (mass ± 2%, CP ± 5mm)</p></li>
+<li><p>Weather variations (wind, temperature, pressure)</p></li>
+<li><p>Motor performance (thrust ± 5%)</p></li>
+</ul>
+<p>See <span class="xref std std-doc">/user/how_to_guides/monte_carlo</span> (TODO)</p>
+</li>
+<li><p><strong>Use Real Launch Site Weather</strong> (TODO)</p>
+<p>Get atmospheric data for your competition:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32.9406</span><span class="w">      </span><span class="c1"># Spaceport America Cup</span>
+<span class="w">  </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-106.9195</span>
+<span class="w">  </span><span class="nt">elevation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1400</span>
+<span class="w">  </span><span class="nt">atmospheric_model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Forecast&quot;</span>
+<span class="w">  </span><span class="nt">atmospheric_model_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GFS&quot;</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2025</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">21</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># Competition date</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-doc">/user/how_to_guides/weather_integration</span> (TODO)</p>
+</li>
+<li><p><strong>Generate Competition Report</strong> (TODO)</p>
+<p>Create professional documentation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/generate_report.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>configs/my_team_rocket.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output<span class="w"> </span>reports/competition_submission.pdf<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--include<span class="w"> </span>trajectory<span class="w"> </span>plots<span class="w"> </span>stability<span class="w"> </span>analysis
+</pre></div>
+</div>
+<p>See <span class="xref std std-doc">/user/how_to_guides/generate_reports</span> (TODO)</p>
+</li>
+</ol>
+<p><strong>Estimated Time</strong>: 1-2 weeks for complete design iteration</p>
+</section>
+</section>
+<section id="path-3-research-and-advanced-analysis">
+<span id="path-research"></span><h2>Path 3: Research and Advanced Analysis<a class="headerlink" href="#path-3-research-and-advanced-analysis" title="Link to this heading">#</a></h2>
+<p><strong>Your Goal</strong>: Publish-quality analysis, custom modifications, advanced simulations.</p>
+<section id="research-workflow">
+<h3>Research Workflow<a class="headerlink" href="#research-workflow" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>Master the API</strong> (TODO)</p>
+<p>Go beyond YAML configs and use Python API directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">src.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.flight_simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlightSimulator</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">&quot;configs/research_vehicle.yaml&quot;</span><span class="p">)</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">FlightSimulator</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">flight</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="c1"># Custom analysis</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">max_q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">flight</span><span class="o">.</span><span class="n">dynamic_pressure</span><span class="p">)</span>  <span class="c1"># Maximum dynamic pressure</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-doc">/reference/api/index</span> (TODO)</p>
+</li>
+<li><p><strong>Custom Atmospheric Models</strong> (TODO)</p>
+<p>Implement your own atmosphere:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">rocketpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">latitude</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># Custom pressure profile from your measurements</span>
+<span class="n">env</span><span class="o">.</span><span class="n">set_atmospheric_model</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;custom_atmosphere&quot;</span><span class="p">,</span>
+    <span class="n">pressure</span><span class="o">=</span><span class="n">my_pressure_data</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="n">my_temperature_data</span><span class="p">,</span>
+    <span class="n">wind_u</span><span class="o">=</span><span class="n">my_wind_u_data</span><span class="p">,</span>
+    <span class="n">wind_v</span><span class="o">=</span><span class="n">my_wind_v_data</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-doc">/user/advanced/custom_atmosphere</span> (TODO)</p>
+</li>
+<li><p><strong>Advanced Control Systems</strong> (TODO)</p>
+<p>Implement custom air brakes controllers:</p>
+<ul class="simple">
+<li><p>Model Predictive Control (MPC)</p></li>
+<li><p>Adaptive control</p></li>
+<li><p>Machine learning-based control</p></li>
+</ul>
+<p>See <span class="xref std std-doc">/user/advanced/custom_controllers</span> (TODO)</p>
+</li>
+<li><p><strong>Sensitivity Analysis</strong> (TODO)</p>
+<p>Understand parameter influence:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">src.sensitivity</span><span class="w"> </span><span class="kn">import</span> <span class="n">SensitivityAnalyzer</span>
+
+<span class="n">analyzer</span> <span class="o">=</span> <span class="n">SensitivityAnalyzer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">run_sobol_analysis</span><span class="p">(</span>
+    <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rocket.mass&#39;</span><span class="p">,</span> <span class="s1">&#39;motor.thrust_scale&#39;</span><span class="p">,</span> <span class="s1">&#39;environment.wind_speed&#39;</span><span class="p">],</span>
+    <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">plot_sensitivity_indices</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-doc">/user/advanced/sensitivity_analysis</span> (TODO)</p>
+</li>
+<li><p><strong>Batch Processing and Automation</strong></p>
+<p>Run hundreds of simulations:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Process multiple configurations</span>
+<span class="k">for</span><span class="w"> </span>config<span class="w"> </span><span class="k">in</span><span class="w"> </span>configs/batch/*.yaml<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span><span class="nv">$config</span><span class="w"> </span>--name<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="nv">$config</span><span class="w"> </span>.yaml<span class="k">)</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-doc">/user/how_to_guides/batch_processing</span> (TODO)</p>
+</li>
+<li><p><strong>Publication-Quality Figures</strong> (TODO)</p>
+<p>Create publication-ready plots:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">src.visualizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">PublicationPlotter</span>
+
+<span class="n">plotter</span> <span class="o">=</span> <span class="n">PublicationPlotter</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;ieee&#39;</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">plot_trajectory_comparison</span><span class="p">(</span>
+    <span class="n">simulations</span><span class="o">=</span><span class="p">[</span><span class="n">flight1</span><span class="p">,</span> <span class="n">flight2</span><span class="p">,</span> <span class="n">flight3</span><span class="p">],</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Baseline&#39;</span><span class="p">,</span> <span class="s1">&#39;With Air Brakes&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimized&#39;</span><span class="p">],</span>
+    <span class="n">save</span><span class="o">=</span><span class="s1">&#39;figures/trajectory_comparison.pdf&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-doc">/user/advanced/publication_plots</span> (TODO)</p>
+</li>
+<li><p><strong>Extend RocketPy</strong> (TODO)</p>
+<p>Add custom physics models:</p>
+<ul class="simple">
+<li><p>Non-standard drag models</p></li>
+<li><p>Ablative thermal protection</p></li>
+<li><p>Multi-stage rockets</p></li>
+<li><p>Custom force/moment models</p></li>
+</ul>
+<p>See <span class="xref std std-doc">/developer/extending_rocketpy</span> (TODO)</p>
+</li>
+</ol>
+<p><strong>Estimated Time</strong>: Ongoing research workflow</p>
+</section>
+</section>
+<section id="path-4-contributing-to-rocket-sim">
+<span id="path-development"></span><h2>Path 4: Contributing to rocket-sim<a class="headerlink" href="#path-4-contributing-to-rocket-sim" title="Link to this heading">#</a></h2>
+<p><strong>Your Goal</strong>: Improve rocket-sim, add features, fix bugs.</p>
+<section id="contribution-workflow">
+<h3>Contribution Workflow<a class="headerlink" href="#contribution-workflow" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>Read Developer Documentation</strong> (TODO)</p>
+<p>Understand the codebase:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../developer/architecture.html"><span class="doc">System Architecture</span></a> - System design</p></li>
+<li><p><span class="xref std std-doc">/developer/coding_standards</span> - Code style (snake_case, NumPy docstrings)</p></li>
+<li><p><span class="xref std std-doc">/developer/testing</span> - How to write tests</p></li>
+<li><p><span class="xref std std-doc">/developer/contributing</span> - Contribution guidelines</p></li>
+</ul>
+</li>
+<li><p><strong>Set Up Development Environment</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/matteodisante/rocket-sim.git
+<span class="nb">cd</span><span class="w"> </span>rocket-sim
+
+<span class="c1"># Install dev dependencies</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-docs.txt
+
+<span class="c1"># Install pre-commit hooks (code formatting)</span>
+pre-commit<span class="w"> </span>install
+
+<span class="c1"># Run tests</span>
+pytest<span class="w"> </span>tests/
+</pre></div>
+</div>
+</li>
+<li><p><strong>Find Something to Work On</strong></p>
+<p>Check GitHub Issues for:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">good-first-issue</span></code> - Easy entry points</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">help-wanted</span></code> - Requested features</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bug</span></code> - Known bugs needing fixes</p></li>
+</ul>
+</li>
+<li><p><strong>Follow Development Workflow</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create feature branch</span>
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/my-awesome-feature
+
+<span class="c1"># Make changes, write tests</span>
+<span class="c1"># ...</span>
+
+<span class="c1"># Run tests</span>
+pytest<span class="w"> </span>tests/
+
+<span class="c1"># Run linters</span>
+ruff<span class="w"> </span>check<span class="w"> </span>.
+ruff<span class="w"> </span>format<span class="w"> </span>.
+
+<span class="c1"># Commit and push</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add awesome feature&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feature/my-awesome-feature
+
+<span class="c1"># Open Pull Request on GitHub</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Documentation for New Features</strong></p>
+<p>If you add a feature, document it:</p>
+<ul class="simple">
+<li><p>NumPy-style docstrings in code</p></li>
+<li><p>User guide if it’s user-facing</p></li>
+<li><p>Example in <code class="docutils literal notranslate"><span class="pre">examples/</span></code></p></li>
+<li><p>Test coverage ≥ 80%</p></li>
+</ul>
+</li>
+<li><p><strong>Join the Community</strong></p>
+<ul class="simple">
+<li><p>GitHub Discussions for questions</p></li>
+<li><p>Code reviews on Pull Requests</p></li>
+<li><p>Share your use cases and feedback</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Estimated Time</strong>: Ongoing contributions</p>
+</section>
+</section>
+<section id="additional-resources">
+<h2>Additional Resources<a class="headerlink" href="#additional-resources" title="Link to this heading">#</a></h2>
+<section id="official-documentation">
+<h3>Official Documentation<a class="headerlink" href="#official-documentation" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>RocketPy Docs</strong>: <a class="reference external" href="https://docs.rocketpy.org/">https://docs.rocketpy.org/</a></p></li>
+<li><p><strong>NumPy Docs</strong>: <a class="reference external" href="https://numpy.org/doc/stable/">https://numpy.org/doc/stable/</a></p></li>
+<li><p><strong>SciPy Docs</strong>: <a class="reference external" href="https://docs.scipy.org/">https://docs.scipy.org/</a></p></li>
+</ul>
+</section>
+<section id="learning-materials">
+<h3>Learning Materials<a class="headerlink" href="#learning-materials" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>RocketPy Jupyter Notebooks</strong>: <code class="docutils literal notranslate"><span class="pre">docs/notebooks/</span></code> in RocketPy repo</p></li>
+<li><p><strong>rocket-sim Examples</strong>: <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory</p></li>
+<li><p><strong>Motor Database</strong>: <a class="reference external" href="http://www.thrustcurve.org/">http://www.thrustcurve.org/</a></p></li>
+</ul>
+</section>
+<section id="books-and-references">
+<h3>Books and References<a class="headerlink" href="#books-and-references" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Sutton &amp; Biblarz - <em>Rocket Propulsion Elements</em> (motor theory)</p></li>
+<li><p>Niskanen - <em>Development of an Open Source Model Rocket Simulation Software</em> (OpenRocket thesis)</p></li>
+<li><p>Barrowman - <em>Theoretical Prediction of Center of Pressure</em> (stability theory)</p></li>
+</ul>
+</section>
+<section id="community">
+<h3>Community<a class="headerlink" href="#community" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>GitHub Issues</strong>: Bug reports and feature requests</p></li>
+<li><p><strong>GitHub Discussions</strong>: Questions and community help</p></li>
+<li><p><strong>RocketPy Discord</strong>: General rocketry simulation discussion</p></li>
+</ul>
+</section>
+</section>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading">#</a></h2>
+<p>Still not sure where to start?</p>
+<ol class="arabic simple">
+<li><p><strong>Browse the examples</strong>: <code class="docutils literal notranslate"><span class="pre">examples/</span></code> and <code class="docutils literal notranslate"><span class="pre">configs/</span></code></p></li>
+<li><p><strong>Read existing configurations</strong>: Learn from working setups</p></li>
+<li><p><strong>Ask on GitHub Discussions</strong>: Community can guide you</p></li>
+<li><p><strong>Check RocketPy docs</strong>: For underlying library details</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Pro tip</strong>: Start with small, working examples and gradually increase complexity.
+Don’t try to simulate your dream rocket on day one!</p>
+</div>
+</section>
+<section id="what-s-next">
+<h2>What’s Next?<a class="headerlink" href="#what-s-next" title="Link to this heading">#</a></h2>
+<p>No matter which path you chose, remember:</p>
+<ul class="simple">
+<li><p><strong>Start simple</strong> - Master basics before advanced features</p></li>
+<li><p><strong>Validate often</strong> - Check results make physical sense</p></li>
+<li><p><strong>Read docs</strong> - Most questions are answered in documentation</p></li>
+<li><p><strong>Ask questions</strong> - Community is here to help</p></li>
+<li><p><strong>Share results</strong> - Your experience helps others learn</p></li>
+</ul>
+<p>Happy simulating! 🚀</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../user/index.html"><span class="doc">User Guide</span></a> - Complete user documentation (TODO)</p></li>
+<li><p><span class="xref std std-doc">/reference/index</span> - API reference (TODO)</p></li>
+<li><p><a class="reference internal" href="../developer/index.html"><span class="doc">Developer Documentation</span></a> - Developer guides (TODO)</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="key_concepts.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Key Concepts</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../user/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">User Guide</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-your-path">Choose Your Path</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path-1-learning-rocket-simulation">Path 1: Learning Rocket Simulation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-learning-path">Recommended Learning Path</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path-2-building-a-competition-rocket">Path 2: Building a Competition Rocket</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#competition-workflow">Competition Workflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path-3-research-and-advanced-analysis">Path 3: Research and Advanced Analysis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#research-workflow">Research Workflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path-4-contributing-to-rocket-sim">Path 4: Contributing to rocket-sim</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contribution-workflow">Contribution Workflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#official-documentation">Official Documentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-materials">Learning Materials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#books-and-references">Books and References</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#community">Community</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-help">Getting Help</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-next">What’s Next?</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/getting_started/next_steps.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

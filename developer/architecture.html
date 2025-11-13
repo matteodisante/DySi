@@ -1,0 +1,1414 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>System Architecture &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'developer/architecture';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Module Quick Reference" href="module_reference.html" />
+    <link rel="prev" title="Developer Documentation" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guides</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">System Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_reference.html">Module Quick Reference</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Developer Documentation</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">System Architecture</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="system-architecture">
+<span id="developer-architecture"></span><h1>System Architecture<a class="headerlink" href="#system-architecture" title="Link to this heading">#</a></h1>
+<p>This document explains the architecture of the rocket simulation framework, from configuration loading to output generation.</p>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#system-layers" id="id2">System Layers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuration-layer" id="id3">1. Configuration Layer</a></p></li>
+<li><p><a class="reference internal" href="#validation-layer" id="id4">2. Validation Layer</a></p></li>
+<li><p><a class="reference internal" href="#builder-layer" id="id5">3. Builder Layer</a></p></li>
+<li><p><a class="reference internal" href="#simulation-layer" id="id6">4. Simulation Layer</a></p></li>
+<li><p><a class="reference internal" href="#output-layer" id="id7">5. Output Layer</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#data-flow-diagrams" id="id8">Data Flow Diagrams</a></p>
+<ul>
+<li><p><a class="reference internal" href="#single-flight-simulation" id="id9">Single Flight Simulation</a></p></li>
+<li><p><a class="reference internal" href="#configuration-to-output-pipeline" id="id10">Configuration to Output Pipeline</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#key-design-patterns" id="id11">Key Design Patterns</a></p>
+<ul>
+<li><p><a class="reference internal" href="#builder-pattern" id="id12">Builder Pattern</a></p></li>
+<li><p><a class="reference internal" href="#factory-pattern" id="id13">Factory Pattern</a></p></li>
+<li><p><a class="reference internal" href="#dependency-injection" id="id14">Dependency Injection</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#module-responsibilities" id="id15">Module Responsibilities</a></p></li>
+<li><p><a class="reference internal" href="#extension-points" id="id16">Extension Points</a></p>
+<ul>
+<li><p><a class="reference internal" href="#adding-new-components" id="id17">Adding New Components</a></p></li>
+<li><p><a class="reference internal" href="#adding-new-output-formats" id="id18">Adding New Output Formats</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#performance-considerations" id="id19">Performance Considerations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#computational-complexity" id="id20">Computational Complexity</a></p></li>
+<li><p><a class="reference internal" href="#optimization-strategies" id="id21">Optimization Strategies</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#error-handling-strategy" id="id22">Error Handling Strategy</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fail-fast-principle" id="id23">Fail-Fast Principle</a></p></li>
+<li><p><a class="reference internal" href="#error-categories" id="id24">Error Categories</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#testing-architecture" id="id25">Testing Architecture</a></p>
+<ul>
+<li><p><a class="reference internal" href="#test-categories" id="id26">Test Categories</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#future-architecture-plans" id="id27">Future Architecture Plans</a></p>
+<ul>
+<li><p><a class="reference internal" href="#planned-enhancements" id="id28">Planned Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#scalability-considerations" id="id29">Scalability Considerations</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#see-also" id="id30">See Also</a></p></li>
+</ul>
+</nav>
+<hr class="docutils" />
+<section id="overview">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The framework follows a <strong>layered architecture</strong> with clear separation of concerns:</p>
+<p><strong>Design Principles:</strong></p>
+<ul class="simple">
+<li><p>✅ <strong>Type Safety</strong>: Full type hints with dataclasses</p></li>
+<li><p>✅ <strong>Validation First</strong>: Catch errors at config load, not runtime</p></li>
+<li><p>✅ <strong>Separation of Concerns</strong>: Each module has one responsibility</p></li>
+<li><p>✅ <strong>Builder Pattern</strong>: Progressive object construction</p></li>
+<li><p>✅ <strong>Testability</strong>: Dependency injection throughout</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="system-layers">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">System Layers</a><a class="headerlink" href="#system-layers" title="Link to this heading">#</a></h2>
+<section id="configuration-layer">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">1. Configuration Layer</a><a class="headerlink" href="#configuration-layer" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Load and validate YAML configurations into type-safe Python objects.</p>
+<p><strong>Key Components</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>configs/single_sim/my_rocket.yaml
+     ↓
+ConfigLoader.load_from_yaml()
+     ↓
+Dataclass objects (RocketConfig, MotorConfig, EnvironmentConfig)
+     ↓
+Validators.validate()
+     ↓
+Validated configurations ready for builders
+</pre></div>
+</div>
+<p><strong>Configuration Structure</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Artemis&quot;</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16.4</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.127</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">    </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span>
+<span class="w">    </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.100</span>
+
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SolidMotor&quot;</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/motor.eng&quot;</span>
+
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">39.39</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-8.29</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+</pre></div>
+</div>
+<p><strong>Type Safety with Dataclasses</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RocketConfig</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">dry_mass_kg</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">geometry</span><span class="p">:</span> <span class="n">GeometryConfig</span>
+    <span class="n">nose_cone</span><span class="p">:</span> <span class="n">NoseConeConfig</span>
+    <span class="n">fins</span><span class="p">:</span> <span class="n">FinsConfig</span>
+    <span class="c1"># ... more fields with types</span>
+</pre></div>
+</div>
+</section>
+<section id="validation-layer">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">2. Validation Layer</a><a class="headerlink" href="#validation-layer" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Ensure physical plausibility and configuration consistency.</p>
+<p><strong>Validation Types</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Physical Bounds</strong></p>
+<ul class="simple">
+<li><p>Mass &gt; 0 and &lt; 1000 kg</p></li>
+<li><p>Lengths &gt; 0</p></li>
+<li><p>Angles in valid ranges</p></li>
+</ul>
+</li>
+<li><p><strong>Consistency Checks</strong></p>
+<ul class="simple">
+<li><p>Stability margin &gt; 1.0 calibers</p></li>
+<li><p>Center of pressure aft of center of gravity</p></li>
+<li><p>Fin positions within rocket length</p></li>
+</ul>
+</li>
+<li><p><strong>File Existence</strong></p>
+<ul class="simple">
+<li><p>Motor thrust curves exist</p></li>
+<li><p>Custom drag curves exist (if specified)</p></li>
+<li><p>Airfoil files exist (if specified)</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Example Validation</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RocketValidator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_stability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">RocketConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure rocket is statically stable.&quot;&quot;&quot;</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">cp_location_m</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimate_cp</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">cg</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">cg_location_m</span>
+        <span class="n">caliber</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">caliber_m</span>
+
+        <span class="n">margin</span> <span class="o">=</span> <span class="p">(</span><span class="n">cp</span> <span class="o">-</span> <span class="n">cg</span><span class="p">)</span> <span class="o">/</span> <span class="n">caliber</span>
+
+        <span class="k">if</span> <span class="n">margin</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unstable! Static margin </span><span class="si">{</span><span class="n">margin</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> &lt; 1.0 calibers&quot;</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="builder-layer">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">3. Builder Layer</a><a class="headerlink" href="#builder-layer" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Construct RocketPy objects from validated configurations.</p>
+<p><strong>Pattern</strong>: Builder pattern with progressive construction</p>
+<p><strong>Workflow</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>MotorConfig → MotorBuilder.build() → rocketpy.SolidMotor
+EnvConfig → EnvironmentBuilder.build() → rocketpy.Environment
+RocketConfig → RocketBuilder.build() → rocketpy.Rocket
+</pre></div>
+</div>
+<p><strong>Motor Construction</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MotorBuilder</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">MotorConfig</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SolidMotor</span><span class="p">:</span>
+        <span class="n">motor</span> <span class="o">=</span> <span class="n">SolidMotor</span><span class="p">(</span>
+            <span class="n">thrust_source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">thrust_source</span><span class="p">,</span>
+            <span class="n">burn_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">burn_time_s</span><span class="p">,</span>
+            <span class="n">dry_mass</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dry_mass_kg</span><span class="p">,</span>
+            <span class="n">dry_inertia</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dry_inertia</span><span class="p">,</span>
+            <span class="c1"># ... more parameters</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">motor</span>
+</pre></div>
+</div>
+<p><strong>Rocket Construction</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RocketBuilder</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motor</span><span class="p">:</span> <span class="n">Motor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Rocket</span><span class="p">:</span>
+        <span class="c1"># Create base rocket</span>
+        <span class="n">rocket</span> <span class="o">=</span> <span class="n">Rocket</span><span class="p">(</span>
+            <span class="n">radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">caliber_m</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">mass</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dry_mass_kg</span><span class="p">,</span>
+            <span class="c1"># ... more parameters</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Add components progressively</span>
+        <span class="n">rocket</span><span class="o">.</span><span class="n">add_motor</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">motor_config</span><span class="o">.</span><span class="n">position_m</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_nose_cone</span><span class="p">(</span><span class="n">rocket</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_fins</span><span class="p">(</span><span class="n">rocket</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_parachute</span><span class="p">(</span><span class="n">rocket</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rocket</span>
+</pre></div>
+</div>
+</section>
+<section id="simulation-layer">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">4. Simulation Layer</a><a class="headerlink" href="#simulation-layer" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Execute flight simulation using RocketPy.</p>
+<p><strong>Key Class</strong>: <code class="docutils literal notranslate"><span class="pre">FlightSimulator</span></code></p>
+<p><strong>Execution Flow</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Rocket + Environment + SimConfig
+     ↓
+FlightSimulator.run()
+     ↓
+rocketpy.Flight(
+    rocket=rocket,
+    environment=environment,
+    rail_length=config.rail.length_m,
+    inclination=config.rail.inclination_deg,
+    heading=config.rail.heading_deg
+)
+     ↓
+6-DOF Integration (RocketPy)
+     ↓
+Flight object with trajectory data
+</pre></div>
+</div>
+<p><strong>Integration Details</strong>:</p>
+<ul class="simple">
+<li><p><strong>Solver</strong>: scipy.integrate.solve_ivp (adaptive RK45/DOP853)</p></li>
+<li><p><strong>Time stepping</strong>: Adaptive with rtol=1e-6, atol=1e-9</p></li>
+<li><p><strong>Phases</strong>:</p>
+<ol class="arabic simple">
+<li><p>Rail-guided launch</p></li>
+<li><p>Powered ascent (motor burning)</p></li>
+<li><p>Coasting ascent</p></li>
+<li><p>Apogee</p></li>
+<li><p>Parachute deployment</p></li>
+<li><p>Descent</p></li>
+<li><p>Ground impact</p></li>
+</ol>
+</li>
+</ul>
+<p><strong>Metrics Extraction</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">FlightSimulator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flight</span><span class="p">:</span> <span class="n">Flight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;apogee_m&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="o">.</span><span class="n">apogee</span><span class="p">,</span>
+            <span class="s1">&#39;apogee_time_s&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="o">.</span><span class="n">apogee_time</span><span class="p">,</span>
+            <span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">flight</span><span class="o">.</span><span class="n">speed</span><span class="p">),</span>
+            <span class="s1">&#39;max_acceleration_ms2&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">flight</span><span class="o">.</span><span class="n">acceleration</span><span class="p">),</span>
+            <span class="s1">&#39;flight_time_s&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="o">.</span><span class="n">t_final</span><span class="p">,</span>
+            <span class="s1">&#39;impact_velocity_ms&#39;</span><span class="p">:</span> <span class="n">flight</span><span class="o">.</span><span class="n">impact_velocity</span><span class="p">,</span>
+            <span class="s1">&#39;lateral_distance_m&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">flight</span><span class="o">.</span><span class="n">x_impact</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">flight</span><span class="o">.</span><span class="n">y_impact</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="c1"># ... more metrics</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="output-layer">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">5. Output Layer</a><a class="headerlink" href="#output-layer" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Export results in multiple formats for analysis and visualization.</p>
+<p><strong>Output Structure</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>outputs/
+└── artemis/
+    ├── final_state                      # Binary (pickle)
+    ├── final_state_READABLE.txt         # Human-readable summary
+    ├── artemis_log                      # Detailed log
+    ├── curves/
+    │   ├── motor_thrust.png
+    │   └── rocket_static_margin.png
+    ├── plots/
+    │   ├── artemis_altitude.png
+    │   ├── artemis_velocity.png
+    │   ├── artemis_acceleration.png
+    │   ├── artemis_trajectory_2d.png
+    │   └── artemis_trajectory_3d.png
+    └── trajectory/
+        ├── artemis_summary.json         # Key metrics
+        └── artemis_trajectory.csv       # Full time series
+</pre></div>
+</div>
+<p><strong>JSON Summary</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;simulation_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;artemis&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-12T14:30:00&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;flight_results&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;apogee_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3245.7</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;apogee_time_s&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">18.3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_velocity_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">287.4</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_acceleration_ms2&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">145.2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;flight_time_s&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">156.8</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;impact_velocity_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">6.2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;lateral_distance_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">234.5</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;latitude_deg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">39.3897</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;longitude_deg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-8.2889</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;elevation_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">100.0</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>CSV Trajectory</strong> (sample):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>time_s,altitude_m,x_m,y_m,vx_ms,vy_ms,vz_ms,ax_ms2,ay_ms2,az_ms2
+0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000
+0.010,0.001,0.000,0.000,0.058,0.000,0.196,11.6,0.0,39.2
+0.020,0.005,0.000,0.000,0.174,0.000,0.587,17.4,0.0,58.7
+...
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="data-flow-diagrams">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Data Flow Diagrams</a><a class="headerlink" href="#data-flow-diagrams" title="Link to this heading">#</a></h2>
+<section id="single-flight-simulation">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Single Flight Simulation</a><a class="headerlink" href="#single-flight-simulation" title="Link to this heading">#</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>┌──────────────┐
+│ YAML Config  │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│ ConfigLoader │ Parse YAML → Dataclasses
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│  Validators  │ Check physical plausibility
+└──────┬───────┘
+       │
+       ├─────────────┬─────────────┐
+       ▼             ▼             ▼
+┌────────────┐ ┌──────────┐ ┌────────────┐
+│MotorBuilder│ │EnvBuilder│ │RocketBuilder│
+└──────┬─────┘ └─────┬────┘ └──────┬─────┘
+       │             │             │
+       ▼             ▼             ▼
+┌────────────┐ ┌──────────┐ ┌────────────┐
+│   Motor    │ │Environment│ │   Rocket   │
+└──────┬─────┘ └─────┬────┘ └──────┬─────┘
+       │             │             │
+       └──────┬──────┴──────┬──────┘
+              │             │
+              ▼             ▼
+       ┌─────────────────────────┐
+       │   FlightSimulator.run() │
+       └───────────┬─────────────┘
+                   │
+                   ▼
+       ┌─────────────────────────┐
+       │  RocketPy Flight Object │ 6-DOF Integration
+       └───────────┬─────────────┘
+                   │
+                   ▼
+       ┌─────────────────────────┐
+       │   Extract Metrics       │
+       └───────────┬─────────────┘
+                   │
+       ┌───────────┴───────────┐
+       ▼                       ▼
+┌──────────────┐      ┌──────────────┐
+│ DataHandler  │      │  Visualizer  │
+└──────┬───────┘      └──────┬───────┘
+       │                     │
+       ▼                     ▼
+┌──────────────┐      ┌──────────────┐
+│ CSV/JSON/KML │      │  PNG Plots   │
+└──────────────┘      └──────────────┘
+</pre></div>
+</div>
+</section>
+<section id="configuration-to-output-pipeline">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Configuration to Output Pipeline</a><a class="headerlink" href="#configuration-to-output-pipeline" title="Link to this heading">#</a></h3>
+<p><strong>Step-by-step transformation:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>YAML File</strong> → <code class="docutils literal notranslate"><span class="pre">configs/single_sim/artemis.yaml</span></code></p>
+<ul class="simple">
+<li><p>User-friendly configuration format</p></li>
+<li><p>Comments and documentation inline</p></li>
+<li><p>Units explicitly specified in parameter names</p></li>
+</ul>
+</li>
+<li><p><strong>ConfigLoader</strong> → Type-safe Python objects</p>
+<ul class="simple">
+<li><p>Parse YAML to dictionaries</p></li>
+<li><p>Create dataclass instances</p></li>
+<li><p>Validate required fields exist</p></li>
+</ul>
+</li>
+<li><p><strong>Validators</strong> → Physical checks</p>
+<ul class="simple">
+<li><p>Stability margin validation</p></li>
+<li><p>Mass/inertia consistency</p></li>
+<li><p>File existence checks</p></li>
+</ul>
+</li>
+<li><p><strong>Builders</strong> → RocketPy objects</p>
+<ul class="simple">
+<li><p>MotorBuilder creates <code class="docutils literal notranslate"><span class="pre">rocketpy.SolidMotor</span></code></p></li>
+<li><p>EnvironmentBuilder creates <code class="docutils literal notranslate"><span class="pre">rocketpy.Environment</span></code></p></li>
+<li><p>RocketBuilder creates <code class="docutils literal notranslate"><span class="pre">rocketpy.Rocket</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>FlightSimulator</strong> → Trajectory computation</p>
+<ul class="simple">
+<li><p>Initialize <code class="docutils literal notranslate"><span class="pre">rocketpy.Flight</span></code></p></li>
+<li><p>Run 6-DOF integration</p></li>
+<li><p>Extract key metrics</p></li>
+</ul>
+</li>
+<li><p><strong>Outputs</strong> → Multiple export formats</p>
+<ul class="simple">
+<li><p><strong>Visualizer</strong>: Generate plots (altitude, velocity, 3D trajectory)</p></li>
+<li><p><strong>DataHandler</strong>: Export CSV (time series), JSON (summary), KML (Google Earth)</p></li>
+<li><p><strong>StateExporter</strong>: Save RocketPy state objects (pickle)</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="key-design-patterns">
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Key Design Patterns</a><a class="headerlink" href="#key-design-patterns" title="Link to this heading">#</a></h2>
+<section id="builder-pattern">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Builder Pattern</a><a class="headerlink" href="#builder-pattern" title="Link to this heading">#</a></h3>
+<p><strong>Usage</strong>: Motor, Environment, and Rocket construction</p>
+<p><strong>Benefits</strong>:</p>
+<ul class="simple">
+<li><p>Separates configuration from construction</p></li>
+<li><p>Progressive object assembly</p></li>
+<li><p>Validation during construction</p></li>
+<li><p>Clear, readable code</p></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Progressive construction</span>
+<span class="n">motor</span> <span class="o">=</span> <span class="n">MotorBuilder</span><span class="p">(</span><span class="n">motor_config</span><span class="p">)</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+
+<span class="n">rocket</span> <span class="o">=</span> <span class="p">(</span><span class="n">RocketBuilder</span><span class="p">(</span><span class="n">rocket_config</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_motor</span><span class="p">(</span><span class="n">motor</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">add_nose_cone</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">add_fins</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">add_parachute</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="factory-pattern">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Factory Pattern</a><a class="headerlink" href="#factory-pattern" title="Link to this heading">#</a></h3>
+<p><strong>Usage</strong>: ConfigLoader creates appropriate config objects</p>
+<p><strong>Benefits</strong>:</p>
+<ul class="simple">
+<li><p>Centralized object creation</p></li>
+<li><p>Type safety enforcement</p></li>
+<li><p>Easy to extend with new config types</p></li>
+</ul>
+</section>
+<section id="dependency-injection">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Dependency Injection</a><a class="headerlink" href="#dependency-injection" title="Link to this heading">#</a></h3>
+<p><strong>Usage</strong>: Throughout (FlightSimulator, Builders)</p>
+<p><strong>Benefits</strong>:</p>
+<ul class="simple">
+<li><p>Testability (easy mocking)</p></li>
+<li><p>Loose coupling</p></li>
+<li><p>Clear dependencies in signatures</p></li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dependencies injected via constructor</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">FlightSimulator</span><span class="p">(</span>
+    <span class="n">rocket</span><span class="o">=</span><span class="n">rocket</span><span class="p">,</span>
+    <span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">sim_config</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="module-responsibilities">
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Module Responsibilities</a><a class="headerlink" href="#module-responsibilities" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Module</p></th>
+<th class="head"><p>Responsibility</p></th>
+<th class="head"><p>Key Classes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">config_loader.py</span></code></p></td>
+<td><p>YAML parsing, dataclass creation</p></td>
+<td><p>ConfigLoader, RocketConfig, MotorConfig, etc.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">validators.py</span></code></p></td>
+<td><p>Configuration validation</p></td>
+<td><p>RocketValidator, MotorValidator</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">motor_builder.py</span></code></p></td>
+<td><p>Motor object construction</p></td>
+<td><p>MotorBuilder</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">environment_setup.py</span></code></p></td>
+<td><p>Environment construction</p></td>
+<td><p>EnvironmentBuilder</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rocket_builder.py</span></code></p></td>
+<td><p>Rocket assembly</p></td>
+<td><p>RocketBuilder</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">flight_simulator.py</span></code></p></td>
+<td><p>Flight execution &amp; metrics</p></td>
+<td><p>FlightSimulator</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">data_handler.py</span></code></p></td>
+<td><p>Data export (CSV, JSON, KML)</p></td>
+<td><p>DataHandler</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">visualizer.py</span></code></p></td>
+<td><p>Plotting &amp; visualization</p></td>
+<td><p>Visualizer</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">state_exporter.py</span></code></p></td>
+<td><p>RocketPy state serialization</p></td>
+<td><p>StateExporter</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="extension-points">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Extension Points</a><a class="headerlink" href="#extension-points" title="Link to this heading">#</a></h2>
+<section id="adding-new-components">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Adding New Components</a><a class="headerlink" href="#adding-new-components" title="Link to this heading">#</a></h3>
+<p>To add a new rocket component (e.g., air brakes):</p>
+<ol class="arabic">
+<li><p><strong>Create Configuration</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AirBrakesConfig</span><span class="p">:</span>
+    <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">drag_coefficient</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">reference_area_m2</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">position_m</span><span class="p">:</span> <span class="nb">float</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Update RocketConfig</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RocketConfig</span><span class="p">:</span>
+    <span class="c1"># ... existing fields</span>
+    <span class="n">air_brakes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AirBrakesConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Add Builder Method</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RocketBuilder</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_air_brakes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rocket</span><span class="p">:</span> <span class="n">Rocket</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">air_brakes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">rocket</span><span class="o">.</span><span class="n">add_air_brakes</span><span class="p">(</span>
+            <span class="n">drag_coefficient</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">air_brakes</span><span class="o">.</span><span class="n">drag_coefficient</span><span class="p">,</span>
+            <span class="n">reference_area</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">air_brakes</span><span class="o">.</span><span class="n">reference_area_m2</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">air_brakes</span><span class="o">.</span><span class="n">position_m</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Update YAML Schema</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">air_brakes</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+<span class="w">    </span><span class="nt">reference_area_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="adding-new-output-formats">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Adding New Output Formats</a><a class="headerlink" href="#adding-new-output-formats" title="Link to this heading">#</a></h3>
+<p>To add a new export format (e.g., Excel):</p>
+<ol class="arabic">
+<li><p><strong>Extend DataHandler</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataHandler</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_to_excel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flight</span><span class="p">:</span> <span class="n">Flight</span><span class="p">,</span> <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export trajectory to Excel with multiple sheets.&quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+        <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="c1"># Trajectory sheet</span>
+            <span class="n">trajectory_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_trajectory_df</span><span class="p">(</span><span class="n">flight</span><span class="p">)</span>
+            <span class="n">trajectory_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;Trajectory&#39;</span><span class="p">)</span>
+
+            <span class="c1"># Summary sheet</span>
+            <span class="n">summary_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_summary_df</span><span class="p">(</span><span class="n">flight</span><span class="p">)</span>
+            <span class="n">summary_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;Summary&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Update CLI Interface</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--export-excel&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                   <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Export results to Excel format&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="performance-considerations">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Performance Considerations</a><a class="headerlink" href="#performance-considerations" title="Link to this heading">#</a></h2>
+<section id="computational-complexity">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Computational Complexity</a><a class="headerlink" href="#computational-complexity" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>Complexity</p></th>
+<th class="head"><p>Typical Time</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Config Loading</p></td>
+<td><p>O(1)</p></td>
+<td><p>&lt;0.1 seconds</p></td>
+</tr>
+<tr class="row-odd"><td><p>Validation</p></td>
+<td><p>O(1)</p></td>
+<td><p>&lt;0.1 seconds</p></td>
+</tr>
+<tr class="row-even"><td><p>Object Building</p></td>
+<td><p>O(1)</p></td>
+<td><p>&lt;0.1 seconds</p></td>
+</tr>
+<tr class="row-odd"><td><p>Single Flight</p></td>
+<td><p>O(N_timesteps)</p></td>
+<td><p>0.5-2 seconds</p></td>
+</tr>
+<tr class="row-even"><td><p>Plotting</p></td>
+<td><p>O(N_points)</p></td>
+<td><p>0.2-0.5 seconds</p></td>
+</tr>
+<tr class="row-odd"><td><p>CSV Export</p></td>
+<td><p>O(N_points)</p></td>
+<td><p>0.1-0.3 seconds</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="optimization-strategies">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Optimization Strategies</a><a class="headerlink" href="#optimization-strategies" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Lazy Evaluation</strong>: Only compute requested outputs</p></li>
+<li><p><strong>Efficient Data Structures</strong>: NumPy arrays for trajectories</p></li>
+<li><p><strong>Minimal Object Copies</strong>: Pass by reference where safe</p></li>
+<li><p><strong>Caching</strong>: Reuse atmospheric calculations (via RocketPy)</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="error-handling-strategy">
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">Error Handling Strategy</a><a class="headerlink" href="#error-handling-strategy" title="Link to this heading">#</a></h2>
+<section id="fail-fast-principle">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Fail-Fast Principle</a><a class="headerlink" href="#fail-fast-principle" title="Link to this heading">#</a></h3>
+<p><strong>Errors caught at configuration load time</strong>, not during simulation:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>❌ BAD: Error during flight simulation
+✅ GOOD: Error when loading configuration
+
+Why? Fail early to save computation time and provide clear feedback.
+</pre></div>
+</div>
+</section>
+<section id="error-categories">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">Error Categories</a><a class="headerlink" href="#error-categories" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Configuration Errors</strong> (<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>)</p>
+<ul class="simple">
+<li><p>Missing required fields</p></li>
+<li><p>Invalid parameter values</p></li>
+<li><p>File not found</p></li>
+</ul>
+</li>
+<li><p><strong>Validation Errors</strong> (<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>)</p>
+<ul class="simple">
+<li><p>Physical inconsistencies</p></li>
+<li><p>Stability issues</p></li>
+<li><p>Out-of-range parameters</p></li>
+</ul>
+</li>
+<li><p><strong>Runtime Errors</strong> (<code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code>)</p>
+<ul class="simple">
+<li><p>Integration failures</p></li>
+<li><p>Numerical instabilities</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Error Message Quality</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ❌ BAD</span>
+<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid mass&quot;</span><span class="p">)</span>
+
+<span class="c1"># ✅ GOOD</span>
+<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Rocket mass </span><span class="si">{</span><span class="n">mass</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> kg is outside valid range [0.1, 1000] kg. &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;Check &#39;dry_mass_kg&#39; in configuration.&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="testing-architecture">
+<h2><a class="toc-backref" href="#id25" role="doc-backlink">Testing Architecture</a><a class="headerlink" href="#testing-architecture" title="Link to this heading">#</a></h2>
+<section id="test-categories">
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">Test Categories</a><a class="headerlink" href="#test-categories" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Unit Tests</strong>: Individual function/class testing</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">test_config_loader.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_validators.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_builders.py</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Integration Tests</strong>: End-to-end workflows</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">test_single_flight_pipeline.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_output_generation.py</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Validation Tests</strong>: Physical plausibility</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">test_stability_calculations.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_known_flights.py</span></code> (regression tests)</p></li>
+</ul>
+</li>
+</ol>
+<p>Test Coverage: ~90%</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="future-architecture-plans">
+<h2><a class="toc-backref" href="#id27" role="doc-backlink">Future Architecture Plans</a><a class="headerlink" href="#future-architecture-plans" title="Link to this heading">#</a></h2>
+<section id="planned-enhancements">
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">Planned Enhancements</a><a class="headerlink" href="#planned-enhancements" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Web API</strong>: FastAPI REST interface for remote simulations</p></li>
+<li><p><strong>Database Backend</strong>: Store simulations in PostgreSQL/SQLite</p></li>
+<li><p><strong>Real-time Monitoring</strong>: WebSocket-based live trajectory updates</p></li>
+<li><p><strong>Plugin System</strong>: Third-party component extensions</p></li>
+<li><p><strong>Optimization Framework</strong>: Automated design optimization</p></li>
+</ol>
+</section>
+<section id="scalability-considerations">
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">Scalability Considerations</a><a class="headerlink" href="#scalability-considerations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Horizontal Scaling</strong>: Distribute Monte Carlo across machines</p></li>
+<li><p><strong>Caching Layer</strong>: Redis for atmospheric/motor data</p></li>
+<li><p><strong>Async Operations</strong>: Background task queue (Celery)</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="see-also">
+<h2><a class="toc-backref" href="#id30" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><strong>Related Documentation:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">user-configuration</span> - Configuration file reference</p></li>
+<li><p><span class="xref std std-ref">user-tutorials</span> - Step-by-step tutorials</p></li>
+<li><p><span class="xref std std-ref">api-reference</span> - Complete API documentation</p></li>
+</ul>
+<p><strong>External Resources:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.rocketpy.org/">RocketPy Documentation</a></p></li>
+<li><p><a class="reference external" href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">Clean Architecture Principles</a></p></li>
+<li><p><a class="reference external" href="https://refactoring.guru/design-patterns">Design Patterns</a></p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Developer Documentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="module_reference.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Module Quick Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#system-layers">System Layers</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-layer">1. Configuration Layer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-layer">2. Validation Layer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#builder-layer">3. Builder Layer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-layer">4. Simulation Layer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-layer">5. Output Layer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-flow-diagrams">Data Flow Diagrams</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-flight-simulation">Single Flight Simulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-to-output-pipeline">Configuration to Output Pipeline</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-design-patterns">Key Design Patterns</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#builder-pattern">Builder Pattern</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#factory-pattern">Factory Pattern</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-injection">Dependency Injection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-responsibilities">Module Responsibilities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extension-points">Extension Points</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-new-components">Adding New Components</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-new-output-formats">Adding New Output Formats</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-considerations">Performance Considerations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computational-complexity">Computational Complexity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-strategies">Optimization Strategies</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-handling-strategy">Error Handling Strategy</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fail-fast-principle">Fail-Fast Principle</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#error-categories">Error Categories</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-architecture">Testing Architecture</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-categories">Test Categories</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#future-architecture-plans">Future Architecture Plans</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#planned-enhancements">Planned Enhancements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scalability-considerations">Scalability Considerations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See Also</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/developer/architecture.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

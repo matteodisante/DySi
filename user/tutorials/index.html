@@ -1,0 +1,791 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorials &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/tutorials/index';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Tutorial 1: Basic Flight Simulation" href="01_basic_flight.html" />
+    <link rel="prev" title="User Guide" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorials</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tutorials">
+<h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">#</a></h1>
+<p>These step-by-step tutorials will teach you how to use rocket-sim effectively.
+Each tutorial builds on previous knowledge, so we recommend following them in order.</p>
+<div class="note admonition">
+<p class="admonition-title">Prerequisites</p>
+<p>Before starting, ensure you’ve completed <a class="reference internal" href="../../getting_started/quickstart.html"><span class="doc">Quickstart: Your First Simulation</span></a>.</p>
+</div>
+<section id="tutorial-path">
+<h2>Tutorial Path<a class="headerlink" href="#tutorial-path" title="Link to this heading">#</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-3 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+1️⃣ Basic Flight</div>
+<p class="sd-card-text">Create your first simulation from scratch</p>
+<p class="sd-card-text"><strong>Time</strong>: 15 minutes
+<strong>Level</strong>: Beginner</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="01_basic_flight.html"><span class="doc">Tutorial 1: Basic Flight Simulation</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+2️⃣ Understanding Outputs ✅</div>
+<p class="sd-card-text">Interpret trajectory data and plots</p>
+<p class="sd-card-text"><strong>Time</strong>: 20 minutes
+<strong>Level</strong>: Beginner</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="02_understanding_outputs.html"><span class="doc">Understanding Simulation Outputs</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+3️⃣ Custom Motor Data ✅</div>
+<p class="sd-card-text">Import your own thrust curves</p>
+<p class="sd-card-text"><strong>Time</strong>: 25 minutes
+<strong>Level</strong>: Beginner</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="03_custom_motor.html"><span class="doc">Using Custom Motor Data</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+4️⃣ Adding Fins ✅</div>
+<p class="sd-card-text">Design fin configurations</p>
+<p class="sd-card-text"><strong>Time</strong>: 30 minutes
+<strong>Level</strong>: Intermediate</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="04_adding_fins.html"><span class="doc">Adding and Optimizing Fins</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+5️⃣ Recovery System ✅</div>
+<p class="sd-card-text">Configure parachutes and deployment</p>
+<p class="sd-card-text"><strong>Time</strong>: 35 minutes
+<strong>Level</strong>: Intermediate</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="05_recovery_system.html"><span class="doc">Configuring Recovery Systems</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+6️⃣ Weather Integration</div>
+<p class="sd-card-text">Use real atmospheric data</p>
+<p class="sd-card-text"><strong>Time</strong>: 30 minutes
+<strong>Level</strong>: Intermediate</p>
+</div>
+<span class="sd-stretched-link sd-hide-link-text">06_weather_integration</span></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+7️⃣ Air Brakes Control</div>
+<p class="sd-card-text">Active apogee control with PID</p>
+<p class="sd-card-text"><strong>Time</strong>: 35 minutes
+<strong>Level</strong>: Advanced</p>
+</div>
+<span class="sd-stretched-link sd-hide-link-text">07_air_brakes</span></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+8️⃣ Custom Aerodynamics</div>
+<p class="sd-card-text">Import wind tunnel drag curves</p>
+<p class="sd-card-text"><strong>Time</strong>: 25 minutes
+<strong>Level</strong>: Advanced</p>
+</div>
+<span class="sd-stretched-link sd-hide-link-text">08_custom_aero</span></div>
+</div>
+</div>
+</div>
+</section>
+<section id="learning-paths">
+<h2>Learning Paths<a class="headerlink" href="#learning-paths" title="Link to this heading">#</a></h2>
+<p>Choose the path that fits your needs:</p>
+<dl>
+<dt><strong>Quick Start Path</strong> (Total: ~50 minutes)</dt><dd><p>For users who want to get productive quickly:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="01_basic_flight.html"><span class="doc">Tutorial 1: Basic Flight Simulation</span></a> - Essential basics</p></li>
+<li><p><a class="reference internal" href="02_understanding_outputs.html"><span class="doc">Understanding Simulation Outputs</span></a> - Interpret results</p></li>
+<li><p><a class="reference internal" href="03_custom_motor.html"><span class="doc">Using Custom Motor Data</span></a> - Use your own motor</p></li>
+</ol>
+</dd>
+<dt><strong>Competition Path</strong> (Total: ~2 hours)</dt><dd><p>For student rocketry teams preparing for competitions:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="01_basic_flight.html"><span class="doc">Tutorial 1: Basic Flight Simulation</span></a> - Fundamentals</p></li>
+<li><p><a class="reference internal" href="04_adding_fins.html"><span class="doc">Adding and Optimizing Fins</span></a> - Aerodynamic design</p></li>
+<li><p><a class="reference internal" href="05_recovery_system.html"><span class="doc">Configuring Recovery Systems</span></a> - Safe landing</p></li>
+<li><p><span class="xref std std-doc">06_weather_integration</span> - Launch site conditions</p></li>
+<li><p><span class="xref std std-doc">07_air_brakes</span> - Active control (optional)</p></li>
+</ol>
+</dd>
+<dt><strong>Complete Path</strong> (Total: ~3 hours)</dt><dd><p>Master all features of rocket-sim:</p>
+<p>All tutorials 1-8 in order</p>
+</dd>
+</dl>
+</section>
+<section id="tutorial-contents">
+<h2>Tutorial Contents<a class="headerlink" href="#tutorial-contents" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Available Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</div>
+</section>
+<section id="what-you-ll-learn">
+<h2>What You’ll Learn<a class="headerlink" href="#what-you-ll-learn" title="Link to this heading">#</a></h2>
+<p>By completing these tutorials, you will be able to:</p>
+<p>✅ Create rocket configurations from scratch</p>
+<p>✅ Import and validate motor thrust curves</p>
+<p>✅ Design stable fin configurations</p>
+<p>✅ Configure recovery systems with deployment logic</p>
+<p>✅ Use real atmospheric data from multiple sources</p>
+<p>✅ Implement active control systems (air brakes)</p>
+<p>✅ Import custom aerodynamic data</p>
+<p>✅ Validate and troubleshoot configurations</p>
+<p>✅ Interpret simulation results and plots</p>
+<p>✅ Export data in multiple formats</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>After completing the tutorials:</p>
+<ul class="simple">
+<li><p><strong>Apply to your rocket</strong>: Use <span class="xref std std-doc">/how_to_guides/index</span> for specific tasks</p></li>
+<li><p><strong>Deep dive into parameters</strong>: See <span class="xref std std-doc">/configuration/index</span> for all options</p></li>
+<li><p><strong>Study examples</strong>: Browse <span class="xref std std-doc">/examples/index</span> for real rockets</p></li>
+<li><p><strong>Contribute</strong>: Read <a class="reference internal" href="../../developer/index.html"><span class="doc">Developer Documentation</span></a> to extend rocket-sim</p></li>
+</ul>
+</section>
+<section id="tips-for-learning">
+<h2>Tips for Learning<a class="headerlink" href="#tips-for-learning" title="Link to this heading">#</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Work through examples</strong>: Type the code yourself rather than copy-pasting.
+This helps build muscle memory and understanding.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Experiment</strong>: After each tutorial, try modifying parameters to see how
+results change. This is the best way to build intuition.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Use version control</strong>: Keep your configurations in git so you can
+track changes and revert if needed.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All tutorial examples are available in <code class="docutils literal notranslate"><span class="pre">examples/tutorials/</span></code> directory.
+You can run them directly to verify expected behavior.</p>
+</div>
+</section>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading">#</a></h2>
+<p>If you get stuck:</p>
+<ol class="arabic simple">
+<li><p>Check the tutorial’s “Common Issues” section</p></li>
+<li><p>Review <a class="reference internal" href="../../getting_started/key_concepts.html"><span class="doc">Key Concepts</span></a> for fundamentals</p></li>
+<li><p>Search the documentation</p></li>
+<li><p>Ask on <a class="reference external" href="https://github.com/matteodisante/rocket-sim/discussions">GitHub Discussions</a></p></li>
+</ol>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">User Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="01_basic_flight.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 1: Basic Flight Simulation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-path">Tutorial Path</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-paths">Learning Paths</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-contents">Tutorial Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-ll-learn">What You’ll Learn</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-learning">Tips for Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-help">Getting Help</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/tutorials/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

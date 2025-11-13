@@ -1,0 +1,1048 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.flight_simulator &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/flight_simulator';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.flight_simulator</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.flight_simulator</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Flight simulator for executing rocket trajectory simulations.</span>
+
+<span class="sd">This module provides the FlightSimulator class for running single flight</span>
+<span class="sd">simulations and extracting key flight metrics.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">rocketpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flight</span><span class="p">,</span> <span class="n">Rocket</span><span class="p">,</span> <span class="n">Environment</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">Flight</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">Rocket</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">Environment</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.state_exporter</span><span class="w"> </span><span class="kn">import</span> <span class="n">StateExporter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.data_handler</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataHandler</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="FlightSimulator">
+<a class="viewcode-back" href="../../api/index.html#src.flight_simulator.FlightSimulator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FlightSimulator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simulator for rocket flight trajectories.</span>
+
+<span class="sd">    This class executes single flight simulations using RocketPy&#39;s Flight</span>
+<span class="sd">    class and provides methods to extract key metrics and export data.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        rocket: Rocket instance for simulation.</span>
+<span class="sd">        environment: Environment instance for simulation.</span>
+<span class="sd">        config: SimulationConfig with simulation parameters.</span>
+<span class="sd">        flight: Flight instance (after run()).</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; simulator = FlightSimulator(rocket, environment, sim_config)</span>
+<span class="sd">        &gt;&gt;&gt; flight = simulator.run()</span>
+<span class="sd">        &gt;&gt;&gt; metrics = simulator.get_summary()</span>
+<span class="sd">        &gt;&gt;&gt; print(f&quot;Apogee: {metrics[&#39;apogee_m&#39;]:.0f} m&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FlightSimulator.__init__">
+<a class="viewcode-back" href="../../api/index.html#src.flight_simulator.FlightSimulator.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">rocket</span><span class="p">:</span> <span class="s2">&quot;Rocket&quot;</span><span class="p">,</span>
+        <span class="n">environment</span><span class="p">:</span> <span class="s2">&quot;Environment&quot;</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">SimulationConfig</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize FlightSimulator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rocket: Configured Rocket instance.</span>
+<span class="sd">            environment: Configured Environment instance.</span>
+<span class="sd">            config: SimulationConfig with simulation parameters.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ImportError: If RocketPy is not installed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">Flight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s2">&quot;RocketPy is not installed. Install with: pip install rocketpy&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rocket</span> <span class="o">=</span> <span class="n">rocket</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="n">environment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Flight</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="FlightSimulator.run">
+<a class="viewcode-back" href="../../api/index.html#src.flight_simulator.FlightSimulator.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">export_state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">output_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Flight&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute flight simulation with optional state export.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            export_state: If True, export complete simulation state (JSON + TXT)</span>
+<span class="sd">            output_dir: Directory for state export files (required if export_state=True)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Flight instance with simulation results.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If simulation fails.</span>
+<span class="sd">            ValueError: If export_state=True but output_dir is None.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; simulator = FlightSimulator(rocket, env, sim_config)</span>
+<span class="sd">            &gt;&gt;&gt; flight = simulator.run()</span>
+<span class="sd">            &gt;&gt;&gt; print(f&quot;Apogee: {flight.apogee} m&quot;)</span>
+
+<span class="sd">            &gt;&gt;&gt; # With state export</span>
+<span class="sd">            &gt;&gt;&gt; flight = simulator.run(export_state=True, output_dir=&quot;outputs/flight_001&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">export_state</span> <span class="ow">and</span> <span class="n">output_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;output_dir must be specified when export_state=True&quot;</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting flight simulation...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Export initial state if requested</span>
+        <span class="k">if</span> <span class="n">export_state</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Exporting initial state...&quot;</span><span class="p">)</span>
+            <span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+            <span class="n">output_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># Extract motor from rocket (RocketPy stores motor in rocket.motor)</span>
+            <span class="n">motor</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rocket</span><span class="p">,</span> <span class="s1">&#39;motor&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">motor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Could not find motor in rocket object&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Create simulation config dict</span>
+            <span class="n">sim_config_dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;rail&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;length_m&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span><span class="p">,</span>
+                    <span class="s2">&quot;inclination_deg&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">inclination_deg</span><span class="p">,</span>
+                    <span class="s2">&quot;heading_deg&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">heading_deg</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;max_time_s&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_time_s</span><span class="p">,</span>
+                <span class="s2">&quot;max_time_step_s&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_time_step_s</span><span class="p">,</span>
+                <span class="s2">&quot;min_time_step_s&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">min_time_step_s</span><span class="p">,</span>
+                <span class="s2">&quot;rtol&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rtol</span><span class="p">,</span>
+                <span class="s2">&quot;atol&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atol</span><span class="p">,</span>
+                <span class="s2">&quot;terminate_on_apogee&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">terminate_on_apogee</span><span class="p">,</span>
+                <span class="s2">&quot;verbose&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="p">}</span>
+
+            <span class="c1"># Create StateExporter and export initial state</span>
+            <span class="n">state_exporter</span> <span class="o">=</span> <span class="n">StateExporter</span><span class="p">(</span>
+                <span class="n">motor</span><span class="o">=</span><span class="n">motor</span><span class="p">,</span>
+                <span class="n">rocket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rocket</span><span class="p">,</span>
+                <span class="n">environment</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="p">,</span>
+                <span class="n">sim_config</span><span class="o">=</span><span class="n">sim_config_dict</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">state_exporter</span><span class="o">.</span><span class="n">export_initial_state</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;initial_state.json&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Create Flight instance and run simulation</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flight</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">(</span>
+                <span class="n">rocket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rocket</span><span class="p">,</span>
+                <span class="n">environment</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="p">,</span>
+                <span class="n">rail_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span><span class="p">,</span>
+                <span class="n">inclination</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">inclination_deg</span><span class="p">,</span>
+                <span class="n">heading</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">heading_deg</span><span class="p">,</span>
+                <span class="n">terminate_on_apogee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">terminate_on_apogee</span><span class="p">,</span>
+                <span class="n">max_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_time_s</span><span class="p">,</span>
+                <span class="n">max_time_step</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_time_step_s</span><span class="p">,</span>
+                <span class="n">min_time_step</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">min_time_step_s</span><span class="p">,</span>
+                <span class="n">rtol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rtol</span><span class="p">,</span>
+                <span class="n">atol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atol</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Simulation complete: Apogee = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Flight time = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">t_final</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s&quot;</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Export final state and trajectory if requested</span>
+            <span class="k">if</span> <span class="n">export_state</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Exporting final state and trajectory...&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Export final state (summary only, no arrays)</span>
+                <span class="n">state_exporter</span><span class="o">.</span><span class="n">export_final_state</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="p">,</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;final_state.json&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Export trajectory arrays to CSV</span>
+                <span class="n">data_handler</span> <span class="o">=</span> <span class="n">DataHandler</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">output_path</span><span class="p">))</span>
+                <span class="n">trajectory_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trajectory_data</span><span class="p">()</span>
+                <span class="n">data_handler</span><span class="o">.</span><span class="n">export_trajectory_csv</span><span class="p">(</span>
+                    <span class="n">trajectory_data</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;trajectory.csv&quot;</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Export summary for convenience</span>
+                <span class="n">summary_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_summary</span><span class="p">()</span>
+                <span class="n">data_handler</span><span class="o">.</span><span class="n">export_summary_json</span><span class="p">(</span>
+                    <span class="n">summary_data</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;summary.json&quot;</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Generate curve plots</span>
+                <span class="n">curves_dir</span> <span class="o">=</span> <span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;curves&quot;</span>
+                <span class="n">max_mach</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_mach_number</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span> <span class="k">else</span> <span class="mf">2.0</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating curve plots with max_mach=</span><span class="si">{</span><span class="n">max_mach</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">curve_paths</span> <span class="o">=</span> <span class="n">state_exporter</span><span class="o">.</span><span class="n">export_curves_plots</span><span class="p">(</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">curves_dir</span><span class="p">),</span> 
+                    <span class="n">max_mach</span><span class="o">=</span><span class="n">max_mach</span><span class="p">,</span> 
+                    <span class="n">flight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">curve_paths</span><span class="p">)</span><span class="si">}</span><span class="s2"> curve plots&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Generate technical schematics (rocket.draw() and motor.draw())</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">src.curve_plotter</span><span class="w"> </span><span class="kn">import</span> <span class="n">CurvePlotter</span>
+                <span class="n">plotter</span> <span class="o">=</span> <span class="n">CurvePlotter</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rocket</span><span class="o">.</span><span class="n">motor</span><span class="p">,</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rocket</span><span class="p">,</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="p">,</span> 
+                    <span class="n">max_mach</span><span class="o">=</span><span class="n">max_mach</span><span class="p">,</span> 
+                    <span class="n">flight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span>
+                <span class="p">)</span>
+                <span class="n">schematic_paths</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">save_all_schematics</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_path</span><span class="p">))</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">schematic_paths</span><span class="p">)</span><span class="si">}</span><span class="s2"> technical schematics&quot;</span><span class="p">)</span>
+
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State export complete: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Simulation failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Flight simulation failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span></div>
+
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_safe_get_rail_force</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_getter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Safely get rail button force, returning 0.0 if not available.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            force_getter: Lambda function to get force value</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Force value in N, or 0.0 if rail buttons not defined</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">force_getter</span><span class="p">()</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+
+<div class="viewcode-block" id="FlightSimulator.get_summary">
+<a class="viewcode-back" href="../../api/index.html#src.flight_simulator.FlightSimulator.get_summary">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get comprehensive flight summary.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with key flight metrics.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If simulation has not been run yet.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; summary = simulator.get_summary()</span>
+<span class="sd">            &gt;&gt;&gt; print(f&quot;Max velocity: {summary[&#39;max_velocity_ms&#39;]:.1f} m/s&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Simulation not run yet. Call run() first.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get apogee position - handle different RocketPy versions</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">apogee_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee_x</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># x is a Function object, call it with time</span>
+                <span class="n">apogee_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">get_value_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee_time</span><span class="p">))</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="n">apogee_x</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">apogee_y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee_y</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># y is a Function object, call it with time</span>
+                <span class="n">apogee_y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">get_value_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee_time</span><span class="p">))</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="n">apogee_y</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="c1"># Altitude metrics</span>
+            <span class="s2">&quot;apogee_m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee</span><span class="p">),</span>
+            <span class="s2">&quot;apogee_time_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee_time</span><span class="p">),</span>
+            <span class="s2">&quot;apogee_x_m&quot;</span><span class="p">:</span> <span class="n">apogee_x</span><span class="p">,</span>
+            <span class="s2">&quot;apogee_y_m&quot;</span><span class="p">:</span> <span class="n">apogee_y</span><span class="p">,</span>
+            <span class="s2">&quot;apogee_lat&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">get_value_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee_time</span><span class="p">)),</span>
+            <span class="s2">&quot;apogee_lon&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">get_value_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee_time</span><span class="p">)),</span>
+
+            <span class="c1"># Velocity metrics</span>
+            <span class="s2">&quot;max_velocity_ms&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_speed</span><span class="p">),</span>
+            <span class="s2">&quot;max_velocity_time_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_speed_time</span><span class="p">),</span>
+            <span class="s2">&quot;out_of_rail_velocity_ms&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">out_of_rail_velocity</span><span class="p">),</span>
+            <span class="s2">&quot;impact_velocity_ms&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">impact_velocity</span><span class="p">),</span>
+
+            <span class="c1"># Acceleration metrics</span>
+            <span class="s2">&quot;max_acceleration_ms2&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_acceleration</span><span class="p">),</span>
+            <span class="s2">&quot;max_acceleration_time_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_acceleration_time</span><span class="p">),</span>
+
+            <span class="c1"># Mach and dynamic pressure</span>
+            <span class="s2">&quot;max_mach_number&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_mach_number</span><span class="p">),</span>
+            <span class="s2">&quot;max_mach_number_time_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_mach_number_time</span><span class="p">),</span>
+            <span class="s2">&quot;max_dynamic_pressure_pa&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_dynamic_pressure</span><span class="p">),</span>
+            <span class="s2">&quot;max_dynamic_pressure_time_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_dynamic_pressure_time</span><span class="p">),</span>
+
+            <span class="c1"># Aerodynamic forces (at max-Q)</span>
+            <span class="s2">&quot;max_aerodynamic_drag_n&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">aerodynamic_drag</span><span class="o">.</span><span class="n">get_value_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_dynamic_pressure_time</span><span class="p">)),</span>
+            <span class="s2">&quot;max_aerodynamic_lift_n&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">aerodynamic_lift</span><span class="o">.</span><span class="n">get_value_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_dynamic_pressure_time</span><span class="p">)),</span>
+            <span class="s2">&quot;max_bending_moment_nm&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">aerodynamic_bending_moment</span><span class="o">.</span><span class="n">get_value_opt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_dynamic_pressure_time</span><span class="p">)),</span>
+
+            <span class="c1"># Rail button forces (if rail buttons are defined)</span>
+            <span class="s2">&quot;max_rail_button1_normal_force_n&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_safe_get_rail_force</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_rail_button1_normal_force</span><span class="p">),</span>
+            <span class="s2">&quot;max_rail_button1_shear_force_n&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_safe_get_rail_force</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_rail_button1_shear_force</span><span class="p">),</span>
+            <span class="s2">&quot;max_rail_button2_normal_force_n&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_safe_get_rail_force</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_rail_button2_normal_force</span><span class="p">),</span>
+            <span class="s2">&quot;max_rail_button2_shear_force_n&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_safe_get_rail_force</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_rail_button2_shear_force</span><span class="p">),</span>
+
+            <span class="c1"># Impact metrics</span>
+            <span class="s2">&quot;x_impact_m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">x_impact</span><span class="p">),</span>
+            <span class="s2">&quot;y_impact_m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">y_impact</span><span class="p">),</span>
+            <span class="s2">&quot;impact_velocity_ms&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">impact_velocity</span><span class="p">),</span>
+            <span class="s2">&quot;flight_time_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">t_final</span><span class="p">),</span>
+
+            <span class="c1"># Launch rail metrics</span>
+            <span class="s2">&quot;out_of_rail_time_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">out_of_rail_time</span><span class="p">),</span>
+            <span class="s2">&quot;out_of_rail_velocity_ms&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">out_of_rail_velocity</span><span class="p">),</span>
+
+            <span class="c1"># Stability</span>
+            <span class="s2">&quot;initial_stability_margin_calibers&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">initial_stability_margin</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;out_of_rail_stability_margin_calibers&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">out_of_rail_stability_margin</span>
+            <span class="p">),</span>
+
+            <span class="c1"># Drift distance</span>
+            <span class="s2">&quot;lateral_distance_m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">x_impact</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">y_impact</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+            <span class="p">),</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="FlightSimulator.get_trajectory_data">
+<a class="viewcode-back" href="../../api/index.html#src.flight_simulator.FlightSimulator.get_trajectory_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_trajectory_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get complete trajectory data as arrays.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with time-series trajectory data.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If simulation has not been run yet.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; data = simulator.get_trajectory_data()</span>
+<span class="sd">            &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">            &gt;&gt;&gt; plt.plot(data[&#39;time_s&#39;], data[&#39;altitude_m&#39;])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Simulation not run yet. Call run() first.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get time array</span>
+        <span class="n">time_array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">time</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;time_s&quot;</span><span class="p">:</span> <span class="n">time_array</span><span class="p">,</span>
+            <span class="s2">&quot;altitude_m&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">z</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">time_array</span><span class="p">],</span>
+            <span class="s2">&quot;x_m&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">time_array</span><span class="p">],</span>
+            <span class="s2">&quot;y_m&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">time_array</span><span class="p">],</span>
+            <span class="s2">&quot;vx_ms&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">vx</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">time_array</span><span class="p">],</span>
+            <span class="s2">&quot;vy_ms&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">vy</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">time_array</span><span class="p">],</span>
+            <span class="s2">&quot;vz_ms&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">vz</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">time_array</span><span class="p">],</span>
+            <span class="s2">&quot;ax_ms2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">ax</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">time_array</span><span class="p">],</span>
+            <span class="s2">&quot;ay_ms2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">ay</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">time_array</span><span class="p">],</span>
+            <span class="s2">&quot;az_ms2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">az</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">time_array</span><span class="p">],</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="FlightSimulator.export_summary_to_dict">
+<a class="viewcode-back" href="../../api/index.html#src.flight_simulator.FlightSimulator.export_summary_to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_summary_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export complete simulation summary including configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with configuration and results.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If simulation has not been run yet.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; summary = simulator.export_summary_to_dict()</span>
+<span class="sd">            &gt;&gt;&gt; import json</span>
+<span class="sd">            &gt;&gt;&gt; with open(&#39;results.json&#39;, &#39;w&#39;) as f:</span>
+<span class="sd">            ...     json.dump(summary, f, indent=2)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Simulation not run yet. Call run() first.&quot;</span><span class="p">)</span>
+
+        <span class="n">flight_summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_summary</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;simulation_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;rail_length_m&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span><span class="p">,</span>
+                <span class="s2">&quot;rail_inclination_deg&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">inclination_deg</span><span class="p">,</span>
+                <span class="s2">&quot;rail_heading_deg&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">heading_deg</span><span class="p">,</span>
+                <span class="s2">&quot;max_time_s&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_time_s</span><span class="p">,</span>
+                <span class="s2">&quot;rtol&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rtol</span><span class="p">,</span>
+                <span class="s2">&quot;atol&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atol</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;latitude_deg&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span>
+                <span class="s2">&quot;longitude_deg&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span>
+                <span class="s2">&quot;elevation_m&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">elevation</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;rocket&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;mass_kg&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rocket</span><span class="o">.</span><span class="n">mass</span><span class="p">),</span>
+                <span class="s2">&quot;radius_m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rocket</span><span class="o">.</span><span class="n">radius</span><span class="p">),</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;flight_results&quot;</span><span class="p">:</span> <span class="n">flight_summary</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="FlightSimulator.print_summary">
+<a class="viewcode-back" href="../../api/index.html#src.flight_simulator.FlightSimulator.print_summary">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print formatted flight summary to console.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If simulation has not been run yet.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; simulator.run()</span>
+<span class="sd">            &gt;&gt;&gt; simulator.print_summary()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Simulation not run yet. Call run() first.&quot;</span><span class="p">)</span>
+
+        <span class="n">summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_summary</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLIGHT SIMULATION SUMMARY&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- ALTITUDE METRICS ---&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Apogee:                </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Apogee Time:           </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;apogee_time_s&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Apogee Location:       (</span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;apogee_x_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;apogee_y_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">) m&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- VELOCITY METRICS ---&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Max Velocity:          </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m/s&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Max Mach Number:       </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;max_mach_number&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Off-Rail Velocity:     </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;out_of_rail_velocity_ms&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m/s&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Impact Velocity:       </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;impact_velocity_ms&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m/s&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- IMPACT METRICS ---&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Impact Location:       (</span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;x_impact_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;y_impact_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">) m&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Lateral Distance:      </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;lateral_distance_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Flight Duration:       </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- STABILITY ---&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Initial Margin:        </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;initial_stability_margin_calibers&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> calibers&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Off-Rail Margin:       </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;out_of_rail_stability_margin_calibers&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> calibers&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FlightSimulator.quick_simulation">
+<a class="viewcode-back" href="../../api/index.html#src.flight_simulator.FlightSimulator.quick_simulation">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">quick_simulation</span><span class="p">(</span>
+        <span class="n">rocket</span><span class="p">:</span> <span class="s2">&quot;Rocket&quot;</span><span class="p">,</span>
+        <span class="n">environment</span><span class="p">:</span> <span class="s2">&quot;Environment&quot;</span><span class="p">,</span>
+        <span class="n">rail_length_m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.2</span><span class="p">,</span>
+        <span class="n">inclination_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">85.0</span><span class="p">,</span>
+        <span class="n">heading_deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Flight&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Quick flight simulation with default parameters.</span>
+
+<span class="sd">        This is a convenience method for running simulations without</span>
+<span class="sd">        creating a full SimulationConfig.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rocket: Configured Rocket instance.</span>
+<span class="sd">            environment: Configured Environment instance.</span>
+<span class="sd">            rail_length_m: Launch rail length in meters.</span>
+<span class="sd">            inclination_deg: Rail inclination from vertical.</span>
+<span class="sd">            heading_deg: Launch heading from North.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Flight instance with results.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; flight = FlightSimulator.quick_simulation(rocket, env)</span>
+<span class="sd">            &gt;&gt;&gt; print(f&quot;Apogee: {flight.apogee:.0f} m&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">Flight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s2">&quot;RocketPy is not installed. Install with: pip install rocketpy&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running quick simulation with default parameters...&quot;</span><span class="p">)</span>
+
+        <span class="n">flight</span> <span class="o">=</span> <span class="n">Flight</span><span class="p">(</span>
+            <span class="n">rocket</span><span class="o">=</span><span class="n">rocket</span><span class="p">,</span>
+            <span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">,</span>
+            <span class="n">rail_length</span><span class="o">=</span><span class="n">rail_length_m</span><span class="p">,</span>
+            <span class="n">inclination</span><span class="o">=</span><span class="n">inclination_deg</span><span class="p">,</span>
+            <span class="n">heading</span><span class="o">=</span><span class="n">heading_deg</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Simulation complete: Apogee = </span><span class="si">{</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">flight</span></div>
+
+
+<div class="viewcode-block" id="FlightSimulator.compare_with">
+<a class="viewcode-back" href="../../api/index.html#src.flight_simulator.FlightSimulator.compare_with">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compare_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_flight</span><span class="p">:</span> <span class="s2">&quot;Flight&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare this flight with another flight.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other_flight: Another Flight instance to compare with.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with comparison metrics.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If simulation has not been run yet.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; flight1 = simulator1.run()</span>
+<span class="sd">            &gt;&gt;&gt; flight2 = simulator2.run()</span>
+<span class="sd">            &gt;&gt;&gt; comparison = simulator1.compare_with(flight2)</span>
+<span class="sd">            &gt;&gt;&gt; print(f&quot;Apogee difference: {comparison[&#39;apogee_diff_m&#39;]:.1f} m&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Simulation not run yet. Call run() first.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;apogee_diff_m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee</span> <span class="o">-</span> <span class="n">other_flight</span><span class="o">.</span><span class="n">apogee</span><span class="p">),</span>
+            <span class="s2">&quot;apogee_diff_percent&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span>
+                <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee</span> <span class="o">-</span> <span class="n">other_flight</span><span class="o">.</span><span class="n">apogee</span><span class="p">)</span> <span class="o">/</span> <span class="n">other_flight</span><span class="o">.</span><span class="n">apogee</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;max_velocity_diff_ms&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">max_speed</span> <span class="o">-</span> <span class="n">other_flight</span><span class="o">.</span><span class="n">max_speed</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;impact_distance_diff_m&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">x_impact</span> <span class="o">-</span> <span class="n">other_flight</span><span class="o">.</span><span class="n">x_impact</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;flight_time_diff_s&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">flight</span><span class="o">.</span><span class="n">t_final</span> <span class="o">-</span> <span class="n">other_flight</span><span class="o">.</span><span class="n">t_final</span>
+            <span class="p">),</span>
+        <span class="p">}</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

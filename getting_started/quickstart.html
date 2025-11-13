@@ -1,0 +1,917 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quickstart: Your First Simulation &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started/quickstart';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Key Concepts" href="key_concepts.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Quickstart: Your First Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="key_concepts.html">Key Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="next_steps.html">Next Steps</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Getting Started</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Quickstart: Your First Simulation</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="quickstart-your-first-simulation">
+<h1>Quickstart: Your First Simulation<a class="headerlink" href="#quickstart-your-first-simulation" title="Link to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">What You’ll Learn</p>
+<p>By the end of this 5-minute tutorial, you will:</p>
+<ul class="simple">
+<li><p>Run a complete rocket flight simulation</p></li>
+<li><p>Understand the basic configuration structure</p></li>
+<li><p>Generate trajectory plots and export data</p></li>
+<li><p>Know where to customize parameters</p></li>
+</ul>
+</div>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Completed <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a></p></li>
+<li><p>5 minutes of time</p></li>
+<li><p>Basic familiarity with YAML (optional)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial uses the pre-configured minimal example. No code writing required!</p>
+</div>
+</section>
+<section id="step-1-navigate-to-project-directory">
+<h2>Step 1: Navigate to Project Directory<a class="headerlink" href="#step-1-navigate-to-project-directory" title="Link to this heading">#</a></h2>
+<p>Open a terminal and navigate to the rocket-sim directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/path/to/rocket-sim
+</pre></div>
+</div>
+<p>Activate your virtual environment if you created one:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+macOS/Linux</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>venv/bin/activate
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Windows</label><div class="sd-tab-content docutils">
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span>venv\Scripts\activate
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-examine-the-configuration-file">
+<h2>Step 2: Examine the Configuration File<a class="headerlink" href="#step-2-examine-the-configuration-file" title="Link to this heading">#</a></h2>
+<p>Let’s look at the minimal configuration file that defines our rocket:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>configs/single_sim/01_minimal.yaml
+</pre></div>
+</div>
+<p>You’ll see a YAML file with four main sections:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rocket physical parameters</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Calisto&quot;</span>
+<span class="w">  </span><span class="nt">mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">14.426</span><span class="w">        </span><span class="c1"># kg (without motor)</span>
+<span class="w">  </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0635</span><span class="w">      </span><span class="c1"># m</span>
+<span class="w">  </span><span class="c1"># ... more parameters</span>
+
+<span class="c1"># Motor thrust curve and properties</span>
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/Cesaroni_M1670.eng&quot;</span>
+<span class="w">  </span><span class="nt">dry_mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.815</span><span class="w">     </span><span class="c1"># kg</span>
+<span class="w">  </span><span class="c1"># ... more parameters</span>
+
+<span class="c1"># Launch site and atmospheric conditions</span>
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">39.3897</span><span class="w">   </span><span class="c1"># Spaceport America</span>
+<span class="w">  </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-8.2889</span>
+<span class="w">  </span><span class="nt">elevation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1400</span><span class="w">     </span><span class="c1"># m</span>
+
+<span class="c1"># Launch angle and simulation settings</span>
+<span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">inclination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85</span><span class="w">     </span><span class="c1"># degrees from horizontal</span>
+<span class="w">  </span><span class="nt">heading</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90</span><span class="w">         </span><span class="c1"># degrees (East)</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Don’t worry about understanding every parameter yet. We’ll cover them in <a class="reference internal" href="key_concepts.html"><span class="doc">Key Concepts</span></a>.</p>
+</div>
+</section>
+<section id="step-3-run-your-first-simulation">
+<h2>Step 3: Run Your First Simulation<a class="headerlink" href="#step-3-run-your-first-simulation" title="Link to this heading">#</a></h2>
+<p>Execute the simulation with plotting enabled:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>configs/single_sim/01_minimal.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>my_first_rocket<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--plots
+</pre></div>
+</div>
+<p><strong>What’s happening:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--config</span></code> specifies which configuration file to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--name</span></code> sets the output directory name (results go to <code class="docutils literal notranslate"><span class="pre">outputs/my_first_rocket/</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--plots</span></code> generates trajectory visualizations</p></li>
+</ul>
+<p>Expected output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>════════════════════════════════════════════════════════════════
+                  ROCKET SIMULATION FRAMEWORK
+════════════════════════════════════════════════════════════════
+
+[CONFIG] Loading configuration from: configs/single_sim/01_minimal.yaml
+[VALID] Configuration validation: PASSED
+
+[BUILD] Building Motor...
+[BUILD] Motor built successfully
+
+[BUILD] Building Environment...
+[BUILD] Environment built successfully
+
+[BUILD] Building Rocket...
+[BUILD] Rocket built successfully
+
+[SIM] Running flight simulation...
+[SIM] Simulation completed in 2.3s
+
+┌─────────────────────────────────────────────────────────────┐
+│                    FLIGHT SUMMARY                           │
+├─────────────────────────────────────────────────────────────┤
+│ Apogee Altitude:        3290.5 m                            │
+│ Apogee Time:            20.4 s                              │
+│ Max Velocity:           287.3 m/s                           │
+│ Max Acceleration:       89.2 m/s²                           │
+│ Impact Velocity:        5.2 m/s                             │
+│ Flight Time:            134.7 s                             │
+│ Ground Hit:             (420m, -1850m)                      │
+└─────────────────────────────────────────────────────────────┘
+
+[EXPORT] Exporting results to: outputs/my_first_rocket/
+[PLOT] Generating plots...
+[PLOT] Saved: trajectory_3d.png
+[PLOT] Saved: altitude_vs_time.png
+[PLOT] Saved: velocity_vs_time.png
+
+✓ Simulation completed successfully!
+</pre></div>
+</div>
+</section>
+<section id="step-4-explore-the-results">
+<h2>Step 4: Explore the Results<a class="headerlink" href="#step-4-explore-the-results" title="Link to this heading">#</a></h2>
+<p>Navigate to the output directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>outputs/my_first_rocket/
+ls<span class="w"> </span>-la
+</pre></div>
+</div>
+<p>You’ll find:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>my_first_rocket/
+├── plots/                          # Visualizations
+│   ├── trajectory_3d.png           # 3D flight path
+│   ├── altitude_vs_time.png        # Altitude profile
+│   ├── velocity_vs_time.png        # Velocity profile
+│   └── acceleration_vs_time.png    # Acceleration profile
+├── trajectory/                     # Raw data
+│   ├── trajectory.csv              # Full trajectory data
+│   └── trajectory.kml              # Google Earth format
+├── motor/                          # Motor state
+│   ├── motor_attributes.txt        # 35+ motor parameters
+│   └── curves/                     # Motor curve plots
+├── rocket/                         # Rocket state
+│   └── rocket_attributes.txt       # Rocket configuration
+├── final_state                     # Simulation end state
+└── initial_state                   # Simulation start state
+</pre></div>
+</div>
+<p><strong>View the plots:</strong></p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+macOS</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>open<span class="w"> </span>plots/trajectory_3d.png
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Linux</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xdg-open<span class="w"> </span>plots/trajectory_3d.png
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+Windows</label><div class="sd-tab-content docutils">
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="k">start</span> plots\trajectory_3d.png
+</pre></div>
+</div>
+</div>
+</div>
+<section id="what-you-re-seeing">
+<h3>What You’re Seeing<a class="headerlink" href="#what-you-re-seeing" title="Link to this heading">#</a></h3>
+<p>The 3D trajectory plot shows:</p>
+<ul class="simple">
+<li><p><strong>Blue line</strong>: Powered ascent (motor burning)</p></li>
+<li><p><strong>Red line</strong>: Ballistic coast to apogee</p></li>
+<li><p><strong>Green line</strong>: Parachute descent</p></li>
+<li><p><strong>Launch point</strong>: Origin (0, 0, 0)</p></li>
+<li><p><strong>Impact point</strong>: Where rocket lands</p></li>
+</ul>
+</section>
+</section>
+<section id="step-5-examine-the-data">
+<h2>Step 5: Examine the Data<a class="headerlink" href="#step-5-examine-the-data" title="Link to this heading">#</a></h2>
+<p>Let’s look at the detailed trajectory data:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>head<span class="w"> </span>-20<span class="w"> </span>trajectory/trajectory.csv
+</pre></div>
+</div>
+<p>The CSV contains time-series data with columns:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>time,x,y,z,vx,vy,vz,ax,ay,az,altitude,velocity,acceleration,...
+0.0,0.0,0.0,1400.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,...
+0.1,0.09,0.02,1400.5,0.87,0.15,4.9,8.7,1.5,49.1,0.5,5.0,50.2,...
+...
+</pre></div>
+</div>
+<p>You can import this into:</p>
+<ul class="simple">
+<li><p><strong>Excel/Google Sheets</strong> for custom analysis</p></li>
+<li><p><strong>Python/MATLAB</strong> for advanced processing</p></li>
+<li><p><strong>Plotting tools</strong> for custom visualizations</p></li>
+</ul>
+</section>
+<section id="step-6-customize-your-simulation">
+<h2>Step 6: Customize Your Simulation<a class="headerlink" href="#step-6-customize-your-simulation" title="Link to this heading">#</a></h2>
+<p>Now let’s modify some parameters. Open the configuration file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a copy to experiment with</span>
+cp<span class="w"> </span>configs/single_sim/01_minimal.yaml<span class="w"> </span>configs/my_custom_rocket.yaml
+
+<span class="c1"># Edit with your preferred editor</span>
+nano<span class="w"> </span>configs/my_custom_rocket.yaml<span class="w">  </span><span class="c1"># or vim, code, etc.</span>
+</pre></div>
+</div>
+<p><strong>Try changing:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">simulation.inclination:</span> <span class="pre">80</span></code> → Launch at different angle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">simulation.heading:</span> <span class="pre">45</span></code> → Launch northeast instead of east</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rocket.mass:</span> <span class="pre">12.0</span></code> → Make rocket lighter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">environment.elevation:</span> <span class="pre">0</span></code> → Launch from sea level</p></li>
+</ul>
+<p>Run with your custom config:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>configs/my_custom_rocket.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>custom_test<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--plots
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Some parameter changes may cause validation errors. Don’t worry! The validator
+will tell you exactly what’s wrong and suggest fixes.</p>
+</div>
+</section>
+<section id="what-you-ve-learned">
+<h2>What You’ve Learned<a class="headerlink" href="#what-you-ve-learned" title="Link to this heading">#</a></h2>
+<p>Congratulations! You’ve successfully:</p>
+<p>✅ Run a complete 6-DOF rocket trajectory simulation</p>
+<p>✅ Generated publication-quality plots and data exports</p>
+<p>✅ Understood the basic configuration structure</p>
+<p>✅ Customized simulation parameters</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>Now you’re ready to:</p>
+<ol class="arabic">
+<li><p><strong>Understand the concepts</strong> → <a class="reference internal" href="key_concepts.html"><span class="doc">Key Concepts</span></a></p>
+<p>Learn what each configuration parameter actually means</p>
+</li>
+<li><p><strong>Explore complete configuration</strong> → <code class="docutils literal notranslate"><span class="pre">configs/single_sim/02_complete.yaml</span></code></p>
+<p>See all available features (air brakes, weather data, custom drag curves)</p>
+</li>
+<li><p><strong>Build your own rocket</strong> → <a class="reference internal" href="../user/tutorials/index.html"><span class="doc">Tutorials</span></a> (TODO)</p>
+<p>Step-by-step guide to simulate your actual rocket design</p>
+</li>
+<li><p><strong>Advanced features</strong> → <a class="reference internal" href="../user/how_to_guides/index.html"><span class="doc">How-To Guides</span></a> (TODO)</p>
+<p>Weather integration, air brakes control, Monte Carlo analysis</p>
+</li>
+</ol>
+</section>
+<section id="common-next-questions">
+<h2>Common Next Questions<a class="headerlink" href="#common-next-questions" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-info sd-bg-text-info">
+<span class="sd-summary-text">How do I simulate my own rocket design?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ol class="arabic simple">
+<li><p class="sd-card-text">Copy <code class="docutils literal notranslate"><span class="pre">configs/templates/template_complete_documented.yaml</span></code></p></li>
+<li><p class="sd-card-text">Fill in your rocket’s actual parameters (mass, dimensions, etc.)</p></li>
+<li><p class="sd-card-text">Use your motor’s thrust curve file (<code class="docutils literal notranslate"><span class="pre">.eng</span></code> format)</p></li>
+<li><p class="sd-card-text">Run simulation and iterate</p></li>
+</ol>
+<p class="sd-card-text">See <span class="xref std std-doc">/user/tutorials/custom_rocket</span> (TODO) for step-by-step guide.</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-info sd-bg-text-info">
+<span class="sd-summary-text">Where can I get motor thrust curve files?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text"><a class="reference external" href="http://www.thrustcurve.org/">ThrustCurve.org</a> - Database of commercial motors</p></li>
+<li><p class="sd-card-text">Test data from your own static fire tests</p></li>
+<li><p class="sd-card-text">Motor manufacturer websites (Cesaroni, AeroTech, etc.)</p></li>
+</ul>
+<p class="sd-card-text">Files should be in RASP <code class="docutils literal notranslate"><span class="pre">.eng</span></code> format.</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-info sd-bg-text-info">
+<span class="sd-summary-text">Can I use real weather data?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Yes! rocket-sim supports:</p>
+<ul class="simple">
+<li><p class="sd-card-text">Wyoming atmospheric soundings</p></li>
+<li><p class="sd-card-text">GFS forecast data</p></li>
+<li><p class="sd-card-text">ERA5 reanalysis data</p></li>
+</ul>
+<p class="sd-card-text">See <span class="xref std std-doc">/user/how_to_guides/weather_integration</span> (TODO)</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-info sd-bg-text-info">
+<span class="sd-summary-text">What if the simulation fails or gives weird results?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ol class="arabic simple">
+<li><p class="sd-card-text">Check the validation messages - they often point to the issue</p></li>
+<li><p class="sd-card-text">Verify your rocket is statically stable (static margin &gt; 2 calibers)</p></li>
+<li><p class="sd-card-text">Ensure motor thrust curve is reasonable</p></li>
+<li><p class="sd-card-text">See <span class="xref std std-doc">/user/troubleshooting</span> (TODO) for common issues</p></li>
+</ol>
+</div>
+</details></section>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading">#</a></h2>
+<p>If you’re stuck:</p>
+<ul class="simple">
+<li><p><strong>Documentation</strong>: Browse <a class="reference internal" href="../user/index.html"><span class="doc">User Guide</span></a> (TODO)</p></li>
+<li><p><strong>Examples</strong>: Check <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory for working code</p></li>
+<li><p><strong>Issues</strong>: <a class="reference external" href="https://github.com/matteodisante/rocket-sim/issues">GitHub Issues</a></p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="key_concepts.html"><span class="doc">Key Concepts</span></a> - Understand the simulation components</p></li>
+<li><p><span class="xref std std-doc">/user/configuration_reference</span> (TODO) - Every parameter explained</p></li>
+<li><p><a class="reference external" href="https://docs.rocketpy.org/">RocketPy Documentation</a> - Underlying library</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="installation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Installation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="key_concepts.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Key Concepts</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-navigate-to-project-directory">Step 1: Navigate to Project Directory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-examine-the-configuration-file">Step 2: Examine the Configuration File</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-run-your-first-simulation">Step 3: Run Your First Simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-explore-the-results">Step 4: Explore the Results</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-re-seeing">What You’re Seeing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-examine-the-data">Step 5: Examine the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-customize-your-simulation">Step 6: Customize Your Simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-ve-learned">What You’ve Learned</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-next-questions">Common Next Questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-help">Getting Help</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/getting_started/quickstart.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

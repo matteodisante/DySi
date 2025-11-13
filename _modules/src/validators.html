@@ -1,0 +1,1086 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.validators &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/validators';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.validators</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.validators</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Validation utilities for rocket configuration parameters.</span>
+
+<span class="sd">This module provides validation functions to check physical plausibility</span>
+<span class="sd">and parameter constraints for rocket, motor, and environment configurations.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RocketConfig</span><span class="p">,</span>
+    <span class="n">MotorConfig</span><span class="p">,</span>
+    <span class="n">EnvironmentConfig</span><span class="p">,</span>
+    <span class="n">SimulationConfig</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ValidationWarning">
+<a class="viewcode-back" href="../../api/index.html#src.validators.ValidationWarning">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValidationWarning</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents a validation warning.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ValidationWarning.__init__">
+<a class="viewcode-back" href="../../api/index.html#src.validators.ValidationWarning.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize validation warning.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            category: Category of warning (e.g., &quot;stability&quot;, &quot;mass&quot;, &quot;geometry&quot;).</span>
+<span class="sd">            message: Descriptive warning message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category</span> <span class="o">=</span> <span class="n">category</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span></div>
+
+
+<div class="viewcode-block" id="ValidationWarning.__str__">
+<a class="viewcode-back" href="../../api/index.html#src.validators.ValidationWarning.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return string representation.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ValidationError">
+<a class="viewcode-back" href="../../api/index.html#src.validators.ValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValidationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when configuration validation fails critically.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="RocketValidator">
+<a class="viewcode-back" href="../../api/index.html#src.validators.RocketValidator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RocketValidator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validator for rocket configuration.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RocketValidator.validate">
+<a class="viewcode-back" href="../../api/index.html#src.validators.RocketValidator.validate">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">RocketConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ValidationWarning</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate rocket configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: RocketConfig object to validate.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of ValidationWarning objects.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValidationError: If critical validation fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warnings</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Mass validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dry_mass_kg</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Rocket dry mass must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dry_mass_kg</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;mass&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Rocket dry mass (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">dry_mass_kg</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> kg) is very low. &quot;</span>
+                    <span class="s2">&quot;Is this correct?&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dry_mass_kg</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;mass&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Rocket dry mass (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">dry_mass_kg</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> kg) is very high. &quot;</span>
+                    <span class="s2">&quot;Check if this is intentional.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Inertia validation</span>
+        <span class="n">inertia</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">inertia</span>
+        <span class="k">if</span> <span class="n">inertia</span><span class="o">.</span><span class="n">ixx_kg_m2</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">inertia</span><span class="o">.</span><span class="n">iyy_kg_m2</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">inertia</span><span class="o">.</span><span class="n">izz_kg_m2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;All inertia moments must be positive&quot;</span><span class="p">)</span>
+
+        <span class="c1"># For cylindrical body, typically Ixx ≈ Iyy &gt;&gt; Izz</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">&lt;</span> <span class="n">inertia</span><span class="o">.</span><span class="n">ixx_kg_m2</span> <span class="o">/</span> <span class="n">inertia</span><span class="o">.</span><span class="n">iyy_kg_m2</span> <span class="o">&lt;</span> <span class="mf">2.0</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;inertia&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Ixx/Iyy ratio (</span><span class="si">{</span><span class="n">inertia</span><span class="o">.</span><span class="n">ixx_kg_m2</span><span class="o">/</span><span class="n">inertia</span><span class="o">.</span><span class="n">iyy_kg_m2</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">) &quot;</span>
+                    <span class="s2">&quot;is unusual for cylindrical rocket. Check inertia values.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Geometry validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">caliber_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Rocket caliber must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">length_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Rocket length must be positive&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check reasonable length-to-diameter ratio</span>
+        <span class="n">length_to_diameter</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">length_m</span> <span class="o">/</span> <span class="n">config</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">caliber_m</span>
+        <span class="k">if</span> <span class="n">length_to_diameter</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;geometry&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Length-to-diameter ratio (</span><span class="si">{</span><span class="n">length_to_diameter</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">) is low. &quot;</span>
+                    <span class="s2">&quot;Rocket may have high drag.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">length_to_diameter</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;geometry&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Length-to-diameter ratio (</span><span class="si">{</span><span class="n">length_to_diameter</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">) is very high. &quot;</span>
+                    <span class="s2">&quot;Rocket may be structurally weak.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># CG validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">cg_location_m</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">cg_location_m</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">length_m</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;CG location (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">cg_location_m</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> m) must be between 0 and &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;rocket length (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">length_m</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> m)&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Note: Stability validation is performed after rocket is built by RocketPy,</span>
+        <span class="c1"># since CP depends on aerodynamic surfaces and varies with Mach number.</span>
+        <span class="c1"># Pre-build validation has been removed as it was based on static CP value.</span>
+
+        <span class="c1"># Fins validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">fins</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fins</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">fins</span>
+
+            <span class="k">if</span> <span class="n">fins</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ValidationWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;fins&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;Only </span><span class="si">{</span><span class="n">fins</span><span class="o">.</span><span class="n">count</span><span class="si">}</span><span class="s2"> fins. At least 3 fins recommended for stability.&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">fins</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ValidationWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;fins&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fins</span><span class="o">.</span><span class="n">count</span><span class="si">}</span><span class="s2"> fins is unusual. Typically 3-4 fins are used.&quot;</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">fins</span><span class="o">.</span><span class="n">root_chord_m</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">fins</span><span class="o">.</span><span class="n">tip_chord_m</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">fins</span><span class="o">.</span><span class="n">span_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Fin dimensions must be positive&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">fins</span><span class="o">.</span><span class="n">tip_chord_m</span> <span class="o">&gt;</span> <span class="n">fins</span><span class="o">.</span><span class="n">root_chord_m</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ValidationWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;fins&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Tip chord &gt; root chord is unusual. Check fin configuration.&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">fins</span><span class="o">.</span><span class="n">thickness_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Fin thickness must be positive&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">fins</span><span class="o">.</span><span class="n">thickness_m</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ValidationWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;fins&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;Fin thickness (</span><span class="si">{</span><span class="n">fins</span><span class="o">.</span><span class="n">thickness_m</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> mm) is very large.&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Parachute validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">parachute</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">parachute</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+            <span class="n">para</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">parachute</span>
+
+            <span class="k">if</span> <span class="n">para</span><span class="o">.</span><span class="n">cd_s</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Parachute Cd*S must be positive&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">para</span><span class="o">.</span><span class="n">cd_s</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ValidationWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;parachute&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;Parachute Cd*S (</span><span class="si">{</span><span class="n">para</span><span class="o">.</span><span class="n">cd_s</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">) is very small. &quot;</span>
+                        <span class="s2">&quot;May result in high impact velocity.&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">para</span><span class="o">.</span><span class="n">lag_s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Parachute lag time cannot be negative&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">para</span><span class="o">.</span><span class="n">lag_s</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ValidationWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;parachute&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;Parachute lag time (</span><span class="si">{</span><span class="n">para</span><span class="o">.</span><span class="n">lag_s</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s) is very long.&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">para</span><span class="o">.</span><span class="n">trigger</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="n">para</span><span class="o">.</span><span class="n">trigger</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Parachute trigger altitude cannot be negative&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">warnings</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MotorValidator">
+<a class="viewcode-back" href="../../api/index.html#src.validators.MotorValidator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MotorValidator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validator for motor configuration.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MotorValidator.validate">
+<a class="viewcode-back" href="../../api/index.html#src.validators.MotorValidator.validate">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">MotorConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ValidationWarning</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate motor configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: MotorConfig object to validate.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of ValidationWarning objects.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValidationError: If critical validation fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warnings</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Mass validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">dry_mass_kg</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Motor dry mass must be positive&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Inertia validation</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">inertia_value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dry_inertia</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">inertia_value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Motor inertia component </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> must be positive&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Geometry validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">nozzle_radius_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Nozzle radius must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">throat_radius_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Throat radius must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">throat_radius_m</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">nozzle_radius_m</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Throat radius must be &lt;= nozzle radius&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Grain validation for solid motors</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;SolidMotor&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_number</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Number of grains must be at least 1&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_density_kg_m3</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Grain density must be positive&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_density_kg_m3</span> <span class="o">&lt;</span> <span class="mi">1000</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_density_kg_m3</span> <span class="o">&gt;</span> <span class="mi">2500</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ValidationWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;motor&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;Grain density (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">grain_density_kg_m3</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> kg/m³) &quot;</span>
+                        <span class="s2">&quot;is outside typical range (1000-2500 kg/m³).&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_outer_radius_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Grain outer radius must be positive&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_initial_inner_radius_m</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Grain inner radius cannot be negative&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_initial_inner_radius_m</span> <span class="o">&gt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_outer_radius_m</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Grain inner radius must be &lt; outer radius&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_initial_height_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Grain height must be positive&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">grain_separation_m</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Grain separation cannot be negative&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Burn time validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">burn_time_s</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">burn_time_s</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Burn time must be positive&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">burn_time_s</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ValidationWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;motor&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;Burn time (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">burn_time_s</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s) is very short.&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">burn_time_s</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ValidationWarning</span><span class="p">(</span>
+                        <span class="s2">&quot;motor&quot;</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">&quot;Burn time (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">burn_time_s</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s) is very long for hobby rocket.&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Thrust source validation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">thrust_source</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;motor&quot;</span><span class="p">,</span> <span class="s2">&quot;No thrust source file specified. Motor will have no thrust.&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">warnings</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="EnvironmentValidator">
+<a class="viewcode-back" href="../../api/index.html#src.validators.EnvironmentValidator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EnvironmentValidator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validator for environment configuration.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="EnvironmentValidator.validate">
+<a class="viewcode-back" href="../../api/index.html#src.validators.EnvironmentValidator.validate">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">EnvironmentConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ValidationWarning</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate environment configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: EnvironmentConfig object to validate.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of ValidationWarning objects.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValidationError: If critical validation fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warnings</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Location validation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="o">-</span><span class="mi">90</span> <span class="o">&lt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">latitude_deg</span> <span class="o">&lt;=</span> <span class="mi">90</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Latitude (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">latitude_deg</span><span class="si">}</span><span class="s2">°) must be between -90 and 90&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="o">-</span><span class="mi">180</span> <span class="o">&lt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">longitude_deg</span> <span class="o">&lt;=</span> <span class="mi">180</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Longitude (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">longitude_deg</span><span class="si">}</span><span class="s2">°) must be between -180 and 180&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">elevation_m</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">500</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Elevation cannot be below -500 m (Dead Sea level)&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">elevation_m</span> <span class="o">&gt;</span> <span class="mi">5000</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;environment&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Elevation (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">elevation_m</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m) is very high. &quot;</span>
+                    <span class="s2">&quot;Check atmospheric model validity.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Gravity validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">gravity_ms2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Gravity must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mf">9.7</span> <span class="o">&lt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">gravity_ms2</span> <span class="o">&lt;=</span> <span class="mf">9.9</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;environment&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Gravity (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">gravity_ms2</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> m/s²) is outside typical &quot;</span>
+                    <span class="s2">&quot;Earth range (9.78-9.83 m/s²).&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Wind validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">velocity_ms</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Wind velocity cannot be negative&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">velocity_ms</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;environment&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Wind velocity (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">velocity_ms</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s) is very high. &quot;</span>
+                    <span class="s2">&quot;Launch may be unsafe.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">direction_deg</span> <span class="o">&lt;</span> <span class="mi">360</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;environment&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Wind direction (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">direction_deg</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">°) should be &quot;</span>
+                    <span class="s2">&quot;normalized to 0-360 degrees.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Max expected height validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">max_expected_height_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Max expected height must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">max_expected_height_m</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;environment&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Max expected height (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">max_expected_height_m</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m) &quot;</span>
+                    <span class="s2">&quot;is very high. Check if this is correct.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">warnings</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SimulationValidator">
+<a class="viewcode-back" href="../../api/index.html#src.validators.SimulationValidator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimulationValidator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validator for simulation configuration.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SimulationValidator.validate">
+<a class="viewcode-back" href="../../api/index.html#src.validators.SimulationValidator.validate">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">SimulationConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ValidationWarning</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate simulation configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: SimulationConfig object to validate.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of ValidationWarning objects.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValidationError: If critical validation fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warnings</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Time validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">max_time_s</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Max simulation time must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">max_time_s</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;simulation&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Max time (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">max_time_s</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s) is very short. &quot;</span>
+                    <span class="s2">&quot;Flight may not complete.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">min_time_step_s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Min time step cannot be negative&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">max_time_step_s</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Max time step must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">min_time_step_s</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">max_time_step_s</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Min time step cannot exceed max time step&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Tolerance validation - convert to float if string (e.g., &quot;1e-6&quot; from YAML)</span>
+        <span class="n">rtol</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">rtol</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">rtol</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">config</span><span class="o">.</span><span class="n">rtol</span>
+        <span class="n">atol</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">atol</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">atol</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">config</span><span class="o">.</span><span class="n">atol</span>
+        
+        <span class="k">if</span> <span class="n">rtol</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">atol</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Tolerances must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">rtol</span> <span class="o">&gt;</span> <span class="mf">1e-3</span> <span class="ow">or</span> <span class="n">atol</span> <span class="o">&gt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;simulation&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Tolerances are loose. Simulation accuracy may be reduced.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Rail configuration validation</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Rail length must be positive&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;simulation&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Rail length (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m) is very short. &quot;</span>
+                    <span class="s2">&quot;Rocket may be unstable off the rail.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;simulation&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Rail length (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m) is very long.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">inclination_deg</span> <span class="o">&lt;=</span> <span class="mi">90</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Rail inclination must be between 0 and 90 degrees&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">inclination_deg</span> <span class="o">&lt;</span> <span class="mi">80</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;simulation&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Rail inclination (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">inclination_deg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°) &quot;</span>
+                    <span class="s2">&quot;is low. This is intentional non-vertical launch.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">heading_deg</span> <span class="o">&lt;</span> <span class="mi">360</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">ValidationWarning</span><span class="p">(</span>
+                    <span class="s2">&quot;simulation&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Rail heading (</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">heading_deg</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">°) should be &quot;</span>
+                    <span class="s2">&quot;normalized to 0-360 degrees.&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">warnings</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="validate_all_configs">
+<a class="viewcode-back" href="../../api/index.html#src.validators.validate_all_configs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_all_configs</span><span class="p">(</span>
+    <span class="n">rocket</span><span class="p">:</span> <span class="n">RocketConfig</span><span class="p">,</span>
+    <span class="n">motor</span><span class="p">:</span> <span class="n">MotorConfig</span><span class="p">,</span>
+    <span class="n">environment</span><span class="p">:</span> <span class="n">EnvironmentConfig</span><span class="p">,</span>
+    <span class="n">simulation</span><span class="p">:</span> <span class="n">SimulationConfig</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ValidationWarning</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate all configuration objects.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rocket: RocketConfig object.</span>
+<span class="sd">        motor: MotorConfig object.</span>
+<span class="sd">        environment: EnvironmentConfig object.</span>
+<span class="sd">        simulation: SimulationConfig object.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Combined list of all ValidationWarning objects.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValidationError: If any critical validation fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">all_warnings</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Validate all components</span>
+    <span class="n">all_warnings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">RocketValidator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">rocket</span><span class="p">))</span>
+    <span class="n">all_warnings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">MotorValidator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">motor</span><span class="p">))</span>
+    <span class="n">all_warnings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">EnvironmentValidator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">environment</span><span class="p">))</span>
+    <span class="n">all_warnings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">SimulationValidator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">simulation</span><span class="p">))</span>
+
+    <span class="c1"># Cross-configuration validation</span>
+    <span class="c1"># Check if rail length is reasonable compared to rocket length</span>
+    <span class="k">if</span> <span class="n">simulation</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span> <span class="o">&gt;</span> <span class="n">rocket</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">length_m</span><span class="p">:</span>
+        <span class="n">all_warnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">ValidationWarning</span><span class="p">(</span>
+                <span class="s2">&quot;cross-config&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;Rail length (</span><span class="si">{</span><span class="n">simulation</span><span class="o">.</span><span class="n">rail</span><span class="o">.</span><span class="n">length_m</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m) &gt; rocket length &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">rocket</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">length_m</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m). This is unusual.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">all_warnings</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_warnings</span><span class="p">)</span><span class="si">}</span><span class="s2"> validation warnings:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">warning</span> <span class="ow">in</span> <span class="n">all_warnings</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">warning</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;All validations passed without warnings.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">all_warnings</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

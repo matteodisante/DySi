@@ -1,0 +1,1157 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Key Concepts &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started/key_concepts';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Next Steps" href="next_steps.html" />
+    <link rel="prev" title="Quickstart: Your First Simulation" href="quickstart.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart: Your First Simulation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Key Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="next_steps.html">Next Steps</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Getting Started</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Key Concepts</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="key-concepts">
+<h1>Key Concepts<a class="headerlink" href="#key-concepts" title="Link to this heading">#</a></h1>
+<p>This guide introduces the core concepts of rocket-sim and how they relate to rocket flight simulation.</p>
+<div class="tip admonition">
+<p class="admonition-title">What You’ll Learn</p>
+<ul class="simple">
+<li><p>The four main components: Motor, Environment, Rocket, Flight</p></li>
+<li><p>How rocket-sim extends RocketPy</p></li>
+<li><p>The simulation workflow</p></li>
+<li><p>Coordinate systems and conventions</p></li>
+</ul>
+</div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>rocket-sim simulates rocket trajectories using a <strong>6-degree-of-freedom (6-DOF) model</strong>,
+which tracks both:</p>
+<ul class="simple">
+<li><p><strong>3 translational degrees</strong>: movement in x, y, z directions</p></li>
+<li><p><strong>3 rotational degrees</strong>: pitch, yaw, roll angles</p></li>
+</ul>
+<p>The simulation is built on four core components:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Motor ──────┐
+           │
+Environment ┼──&gt; Flight ──&gt; Results
+           │
+Rocket ─────┘
+</pre></div>
+</div>
+</section>
+<section id="the-motor-component">
+<h2>1. The Motor Component<a class="headerlink" href="#the-motor-component" title="Link to this heading">#</a></h2>
+<p>The <strong>Motor</strong> represents your rocket’s propulsion system.</p>
+<section id="what-it-defines">
+<h3>What It Defines<a class="headerlink" href="#what-it-defines" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Thrust Curve</strong></p></td>
+<td><p>Force produced over time (from <code class="docutils literal notranslate"><span class="pre">.eng</span></code> file)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Propellant Mass</strong></p></td>
+<td><p>How much propellant is burned</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Burn Time</strong></p></td>
+<td><p>Duration of powered flight</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Center of Mass</strong></p></td>
+<td><p>Changes as propellant burns</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Inertia</strong></p></td>
+<td><p>Moment of inertia (affects rotation)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="configuration-example">
+<h3>Configuration Example<a class="headerlink" href="#configuration-example" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/Cesaroni_M1670.eng&quot;</span>
+<span class="w">  </span><span class="nt">dry_mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.815</span><span class="w">              </span><span class="c1"># kg (motor casing empty)</span>
+<span class="w">  </span><span class="nt">dry_inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.125</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.125</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.002</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># [I_x, I_y, I_z] kg⋅m²</span>
+<span class="w">  </span><span class="nt">nozzle_radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span><span class="w">         </span><span class="c1"># m</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">              </span><span class="c1"># number of propellant grains</span>
+<span class="w">  </span><span class="nt">grain_density</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1815</span><span class="w">          </span><span class="c1"># kg/m³</span>
+<span class="w">  </span><span class="c1"># ... more parameters</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h3>Key Concepts<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p><strong>Coordinate System</strong>: Motor uses <strong>nozzle-to-combustion-chamber</strong> direction</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Nozzle (0.0) ←──────── Combustion Chamber (+)
+             ←── Motor axis
+</pre></div>
+</div>
+<p><strong>Thrust Curve</strong>: Read from industry-standard RASP <code class="docutils literal notranslate"><span class="pre">.eng</span></code> files:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>; Cesaroni M1670-BS
+M1670-BS 54 757 0 1.815 1.840 Cesaroni
+0.00 0.0
+0.05 1250.0
+0.10 1680.0
+...
+3.51 0.0
+</pre></div>
+</div>
+<p><strong>See Also</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">Motor</span></code>, <a class="reference internal" href="../user/configuration/motor_params.html"><span class="doc">Motor Parameters Reference</span></a> (TODO)</p>
+</section>
+</section>
+<section id="the-environment-component">
+<h2>2. The Environment Component<a class="headerlink" href="#the-environment-component" title="Link to this heading">#</a></h2>
+<p>The <strong>Environment</strong> defines atmospheric and gravitational conditions.</p>
+<section id="id2">
+<h3>What It Defines<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Location</strong></p></td>
+<td><p>Latitude, longitude, elevation</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Atmosphere</strong></p></td>
+<td><p>Pressure, temperature, density vs altitude</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Wind</strong></p></td>
+<td><p>Wind speed and direction vs altitude</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Gravity</strong></p></td>
+<td><p>Gravitational acceleration (varies with latitude)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Launch Date</strong></p></td>
+<td><p>For solar activity, magnetic field (advanced)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id3">
+<h3>Configuration Example<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">39.3897</span><span class="w">      </span><span class="c1"># degrees North</span>
+<span class="w">  </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-8.2889</span><span class="w">     </span><span class="c1"># degrees West</span>
+<span class="w">  </span><span class="nt">elevation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1400</span><span class="w">        </span><span class="c1"># meters above sea level</span>
+
+<span class="w">  </span><span class="c1"># Optional: Use real weather data</span>
+<span class="w">  </span><span class="nt">atmospheric_model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Forecast&quot;</span>
+<span class="w">  </span><span class="nt">atmospheric_model_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GFS&quot;</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2024</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">21</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># June 21, 2024, 12:00 UTC</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>Key Concepts<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p><strong>Atmospheric Models</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;StandardAtmosphere&quot;</span></code>: ISA 1976 standard atmosphere (default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Forecast&quot;</span></code>: Real-time weather forecasts (GFS, NAM)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Reanalysis&quot;</span></code>: Historical weather data (ERA5)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Custom&quot;</span></code>: Your own atmospheric profile</p></li>
+</ul>
+<p><strong>Wind Profile</strong>: Can vary with altitude</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Altitude (m)  |  Wind Speed (m/s)  |  Direction (°)
+─────────────────────────────────────────────────
+   0          |       5.0          |    90 (East)
+ 1000         |       8.0          |    95
+ 2000         |      12.0          |   100
+ 3000         |      15.0          |   105
+</pre></div>
+</div>
+<p><strong>See Also</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">Environment</span></code>, <span class="xref std std-doc">/user/how_to_guides/weather</span> (TODO)</p>
+</section>
+</section>
+<section id="the-rocket-component">
+<h2>3. The Rocket Component<a class="headerlink" href="#the-rocket-component" title="Link to this heading">#</a></h2>
+<p>The <strong>Rocket</strong> defines your vehicle’s physical structure and aerodynamics.</p>
+<section id="id5">
+<h3>What It Defines<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Mass Properties</strong></p></td>
+<td><p>Dry mass, center of mass, inertia</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Geometry</strong></p></td>
+<td><p>Radius (reference area for drag)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Nose Cone</strong></p></td>
+<td><p>Shape, length, mass</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Fins</strong></p></td>
+<td><p>Number, shape, position</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Parachutes</strong></p></td>
+<td><p>Size, deployment conditions</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Aerodynamics</strong></p></td>
+<td><p>Drag coefficients (power-on, power-off)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id6">
+<h3>Configuration Example<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Calisto&quot;</span>
+<span class="w">  </span><span class="nt">mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">14.426</span><span class="w">               </span><span class="c1"># kg (dry mass without motor)</span>
+<span class="w">  </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0635</span><span class="w">             </span><span class="c1"># m (outer radius)</span>
+<span class="w">  </span><span class="nt">inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">6.321</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6.321</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0346</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># [I_x, I_y, I_z] kg⋅m²</span>
+<span class="w">  </span><span class="nt">center_of_mass_without_motor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># m from nose tip</span>
+
+<span class="w">  </span><span class="c1"># Nose cone</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.55</span><span class="w">             </span><span class="c1"># m</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span><span class="w">        </span><span class="c1"># aerodynamic shape</span>
+<span class="w">    </span><span class="nt">position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.134</span><span class="w">          </span><span class="c1"># m from tail</span>
+
+<span class="w">  </span><span class="c1"># Fins</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w">                </span><span class="c1"># trapezoidal fins</span>
+<span class="w">    </span><span class="nt">root_chord</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span><span class="w">        </span><span class="c1"># m</span>
+<span class="w">    </span><span class="nt">tip_chord</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.040</span><span class="w">         </span><span class="c1"># m</span>
+<span class="w">    </span><span class="nt">span</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.100</span><span class="w">              </span><span class="c1"># m</span>
+<span class="w">    </span><span class="nt">position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1.04956</span><span class="w">       </span><span class="c1"># m from nose tip</span>
+
+<span class="w">  </span><span class="c1"># Recovery system</span>
+<span class="w">  </span><span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Main&quot;</span>
+<span class="w">      </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span><span class="w">             </span><span class="c1"># Drag coefficient × area</span>
+<span class="w">      </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span><span class="w">      </span><span class="c1"># Deploy at apogee</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3>Key Concepts<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p><strong>Coordinate System</strong>: Rocket uses <strong>tail-to-nose</strong> convention</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Tail (-) ──────────&gt; Nose (+)
+         Rocket axis
+
+Position 0.0 = Nose tip
+Negative values = toward tail
+</pre></div>
+</div>
+<p>All position parameters (center of mass, center of pressure, component locations)
+follow this convention.</p>
+<p><strong>Aerodynamic Stability</strong></p>
+<p>For safe flight, the rocket must be statically stable. This requires the
+<strong>Center of Pressure (CP)</strong> to be aft of the <strong>Center of Gravity (CG)</strong>.</p>
+<p>Static margin quantifies stability:</p>
+<div class="math notranslate nohighlight">
+\[\text{Static Margin (calibers)} = \frac{CP - CG}{D_{rocket}}\]</div>
+<p><strong>Stability criteria:</strong></p>
+<ul class="simple">
+<li><p>Static Margin &lt; 1.0: Unstable or marginally stable</p></li>
+<li><p>Static Margin 1.5-2.5: Recommended range for most rockets</p></li>
+<li><p>Static Margin &gt; 3.5: Over-stable (excessive weathercocking)</p></li>
+</ul>
+<p>RocketPy calculates CP automatically from rocket geometry using Barrowman equations.
+The CP position varies with Mach number during flight.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../user/technical/stability_analysis.html#technical-stability-analysis"><span class="std std-ref">Rocket Stability: Theory and Best Practices</span></a> provides comprehensive stability theory,
+including Static Margin vs Stability Margin, transonic considerations, and
+design guidelines with academic references.</p>
+</div>
+<p><strong>Drag Coefficients</strong></p>
+<p>Drag can be specified as custom curves (from CFD/wind tunnel) or auto-calculated</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Option 1: Use custom drag curve</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">power_off_drag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/drag_curves/my_rocket_poweroff.csv&quot;</span>
+<span class="w">  </span><span class="nt">power_on_drag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/drag_curves/my_rocket_poweron.csv&quot;</span>
+
+<span class="c1"># Option 2: Let RocketPy calculate (based on geometry)</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">power_off_drag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Auto-calculated</span>
+<span class="w">  </span><span class="nt">power_on_drag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">   </span><span class="c1"># Auto-calculated</span>
+</pre></div>
+</div>
+<p><strong>See Also</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">Rocket</span></code>, <span class="xref std std-doc">/user/tutorials/rocket_design</span> (TODO)</p>
+</section>
+</section>
+<section id="the-flight-component">
+<h2>4. The Flight Component<a class="headerlink" href="#the-flight-component" title="Link to this heading">#</a></h2>
+<p>The <strong>Flight</strong> is the actual simulation that combines Motor + Environment + Rocket.</p>
+<section id="what-it-computes">
+<h3>What It Computes<a class="headerlink" href="#what-it-computes" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Output</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Trajectory</strong></p></td>
+<td><p>Position (x, y, z) over time</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Velocity</strong></p></td>
+<td><p>Speed and direction over time</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Acceleration</strong></p></td>
+<td><p>Including gravity, thrust, drag</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Orientation</strong></p></td>
+<td><p>Pitch, yaw, roll angles</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Apogee</strong></p></td>
+<td><p>Maximum altitude reached</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Landing Point</strong></p></td>
+<td><p>Impact coordinates and velocity</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Flight Events</strong></p></td>
+<td><p>Motor burnout, apogee, parachute deployment</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id8">
+<h3>Configuration Example<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">inclination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85</span><span class="w">         </span><span class="c1"># degrees from horizontal (85° = nearly vertical)</span>
+<span class="w">  </span><span class="nt">heading</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90</span><span class="w">             </span><span class="c1"># degrees (0=N, 90=E, 180=S, 270=W)</span>
+<span class="w">  </span><span class="nt">rail_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.2</span><span class="w">        </span><span class="c1"># m (launch rail guides rocket initially)</span>
+
+<span class="w">  </span><span class="c1"># Optional: Advanced features</span>
+<span class="w">  </span><span class="nt">max_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span><span class="w">           </span><span class="c1"># s (maximum simulation time)</span>
+<span class="w">  </span><span class="nt">time_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">         </span><span class="c1"># s (integration step)</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3>Key Concepts<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p><strong>Launch Angle Convention</strong>:</p>
+<ul class="simple">
+<li><p><strong>Inclination</strong>: 0° = horizontal, 90° = vertical</p></li>
+<li><p><strong>Heading</strong>: 0° = North, 90° = East, 180° = South, 270° = West</p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Inclination = 85°        Heading = 90°
+
+     ↑ 90° (vertical)         North (0°)
+     |                           ↑
+     |                           |
+────85°─────→ 0° (horizontal)    └──→ East (90°)
+</pre></div>
+</div>
+<p><strong>Rail Launch</strong>: Rocket is constrained to launch rail until velocity is high enough
+for fins to stabilize the rocket.</p>
+<p><strong>Flight Phases</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Rail Phase</strong>: Constrained to launch rail direction</p></li>
+<li><p><strong>Powered Ascent</strong>: Motor burning, thrust &gt; drag</p></li>
+<li><p><strong>Coasting</strong>: Motor burnout, still ascending</p></li>
+<li><p><strong>Apogee</strong>: Peak altitude, velocity = 0</p></li>
+<li><p><strong>Descent</strong>: Falling (with or without parachute)</p></li>
+<li><p><strong>Impact</strong>: Ground hit</p></li>
+</ol>
+<p><strong>See Also</strong>: <code class="xref py py-class docutils literal notranslate"><span class="pre">Flight</span></code></p>
+</section>
+</section>
+<section id="the-simulation-workflow">
+<h2>The Simulation Workflow<a class="headerlink" href="#the-simulation-workflow" title="Link to this heading">#</a></h2>
+<p>Understanding how the pieces fit together:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>1. CONFIGURATION LOADING
+   ├─ Load YAML file
+   ├─ Parse into dataclasses (RocketConfig, MotorConfig, etc.)
+   └─ Validate parameters (physical plausibility, stability)
+
+2. OBJECT BUILDING
+   ├─ Build Motor (load thrust curve, compute properties)
+   ├─ Build Environment (atmosphere model, wind profile)
+   └─ Build Rocket (geometry, aerodynamics, add motor)
+
+3. FLIGHT SIMULATION
+   ├─ Initialize state (position, velocity, orientation)
+   ├─ Numerical integration (RK45 adaptive step)
+   │  ├─ Compute forces (thrust, drag, gravity)
+   │  ├─ Compute moments (aerodynamic, gyroscopic)
+   │  └─ Update state (position, velocity, attitude)
+   └─ Detect events (burnout, apogee, parachute, impact)
+
+4. RESULTS EXPORT
+   ├─ Extract trajectory data (CSV, JSON, KML)
+   ├─ Generate plots (altitude, velocity, 3D trajectory)
+   └─ Export state files (motor curves, rocket properties)
+</pre></div>
+</div>
+</section>
+<section id="coordinate-systems-summary">
+<h2>Coordinate Systems Summary<a class="headerlink" href="#coordinate-systems-summary" title="Link to this heading">#</a></h2>
+<p>rocket-sim uses <strong>three coordinate systems</strong> - it’s important to know which is which:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>System</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Origin</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Motor</strong></p></td>
+<td><p>Nozzle → Combustion Chamber</p></td>
+<td><p>Nozzle exit (0.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Rocket</strong></p></td>
+<td><p>Tail → Nose</p></td>
+<td><p>Nose tip (0.0)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>World</strong></p></td>
+<td><p>East (x), North (y), Up (z)</p></td>
+<td><p>Launch point (0, 0, elevation)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Example</strong>: Motor positioned in rocket</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nozzle_position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">               </span><span class="c1"># Motor coordinates (at nozzle)</span>
+<span class="w">  </span><span class="nt">center_of_dry_mass_position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span><span class="w"> </span><span class="c1"># Motor coordinates</span>
+
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">motor_position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1.255</span><span class="w">             </span><span class="c1"># Rocket coordinates (nozzle at -1.255m from nose)</span>
+</pre></div>
+</div>
+</section>
+<section id="physical-units-convention">
+<h2>Physical Units Convention<a class="headerlink" href="#physical-units-convention" title="Link to this heading">#</a></h2>
+<p>All parameters use <strong>SI units</strong> unless otherwise specified:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Quantity</p></th>
+<th class="head"><p>Unit</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Length</p></td>
+<td><p>meters (m)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">radius:</span> <span class="pre">0.0635</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Mass</p></td>
+<td><p>kilograms (kg)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mass:</span> <span class="pre">14.426</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Time</p></td>
+<td><p>seconds (s)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">burn_time:</span> <span class="pre">3.9</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Velocity</p></td>
+<td><p>meters/second (m/s)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">max_velocity:</span> <span class="pre">287.3</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Acceleration</p></td>
+<td><p>meters/second² (m/s²)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">max_acceleration:</span> <span class="pre">89.2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Force</p></td>
+<td><p>newtons (N)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">thrust:</span> <span class="pre">1670.0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Angle</p></td>
+<td><p>degrees (°)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">inclination:</span> <span class="pre">85</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Coordinates</p></td>
+<td><p>degrees</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">latitude:</span> <span class="pre">39.3897</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Pressure</p></td>
+<td><p>pascals (Pa)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pressure:</span> <span class="pre">81060.0</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Temperature</p></td>
+<td><p>kelvin (K)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">temperature:</span> <span class="pre">288.15</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Angles are in DEGREES</strong> for configuration, but RocketPy internally uses <strong>radians</strong>.
+rocket-sim handles the conversion automatically.</p>
+</div>
+</section>
+<section id="what-you-ve-learned">
+<h2>What You’ve Learned<a class="headerlink" href="#what-you-ve-learned" title="Link to this heading">#</a></h2>
+<p>You now understand:</p>
+<p>✅ The four core components: Motor, Environment, Rocket, Flight</p>
+<p>✅ What each component defines and controls</p>
+<p>✅ The simulation workflow from config to results</p>
+<p>✅ Coordinate systems and unit conventions</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>Now you can:</p>
+<ul>
+<li><p><strong>Deep dive into configuration</strong> → <a class="reference internal" href="../user/configuration/index.html"><span class="doc">Configuration Reference</span></a> (TODO)</p>
+<p>Learn every parameter in detail</p>
+</li>
+<li><p><strong>Build your rocket</strong> → <span class="xref std std-doc">/user/tutorials/custom_rocket</span> (TODO)</p>
+<p>Simulate your own rocket design</p>
+</li>
+<li><p><strong>Explore advanced features</strong> → <a class="reference internal" href="next_steps.html"><span class="doc">Next Steps</span></a></p>
+<p>Weather data, air brakes, Monte Carlo analysis</p>
+</li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.rocketpy.org/en/latest/user/index.html">RocketPy Theory</a> - Mathematical background</p></li>
+<li><p><span class="xref std std-doc">/background/rocket_physics</span> (TODO) - Physics primer</p></li>
+<li><p><span class="xref std std-doc">/background/simulation_theory</span> (TODO) - Numerical methods</p></li>
+</ul>
+</div>
+</section>
+<section id="common-misconceptions">
+<h2>Common Misconceptions<a class="headerlink" href="#common-misconceptions" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-warning sd-bg-text-warning">
+<span class="sd-summary-text">“Motor mass” means total motor mass</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>No!</strong> Motor <code class="docutils literal notranslate"><span class="pre">dry_mass</span></code> is the <strong>empty motor casing</strong> (without propellant).
+RocketPy adds propellant mass automatically based on the thrust curve.</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-warning sd-bg-text-warning">
+<span class="sd-summary-text">Position 0.0 is always at the tail</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>No!</strong> Depends on component:</p>
+<ul class="simple">
+<li><p class="sd-card-text"><strong>Rocket</strong>: 0.0 = nose tip</p></li>
+<li><p class="sd-card-text"><strong>Motor</strong>: 0.0 = nozzle exit</p></li>
+</ul>
+<p class="sd-card-text">Always check which coordinate system you’re working in!</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-warning sd-bg-text-warning">
+<span class="sd-summary-text">Static margin &lt; 2 is always unstable</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>Not exactly.</strong> Static margin &lt; 2 calibers is generally considered <strong>risky</strong>,
+but small rockets can sometimes fly with SM ≈ 1.5. However, rocket-sim enforces
+SM ≥ 2 for safety.</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-warning sd-bg-text-warning">
+<span class="sd-summary-text">I can use any atmospheric model anywhere</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>No!</strong> Forecast/Reanalysis data is location and time specific. Using wrong
+coordinates or dates gives unrealistic atmosphere.</p>
+</div>
+</details></section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="quickstart.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quickstart: Your First Simulation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="next_steps.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Next Steps</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-motor-component">1. The Motor Component</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-it-defines">What It Defines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-example">Configuration Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Key Concepts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-environment-component">2. The Environment Component</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">What It Defines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Configuration Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Key Concepts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-rocket-component">3. The Rocket Component</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">What It Defines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Configuration Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Key Concepts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-flight-component">4. The Flight Component</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-it-computes">What It Computes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Configuration Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Key Concepts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simulation-workflow">The Simulation Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems-summary">Coordinate Systems Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physical-units-convention">Physical Units Convention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-ve-learned">What You’ve Learned</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-misconceptions">Common Misconceptions</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/getting_started/key_concepts.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

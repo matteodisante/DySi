@@ -1,0 +1,2842 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Rocket Parameters Reference &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/configuration/rocket_params';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Motor Parameters Reference" href="motor_params.html" />
+    <link rel="prev" title="Configuration Reference" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Configuration Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Rocket Parameters Reference</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="rocket-parameters-reference">
+<span id="config-rocket-params"></span><h1>Rocket Parameters Reference<a class="headerlink" href="#rocket-parameters-reference" title="Link to this heading">#</a></h1>
+<p>This reference documents all parameters in the <code class="docutils literal notranslate"><span class="pre">rocket</span></code> configuration section.
+The rocket section defines physical properties, geometry, mass distribution, aerodynamic surfaces, and recovery systems.</p>
+<nav class="contents local" id="on-this-page">
+<p class="topic-title">On this page</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id9">Overview</a></p></li>
+<li><p><a class="reference internal" href="#basic-properties" id="id10">Basic Properties</a></p>
+<ul>
+<li><p><a class="reference internal" href="#name" id="id11">name</a></p></li>
+<li><p><a class="reference internal" href="#dry-mass-kg" id="id12">dry_mass_kg</a></p></li>
+<li><p><a class="reference internal" href="#coordinate-system" id="id13">coordinate_system</a></p></li>
+<li><p><a class="reference internal" href="#cg-location-m" id="id14">cg_location_m</a></p></li>
+<li><p><a class="reference internal" href="#cp-location-m" id="id15">cp_location_m</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#geometry" id="id16">Geometry</a></p>
+<ul>
+<li><p><a class="reference internal" href="#caliber-m" id="id17">caliber_m</a></p></li>
+<li><p><a class="reference internal" href="#length-m" id="id18">length_m</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#inertia" id="id19">Inertia</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ixx-kg-m2-iyy-kg-m2" id="id20">ixx_kg_m2, iyy_kg_m2</a></p></li>
+<li><p><a class="reference internal" href="#izz-kg-m2" id="id21">izz_kg_m2</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#nose-cone" id="id22">Nose Cone</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id23">length_m</a></p></li>
+<li><p><a class="reference internal" href="#kind" id="id24">kind</a></p></li>
+<li><p><a class="reference internal" href="#position-m" id="id25">position_m</a></p></li>
+<li><p><a class="reference internal" href="#base-radius-m" id="id26">base_radius_m</a></p></li>
+<li><p><a class="reference internal" href="#bluffness" id="id27">bluffness</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#fins" id="id28">Fins</a></p>
+<ul>
+<li><p><a class="reference internal" href="#count" id="id29">count</a></p></li>
+<li><p><a class="reference internal" href="#root-chord-m" id="id30">root_chord_m</a></p></li>
+<li><p><a class="reference internal" href="#tip-chord-m" id="id31">tip_chord_m</a></p></li>
+<li><p><a class="reference internal" href="#span-m" id="id32">span_m</a></p></li>
+<li><p><a class="reference internal" href="#thickness-m" id="id33">thickness_m</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id34">position_m</a></p></li>
+<li><p><a class="reference internal" href="#cant-angle-deg" id="id35">cant_angle_deg</a></p></li>
+<li><p><a class="reference internal" href="#airfoil" id="id36">airfoil</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#parachute" id="id37">Parachute</a></p>
+<ul>
+<li><p><a class="reference internal" href="#enabled" id="id38">enabled</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id39">name</a></p></li>
+<li><p><a class="reference internal" href="#cd-s" id="id40">cd_s</a></p></li>
+<li><p><a class="reference internal" href="#trigger" id="id41">trigger</a></p></li>
+<li><p><a class="reference internal" href="#sampling-rate-hz" id="id42">sampling_rate_hz</a></p></li>
+<li><p><a class="reference internal" href="#lag-s" id="id43">lag_s</a></p></li>
+<li><p><a class="reference internal" href="#noise-std" id="id44">noise_std</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#air-brakes" id="id45">Air Brakes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id46">enabled</a></p></li>
+<li><p><a class="reference internal" href="#drag-coefficient" id="id47">drag_coefficient</a></p></li>
+<li><p><a class="reference internal" href="#reference-area-m2" id="id48">reference_area_m2</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id49">position_m</a></p></li>
+<li><p><a class="reference internal" href="#controller" id="id50">controller</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#drag-curves" id="id51">Drag Curves</a></p>
+<ul>
+<li><p><a class="reference internal" href="#power-off-drag" id="id52">power_off_drag</a></p></li>
+<li><p><a class="reference internal" href="#power-on-drag" id="id53">power_on_drag</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#complete-example" id="id54">Complete Example</a></p></li>
+<li><p><a class="reference internal" href="#see-also" id="id55">See Also</a></p></li>
+</ul>
+</nav>
+<hr class="docutils" />
+<section id="overview">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The rocket configuration is divided into these subsections:</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Basic Properties</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Name and identification</p></li>
+<li><p class="sd-card-text">Dry mass</p></li>
+<li><p class="sd-card-text">Center of gravity location</p></li>
+<li><p class="sd-card-text">Coordinate system</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Geometry</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Caliber (diameter)</p></li>
+<li><p class="sd-card-text">Total length</p></li>
+<li><p class="sd-card-text">Reference areas</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Inertia</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Moments of inertia (Ixx, Iyy, Izz)</p></li>
+<li><p class="sd-card-text">About center of mass</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Components</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Nose cone</p></li>
+<li><p class="sd-card-text">Fins</p></li>
+<li><p class="sd-card-text">Parachute</p></li>
+<li><p class="sd-card-text">Air brakes</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="basic-properties">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Basic Properties</a><a class="headerlink" href="#basic-properties" title="Link to this heading">#</a></h2>
+<section id="name">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">name</a><a class="headerlink" href="#name" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;Rocket&quot;</span></code></p>
+</dd>
+</dl>
+<p>Name or identifier for the rocket. Used in simulation outputs, plots, and logs.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Calisto&quot;</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use descriptive names for easy identification when comparing multiple configurations:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Calisto_v2.3_competition&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;TestRocket_2024-03-15&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Zeus_Production_Dry_Run&quot;</span></code></p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="dry-mass-kg">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">dry_mass_kg</a><a class="headerlink" href="#dry-mass-kg" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>kilograms (kg)</p>
+</dd>
+</dl>
+<p>Total mass of the rocket <strong>without motor propellant</strong>.</p>
+<p>Includes:</p>
+<ul class="simple">
+<li><p>Airframe structure (body tubes, bulkheads, centering rings)</p></li>
+<li><p>Nose cone</p></li>
+<li><p>Fins</p></li>
+<li><p>Recovery system (parachutes, shock cords, electronics)</p></li>
+<li><p>Avionics (flight computer, sensors, batteries)</p></li>
+<li><p>Empty motor casing</p></li>
+</ul>
+<p>Excludes:</p>
+<ul class="simple">
+<li><p>Motor propellant mass</p></li>
+<li><p>Anything consumed during flight</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15.426</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Measure</p>
+<p><strong>Method 1: Direct weighing (most accurate)</strong></p>
+<ol class="arabic simple">
+<li><p>Assemble complete rocket with empty motor casing</p></li>
+<li><p>Use digital scale (precision ≥ 0.1 kg)</p></li>
+<li><p>Weigh 3 times, take average</p></li>
+</ol>
+<p><strong>Method 2: Component-by-component</strong></p>
+<p>Sum masses of all components:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Airframe body tubes:      2.5 kg
+Nose cone:                1.2 kg
+Fins (4×):                0.8 kg
+Motor casing (empty):     1.1 kg
+Avionics bay:             0.9 kg
+Recovery system:          0.7 kg
+Fasteners/misc:           0.3 kg
+─────────────────────────────
+Total dry mass:           7.5 kg
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Do NOT include propellant mass!</strong> RocketPy adds motor mass automatically.</p>
+<p>If you accidentally include propellant mass, the simulation will have <strong>double</strong> the motor mass and produce incorrect results.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="coordinate-system">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">coordinate_system</a><a class="headerlink" href="#coordinate-system" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;tail_to_nose&quot;</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;tail_to_nose&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;nose_to_tail&quot;</span></code></p>
+</dd>
+</dl>
+<p>Defines the positive direction for position measurements along the rocket axis.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+tail_to_nose (default)</label><div class="sd-tab-content docutils">
+<p><strong>Origin at rocket tail, positive toward nose</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Nose ←─────────────────→ Tail
+     +2.0 m        0.0 m
+
+Example positions:
+- Nose tip:           +2.0 m
+- Center of mass:     +1.2 m
+- Fin root:           +0.3 m
+- Nozzle exit:         0.0 m (origin)
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span><span class="nt">cg_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.2</span><span class="w">       </span><span class="c1"># 1.2 m from tail</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">        </span><span class="c1"># At rocket nose</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">        </span><span class="c1"># 0.3 m from tail</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+nose_to_tail</label><div class="sd-tab-content docutils">
+<p><strong>Origin at nose tip, positive toward tail</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Nose ─────────────────→ Tail
+0.0 m           +2.0 m
+
+Example positions:
+- Nose tip:            0.0 m (origin)
+- Center of mass:     +0.8 m
+- Fin root:           +1.7 m
+- Nozzle exit:        +2.0 m
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nose_to_tail&quot;</span>
+<span class="w">  </span><span class="nt">cg_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span><span class="w">       </span><span class="c1"># 0.8 m from nose</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">        </span><span class="c1"># At origin</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.7</span><span class="w">        </span><span class="c1"># 1.7 m from nose</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>All positions</strong> (CG, nose cone, fins, motor, air brakes) must use the <strong>same coordinate system</strong>.</p>
+<p>Be consistent throughout your configuration!</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="motor_params.html#config-motor-params-position"><span class="std std-ref">position_m</span></a> for motor position in rocket frame</p></li>
+<li><p><span class="xref std std-ref">how-to-measure-rocket-dimensions</span> for measuring positions</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="cg-location-m">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">cg_location_m</a><a class="headerlink" href="#cg-location-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p>Location of rocket’s <strong>center of gravity (dry)</strong> measured from the coordinate system origin.</p>
+<p>This is the <strong>dry CG</strong> (without motor). RocketPy will compute the <strong>wet CG</strong> during flight as propellant burns.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span><span class="nt">cg_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.255</span><span class="w">  </span><span class="c1"># 1.255 m from tail</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Measure Center of Gravity</p>
+<p><strong>Method 1: Balance point (simple, good accuracy)</strong></p>
+<ol class="arabic simple">
+<li><p>Assemble complete rocket with <strong>empty motor casing</strong></p></li>
+<li><p>Balance rocket horizontally on a knife edge, dowel, or string</p></li>
+<li><p>Measure distance from balance point to reference (tail or nose)</p></li>
+</ol>
+<a class="reference internal image-reference" href="_static/images/measure_cg_balance.png"><img alt="Measuring CG with balance method" class="align-center" src="_static/images/measure_cg_balance.png" style="width: 400px;" />
+</a>
+<p><strong>Method 2: Two-point weighing (more accurate)</strong></p>
+<ol class="arabic simple">
+<li><p>Place rocket horizontally on two scales</p></li>
+<li><p>Measure distances and weights:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(L\)</span> = distance between scales</p></li>
+<li><p><span class="math notranslate nohighlight">\(W_1\)</span> = weight on front scale</p></li>
+<li><p><span class="math notranslate nohighlight">\(W_2\)</span> = weight on rear scale</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_1\)</span> = distance from tail to front scale</p></li>
+</ul>
+</li>
+<li><p>Calculate CG from tail:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[x_{CG} = x_1 + \frac{W_2 \cdot L}{W_1 + W_2}\]</div>
+<p><strong>Method 3: CAD software</strong></p>
+<p>Use SolidWorks, Fusion 360, or OpenRocket’s built-in CG calculator.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Critical for stability!</strong></p>
+<p>Wrong CG position → wrong static margin → potentially unstable rocket</p>
+<p>Accuracy target: ±5 mm for small rockets, ±10 mm for large rockets</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="cp-location-m">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">cp_location_m</a><a class="headerlink" href="#cp-location-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (RocketPy computes automatically)</p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p>Location of rocket’s <strong>center of pressure (CP)</strong> measured from the coordinate system origin.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span><span class="nt">cp_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Let RocketPy calculate</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Auto-calculation (Recommended)</label><div class="sd-tab-content docutils">
+<p><strong>Let RocketPy calculate CP</strong> from fin geometry and nose cone shape:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cp_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Auto-calculation</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">    </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span>
+<span class="w">    </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.040</span>
+<span class="w">    </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.100</span>
+<span class="w">    </span><span class="c1"># ... RocketPy uses Barrowman equations</span>
+</pre></div>
+</div>
+<p>✅ <strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>Automatically adjusts if you change fin size</p></li>
+<li><p>Uses Barrowman method (industry standard)</p></li>
+<li><p>No manual calculations needed</p></li>
+</ul>
+<p>⚠️ <strong>Limitations:</strong></p>
+<ul class="simple">
+<li><p>Assumes standard shapes (trapezoidal fins, standard nose cones)</p></li>
+<li><p>May be inaccurate for complex geometries</p></li>
+</ul>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Manual override</label><div class="sd-tab-content docutils">
+<p><strong>Manually specify CP</strong> from wind tunnel tests, CFD, or OpenRocket:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span><span class="nt">cp_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.516</span><span class="w">  </span><span class="c1"># From OpenRocket simulation</span>
+</pre></div>
+</div>
+<p>✅ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Non-standard fin shapes (clipped delta, elliptical)</p></li>
+<li><p>Unusual body shapes (boat-tail, flared section)</p></li>
+<li><p>CFD or wind tunnel data available</p></li>
+<li><p>OpenRocket/RASAero validation</p></li>
+</ul>
+<p>⚠️ <strong>Remember:</strong></p>
+<ul class="simple">
+<li><p>CP changes with Mach number (use subsonic value)</p></li>
+<li><p>Update manually if you change fin geometry</p></li>
+</ul>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Static Margin Calculation</p>
+<p>RocketPy automatically computes <strong>static margin</strong> from CG and CP:</p>
+<div class="math notranslate nohighlight">
+\[\text{Static Margin (cal)} = \frac{CP - CG}{\text{caliber}}\]</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">caliber</span></code> is rocket diameter.</p>
+<p><strong>Stability criteria:</strong></p>
+<ul class="simple">
+<li><p><strong>&lt; 0 calibers</strong>: Unstable ❌</p></li>
+<li><p><strong>0-1 calibers</strong>: Marginally stable ⚠️</p></li>
+<li><p><strong>1-2 calibers</strong>: Stable ✅ (competition standard)</p></li>
+<li><p><strong>2-3 calibers</strong>: Very stable ✅</p></li>
+<li><p><strong>&gt; 3 calibers</strong>: Overstable (inefficient, excessive drag)</p></li>
+</ul>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">tutorial-basic-flight-stability</span> for static margin examples</p></li>
+<li><p><a class="reference internal" href="../technical/stability_analysis.html#technical-stability-analysis"><span class="std std-ref">Rocket Stability: Theory and Best Practices</span></a> for comprehensive stability theory (Static Margin vs Stability Margin)</p></li>
+<li><p><span class="xref std std-ref">how-to-optimize-static-margin</span> for design iteration</p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="geometry">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Geometry</a><a class="headerlink" href="#geometry" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">geometry</span></code> subsection defines rocket dimensions.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.127</span><span class="w">      </span><span class="c1"># Diameter in meters</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.000</span><span class="w">       </span><span class="c1"># Total length in meters</span>
+</pre></div>
+</div>
+<section id="caliber-m">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">caliber_m</a><a class="headerlink" href="#caliber-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Outer diameter</strong> of the main airframe body tube.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.127</span><span class="w">  </span><span class="c1"># 127 mm diameter</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Common calibers:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Description</p></th>
+<th class="head"><p>Inches</p></th>
+<th class="head"><p>Meters (caliber_m)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Small model rocket</p></td>
+<td><p>2.6”</p></td>
+<td><p>0.066</p></td>
+</tr>
+<tr class="row-odd"><td><p>Mid-power</p></td>
+<td><p>3.0”</p></td>
+<td><p>0.076</p></td>
+</tr>
+<tr class="row-even"><td><p>Mid-power</p></td>
+<td><p>4.0”</p></td>
+<td><p>0.102</p></td>
+</tr>
+<tr class="row-odd"><td><p>High-power</p></td>
+<td><p>5.0”</p></td>
+<td><p>0.127</p></td>
+</tr>
+<tr class="row-even"><td><p>High-power</p></td>
+<td><p>6.0”</p></td>
+<td><p>0.152</p></td>
+</tr>
+<tr class="row-odd"><td><p>Competition</p></td>
+<td><p>6.17” (157 mm)</p></td>
+<td><p>0.157</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Measurement Instructions</p>
+<ol class="arabic simple">
+<li><p>Measure <strong>outer diameter</strong> with calipers at 3 locations</p></li>
+<li><p>Take average</p></li>
+<li><p>Convert to meters:</p>
+<ul class="simple">
+<li><p>Inches → meters: multiply by 0.0254</p></li>
+<li><p>Millimeters → meters: divide by 1000</p></li>
+</ul>
+</li>
+</ol>
+<p>Example:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Measurement 1:  126.8 mm
+Measurement 2:  127.1 mm
+Measurement 3:  126.9 mm
+──────────────────────
+Average:        127.0 mm  →  0.127 m
+</pre></div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="length-m">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">length_m</a><a class="headerlink" href="#length-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Total length</strong> of assembled rocket from nose tip to nozzle exit (or tail end).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.065</span><span class="w">  </span><span class="c1"># Total rocket length</span>
+</pre></div>
+</div>
+<p>Includes:</p>
+<ul class="simple">
+<li><p>Nose cone</p></li>
+<li><p>All body tube sections</p></li>
+<li><p>Boat-tail (if present)</p></li>
+<li><p>Motor nozzle extending beyond airframe (if applicable)</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">Measurement Instructions</p>
+<p><strong>Method 1: Assembled rocket</strong></p>
+<ol class="arabic simple">
+<li><p>Lay rocket horizontally on flat surface</p></li>
+<li><p>Measure from nose tip to nozzle exit</p></li>
+<li><p>Use measuring tape or laser distance meter</p></li>
+</ol>
+<p><strong>Method 2: Component sum</strong></p>
+<p>Add lengths of all sections:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Nose cone:               0.350 m
+Upper body tube:         0.800 m
+Avionics bay:            0.215 m
+Lower body tube:         0.600 m
+Motor casing extension:  0.100 m
+─────────────────────────────
+Total length:            2.065 m
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="inertia">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Inertia</a><a class="headerlink" href="#inertia" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">inertia</span></code> subsection defines the rocket’s moments of inertia about its center of mass.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">inertia</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ixx_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.321</span>
+<span class="w">    </span><span class="nt">iyy_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.321</span>
+<span class="w">    </span><span class="nt">izz_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0346</span>
+</pre></div>
+</div>
+<p>These values are critical for accurate <strong>attitude dynamics</strong> (rotation, spin, wobble).</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Moments of inertia must be calculated about the dry center of mass.</strong></p>
+<p>RocketPy will adjust these values during flight as propellant burns and CG shifts.</p>
+</div>
+<section id="ixx-kg-m2-iyy-kg-m2">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">ixx_kg_m2, iyy_kg_m2</a><a class="headerlink" href="#ixx-kg-m2-iyy-kg-m2" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>kg·m²</p>
+</dd>
+</dl>
+<p><strong>Transverse moments of inertia</strong> about axes perpendicular to rocket centerline.</p>
+<p>For a rocket with <strong>axial symmetry</strong>, <code class="docutils literal notranslate"><span class="pre">ixx_kg_m2</span></code> = <code class="docutils literal notranslate"><span class="pre">iyy_kg_m2</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">inertia</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ixx_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.321</span>
+<span class="w">    </span><span class="nt">iyy_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.321</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Calculate</p>
+<p><strong>Method 1: CAD software (most accurate)</strong></p>
+<ol class="arabic simple">
+<li><p>Create 3D model in SolidWorks/Fusion 360</p></li>
+<li><p>Assign material densities</p></li>
+<li><p>Use CAD’s mass properties tool → read Ixx, Iyy</p></li>
+</ol>
+<p><strong>Method 2: Approximation for cylindrical rocket</strong></p>
+<p>For uniform density cylinder (rough estimate):</p>
+<div class="math notranslate nohighlight">
+\[I_{xx} = I_{yy} = m \left[ \frac{r^2}{4} + \frac{L^2}{12} \right]\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(m\)</span> = dry mass (kg)</p></li>
+<li><p><span class="math notranslate nohighlight">\(r\)</span> = radius (m)</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> = length (m)</p></li>
+</ul>
+<p>Example: <code class="docutils literal notranslate"><span class="pre">m=15.426</span> <span class="pre">kg</span></code>, <code class="docutils literal notranslate"><span class="pre">r=0.0635</span> <span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">L=2.065</span> <span class="pre">m</span></code></p>
+<div class="math notranslate nohighlight">
+\[I_{xx} = 15.426 \times \left[ \frac{0.0635^2}{4} + \frac{2.065^2}{12} \right] = 6.32\text{ kg·m}^2\]</div>
+<p><strong>Method 3: Parallel axis theorem</strong> (component-by-component)</p>
+<p>For each component i:</p>
+<div class="math notranslate nohighlight">
+\[I_i = I_{i,cm} + m_i \cdot d_i^2\]</div>
+<p>Sum all components.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Approximations are acceptable for initial design</strong>, but:</p>
+<ul class="simple">
+<li><p>Critical for spin-stabilized rockets</p></li>
+<li><p>Important for attitude control systems</p></li>
+<li><p>Affects weathercocking behavior</p></li>
+</ul>
+<p>For competition rockets, use CAD-calculated values.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="izz-kg-m2">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">izz_kg_m2</a><a class="headerlink" href="#izz-kg-m2" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>kg·m²</p>
+</dd>
+</dl>
+<p><strong>Axial moment of inertia</strong> about rocket centerline (spin axis).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">inertia</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">izz_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0346</span>
+</pre></div>
+</div>
+<p>Much smaller than Ixx/Iyy because mass is distributed close to centerline.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Calculate</p>
+<p><strong>Method 1: CAD software</strong></p>
+<p>Use CAD mass properties tool → read Izz</p>
+<p><strong>Method 2: Approximation for hollow cylinder</strong></p>
+<div class="math notranslate nohighlight">
+\[I_{zz} = \frac{m}{2} \left( r_{outer}^2 + r_{inner}^2 \right)\]</div>
+<p>Example: body tube with</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(m = 10\)</span> kg</p></li>
+<li><p><span class="math notranslate nohighlight">\(r_{outer} = 0.0635\)</span> m</p></li>
+<li><p><span class="math notranslate nohighlight">\(r_{inner} = 0.061\)</span> m</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[I_{zz} = \frac{10}{2} (0.0635^2 + 0.061^2) = 0.0387 \text{ kg·m}^2\]</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Typical ratios for rockets:</strong></p>
+<div class="math notranslate nohighlight">
+\[\frac{I_{xx}}{I_{zz}} \approx 100 \text{ to } 300\]</div>
+<p>If your ratio is outside this range, double-check calculations.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="nose-cone">
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">Nose Cone</a><a class="headerlink" href="#nose-cone" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">nose_cone</span></code> subsection defines nose cone geometry.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.55829</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+</pre></div>
+</div>
+<section id="id1">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">length_m</a><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Length of nose cone</strong> from tip to base (where it meets body tube).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.558</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Measurement Instructions</p>
+<ol class="arabic simple">
+<li><p>Measure along centerline from tip to shoulder base</p></li>
+<li><p>Do NOT include shoulder length (insertion part)</p></li>
+</ol>
+</div>
+</section>
+<hr class="docutils" />
+<section id="kind">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">kind</a><a class="headerlink" href="#kind" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;vonKarman&quot;</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;vonKarman&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;conical&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ogive&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;elliptical&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;parabolic&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;powerseries&quot;</span></code></p>
+</dd>
+</dl>
+<p>Nose cone <strong>shape profile</strong>.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+vonKarman (Default)</label><div class="sd-tab-content docutils">
+<p><strong>Von Kármán profile</strong> (Haack series, C=0)</p>
+<ul class="simple">
+<li><p>Lowest drag coefficient for subsonic/transonic flight</p></li>
+<li><p>Smooth curved profile</p></li>
+<li><p><strong>Best for competitions</strong> targeting max altitude</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-5">
+ogive</label><div class="sd-tab-content docutils">
+<p><strong>Tangent ogive</strong> (circular arc tangent to body)</p>
+<ul class="simple">
+<li><p>Very common in model rocketry</p></li>
+<li><p>Good drag performance</p></li>
+<li><p>Easy to manufacture</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ogive&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-6" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-6">
+conical</label><div class="sd-tab-content docutils">
+<p><strong>Conical (straight taper)</strong></p>
+<ul class="simple">
+<li><p>Simplest shape</p></li>
+<li><p>Higher drag than curved profiles</p></li>
+<li><p>Easy to make, structurally strong</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;conical&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-7">
+elliptical</label><div class="sd-tab-content docutils">
+<p><strong>Elliptical profile</strong></p>
+<ul class="simple">
+<li><p>Intermediate drag</p></li>
+<li><p>Aesthetically pleasing</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;elliptical&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://www.apogeerockets.com/Tech/Rocket_Nose_Cone_Design">Nose Cone Design (Apogee Rockets)</a></p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="position-m">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">position_m</a><a class="headerlink" href="#position-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Depends on coordinate system</p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Position of nose cone tip</strong> in rocket coordinate system.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.065</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.065</span><span class="w">  </span><span class="c1"># At rocket nose (tail_to_nose system)</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Default position</strong> (if omitted):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tail_to_nose</span></code>: <code class="docutils literal notranslate"><span class="pre">position_m</span> <span class="pre">=</span> <span class="pre">geometry.length_m</span></code> (at nose)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nose_to_tail</span></code>: <code class="docutils literal notranslate"><span class="pre">position_m</span> <span class="pre">=</span> <span class="pre">0.0</span></code> (at origin)</p></li>
+</ul>
+<p>Usually you can omit this parameter.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="base-radius-m">
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">base_radius_m</a><a class="headerlink" href="#base-radius-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (uses <code class="docutils literal notranslate"><span class="pre">geometry.caliber_m</span> <span class="pre">/</span> <span class="pre">2</span></code>)</p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Radius of nose cone base</strong> where it meets the body tube.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.127</span><span class="w">  </span><span class="c1"># Body tube diameter: 127 mm</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">base_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Uses caliber_m/2 = 0.0635 m</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-8" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-8">
+null (Standard - Recommended)</label><div class="sd-tab-content docutils">
+<p><strong>Nose cone matches body tube diameter</strong> (most common)</p>
+<p>Set to <code class="docutils literal notranslate"><span class="pre">null</span></code> to automatically use rocket’s caliber:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.127</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">base_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Auto: uses 0.0635 m radius</span>
+</pre></div>
+</div>
+<p>✅ <strong>Use when:</strong></p>
+<ul class="simple">
+<li><p>Nose cone and body tube have same diameter</p></li>
+<li><p>Standard rocket design (no transitions)</p></li>
+<li><p>99% of rockets</p></li>
+</ul>
+</div>
+<input id="sd-tab-item-9" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-9">
+Custom Radius</label><div class="sd-tab-content docutils">
+<p><strong>Nose cone base differs from body tube</strong> (transitions)</p>
+<p>Specify exact base radius for diameter transitions:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.150</span><span class="w">  </span><span class="c1"># 150 mm body tube</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">base_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.065</span><span class="w">  </span><span class="c1"># 130 mm nose cone base</span>
+<span class="w">    </span><span class="c1"># Creates shoulder/transition section</span>
+</pre></div>
+</div>
+<p>✅ <strong>Use when:</strong></p>
+<ul class="simple">
+<li><p>Nose cone has shoulder that fits inside body tube</p></li>
+<li><p>Transitioning from larger body to smaller nose</p></li>
+<li><p>Competition rockets with optimized nose/body ratio</p></li>
+</ul>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Example: Nose Cone with Shoulder</p>
+<p><strong>Scenario:</strong> 6” (152 mm) body tube with 5” (127 mm) nose cone that has a shoulder.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.152</span><span class="w">  </span><span class="c1"># 6&quot; outer diameter body tube</span>
+
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.450</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span>
+<span class="w">    </span><span class="nt">base_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0635</span><span class="w">  </span><span class="c1"># 5&quot; nose cone base (shoulder fits inside 6&quot; tube)</span>
+</pre></div>
+</div>
+<p><strong>Physical Design:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>   ╱╲  ← Nose cone tip
+  ╱  ╲
+ ╱    ╲
+│      │ ← Nose cone body (127 mm diameter)
+│      │
+├──────┤ ← Shoulder (fits inside)
+│██████│ ← Body tube (152 mm OD, ~146 mm ID)
+│██████│
+</pre></div>
+</div>
+<p>The shoulder section (between nose cone and body tube) provides structural connection.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Aerodynamic considerations:</strong></p>
+<ul class="simple">
+<li><p>Discontinuities in diameter create drag</p></li>
+<li><p>For minimum drag, keep <code class="docutils literal notranslate"><span class="pre">base_radius_m</span> <span class="pre">=</span> <span class="pre">null</span></code> (matched diameters)</p></li>
+<li><p>Only use custom radius when structurally necessary</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="bluffness">
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">bluffness</a><a class="headerlink" href="#bluffness" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (sharp tip)</p>
+</dd>
+<dt class="field-even">Range<span class="colon">:</span></dt>
+<dd class="field-even"><p>0.0 to 1.0</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dimensionless</p>
+</dd>
+</dl>
+<p><strong>Nose cone tip bluffness ratio</strong> - ratio between tip radius and base radius.</p>
+<p>Controls how rounded (bluff) vs. sharp (pointed) the nose tip is.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ogive&quot;</span>
+<span class="w">    </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Sharp pointed tip (default)</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-10" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-10">
+null or 0.0 (Sharp Tip)</label><div class="sd-tab-content docutils">
+<p><strong>Perfectly sharp nose cone tip</strong> (theoretical)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span>
+<span class="w">    </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># or 0.0</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>     •  ← Sharp point
+    ╱│╲
+   ╱ │ ╲
+  ╱  │  ╲
+ ╱   │   ╲
+╱────┴────╲
+</pre></div>
+</div>
+<p>✅ <strong>Characteristics:</strong></p>
+<ul class="simple">
+<li><p>Minimum drag (theoretical)</p></li>
+<li><p>Maximum stress concentration at tip</p></li>
+<li><p>Unrealistic for real rockets (tip would be infinitely thin)</p></li>
+</ul>
+<p>✅ <strong>Use for:</strong></p>
+<ul class="simple">
+<li><p>Initial design simulations</p></li>
+<li><p>Maximum performance estimates</p></li>
+<li><p>When exact tip geometry is unknown</p></li>
+</ul>
+</div>
+<input id="sd-tab-item-11" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-11">
+0.1 - 0.3 (Realistic)</label><div class="sd-tab-content docutils">
+<p><strong>Slightly rounded tip</strong> (typical manufactured nose cones)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ogive&quot;</span>
+<span class="w">    </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w">  </span><span class="c1"># 20% bluffness</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>    ╭─╮  ← Rounded tip (radius = 0.2 × base_radius)
+   ╱   ╲
+  ╱     ╲
+ ╱       ╲
+╱─────────╲
+</pre></div>
+</div>
+<p>✅ <strong>Characteristics:</strong></p>
+<ul class="simple">
+<li><p>Minimal drag increase (~1-3%)</p></li>
+<li><p>Reduced stress concentration</p></li>
+<li><p>Manufacturing-friendly</p></li>
+<li><p>Structurally stronger tip</p></li>
+</ul>
+<p>✅ <strong>Use for:</strong></p>
+<ul class="simple">
+<li><p><strong>Realistic flight predictions</strong></p></li>
+<li><p>Fiberglass/composite nose cones</p></li>
+<li><p>Competition rockets (as-manufactured)</p></li>
+<li><p>Structural analysis</p></li>
+</ul>
+<p><strong>Recommended values:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0.15</span></code>: Slight rounding (molded plastic/fiberglass)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0.20</span></code>: Moderate rounding (typical manufactured)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0.25</span></code>: More rounded (wooden turned cones)</p></li>
+</ul>
+</div>
+<input id="sd-tab-item-12" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-12">
+&gt; 0.3 (Highly Bluff)</label><div class="sd-tab-content docutils">
+<p><strong>Significantly rounded tip</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;elliptical&quot;</span>
+<span class="w">    </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">  </span><span class="c1"># Very rounded</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>   ╭───╮  ← Large radius
+  ╱     ╲
+ ╱       ╲
+╱─────────╲
+</pre></div>
+</div>
+<p>⚠️ <strong>Characteristics:</strong></p>
+<ul class="simple">
+<li><p>Notable drag increase (5-15%)</p></li>
+<li><p>Very low stress concentration</p></li>
+<li><p>Uncommon in high-performance rockets</p></li>
+</ul>
+<p>⚠️ <strong>Use when:</strong></p>
+<ul class="simple">
+<li><p>Payload protection is critical</p></li>
+<li><p>Nose cone designed for very high impact loads</p></li>
+<li><p>Unusual nose cone geometries</p></li>
+</ul>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Physical Meaning</p>
+<p><strong>Bluffness ratio definition:</strong></p>
+<div class="math notranslate nohighlight">
+\[\text{bluffness} = \frac{r_{tip}}{r_{base}}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(r_{tip}\)</span> = radius of spherical cap at nose tip</p></li>
+<li><p><span class="math notranslate nohighlight">\(r_{base}\)</span> = base radius of nose cone</p></li>
+</ul>
+<p><strong>Example:</strong> For a nose cone with <code class="docutils literal notranslate"><span class="pre">base_radius_m</span> <span class="pre">=</span> <span class="pre">0.0635</span></code> m and <code class="docutils literal notranslate"><span class="pre">bluffness</span> <span class="pre">=</span> <span class="pre">0.2</span></code>:</p>
+<div class="math notranslate nohighlight">
+\[r_{tip} = 0.2 \times 0.0635 = 0.0127 \text{ m} = 12.7 \text{ mm}\]</div>
+<p>The nose cone tip is rounded with a 12.7 mm radius sphere.</p>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Effect on Nose Cone Length</p>
+<p><strong>Important:</strong> Setting a non-zero bluffness <strong>slightly reduces</strong> the effective nose cone length.</p>
+<p>RocketPy automatically adjusts the nose cone profile to accommodate the rounded tip:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Original sharp cone:        With bluffness:
+
+•                           ╭─╮ ← Spherical cap
+│\                          │  \
+│ \                         │   \
+│  \                        │    \
+│   \                       │     \
+├────                       ├──────
+
+length_m = 0.50            Effective length ≈ 0.495 m
+</pre></div>
+</div>
+<p><strong>What happens:</strong></p>
+<ol class="arabic simple">
+<li><p>You specify <code class="docutils literal notranslate"><span class="pre">length_m</span> <span class="pre">=</span> <span class="pre">0.50</span></code></p></li>
+<li><p>RocketPy adds spherical cap of radius <span class="math notranslate nohighlight">\(r_{tip}\)</span></p></li>
+<li><p>Nose cone profile is adjusted to maintain smooth tangency</p></li>
+<li><p><strong>Actual geometric length may be 1-2% shorter</strong></p></li>
+</ol>
+<p>RocketPy will print a message if length is adjusted:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Due to the chosen bluffness ratio, the nose cone length
+was reduced to 0.495 m.
+</pre></div>
+</div>
+<p>⚠️ <strong>For accurate simulations:</strong></p>
+<ul class="simple">
+<li><p>Use bluffness that matches your actual nose cone</p></li>
+<li><p>Re-measure final length after manufacturing if critical</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Compatibility restriction:</strong></p>
+<p><strong>bluffness is NOT compatible with</strong> <code class="docutils literal notranslate"><span class="pre">kind:</span> <span class="pre">&quot;powerseries&quot;</span></code></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ❌ INVALID - will raise error</span>
+<span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;powerseries&quot;</span>
+<span class="w">  </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span><span class="w">  </span><span class="c1"># Error!</span>
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ✅ VALID</span>
+<span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;powerseries&quot;</span>
+<span class="w">  </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Must be null or 0</span>
+</pre></div>
+</div>
+<p>Power series nose cones have built-in control over tip shape via the <code class="docutils literal notranslate"><span class="pre">power</span></code> parameter (see RocketPy documentation).</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>How to determine bluffness for your nose cone:</strong></p>
+<p><strong>Method 1: Measure tip radius</strong></p>
+<ol class="arabic simple">
+<li><p>Use radius gauge or calipers on manufactured cone</p></li>
+<li><p>Measure radius of curvature at tip: <span class="math notranslate nohighlight">\(r_{tip}\)</span></p></li>
+<li><p>Measure base radius: <span class="math notranslate nohighlight">\(r_{base}\)</span></p></li>
+<li><p>Calculate: <span class="math notranslate nohighlight">\(\text{bluffness} = r_{tip} / r_{base}\)</span></p></li>
+</ol>
+<p><strong>Method 2: CAD/Design drawings</strong></p>
+<p>If nose cone was designed in CAD, check:</p>
+<ul class="simple">
+<li><p>Fillet radius at tip</p></li>
+<li><p>Nose cone base radius</p></li>
+<li><p>Compute ratio</p></li>
+</ul>
+<p><strong>Method 3: Default assumptions</strong></p>
+<ul class="simple">
+<li><p>Molded fiberglass: <code class="docutils literal notranslate"><span class="pre">0.15</span> <span class="pre">-</span> <span class="pre">0.20</span></code></p></li>
+<li><p>Turned wood/plastic: <code class="docutils literal notranslate"><span class="pre">0.20</span> <span class="pre">-</span> <span class="pre">0.30</span></code></p></li>
+<li><p>Sharp theoretical design: <code class="docutils literal notranslate"><span class="pre">null</span></code> or <code class="docutils literal notranslate"><span class="pre">0.0</span></code></p></li>
+<li><p>3D printed: <code class="docutils literal notranslate"><span class="pre">0.10</span> <span class="pre">-</span> <span class="pre">0.20</span></code> (depends on resolution)</p></li>
+</ul>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.rocketpy.org/en/latest/technical/aerodynamics.html">Barrowman Equations (RocketPy Theory)</a></p></li>
+<li><p><a class="reference external" href="https://www.apogeerockets.com/Tech/Rocket_Nose_Cone_Design">Nose Cone Stress Analysis</a></p></li>
+<li><p><span class="xref std std-ref">how-to-measure-nose-cone</span> for measurement techniques</p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="fins">
+<h2><a class="toc-backref" href="#id28" role="doc-backlink">Fins</a><a class="headerlink" href="#fins" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">fins</span></code> subsection defines fin geometry and placement.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">    </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span>
+<span class="w">    </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.040</span>
+<span class="w">    </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.100</span>
+<span class="w">    </span><span class="nt">thickness_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.003</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.373</span>
+<span class="w">    </span><span class="nt">cant_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">    </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+</pre></div>
+</div>
+<p>RocketPy assumes <strong>trapezoidal fins</strong> by default.</p>
+<section id="count">
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">count</a><a class="headerlink" href="#count" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">integer</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+</dl>
+<p><strong>Number of fins</strong> (equally spaced around body).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w">  </span><span class="c1"># 4 fins, 90° apart</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Common configurations:</strong></p>
+<ul class="simple">
+<li><p><strong>3 fins</strong>: Minimum for stability, lighter weight</p></li>
+<li><p><strong>4 fins</strong>: Standard, better roll control</p></li>
+<li><p><strong>6+ fins</strong>: Competition rockets for max stability</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="root-chord-m">
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">root_chord_m</a><a class="headerlink" href="#root-chord-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Length of fin at root</strong> (where fin attaches to body tube).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_static/images/fin_geometry.png"><img alt="Fin geometry definition" class="align-center" src="_static/images/fin_geometry.png" style="width: 400px;" />
+</a>
+</section>
+<hr class="docutils" />
+<section id="tip-chord-m">
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">tip_chord_m</a><a class="headerlink" href="#tip-chord-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Length of fin at tip</strong> (outer edge).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.040</span>
+</pre></div>
+</div>
+<p>For <strong>rectangular fins</strong>, <code class="docutils literal notranslate"><span class="pre">tip_chord_m</span> <span class="pre">=</span> <span class="pre">root_chord_m</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="span-m">
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">span_m</a><a class="headerlink" href="#span-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Height of fin</strong> (perpendicular distance from body to fin tip).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.100</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Ground clearance check:</strong></p>
+<p>Ensure fins don’t hit ground when rocket is on launch pad:</p>
+<div class="math notranslate nohighlight">
+\[\text{span} + \text{caliber}/2 &lt; \text{rail\_height}\]</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="thickness-m">
+<h3><a class="toc-backref" href="#id33" role="doc-backlink">thickness_m</a><a class="headerlink" href="#thickness-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Thickness of fin material</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">thickness_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.003</span><span class="w">  </span><span class="c1"># 3 mm plywood</span>
+</pre></div>
+</div>
+<p>Used for:</p>
+<ul class="simple">
+<li><p>Mass calculation</p></li>
+<li><p>Flutter speed calculation (stiffness)</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">Common Materials</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Material</p></th>
+<th class="head"><p>Typical Thickness</p></th>
+<th class="head"><p>thickness_m</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1/8” plywood</p></td>
+<td><p>3.2 mm</p></td>
+<td><p>0.0032</p></td>
+</tr>
+<tr class="row-odd"><td><p>1/16” plywood</p></td>
+<td><p>1.6 mm</p></td>
+<td><p>0.0016</p></td>
+</tr>
+<tr class="row-even"><td><p>Fiberglass (2 layers)</p></td>
+<td><p>1.0 mm</p></td>
+<td><p>0.0010</p></td>
+</tr>
+<tr class="row-odd"><td><p>Carbon fiber (2 layers)</p></td>
+<td><p>0.5 mm</p></td>
+<td><p>0.0005</p></td>
+</tr>
+<tr class="row-even"><td><p>G10 FR4 (3 mm)</p></td>
+<td><p>3.0 mm</p></td>
+<td><p>0.0030</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="id2">
+<h3><a class="toc-backref" href="#id34" role="doc-backlink">position_m</a><a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Position of fin root leading edge</strong> in rocket coordinate system.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.373</span><span class="w">  </span><span class="c1"># 0.373 m from tail</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Fin placement for stability:</strong></p>
+<ul class="simple">
+<li><p>Fins should be near tail (increases CP separation from CG)</p></li>
+<li><p>Leave ~1-2 calibers from nozzle for exhaust flow</p></li>
+</ul>
+<p>Example: For 0.127 m caliber rocket, place fins at ≥ 0.2 m from tail</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="cant-angle-deg">
+<h3><a class="toc-backref" href="#id35" role="doc-backlink">cant_angle_deg</a><a class="headerlink" href="#cant-angle-deg" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>degrees (°)</p>
+</dd>
+</dl>
+<p><strong>Cant angle</strong> for inducing spin stabilization.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cant_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">  </span><span class="c1"># 2° cant for slow spin</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-13" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-13">
+No cant (0°)</label><div class="sd-tab-content docutils">
+<p><strong>Fins aligned with airflow</strong> (default)</p>
+<ul class="simple">
+<li><p>No induced spin</p></li>
+<li><p>Minimum drag</p></li>
+<li><p>Standard for non-spinning rockets</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cant_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-14" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-14">
+Canted fins</label><div class="sd-tab-content docutils">
+<p><strong>Fins angled to induce spin</strong></p>
+<ul class="simple">
+<li><p>Improves gyroscopic stability</p></li>
+<li><p>Reduces weathercocking</p></li>
+<li><p>Increases drag</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cant_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span><span class="w">  </span><span class="c1"># Moderate spin</span>
+</pre></div>
+</div>
+<p><strong>Typical values:</strong></p>
+<ul class="simple">
+<li><p>1-2°: Slow spin, minimal drag</p></li>
+<li><p>3-5°: Moderate spin</p></li>
+<li><p>5-10°: Fast spin, high drag penalty</p></li>
+</ul>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Excessive cant angle:</strong></p>
+<ul class="simple">
+<li><p>Causes significant drag increase</p></li>
+<li><p>May cause excessive spin rate (instability, recovery issues)</p></li>
+<li><p>Generally avoid cant_angle &gt; 5° unless specifically needed</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="airfoil">
+<h3><a class="toc-backref" href="#id36" role="doc-backlink">airfoil</a><a class="headerlink" href="#airfoil" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (flat plate)</p>
+</dd>
+</dl>
+<p><strong>Airfoil cross-section</strong> for lift/drag calculations.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Flat plate (default)</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-15" name="sd-tab-set-6" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-15">
+null (Flat Plate)</label><div class="sd-tab-content docutils">
+<p><strong>Simplest model</strong> (default)</p>
+<ul class="simple">
+<li><p>Assumes fins are flat plates</p></li>
+<li><p>Reasonable accuracy for thin fins</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-16" name="sd-tab-set-6" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-16">
+Custom Airfoil</label><div class="sd-tab-content docutils">
+<p><strong>Specify airfoil profile</strong> for higher accuracy</p>
+<p>Provide path to airfoil data file (RocketPy format):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/airfoils/NACA0012.txt&quot;</span>
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">data/airfoils/NACA0012.txt</span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> # NACA 0012 airfoil coordinates
+ # x/c    y/c
+ 1.0000  0.0000
+ 0.9500  0.0157
+ 0.9000  0.0222
+ # ... more coordinates
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">how-to-create-airfoil-file</span> for custom profiles</p></li>
+<li><p><a class="reference external" href="https://m-selig.ae.illinois.edu/ads/coord_database.html">UIUC Airfoil Database</a></p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="parachute">
+<h2><a class="toc-backref" href="#id37" role="doc-backlink">Parachute</a><a class="headerlink" href="#parachute" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">parachute</span></code> subsection defines recovery system parameters.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Main&quot;</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span>
+<span class="w">    </span><span class="nt">sampling_rate_hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">105.0</span>
+<span class="w">    </span><span class="nt">lag_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+<span class="w">    </span><span class="nt">noise_std</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<section id="enabled">
+<h3><a class="toc-backref" href="#id38" role="doc-backlink">enabled</a><a class="headerlink" href="#enabled" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p>
+</dd>
+</dl>
+<p>Enable or disable parachute deployment.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<p>Set to <code class="docutils literal notranslate"><span class="pre">false</span></code> for ballistic flights or testing without recovery.</p>
+</section>
+<hr class="docutils" />
+<section id="id3">
+<h3><a class="toc-backref" href="#id39" role="doc-backlink">name</a><a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;Main&quot;</span></code></p>
+</dd>
+</dl>
+<p>Identifier for parachute (useful for dual-deployment systems).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Main</span><span class="nv"> </span><span class="s">Chute&quot;</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="cd-s">
+<h3><a class="toc-backref" href="#id40" role="doc-backlink">cd_s</a><a class="headerlink" href="#cd-s" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>m²</p>
+</dd>
+</dl>
+<p><strong>Drag coefficient × reference area</strong> for parachute.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Calculate</p>
+<p><strong>Formula:</strong></p>
+<div class="math notranslate nohighlight">
+\[C_D S = C_D \times \frac{\pi D^2}{4}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(C_D\)</span> = drag coefficient (typically 0.75-2.2 for parachutes)</p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span> = parachute diameter (m)</p></li>
+</ul>
+<p><strong>Example:</strong> 1.5 m diameter parachute, <span class="math notranslate nohighlight">\(C_D = 1.5\)</span></p>
+<div class="math notranslate nohighlight">
+\[C_D S = 1.5 \times \frac{\pi \times 1.5^2}{4} = 2.65 \text{ m}^2\]</div>
+<p><strong>Typical values:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parachute Type</p></th>
+<th class="head"><p>Cd (typical)</p></th>
+<th class="head"><p>Example cd_s</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Hemispherical</p></td>
+<td><p>2.2</p></td>
+<td><p>15.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Conical</p></td>
+<td><p>0.75</p></td>
+<td><p>6.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Annular (Top Flight)</p></td>
+<td><p>1.5</p></td>
+<td><p>10.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cruciform</p></td>
+<td><p>1.0</p></td>
+<td><p>8.0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Choosing cd_s for target descent rate:</strong></p>
+<div class="math notranslate nohighlight">
+\[v_{descent} = \sqrt{\frac{2mg}{\rho \cdot C_D S}}\]</div>
+<p>Solve for <span class="math notranslate nohighlight">\(C_D S\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[C_D S = \frac{2mg}{\rho \cdot v_{descent}^2}\]</div>
+<p>Example: 20 kg rocket, target 5 m/s descent, ρ=1.225 kg/m³</p>
+<div class="math notranslate nohighlight">
+\[C_D S = \frac{2 \times 20 \times 9.81}{1.225 \times 5^2} = 12.8 \text{ m}^2\]</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="trigger">
+<h3><a class="toc-backref" href="#id41" role="doc-backlink">trigger</a><a class="headerlink" href="#trigger" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;apogee&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Deployment trigger condition</strong>.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-17" name="sd-tab-set-7" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-17">
+“apogee”</label><div class="sd-tab-content docutils">
+<p><strong>Deploy at apogee</strong> (highest altitude)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span>
+</pre></div>
+</div>
+<p>RocketPy detects apogee when vertical velocity changes sign.</p>
+</div>
+<input id="sd-tab-item-18" name="sd-tab-set-7" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-18">
+Altitude (m)</label><div class="sd-tab-content docutils">
+<p><strong>Deploy at specific altitude above ground</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">800.0</span><span class="w">  </span><span class="c1"># Deploy at 800 m AGL</span>
+</pre></div>
+</div>
+<p>Used for dual-deployment (drogue at apogee, main at low altitude):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Drogue&quot;</span>
+<span class="w">      </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+<span class="w">      </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Main&quot;</span>
+<span class="w">      </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15.0</span>
+<span class="w">      </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300.0</span><span class="w">  </span><span class="c1"># Main at 300 m</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Current limitation:</strong> rocket-sim supports <strong>single parachute</strong> only.</p>
+<p>For dual-deployment, use RocketPy API directly.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="sampling-rate-hz">
+<h3><a class="toc-backref" href="#id42" role="doc-backlink">sampling_rate_hz</a><a class="headerlink" href="#sampling-rate-hz" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">105.0</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>hertz (Hz)</p>
+</dd>
+</dl>
+<p><strong>Sampling rate</strong> of altimeter for trigger detection.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">sampling_rate_hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">105.0</span>
+</pre></div>
+</div>
+<p>Affects simulation of realistic deployment timing (accounts for sensor update rate).</p>
+</section>
+<hr class="docutils" />
+<section id="lag-s">
+<h3><a class="toc-backref" href="#id43" role="doc-backlink">lag_s</a><a class="headerlink" href="#lag-s" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">1.5</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>seconds (s)</p>
+</dd>
+</dl>
+<p><strong>Deployment lag time</strong> from trigger to full parachute inflation.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">lag_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+</pre></div>
+</div>
+<p>Accounts for:</p>
+<ul class="simple">
+<li><p>Ejection charge firing delay</p></li>
+<li><p>Parachute leaving deployment bag</p></li>
+<li><p>Line stretch</p></li>
+<li><p>Canopy inflation time</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">Typical Values</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>System</p></th>
+<th class="head"><p>lag_s</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Small drogue (0.3 m)</p></td>
+<td><p>0.5 - 1.0 s</p></td>
+</tr>
+<tr class="row-odd"><td><p>Main chute (1.5 m)</p></td>
+<td><p>1.0 - 2.0 s</p></td>
+</tr>
+<tr class="row-even"><td><p>Large main (3.0 m)</p></td>
+<td><p>2.0 - 3.0 s</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tender Descender / reefed chute</p></td>
+<td><p>0.5 - 1.0 s</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="noise-std">
+<h3><a class="toc-backref" href="#id44" role="doc-backlink">noise_std</a><a class="headerlink" href="#noise-std" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">of</span> <span class="pre">float</span></code> (3 elements)</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0]</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>various (pressure, x, y position)</p>
+</dd>
+</dl>
+<p><strong>Standard deviation of sensor noise</strong> for Monte Carlo simulations.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">noise_std</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">5.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># ±5 Pa pressure noise</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Advanced parameter</strong> - usually leave at default <code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0]</span></code> unless:</p>
+<ul class="simple">
+<li><p>Running Monte Carlo with sensor uncertainties</p></li>
+<li><p>Modeling specific altimeter characteristics</p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="air-brakes">
+<h2><a class="toc-backref" href="#id45" role="doc-backlink">Air Brakes</a><a class="headerlink" href="#air-brakes" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">air_brakes</span></code> subsection defines active drag control for apogee targeting.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">air_brakes</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+<span class="w">    </span><span class="nt">reference_area_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-0.5</span>
+<span class="w">    </span><span class="nt">deployment_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">    </span><span class="nt">controller</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pid&quot;</span>
+<span class="w">      </span><span class="nt">target_apogee_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000.0</span>
+<span class="w">      </span><span class="nt">kp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.001</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Advanced feature</strong> - requires custom motor controller hardware</p>
+<p>See <span class="xref std std-ref">how-to-implement-air-brakes</span> for complete setup guide.</p>
+</div>
+<section id="id4">
+<h3><a class="toc-backref" href="#id46" role="doc-backlink">enabled</a><a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+</dd>
+</dl>
+<p>Enable or disable air brakes system.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">air_brakes</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="drag-coefficient">
+<h3><a class="toc-backref" href="#id47" role="doc-backlink">drag_coefficient</a><a class="headerlink" href="#drag-coefficient" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No (required if <code class="docutils literal notranslate"><span class="pre">drag_coefficient_curve</span></code> not provided)</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">1.5</span></code></p>
+</dd>
+</dl>
+<p><strong>Drag coefficient</strong> of fully deployed air brakes.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">air_brakes</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Typical values:</strong></p>
+<ul class="simple">
+<li><p>Flat plate perpendicular to flow: 1.28</p></li>
+<li><p>Air brake flaps (30-45° deployment): 1.0 - 2.0</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="reference-area-m2">
+<h3><a class="toc-backref" href="#id48" role="doc-backlink">reference_area_m2</a><a class="headerlink" href="#reference-area-m2" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>m²</p>
+</dd>
+</dl>
+<p><strong>Reference area</strong> of deployed air brake surface.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">air_brakes</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">reference_area_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">  </span><span class="c1"># 100 cm²</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="id5">
+<h3><a class="toc-backref" href="#id49" role="doc-backlink">position_m</a><a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Position of air brake</strong> in rocket coordinate system.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span><span class="nt">air_brakes</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">  </span><span class="c1"># 1.5 m from tail</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="controller">
+<h3><a class="toc-backref" href="#id50" role="doc-backlink">controller</a><a class="headerlink" href="#controller" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+</dl>
+<p><strong>Control algorithm parameters</strong> for air brake deployment.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">air_brakes</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">controller</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pid&quot;</span>
+<span class="w">      </span><span class="nt">target_apogee_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000.0</span>
+<span class="w">      </span><span class="nt">kp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.001</span>
+<span class="w">      </span><span class="nt">ki</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0001</span>
+<span class="w">      </span><span class="nt">kd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span>
+<span class="w">      </span><span class="nt">sampling_rate_hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.0</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-ref">config-airbrakes-controller</span> for detailed parameter reference.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="drag-curves">
+<h2><a class="toc-backref" href="#id51" role="doc-backlink">Drag Curves</a><a class="headerlink" href="#drag-curves" title="Link to this heading">#</a></h2>
+<p>Custom drag curves can be specified for power-off and power-on flight phases.</p>
+<section id="power-off-drag">
+<h3><a class="toc-backref" href="#id52" role="doc-backlink">power_off_drag</a><a class="headerlink" href="#power-off-drag" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (RocketPy computes from geometry)</p>
+</dd>
+</dl>
+<p><strong>Path to power-off drag curve</strong> CSV file.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">power_off_drag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/drag_curves/calisto_power_off.csv&quot;</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Drag Curve File Format</p>
+<p>CSV file with Mach number and drag coefficient:</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">data/drag_curves/calisto_power_off.csv</span><a class="headerlink" href="#id7" title="Link to this code">#</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> # Mach, Cd
+ 0.0, 0.45
+ 0.3, 0.46
+ 0.6, 0.48
+ 0.9, 0.52
+ 1.0, 0.65
+ 1.2, 0.58
+ 1.5, 0.52
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li><p>First column: Mach number</p></li>
+<li><p>Second column: Drag coefficient (dimensionless)</p></li>
+<li><p>Lines starting with <code class="docutils literal notranslate"><span class="pre">#</span></code> are comments</p></li>
+</ul>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">how-to-generate-drag-curve</span> from CFD or wind tunnel</p></li>
+<li><p><span class="xref std std-ref">example-rasaero-to-rocketpy</span> for importing RASAero data</p></li>
+</ul>
+</div>
+</section>
+<section id="power-on-drag">
+<h3><a class="toc-backref" href="#id53" role="doc-backlink">power_on_drag</a><a class="headerlink" href="#power-on-drag" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (same as power_off_drag)</p>
+</dd>
+</dl>
+<p><strong>Path to power-on drag curve</strong> CSV file (during motor burn).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">power_on_drag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/drag_curves/calisto_power_on.csv&quot;</span>
+</pre></div>
+</div>
+<p>Usually slightly different from power-off due to exhaust plume effects.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="complete-example">
+<h2><a class="toc-backref" href="#id54" role="doc-backlink">Complete Example</a><a class="headerlink" href="#complete-example" title="Link to this heading">#</a></h2>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Complete rocket configuration example</span><a class="headerlink" href="#id8" title="Link to this code">#</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ============================================================================</span>
+<span class="hll"><span class="c1"># ROCKET SIMULATION CONFIGURATION FILE</span>
+</span><span class="hll"><span class="c1"># ============================================================================</span>
+</span>
+<span class="c1"># ----------------------------------------------------------------------------</span>
+<span class="c1"># ROCKET CONFIGURATION</span>
+<span class="c1"># ----------------------------------------------------------------------------</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="hll"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Lumière&quot;</span><span class="w">                        </span><span class="c1"># Rocket name</span>
+</span><span class="hll"><span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16.426</span><span class="w">                    </span><span class="c1"># Rocket mass without motor</span>
+</span><span class="hll"><span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nose_to_tail&quot;</span><span class="w">      </span><span class="c1"># Origin at nose, positive toward tail</span>
+</span>
+<span class="w">  </span><span class="c1"># Geometry</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.127</span><span class="w">                     </span><span class="c1"># Rocket diameter (reference for stability)</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">                        </span><span class="c1"># Total rocket length</span>
+
+<span class="w">  </span><span class="c1"># Mass properties</span>
+<span class="w">  </span><span class="nt">cg_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.255</span><span class="w">                   </span><span class="c1"># Center of gravity position (without motor)</span>
+
+<span class="w">  </span><span class="c1"># Inertia tensor (kg·m²)</span>
+<span class="w">  </span><span class="nt">inertia</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ixx_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.321</span><span class="w">                     </span><span class="c1"># Lateral inertia around x-axis (pitch/yaw)</span>
+<span class="w">    </span><span class="nt">iyy_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.321</span><span class="w">                     </span><span class="c1"># Lateral inertia around y-axis (pitch/yaw)</span>
+<span class="w">    </span><span class="nt">izz_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.034</span><span class="w">                     </span><span class="c1"># Axial inertia around z-axis (roll)</span>
+<span class="w">    </span><span class="nt">ixy_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                       </span><span class="c1"># Product of inertia (0 for symmetric rockets)</span>
+<span class="w">    </span><span class="nt">ixz_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                       </span><span class="c1"># Product of inertia (0 for symmetric rockets)</span>
+<span class="hll"><span class="w">    </span><span class="nt">iyz_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                       </span><span class="c1"># Product of inertia (0 for symmetric rockets)</span>
+</span><span class="hll">
+</span><span class="hll"><span class="w">  </span><span class="c1"># Eccentricities (offsets from centerline)</span>
+</span><span class="hll"><span class="w">  </span><span class="nt">eccentricities</span><span class="p">:</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">cm_x_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                          </span><span class="c1"># Center of mass offset in x (lateral)</span>
+</span><span class="w">    </span><span class="nt">cm_y_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                          </span><span class="c1"># Center of mass offset in y (lateral)</span>
+<span class="w">    </span><span class="nt">cp_x_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                          </span><span class="c1"># Center of pressure offset in x (aerodynamic)</span>
+<span class="w">    </span><span class="nt">cp_y_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                          </span><span class="c1"># Center of pressure offset in y (aerodynamic)</span>
+<span class="w">    </span><span class="nt">thrust_x_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                      </span><span class="c1"># Thrust vector offset in x (nozzle misalignment)</span>
+<span class="w">    </span><span class="nt">thrust_y_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                      </span><span class="c1"># Thrust vector offset in y (nozzle misalignment)</span>
+
+<span class="w">  </span><span class="c1"># Aerodynamics</span>
+<span class="w">  </span><span class="nt">power_off_drag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/drag_curves/polito_drag_coefficient_power_off.csv&quot;</span><span class="w">  </span><span class="c1"># Cd vs Mach (motor off)</span>
+<span class="w">  </span><span class="nt">power_on_drag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/drag_curves/polito_drag_coefficient_power_on.csv&quot;</span><span class="w">    </span><span class="c1"># Cd vs Mach (motor on)</span>
+
+<span class="w">  </span><span class="c1"># --- Structural Components ---</span>
+
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span><span class="w">                    </span><span class="c1"># Shape optimized for minimum drag</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">                        </span><span class="c1"># Nose cone length</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                      </span><span class="c1"># Position along rocket axis (0 = nose in nose_to_tail)</span>
+<span class="w">    </span><span class="nt">base_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">                  </span><span class="c1"># Base radius (uses rocket radius if null)</span>
+<span class="w">    </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">                      </span><span class="c1"># Tip bluntness ratio 0-1 (null = sharp)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="see-also">
+<h2><a class="toc-backref" href="#id55" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><strong>Configuration References:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="motor_params.html#config-motor-params"><span class="std std-ref">Motor Parameters Reference</span></a> - Motor parameters and thrust curves</p></li>
+<li><p><a class="reference internal" href="environment_params.html#config-environment-params"><span class="std std-ref">Environment Parameters Reference</span></a> - Launch site and atmospheric conditions</p></li>
+<li><p><a class="reference internal" href="simulation_params.html#config-simulation-params"><span class="std std-ref">Simulation Parameters Reference</span></a> - Simulation settings</p></li>
+</ul>
+<p><strong>Tutorials:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">tutorial-basic-flight</span> - Step-by-step first simulation</p></li>
+<li><p><span class="xref std std-ref">tutorial-stability-analysis</span> - Static margin calculation</p></li>
+</ul>
+<p><strong>How-To Guides:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">how-to-measure-rocket</span> - Physical parameter measurement techniques</p></li>
+<li><p><span class="xref std std-ref">how-to-optimize-static-margin</span> - Iterative design for stability</p></li>
+</ul>
+<p><strong>Technical Deep Dives:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../technical/stability_analysis.html#technical-stability-analysis"><span class="std std-ref">Rocket Stability: Theory and Best Practices</span></a> - Comprehensive stability theory and metrics</p></li>
+<li><p><span class="xref std std-ref">how-to-dual-deployment</span> - Setting up drogue + main parachute</p></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">example-competition-rocket</span> - Full competition rocket config</p></li>
+<li><p><span class="xref std std-ref">example-high-power-rocket</span> - Level 2/3 certification rocket</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Configuration Reference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="motor_params.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Motor Parameters Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-properties">Basic Properties</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#name">name</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dry-mass-kg">dry_mass_kg</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-system">coordinate_system</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cg-location-m">cg_location_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cp-location-m">cp_location_m</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry">Geometry</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#caliber-m">caliber_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#length-m">length_m</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inertia">Inertia</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ixx-kg-m2-iyy-kg-m2">ixx_kg_m2, iyy_kg_m2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#izz-kg-m2">izz_kg_m2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nose-cone">Nose Cone</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">length_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kind">kind</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#position-m">position_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base-radius-m">base_radius_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bluffness">bluffness</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fins">Fins</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#count">count</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#root-chord-m">root_chord_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tip-chord-m">tip_chord_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#span-m">span_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thickness-m">thickness_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">position_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cant-angle-deg">cant_angle_deg</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#airfoil">airfoil</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parachute">Parachute</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enabled">enabled</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">name</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cd-s">cd_s</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trigger">trigger</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-rate-hz">sampling_rate_hz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lag-s">lag_s</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noise-std">noise_std</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#air-brakes">Air Brakes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">enabled</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drag-coefficient">drag_coefficient</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-area-m2">reference_area_m2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">position_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#controller">controller</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#drag-curves">Drag Curves</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#power-off-drag">power_off_drag</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#power-on-drag">power_on_drag</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-example">Complete Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See Also</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/configuration/rocket_params.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1244 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial 1: Basic Flight Simulation &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/tutorials/01_basic_flight';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Understanding Simulation Outputs" href="02_understanding_outputs.html" />
+    <link rel="prev" title="Tutorials" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial 1: Basic Flight Simulation</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tutorial-1-basic-flight-simulation">
+<h1>Tutorial 1: Basic Flight Simulation<a class="headerlink" href="#tutorial-1-basic-flight-simulation" title="Link to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">What You’ll Learn</p>
+<p>In this tutorial, you will:</p>
+<ul class="simple">
+<li><p>Create a complete rocket configuration from scratch</p></li>
+<li><p>Understand each configuration parameter</p></li>
+<li><p>Run a simulation and interpret results</p></li>
+<li><p>Modify parameters to see their effects</p></li>
+</ul>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Prerequisites</p>
+<ul class="simple">
+<li><p>Completed <a class="reference internal" href="../../getting_started/installation.html"><span class="doc">Installation</span></a></p></li>
+<li><p>Completed <a class="reference internal" href="../../getting_started/quickstart.html"><span class="doc">Quickstart: Your First Simulation</span></a></p></li>
+<li><p>Basic understanding of <a class="reference internal" href="../../getting_started/key_concepts.html"><span class="doc">Key Concepts</span></a></p></li>
+</ul>
+<p><strong>Time required</strong>: ~15 minutes</p>
+</div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>In the quickstart, you ran a pre-made configuration. Now you’ll build one from scratch
+to understand exactly what each parameter does and why it matters.</p>
+<p>We’ll simulate a simple high-power rocket:</p>
+<ul class="simple">
+<li><p><strong>Name</strong>: “Tutorial Rocket”</p></li>
+<li><p><strong>Motor</strong>: AeroTech J450DM (readily available commercial motor)</p></li>
+<li><p><strong>Target altitude</strong>: ~500 meters</p></li>
+<li><p><strong>Recovery</strong>: Single parachute</p></li>
+</ul>
+</section>
+<section id="step-1-create-configuration-file">
+<h2>Step 1: Create Configuration File<a class="headerlink" href="#step-1-create-configuration-file" title="Link to this heading">#</a></h2>
+<p>Create a new file <code class="docutils literal notranslate"><span class="pre">configs/tutorial_rocket.yaml</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/path/to/rocket-sim
+touch<span class="w"> </span>configs/tutorial_rocket.yaml
+</pre></div>
+</div>
+<p>Open it in your preferred editor and start with the basic structure:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tutorial Rocket Configuration</span>
+<span class="c1"># A simple high-power rocket for learning</span>
+
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Rocket parameters go here</span>
+
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Motor parameters go here</span>
+
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Environment parameters go here</span>
+
+<span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Simulation parameters go here</span>
+</pre></div>
+</div>
+<p>This four-section structure is mandatory. Let’s fill each section.</p>
+</section>
+<section id="step-2-configure-the-rocket">
+<h2>Step 2: Configure the Rocket<a class="headerlink" href="#step-2-configure-the-rocket" title="Link to this heading">#</a></h2>
+<p>The rocket section defines physical properties. Add these parameters:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Tutorial</span><span class="nv"> </span><span class="s">Rocket&quot;</span>
+
+<span class="w">  </span><span class="c1"># Mass and inertia</span>
+<span class="w">  </span><span class="nt">mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span><span class="w">                    </span><span class="c1"># kg (dry mass, without motor)</span>
+<span class="w">  </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.052</span><span class="w">                </span><span class="c1"># m (outer radius, ~4 inch diameter)</span>
+<span class="w">  </span><span class="nt">inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.003</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># kg⋅m² [I_longitudinal, I_longitudinal, I_spin]</span>
+<span class="w">  </span><span class="nt">center_of_mass_without_motor</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span><span class="w">  </span><span class="c1"># m from nose tip</span>
+
+<span class="w">  </span><span class="c1"># Coordinate system convention: nose tip is 0.0, tail is negative</span>
+
+<span class="w">  </span><span class="c1"># Nose cone</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">                </span><span class="c1"># m</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span><span class="w">          </span><span class="c1"># Aerodynamic shape (low drag)</span>
+<span class="w">    </span><span class="nt">position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.2</span><span class="w">              </span><span class="c1"># m from tail (rocket is 1.2m long)</span>
+
+<span class="w">  </span><span class="c1"># Body tube (implicitly defined by radius and rocket length)</span>
+
+<span class="w">  </span><span class="c1"># Fins (trapezoidal)</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">                  </span><span class="c1"># 3-fin configuration</span>
+<span class="w">    </span><span class="nt">root_chord</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span><span class="w">           </span><span class="c1"># m (fin length at body tube)</span>
+<span class="w">    </span><span class="nt">tip_chord</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.08</span><span class="w">            </span><span class="c1"># m (fin length at tip)</span>
+<span class="w">    </span><span class="nt">span</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span><span class="w">                 </span><span class="c1"># m (fin height from body to tip)</span>
+<span class="w">    </span><span class="nt">position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">              </span><span class="c1"># m from tail (aft of rocket)</span>
+<span class="w">    </span><span class="nt">cant_angle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">              </span><span class="c1"># degrees (0 = no spin)</span>
+<span class="w">    </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">              </span><span class="c1"># Use flat plate (simple)</span>
+
+<span class="w">  </span><span class="c1"># Motor position</span>
+<span class="w">  </span><span class="nt">motor_position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-0.5</span><span class="w">         </span><span class="c1"># m from nose tip (negative = toward tail)</span>
+
+<span class="w">  </span><span class="c1"># Recovery system</span>
+<span class="w">  </span><span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Main&quot;</span>
+<span class="w">      </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">                </span><span class="c1"># Drag coefficient × area (m²)</span>
+<span class="w">      </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span><span class="w">        </span><span class="c1"># Deploy at highest point</span>
+<span class="w">      </span><span class="nt">sampling_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">105</span><span class="w">       </span><span class="c1"># Hz</span>
+<span class="w">      </span><span class="nt">lag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">                 </span><span class="c1"># seconds (delay after trigger)</span>
+<span class="w">      </span><span class="nt">noise</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8.3</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.5</span><span class="p p-Indicator">]</span><span class="w">     </span><span class="c1"># [mean, std_dev, time_correlation]</span>
+
+<span class="w">  </span><span class="c1"># Aerodynamics (let RocketPy calculate)</span>
+<span class="w">  </span><span class="nt">power_off_drag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">         </span><span class="c1"># Auto-calculate from geometry</span>
+<span class="w">  </span><span class="nt">power_on_drag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">          </span><span class="c1"># Auto-calculate from geometry</span>
+</pre></div>
+</div>
+<p><strong>Understanding the Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mass</span></code>: Rocket without motor (weigh all components except motor)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">radius</span></code>: Outer radius of body tube (diameter / 2)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inertia</span></code>: Moment of inertia (can estimate or calculate)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">center_of_mass_without_motor</span></code>: Balance point without motor</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">motor_position</span></code>: Where motor is mounted (negative = toward tail from nose)</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>For detailed parameter explanations, see <a class="reference internal" href="../configuration/rocket_params.html"><span class="doc">Rocket Parameters Reference</span></a>.</p>
+</div>
+</section>
+<section id="step-3-configure-the-motor">
+<h2>Step 3: Configure the Motor<a class="headerlink" href="#step-3-configure-the-motor" title="Link to this heading">#</a></h2>
+<p>We’ll use an AeroTech J450DM motor. Add this to the <code class="docutils literal notranslate"><span class="pre">motor</span></code> section:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Thrust curve source</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/aerotech/AeroTech_J450DM.eng&quot;</span>
+
+<span class="w">  </span><span class="c1"># Motor properties</span>
+<span class="w">  </span><span class="nt">dry_mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.457</span><span class="w">              </span><span class="c1"># kg (empty motor casing)</span>
+<span class="w">  </span><span class="nt">dry_inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.015</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.015</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0001</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># kg⋅m² (motor tube inertia)</span>
+
+<span class="w">  </span><span class="c1"># Nozzle</span>
+<span class="w">  </span><span class="nt">nozzle_radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.025</span><span class="w">         </span><span class="c1"># m</span>
+
+<span class="w">  </span><span class="c1"># Grain geometry (BATES grain configuration)</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w">              </span><span class="c1"># Number of propellant grains</span>
+<span class="w">  </span><span class="nt">grain_density</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1750</span><span class="w">          </span><span class="c1"># kg/m³ (APCP propellant)</span>
+<span class="w">  </span><span class="nt">grain_outer_radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0335</span><span class="w">   </span><span class="c1"># m</span>
+<span class="w">  </span><span class="nt">grain_initial_inner_radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.015</span><span class="w">  </span><span class="c1"># m (core diameter)</span>
+<span class="w">  </span><span class="nt">grain_initial_height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.070</span><span class="w">  </span><span class="c1"># m (grain length)</span>
+<span class="w">  </span><span class="nt">grain_separation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.003</span><span class="w">      </span><span class="c1"># m (gap between grains)</span>
+
+<span class="w">  </span><span class="c1"># Positions (in motor coordinate system: nozzle is 0.0)</span>
+<span class="w">  </span><span class="nt">nozzle_position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">         </span><span class="c1"># m</span>
+<span class="w">  </span><span class="nt">grains_center_of_mass_position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span><span class="w">  </span><span class="c1"># m</span>
+<span class="w">  </span><span class="nt">center_of_dry_mass_position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.14</span><span class="w">     </span><span class="c1"># m</span>
+
+<span class="w">  </span><span class="c1"># Burn characteristics</span>
+<span class="w">  </span><span class="nt">throat_radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.012</span><span class="w">         </span><span class="c1"># m</span>
+<span class="w">  </span><span class="nt">interpolation_method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;linear&quot;</span>
+</pre></div>
+</div>
+<p><strong>Key Points:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">thrust_source</span></code>: Path to <cite>.eng</cite> file (RASP format)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dry_mass</span></code>: Empty motor casing (not including propellant)</p></li>
+<li><p>Grain parameters define propellant geometry (affects burn profile)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Motor <cite>.eng</cite> files can be downloaded from <a class="reference external" href="http://www.thrustcurve.org/">ThrustCurve.org</a>.
+The file includes thrust curve data that RocketPy will read automatically.</p>
+</div>
+<p><strong>Where to get the .eng file:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download from ThrustCurve.org or use included example</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>data/motors/aerotech
+<span class="c1"># Copy AeroTech_J450DM.eng to that directory</span>
+</pre></div>
+</div>
+</section>
+<section id="step-4-configure-the-environment">
+<h2>Step 4: Configure the Environment<a class="headerlink" href="#step-4-configure-the-environment" title="Link to this heading">#</a></h2>
+<p>Define launch site atmospheric conditions:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Launch location</span>
+<span class="w">  </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">35.5495</span><span class="w">            </span><span class="c1"># degrees North (example: Oklahoma)</span>
+<span class="w">  </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-105.0000</span><span class="w">         </span><span class="c1"># degrees West</span>
+<span class="w">  </span><span class="nt">elevation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1500</span><span class="w">              </span><span class="c1"># m above sea level</span>
+
+<span class="w">  </span><span class="c1"># Date (optional, for solar activity)</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2025</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span><span class="w">      </span><span class="c1"># [year, month, day, hour(UTC)]</span>
+
+<span class="w">  </span><span class="c1"># Atmospheric model</span>
+<span class="w">  </span><span class="nt">atmospheric_model_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;StandardAtmosphere&quot;</span><span class="w">  </span><span class="c1"># ISA model</span>
+
+<span class="w">  </span><span class="c1"># Wind (optional)</span>
+<span class="w">  </span><span class="c1"># For now, use no wind (calm day)</span>
+</pre></div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">latitude/longitude</span></code>: Launch site coordinates</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">elevation</span></code>: Altitude of launch site</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">atmospheric_model_type</span></code>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;StandardAtmosphere&quot;</span></code>: ISA 1976 model (simple, repeatable)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Forecast&quot;</span></code>: Real weather data (advanced)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Reanalysis&quot;</span></code>: Historical weather (advanced)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="step-5-configure-the-simulation">
+<h2>Step 5: Configure the Simulation<a class="headerlink" href="#step-5-configure-the-simulation" title="Link to this heading">#</a></h2>
+<p>Set launch parameters:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Launch angle</span>
+<span class="w">  </span><span class="nt">inclination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85</span><span class="w">              </span><span class="c1"># degrees from horizontal (85° ≈ vertical)</span>
+<span class="w">  </span><span class="nt">heading</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90</span><span class="w">                  </span><span class="c1"># degrees (0=N, 90=E, 180=S, 270=W)</span>
+
+<span class="w">  </span><span class="c1"># Launch rail</span>
+<span class="w">  </span><span class="nt">rail_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span><span class="w">             </span><span class="c1"># m (guides rocket until stable)</span>
+
+<span class="w">  </span><span class="c1"># Simulation limits (optional)</span>
+<span class="w">  </span><span class="nt">max_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span><span class="w">                </span><span class="c1"># seconds (stop simulation after 5 min)</span>
+<span class="w">  </span><span class="nt">time_step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">              </span><span class="c1"># Use adaptive step (recommended)</span>
+</pre></div>
+</div>
+<p><strong>Understanding Launch Angles:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>inclination = 85°:  Nearly vertical (5° from vertical)
+heading = 90°:      Launches toward East
+
+Typical range: 80-90° for high-power rockets
+</pre></div>
+</div>
+</section>
+<section id="step-6-validate-configuration">
+<h2>Step 6: Validate Configuration<a class="headerlink" href="#step-6-validate-configuration" title="Link to this heading">#</a></h2>
+<p>Save your <code class="docutils literal notranslate"><span class="pre">configs/tutorial_rocket.yaml</span></code> file. Now validate it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>configs/tutorial_rocket.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>tutorial_test<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--validate-only
+</pre></div>
+</div>
+<p>This checks:</p>
+<ul class="simple">
+<li><p>✅ YAML syntax is correct</p></li>
+<li><p>✅ All required parameters present</p></li>
+<li><p>✅ Parameters physically plausible</p></li>
+<li><p>✅ Rocket is statically stable (static margin ≥ 2)</p></li>
+</ul>
+<p><strong>If validation fails:</strong></p>
+<p>Read the error message carefully - it will tell you exactly what’s wrong and suggest fixes.</p>
+<p>Common issues:</p>
+<ul class="simple">
+<li><p>Typo in parameter name</p></li>
+<li><p>Missing required parameter</p></li>
+<li><p>Value out of physical range (e.g., negative mass)</p></li>
+<li><p>Static margin &lt; 2 (unstable rocket)</p></li>
+</ul>
+</section>
+<section id="step-7-run-the-simulation">
+<h2>Step 7: Run the Simulation<a class="headerlink" href="#step-7-run-the-simulation" title="Link to this heading">#</a></h2>
+<p>Once validation passes, run the full simulation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>configs/tutorial_rocket.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>tutorial_rocket<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--plots<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p><strong>Expected Output:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>════════════════════════════════════════════════════════════════
+                 ROCKET SIMULATION FRAMEWORK
+════════════════════════════════════════════════════════════════
+
+[CONFIG] Loading configuration: configs/tutorial_rocket.yaml
+[VALID] Configuration validation: PASSED
+[BUILD] Building Motor... OK
+[BUILD] Building Environment... OK
+[BUILD] Building Rocket... OK
+[SIM] Running flight simulation...
+[SIM] Simulation completed in 1.8s
+
+┌─────────────────────────────────────────────────────────────┐
+│                    FLIGHT SUMMARY                           │
+├─────────────────────────────────────────────────────────────┤
+│ Apogee Altitude:        524.8 m                             │
+│ Apogee Time:            8.2 s                               │
+│ Max Velocity:           142.3 m/s                           │
+│ Max Acceleration:       201.5 m/s²                          │
+│ Impact Velocity:        4.8 m/s                             │
+│ Flight Time:            58.4 s                              │
+└─────────────────────────────────────────────────────────────┘
+
+✓ Simulation completed successfully!
+</pre></div>
+</div>
+</section>
+<section id="step-8-examine-the-results">
+<h2>Step 8: Examine the Results<a class="headerlink" href="#step-8-examine-the-results" title="Link to this heading">#</a></h2>
+<p>Navigate to the output directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>outputs/tutorial_rocket/
+ls<span class="w"> </span>-la
+</pre></div>
+</div>
+<p>You’ll find:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>tutorial_rocket/
+├── plots/
+│   ├── trajectory_3d.png           # 3D flight path
+│   ├── altitude_vs_time.png        # Altitude profile
+│   ├── velocity_vs_time.png        # Velocity over time
+│   └── acceleration_vs_time.png    # Acceleration (g-forces)
+├── trajectory/
+│   ├── trajectory.csv              # Time-series data
+│   └── trajectory.kml              # Google Earth format
+├── motor/
+│   ├── motor_attributes.txt        # Motor properties
+│   └── curves/                     # Thrust, mass, inertia curves
+└── final_state                     # End state of simulation
+</pre></div>
+</div>
+<p><strong>Key Files to Check:</strong></p>
+<ol class="arabic">
+<li><p><strong>plots/altitude_vs_time.png</strong>: Shows flight profile</p>
+<ul class="simple">
+<li><p>Powered ascent (steep climb)</p></li>
+<li><p>Coasting phase (curve flattens)</p></li>
+<li><p>Apogee (peak)</p></li>
+<li><p>Parachute descent (gentle slope down)</p></li>
+</ul>
+</li>
+<li><p><strong>trajectory/trajectory.csv</strong>: Full data for analysis</p>
+<p>Open in Excel/Python to analyze:</p>
+<ul class="simple">
+<li><p>Peak altitude vs time</p></li>
+<li><p>Maximum velocity</p></li>
+<li><p>G-forces during boost</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="step-9-understand-what-happened">
+<h2>Step 9: Understand What Happened<a class="headerlink" href="#step-9-understand-what-happened" title="Link to this heading">#</a></h2>
+<p>Let’s interpret the flight:</p>
+<dl class="simple">
+<dt><strong>Phase 1: Launch (0-0.5s)</strong></dt><dd><p>Rocket accelerates on rail, fins not yet effective</p>
+</dd>
+<dt><strong>Phase 2: Powered Ascent (0.5-2.5s)</strong></dt><dd><p>Motor burning, thrust &gt; drag + gravity, rocket accelerates upward</p>
+<ul class="simple">
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">velocity_vs_time.png</span></code>: velocity increasing</p></li>
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">acceleration_vs_time.png</span></code>: high acceleration</p></li>
+</ul>
+</dd>
+<dt><strong>Phase 3: Coasting (2.5-8.2s)</strong></dt><dd><p>Motor burnout, rocket continues upward on momentum</p>
+<ul class="simple">
+<li><p>Velocity decreases due to drag and gravity</p></li>
+<li><p>Still climbing but slowing down</p></li>
+</ul>
+</dd>
+<dt><strong>Phase 4: Apogee (8.2s)</strong></dt><dd><p>Velocity = 0, highest point reached (~525m)</p>
+<ul class="simple">
+<li><p>Parachute deployment triggered</p></li>
+<li><p>Rocket orientation becomes unstable (doesn’t matter, parachute is out)</p></li>
+</ul>
+</dd>
+<dt><strong>Phase 5: Descent (8.2-58.4s)</strong></dt><dd><p>Parachute open, slow descent</p>
+<ul class="simple">
+<li><p>Terminal velocity ~5 m/s (safe landing)</p></li>
+<li><p>Drifts with wind (if any)</p></li>
+</ul>
+</dd>
+<dt><strong>Phase 6: Impact (58.4s)</strong></dt><dd><p>Rocket hits ground at 4.8 m/s (acceptable)</p>
+</dd>
+</dl>
+</section>
+<section id="step-10-experiment-with-parameters">
+<h2>Step 10: Experiment with Parameters<a class="headerlink" href="#step-10-experiment-with-parameters" title="Link to this heading">#</a></h2>
+<p>Now modify parameters to see effects. Try these experiments:</p>
+<p><strong>Experiment 1: Heavier Rocket</strong></p>
+<p>Change <code class="docutils literal notranslate"><span class="pre">rocket.mass</span></code> from 5.0 to 7.0 kg:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7.0</span><span class="w">  </span><span class="c1"># Was 5.0</span>
+</pre></div>
+</div>
+<p>Run simulation again with <code class="docutils literal notranslate"><span class="pre">--name</span> <span class="pre">tutorial_heavy</span></code>.</p>
+<p><strong>Question</strong>: Did apogee increase or decrease? Why?</p>
+<p><strong>Answer</strong>: Decreased (heavier rocket fights gravity more, same motor power)</p>
+<p><strong>Experiment 2: Larger Parachute</strong></p>
+<p>Change <code class="docutils literal notranslate"><span class="pre">cd_s</span></code> from 1.5 to 3.0:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Main&quot;</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span><span class="w">  </span><span class="c1"># Was 1.5</span>
+</pre></div>
+</div>
+<p><strong>Question</strong>: How does landing velocity change?</p>
+<p><strong>Answer</strong>: Slower descent, gentler landing</p>
+<p><strong>Experiment 3: Launch Angle</strong></p>
+<p>Change <code class="docutils literal notranslate"><span class="pre">inclination</span></code> from 85 to 80 degrees:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">inclination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class="w">  </span><span class="c1"># Was 85</span>
+</pre></div>
+</div>
+<p><strong>Question</strong>: What happens to trajectory shape?</p>
+<p><strong>Answer</strong>: More horizontal travel, apogee farther from launch site</p>
+</section>
+<section id="step-11-common-issues-and-solutions">
+<h2>Step 11: Common Issues and Solutions<a class="headerlink" href="#step-11-common-issues-and-solutions" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-danger sd-bg-text-danger">
+<span class="sd-summary-text">“Static margin less than 2 calibers”</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>Problem</strong>: Rocket is aerodynamically unstable.</p>
+<p class="sd-card-text"><strong>Solution</strong>:</p>
+<ul class="simple">
+<li><p class="sd-card-text">Move fins farther from nose (increase <code class="docutils literal notranslate"><span class="pre">fins.position</span></code>)</p></li>
+<li><p class="sd-card-text">Make fins larger (increase <code class="docutils literal notranslate"><span class="pre">fins.span</span></code> or <code class="docutils literal notranslate"><span class="pre">fins.root_chord</span></code>)</p></li>
+<li><p class="sd-card-text">Move center of mass forward (reduce <code class="docutils literal notranslate"><span class="pre">center_of_mass_without_motor</span></code>)</p></li>
+</ul>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-warning sd-bg-text-warning">
+<span class="sd-summary-text">“Motor thrust curve file not found”</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>Problem</strong>: Path to <code class="docutils literal notranslate"><span class="pre">.eng</span></code> file is wrong.</p>
+<p class="sd-card-text"><strong>Solution</strong>:</p>
+<ul class="simple">
+<li><p class="sd-card-text">Check file exists: <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">data/motors/aerotech/AeroTech_J450DM.eng</span></code></p></li>
+<li><p class="sd-card-text">Use absolute path or correct relative path</p></li>
+<li><p class="sd-card-text">Download motor file from ThrustCurve.org if missing</p></li>
+</ul>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-warning sd-bg-text-warning">
+<span class="sd-summary-text">“Parachute never deploys”</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>Problem</strong>: Trigger condition not met or wrong configuration.</p>
+<p class="sd-card-text"><strong>Solution</strong>:</p>
+<ul class="simple">
+<li><p class="sd-card-text">Check <code class="docutils literal notranslate"><span class="pre">trigger:</span> <span class="pre">&quot;apogee&quot;</span></code> is correct</p></li>
+<li><p class="sd-card-text">Verify rocket reaches apogee (doesn’t crash during ascent)</p></li>
+<li><p class="sd-card-text">Check for typos in parachute configuration</p></li>
+</ul>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-info sd-bg-text-info">
+<span class="sd-summary-text">“Simulation takes too long”</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>Problem</strong>: Simulation running for unrealistic time.</p>
+<p class="sd-card-text"><strong>Solution</strong>:</p>
+<ul class="simple">
+<li><p class="sd-card-text">Set <code class="docutils literal notranslate"><span class="pre">max_time:</span> <span class="pre">300</span></code> to limit simulation</p></li>
+<li><p class="sd-card-text">Check rocket actually lands (impact detected)</p></li>
+<li><p class="sd-card-text">Verify environment makes physical sense</p></li>
+</ul>
+</div>
+</details></section>
+<section id="what-you-ve-learned">
+<h2>What You’ve Learned<a class="headerlink" href="#what-you-ve-learned" title="Link to this heading">#</a></h2>
+<p>Congratulations! You’ve now:</p>
+<p>✅ Created a complete rocket configuration from scratch</p>
+<p>✅ Understood the four main sections (rocket, motor, environment, simulation)</p>
+<p>✅ Run a simulation and interpreted the results</p>
+<p>✅ Explored how parameter changes affect flight</p>
+<p>✅ Debugged common configuration issues</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>Now you’re ready for more advanced topics:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="02_understanding_outputs.html"><span class="doc">Understanding Simulation Outputs</span></a> - Deep dive into data analysis</p></li>
+<li><p><a class="reference internal" href="03_custom_motor.html"><span class="doc">Using Custom Motor Data</span></a> - Import your own motor data</p></li>
+<li><p><a class="reference internal" href="04_adding_fins.html"><span class="doc">Adding and Optimizing Fins</span></a> - Advanced fin configurations</p></li>
+<li><p><a class="reference internal" href="../how_to_guides/measure_rocket.html"><span class="doc">How to Measure Your Rocket’s Parameters</span></a> - Measure real rocket parameters</p></li>
+</ul>
+</section>
+<section id="complete-example-file">
+<h2>Complete Example File<a class="headerlink" href="#complete-example-file" title="Link to this heading">#</a></h2>
+<p>Here’s the complete <code class="docutils literal notranslate"><span class="pre">tutorial_rocket.yaml</span></code> configuration:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">configs/tutorial_rocket.yaml</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tutorial Rocket Configuration</span>
+<span class="c1"># This is the example configuration from Tutorial 01: Basic Flight</span>
+<span class="c1"># All parameters are documented with inline comments</span>
+
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># === BASIC PROPERTIES ===</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Tutorial</span><span class="nv"> </span><span class="s">Rocket&quot;</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.5</span><span class="w">  </span><span class="c1"># Rocket mass WITHOUT motor propellant</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># Coordinate system: tail_to_nose (origin at tail, positive toward nose)</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># Center of gravity (dry) measured from tail</span>
+<span class="w">  </span><span class="nt">cg_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">  </span><span class="c1"># 1.0 m from tail</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># Center of pressure (auto-calculated from fin geometry)</span>
+<span class="w">  </span><span class="nt">cp_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === GEOMETRY ===</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.127</span><span class="w">  </span><span class="c1"># 127 mm diameter (5 inch)</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.8</span><span class="w">     </span><span class="c1"># Total rocket length from nose to tail</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === INERTIA (about center of mass) ===</span>
+<span class="w">  </span><span class="nt">inertia</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ixx_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.5</span><span class="w">   </span><span class="c1"># Transverse moment of inertia</span>
+<span class="w">    </span><span class="nt">iyy_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.5</span><span class="w">   </span><span class="c1"># Transverse moment of inertia</span>
+<span class="w">    </span><span class="nt">izz_kg_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.02</span><span class="w">  </span><span class="c1"># Axial moment of inertia (spin axis)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === NOSE CONE ===</span>
+<span class="w">  </span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.35</span><span class="w">       </span><span class="c1"># Nose cone length</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span><span class="w">    </span><span class="c1"># Low-drag profile</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.8</span><span class="w">      </span><span class="c1"># At rocket nose (tail_to_nose system)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === FINS ===</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w">                  </span><span class="c1"># 4 fins, 90° apart</span>
+<span class="w">    </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span><span class="w">        </span><span class="c1"># Fin root length (at body tube)</span>
+<span class="w">    </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">         </span><span class="c1"># Fin tip length</span>
+<span class="w">    </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.10</span><span class="w">              </span><span class="c1"># Fin height (perpendicular from body)</span>
+<span class="w">    </span><span class="nt">thickness_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.003</span><span class="w">        </span><span class="c1"># 3 mm fin material thickness</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">           </span><span class="c1"># 0.3 m from tail (tail_to_nose)</span>
+<span class="w">    </span><span class="nt">cant_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">       </span><span class="c1"># No cant (no induced spin)</span>
+<span class="w">    </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">             </span><span class="c1"># Flat plate (default)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === PARACHUTE ===</span>
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Main</span><span class="nv"> </span><span class="s">Chute&quot;</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.0</span><span class="w">                 </span><span class="c1"># Drag coefficient × area (m²)</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span><span class="w">         </span><span class="c1"># Deploy at apogee</span>
+<span class="w">    </span><span class="nt">sampling_rate_hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">105.0</span><span class="w">   </span><span class="c1"># Altimeter sampling rate</span>
+<span class="w">    </span><span class="nt">lag_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">                </span><span class="c1"># Deployment lag (ejection + inflation)</span>
+<span class="w">    </span><span class="nt">noise_std</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># No sensor noise</span>
+
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># === MOTOR TYPE ===</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SolidMotor&quot;</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === THRUST CURVE ===</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/Cesaroni_M1670.eng&quot;</span><span class="w">  </span><span class="c1"># .eng format</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === MOTOR MASS PROPERTIES ===</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.286</span><span class="w">  </span><span class="c1"># Empty motor casing mass</span>
+<span class="w">  </span><span class="nt">dry_inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.125</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.125</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.002</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># [Ixx, Iyy, Izz] of empty motor</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === NOZZLE GEOMETRY ===</span>
+<span class="w">  </span><span class="nt">nozzle_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span><span class="w">    </span><span class="c1"># Nozzle exit radius (33 mm)</span>
+<span class="w">  </span><span class="nt">throat_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.011</span><span class="w">    </span><span class="c1"># Nozzle throat radius (11 mm)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === PROPELLANT GRAIN GEOMETRY (BATES grains) ===</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">                      </span><span class="c1"># 5 cylindrical grains</span>
+<span class="w">  </span><span class="nt">grain_density_kg_m3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1815.0</span><span class="w">          </span><span class="c1"># APCP propellant density</span>
+<span class="w">  </span><span class="nt">grain_outer_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span><span class="w">          </span><span class="c1"># Grain outer radius</span>
+<span class="w">  </span><span class="nt">grain_initial_inner_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.015</span><span class="w">  </span><span class="c1"># Initial bore radius</span>
+<span class="w">  </span><span class="nt">grain_initial_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span><span class="w">        </span><span class="c1"># Each grain height (120 mm)</span>
+<span class="w">  </span><span class="nt">grain_separation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span><span class="w">            </span><span class="c1"># 5 mm gap between grains</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === MOTOR COORDINATE SYSTEM ===</span>
+<span class="w">  </span><span class="c1"># Motor uses nozzle_to_combustion_chamber orientation</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nozzle_to_combustion_chamber&quot;</span>
+<span class="w">  </span><span class="nt">nozzle_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                      </span><span class="c1"># Nozzle at origin</span>
+<span class="w">  </span><span class="nt">grains_center_of_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span><span class="w">     </span><span class="c1"># Grains CoM from nozzle</span>
+<span class="w">  </span><span class="nt">center_of_dry_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span><span class="w">        </span><span class="c1"># Dry motor CoM from nozzle</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === BURN CHARACTERISTICS ===</span>
+<span class="w">  </span><span class="nt">burn_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Auto-detect from thrust curve</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === ADVANCED PARAMETERS ===</span>
+<span class="w">  </span><span class="nt">interpolation_method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spline&quot;</span><span class="w">  </span><span class="c1"># Smooth thrust interpolation</span>
+<span class="w">  </span><span class="nt">reference_pressure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">101325</span><span class="w">      </span><span class="c1"># Sea level (thrust curve test pressure)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === MOTOR POSITION IN ROCKET ===</span>
+<span class="w">  </span><span class="c1"># Position of nozzle exit in rocket coordinate system (tail_to_nose)</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># Nozzle at tail (0.0 m from tail)</span>
+
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># === LAUNCH SITE LOCATION ===</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">39.3897</span><span class="w">   </span><span class="c1"># Alcochete, Portugal (North)</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-8.2889</span><span class="w">  </span><span class="c1"># West</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100.0</span><span class="w">      </span><span class="c1"># 100 m above sea level</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === ATMOSPHERIC MODEL ===</span>
+<span class="w">  </span><span class="nt">atmospheric_model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;standard_atmosphere&quot;</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === WEATHER DATA (optional - using standard atmosphere) ===</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;standard_atmosphere&quot;</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === WIND ===</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;constant&quot;</span><span class="w">      </span><span class="c1"># Constant wind at all altitudes</span>
+<span class="w">    </span><span class="nt">velocity_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span><span class="w">       </span><span class="c1"># 3 m/s wind speed (light breeze)</span>
+<span class="w">    </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90.0</span><span class="w">    </span><span class="c1"># Wind FROM East (easterly)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === DATE/TIME (optional) ===</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># No specific date (using standard atmosphere)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === GRAVITY ===</span>
+<span class="w">  </span><span class="nt">gravity_ms2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9.80665</span><span class="w">  </span><span class="c1"># Standard gravity</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === SIMULATION LIMITS ===</span>
+<span class="w">  </span><span class="nt">max_expected_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3500.0</span><span class="w">  </span><span class="c1"># Pre-allocate atmosphere to 3500 m</span>
+
+<span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># === LAUNCH RAIL ===</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span><span class="w">           </span><span class="c1"># 5 meter rail</span>
+<span class="w">    </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85.0</span><span class="w">   </span><span class="c1"># 5° from vertical (nearly vertical)</span>
+<span class="w">    </span><span class="nt">heading_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">        </span><span class="c1"># Pointing North</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === INTEGRATION PARAMETERS ===</span>
+<span class="w">  </span><span class="nt">max_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300.0</span><span class="w">         </span><span class="c1"># Max 5 minutes simulation time</span>
+<span class="w">  </span><span class="nt">max_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.inf</span><span class="w">     </span><span class="c1"># Automatic time step (recommended)</span>
+<span class="w">  </span><span class="nt">min_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">      </span><span class="c1"># No minimum limit</span>
+<span class="w">  </span><span class="nt">rtol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span><span class="w">                </span><span class="c1"># Relative tolerance (0.0001% error)</span>
+<span class="w">  </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span><span class="w">                </span><span class="c1"># Absolute tolerance</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === TERMINATION CONDITIONS ===</span>
+<span class="w">  </span><span class="nt">terminate_on_apogee</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Simulate full flight (ascent + descent)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># === OUTPUT CONTROL ===</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Minimal output (quiet mode)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This file is available in the rocket-sim repository at
+<code class="docutils literal notranslate"><span class="pre">configs/tutorial_rocket.yaml</span></code>. You can use it as a template for your own rockets.</p>
+</div>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../configuration/rocket_params.html"><span class="doc">Rocket Parameters Reference</span></a> - Every rocket parameter explained</p></li>
+<li><p><a class="reference internal" href="../configuration/motor_params.html"><span class="doc">Motor Parameters Reference</span></a> - Motor parameter details</p></li>
+<li><p><a class="reference internal" href="../../getting_started/key_concepts.html"><span class="doc">Key Concepts</span></a> - Review core concepts</p></li>
+<li><p><a class="reference external" href="https://docs.rocketpy.org/">RocketPy Documentation</a> - Underlying library</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><strong>Related How-To Guides:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../how_to_guides/create_config.html"><span class="doc">Create Configuration Files</span></a> - Configuration best practices</p></li>
+<li><p><a class="reference internal" href="../how_to_guides/validate_design.html"><span class="doc">Validate Your Rocket Design</span></a> - Stability validation</p></li>
+<li><p><span class="xref std std-doc">/user/how_to_guides/troubleshooting_validation</span> - Fix validation errors</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorials</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="02_understanding_outputs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Understanding Simulation Outputs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-create-configuration-file">Step 1: Create Configuration File</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-configure-the-rocket">Step 2: Configure the Rocket</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-configure-the-motor">Step 3: Configure the Motor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-configure-the-environment">Step 4: Configure the Environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-configure-the-simulation">Step 5: Configure the Simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-validate-configuration">Step 6: Validate Configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-run-the-simulation">Step 7: Run the Simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-8-examine-the-results">Step 8: Examine the Results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-9-understand-what-happened">Step 9: Understand What Happened</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-10-experiment-with-parameters">Step 10: Experiment with Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-11-common-issues-and-solutions">Step 11: Common Issues and Solutions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-ve-learned">What You’ve Learned</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-example-file">Complete Example File</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/tutorials/01_basic_flight.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

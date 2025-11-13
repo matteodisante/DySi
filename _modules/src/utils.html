@@ -1,0 +1,862 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.utils &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/utils';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.utils</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utility functions for rocket simulation.</span>
+
+<span class="sd">This module provides common utility functions for unit conversions,</span>
+<span class="sd">coordinate transformations, and other helper functions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># Unit conversion constants</span>
+<span class="n">DEG_TO_RAD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.0</span>
+<span class="n">RAD_TO_DEG</span> <span class="o">=</span> <span class="mf">180.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">FT_TO_M</span> <span class="o">=</span> <span class="mf">0.3048</span>
+<span class="n">M_TO_FT</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">FT_TO_M</span>
+<span class="n">LBF_TO_N</span> <span class="o">=</span> <span class="mf">4.44822</span>
+<span class="n">N_TO_LBF</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">LBF_TO_N</span>
+<span class="n">LBM_TO_KG</span> <span class="o">=</span> <span class="mf">0.453592</span>
+<span class="n">KG_TO_LBM</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">LBM_TO_KG</span>
+<span class="n">IN_TO_M</span> <span class="o">=</span> <span class="mf">0.0254</span>
+<span class="n">M_TO_IN</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">IN_TO_M</span>
+
+
+<div class="viewcode-block" id="deg_to_rad">
+<a class="viewcode-back" href="../../api/index.html#src.utils.deg_to_rad">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">deg_to_rad</span><span class="p">(</span><span class="n">degrees</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert degrees to radians.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        degrees: Angle in degrees.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Angle in radians.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">degrees</span> <span class="o">*</span> <span class="n">DEG_TO_RAD</span></div>
+
+
+
+<div class="viewcode-block" id="rad_to_deg">
+<a class="viewcode-back" href="../../api/index.html#src.utils.rad_to_deg">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rad_to_deg</span><span class="p">(</span><span class="n">radians</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert radians to degrees.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        radians: Angle in radians.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Angle in degrees.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">radians</span> <span class="o">*</span> <span class="n">RAD_TO_DEG</span></div>
+
+
+
+<div class="viewcode-block" id="feet_to_meters">
+<a class="viewcode-back" href="../../api/index.html#src.utils.feet_to_meters">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">feet_to_meters</span><span class="p">(</span><span class="n">feet</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert feet to meters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        feet: Length in feet.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Length in meters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">feet</span> <span class="o">*</span> <span class="n">FT_TO_M</span></div>
+
+
+
+<div class="viewcode-block" id="meters_to_feet">
+<a class="viewcode-back" href="../../api/index.html#src.utils.meters_to_feet">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">meters_to_feet</span><span class="p">(</span><span class="n">meters</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert meters to feet.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        meters: Length in meters.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Length in feet.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">meters</span> <span class="o">*</span> <span class="n">M_TO_FT</span></div>
+
+
+
+<div class="viewcode-block" id="lbf_to_newtons">
+<a class="viewcode-back" href="../../api/index.html#src.utils.lbf_to_newtons">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lbf_to_newtons</span><span class="p">(</span><span class="n">lbf</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert pounds-force to Newtons.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lbf: Force in pounds-force.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Force in Newtons.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">lbf</span> <span class="o">*</span> <span class="n">LBF_TO_N</span></div>
+
+
+
+<div class="viewcode-block" id="newtons_to_lbf">
+<a class="viewcode-back" href="../../api/index.html#src.utils.newtons_to_lbf">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">newtons_to_lbf</span><span class="p">(</span><span class="n">newtons</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert Newtons to pounds-force.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        newtons: Force in Newtons.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Force in pounds-force.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">newtons</span> <span class="o">*</span> <span class="n">N_TO_LBF</span></div>
+
+
+
+<div class="viewcode-block" id="lbm_to_kg">
+<a class="viewcode-back" href="../../api/index.html#src.utils.lbm_to_kg">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lbm_to_kg</span><span class="p">(</span><span class="n">lbm</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert pounds-mass to kilograms.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lbm: Mass in pounds-mass.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Mass in kilograms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">lbm</span> <span class="o">*</span> <span class="n">LBM_TO_KG</span></div>
+
+
+
+<div class="viewcode-block" id="kg_to_lbm">
+<a class="viewcode-back" href="../../api/index.html#src.utils.kg_to_lbm">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">kg_to_lbm</span><span class="p">(</span><span class="n">kg</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert kilograms to pounds-mass.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kg: Mass in kilograms.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Mass in pounds-mass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">kg</span> <span class="o">*</span> <span class="n">KG_TO_LBM</span></div>
+
+
+
+<div class="viewcode-block" id="inches_to_meters">
+<a class="viewcode-back" href="../../api/index.html#src.utils.inches_to_meters">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">inches_to_meters</span><span class="p">(</span><span class="n">inches</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert inches to meters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        inches: Length in inches.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Length in meters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">inches</span> <span class="o">*</span> <span class="n">IN_TO_M</span></div>
+
+
+
+<div class="viewcode-block" id="meters_to_inches">
+<a class="viewcode-back" href="../../api/index.html#src.utils.meters_to_inches">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">meters_to_inches</span><span class="p">(</span><span class="n">meters</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert meters to inches.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        meters: Length in meters.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Length in inches.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">meters</span> <span class="o">*</span> <span class="n">M_TO_IN</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_static_margin">
+<a class="viewcode-back" href="../../api/index.html#src.utils.calculate_static_margin">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_static_margin</span><span class="p">(</span>
+    <span class="n">cp_location_m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">cg_location_m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">caliber_m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate static margin in calibers.</span>
+
+<span class="sd">    Static margin is the distance between center of pressure (CP)</span>
+<span class="sd">    and center of gravity (CG), expressed in rocket diameters (calibers).</span>
+<span class="sd">    Positive margin indicates stable rocket (CP behind CG).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cp_location_m: Center of pressure location (m).</span>
+<span class="sd">        cg_location_m: Center of gravity location (m).</span>
+<span class="sd">        caliber_m: Rocket diameter/caliber (m).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Static margin in calibers.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; calculate_static_margin(1.5, 1.0, 0.1)</span>
+<span class="sd">        5.0  # CP is 5 calibers behind CG</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">cp_location_m</span> <span class="o">-</span> <span class="n">cg_location_m</span><span class="p">)</span> <span class="o">/</span> <span class="n">caliber_m</span></div>
+
+
+
+<div class="viewcode-block" id="wind_to_components">
+<a class="viewcode-back" href="../../api/index.html#src.utils.wind_to_components">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">wind_to_components</span><span class="p">(</span>
+    <span class="n">velocity_ms</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">direction_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert wind velocity and direction to x-y components.</span>
+
+<span class="sd">    Uses meteorological convention: direction is where wind comes FROM.</span>
+<span class="sd">    - 0° = North</span>
+<span class="sd">    - 90° = East</span>
+<span class="sd">    - 180° = South</span>
+<span class="sd">    - 270° = West</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        velocity_ms: Wind speed (m/s).</span>
+<span class="sd">        direction_deg: Wind direction (degrees, meteorological convention).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple of (wind_x, wind_y) components in m/s.</span>
+<span class="sd">        wind_x: East component</span>
+<span class="sd">        wind_y: North component</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; wind_to_components(10.0, 0.0)  # Wind from North</span>
+<span class="sd">        (0.0, -10.0)  # Blowing toward South</span>
+<span class="sd">        &gt;&gt;&gt; wind_to_components(10.0, 90.0)  # Wind from East</span>
+<span class="sd">        (-10.0, 0.0)  # Blowing toward West</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Convert to radians</span>
+    <span class="n">direction_rad</span> <span class="o">=</span> <span class="n">deg_to_rad</span><span class="p">(</span><span class="n">direction_deg</span><span class="p">)</span>
+
+    <span class="c1"># Calculate components (negative because wind direction is where it comes FROM)</span>
+    <span class="n">wind_x</span> <span class="o">=</span> <span class="o">-</span><span class="n">velocity_ms</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">direction_rad</span><span class="p">)</span>  <span class="c1"># East component</span>
+    <span class="n">wind_y</span> <span class="o">=</span> <span class="o">-</span><span class="n">velocity_ms</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">direction_rad</span><span class="p">)</span>  <span class="c1"># North component</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">wind_x</span><span class="p">,</span> <span class="n">wind_y</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="setup_logging">
+<a class="viewcode-back" href="../../api/index.html#src.utils.setup_logging">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">setup_logging</span><span class="p">(</span><span class="n">level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span> <span class="n">log_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Setup logging configuration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        level: Logging level (&quot;DEBUG&quot;, &quot;INFO&quot;, &quot;WARNING&quot;, &quot;ERROR&quot;).</span>
+<span class="sd">        log_file: Optional log file path. If None, logs to console only.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; setup_logging(level=&quot;DEBUG&quot;, log_file=&quot;simulation.log&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">numeric_level</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">logging</span><span class="p">,</span> <span class="n">level</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+    <span class="c1"># Get root logger</span>
+    <span class="n">root_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">root_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">numeric_level</span><span class="p">)</span>
+    
+    <span class="c1"># Remove existing handlers to allow reconfiguration</span>
+    <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">root_logger</span><span class="o">.</span><span class="n">handlers</span><span class="p">[:]:</span>
+        <span class="n">root_logger</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+    <span class="c1"># Create formatter</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Console handler</span>
+    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">numeric_level</span><span class="p">)</span>
+    <span class="n">root_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span>
+
+    <span class="c1"># File handler if specified</span>
+    <span class="k">if</span> <span class="n">log_file</span><span class="p">:</span>
+        <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">log_file</span><span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">numeric_level</span><span class="p">)</span>
+        <span class="n">root_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
+
+    <span class="c1"># Silence verbose third-party libraries</span>
+    <span class="c1"># These libraries produce excessive DEBUG messages that clutter logs</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;matplotlib&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;matplotlib.font_manager&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;PIL&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;urllib3&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ensure_directory_exists">
+<a class="viewcode-back" href="../../api/index.html#src.utils.ensure_directory_exists">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ensure_directory_exists</span><span class="p">(</span><span class="n">directory_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ensure a directory exists, creating it if necessary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        directory_path: Path to directory.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; ensure_directory_exists(&quot;outputs/results&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">directory_path</span><span class="p">)</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ensured directory exists: </span><span class="si">{</span><span class="n">directory_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="format_duration">
+<a class="viewcode-back" href="../../api/index.html#src.utils.format_duration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_duration</span><span class="p">(</span><span class="n">seconds</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Format duration in seconds to human-readable string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        seconds: Duration in seconds.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Formatted string (e.g., &quot;2m 30s&quot; or &quot;1h 5m 23s&quot;).</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; format_duration(150)</span>
+<span class="sd">        &#39;2m 30s&#39;</span>
+<span class="sd">        &gt;&gt;&gt; format_duration(3723)</span>
+<span class="sd">        &#39;1h 2m 3s&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hours</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">seconds</span> <span class="o">//</span> <span class="mi">3600</span><span class="p">)</span>
+    <span class="n">minutes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">seconds</span> <span class="o">%</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">//</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">secs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">seconds</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">hours</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hours</span><span class="si">}</span><span class="s2">h </span><span class="si">{</span><span class="n">minutes</span><span class="si">}</span><span class="s2">m </span><span class="si">{</span><span class="n">secs</span><span class="si">}</span><span class="s2">s&quot;</span>
+    <span class="k">elif</span> <span class="n">minutes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">minutes</span><span class="si">}</span><span class="s2">m </span><span class="si">{</span><span class="n">secs</span><span class="si">}</span><span class="s2">s&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">secs</span><span class="si">}</span><span class="s2">s&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="truncate_string">
+<a class="viewcode-back" href="../../api/index.html#src.utils.truncate_string">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">truncate_string</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">suffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Truncate string to maximum length with suffix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text: String to truncate.</span>
+<span class="sd">        max_length: Maximum length.</span>
+<span class="sd">        suffix: Suffix to append if truncated.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Truncated string.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; truncate_string(&quot;Very long rocket name here&quot;, max_length=15)</span>
+<span class="sd">        &#39;Very long ro...&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">max_length</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span>
+    <span class="k">return</span> <span class="n">text</span><span class="p">[:</span> <span class="n">max_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">suffix</span><span class="p">)]</span> <span class="o">+</span> <span class="n">suffix</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

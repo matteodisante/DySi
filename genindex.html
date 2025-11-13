@@ -1,0 +1,1458 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=fd10adb8"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#Symbols"><strong>Symbols</strong></a>
+ | <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="Symbols">Symbols</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-6-DOF"><strong>6-DOF</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController.__init__">__init__() (src.air_brakes_controller.AirBrakesController method)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.ConfigLoader.__init__">(src.config_loader.ConfigLoader method)</a>
+</li>
+        <li><a href="api/index.html#src.curve_plotter.CurvePlotter.__init__">(src.curve_plotter.CurvePlotter method)</a>
+</li>
+        <li><a href="api/index.html#src.data_handler.DataHandler.__init__">(src.data_handler.DataHandler method)</a>
+</li>
+        <li><a href="api/index.html#src.environment_setup.EnvironmentBuilder.__init__">(src.environment_setup.EnvironmentBuilder method)</a>
+</li>
+        <li><a href="api/index.html#src.flight_simulator.FlightSimulator.__init__">(src.flight_simulator.FlightSimulator method)</a>
+</li>
+        <li><a href="api/index.html#src.motor_builder.MotorBuilder.__init__">(src.motor_builder.MotorBuilder method)</a>
+</li>
+        <li><a href="api/index.html#src.state_exporter.StateExporter.__init__">(src.state_exporter.StateExporter method)</a>
+</li>
+        <li><a href="api/index.html#src.validators.ValidationWarning.__init__">(src.validators.ValidationWarning method)</a>
+</li>
+        <li><a href="api/index.html#src.visualizer.Visualizer.__init__">(src.visualizer.Visualizer method)</a>
+</li>
+        <li><a href="api/index.html#src.weather_fetcher.WeatherFetcher.__init__">(src.weather_fetcher.WeatherFetcher method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.validators.ValidationWarning.__str__">__str__() (src.validators.ValidationWarning method)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController._actual_deployment">_actual_deployment (src.air_brakes_controller.AirBrakesController attribute)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController._commanded_deployment">_commanded_deployment (src.air_brakes_controller.AirBrakesController attribute)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController._computation_buffer">_computation_buffer (src.air_brakes_controller.AirBrakesController attribute)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController._integral">_integral (src.air_brakes_controller.AirBrakesController attribute)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController._prev_error">_prev_error (src.air_brakes_controller.AirBrakesController attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.actuator_lag_s">actuator_lag_s (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.actuator_lag_s">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.air_brakes">air_brakes (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.AirBrakesConfig">AirBrakesConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController">AirBrakesController (class in src.air_brakes_controller)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig">AirBrakesControllerConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.FinConfig.airfoil">airfoil (src.config_loader.FinConfig attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.algorithm">algorithm (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.algorithm">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.altitude_filter_alpha">altitude_filter_alpha (src.air_brakes_controller.ControllerConfig attribute)</a>
+</li>
+      <li><a href="glossary.html#term-Apogee"><strong>Apogee</strong></a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.apogee_tolerance_m">apogee_tolerance_m (src.air_brakes_controller.ControllerConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.atmospheric_model">atmospheric_model (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.atmospheric_model_file">atmospheric_model_file (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.SimulationConfig.atol">atol (src.config_loader.SimulationConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.environment_setup.EnvironmentBuilder.build">build() (src.environment_setup.EnvironmentBuilder method)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.motor_builder.MotorBuilder.build">(src.motor_builder.MotorBuilder method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-Burn-Time"><strong>Burn Time</strong></a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.burn_time_s">burn_time_s (src.config_loader.MotorConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.utils.calculate_static_margin">calculate_static_margin() (in module src.utils)</a>
+</li>
+      <li><a href="glossary.html#term-Caliber"><strong>Caliber</strong></a>
+</li>
+      <li><a href="api/index.html#src.config_loader.GeometryConfig.caliber_m">caliber_m (src.config_loader.GeometryConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.FinConfig.cant_angle_deg">cant_angle_deg (src.config_loader.FinConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ParachuteConfig.cd_s">cd_s (src.config_loader.ParachuteConfig attribute)</a>
+</li>
+      <li><a href="glossary.html#term-Center-of-Gravity-CG"><strong>Center of Gravity (CG)</strong></a>
+</li>
+      <li><a href="glossary.html#term-Center-of-Pressure-CP"><strong>Center of Pressure (CP)</strong></a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.center_of_dry_mass_position_m">center_of_dry_mass_position_m (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.cg_location_m">cg_location_m (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.flight_simulator.FlightSimulator.compare_with">compare_with() (src.flight_simulator.FlightSimulator method)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.computation_time_s">computation_time_s (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.computation_time_s">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController.config">config (src.air_brakes_controller.AirBrakesController attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.environment_setup.EnvironmentBuilder.config">(src.environment_setup.EnvironmentBuilder attribute)</a>
+</li>
+        <li><a href="api/index.html#src.flight_simulator.FlightSimulator.config">(src.flight_simulator.FlightSimulator attribute)</a>
+</li>
+        <li><a href="api/index.html#src.motor_builder.MotorBuilder.config">(src.motor_builder.MotorBuilder attribute)</a>
+</li>
+        <li><a href="api/index.html#src.weather_fetcher.WeatherFetcher.config">(src.weather_fetcher.WeatherFetcher attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.ConfigLoader">ConfigLoader (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.AirBrakesConfig.controller">controller (src.config_loader.AirBrakesConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig">ControllerConfig (class in src.air_brakes_controller)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.coordinate_system">coordinate_system (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.coordinate_system_orientation">coordinate_system_orientation (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.FinConfig.count">count (src.config_loader.FinConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.create_bang_bang_controller">create_bang_bang_controller() (in module src.air_brakes_controller)</a>
+</li>
+      <li><a href="api/index.html#src.data_handler.DataHandler.create_comparison_report">create_comparison_report() (src.data_handler.DataHandler method)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.create_pid_controller">create_pid_controller() (in module src.air_brakes_controller)</a>
+</li>
+      <li><a href="api/index.html#src.visualizer.Visualizer.create_standard_plots">create_standard_plots() (src.visualizer.Visualizer method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter">CurvePlotter (class in src.curve_plotter)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.WeatherSourceConfig.custom_file">custom_file (src.config_loader.WeatherSourceConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.weather_fetcher.WeatherConfig.custom_file">(src.weather_fetcher.WeatherConfig attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.data_handler.DataHandler">DataHandler (class in src.data_handler)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.date">date (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.utils.deg_to_rad">deg_to_rad() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.deploy_threshold_m">deploy_threshold_m (src.air_brakes_controller.ControllerConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.AirBrakesConfig.deployment_level">deployment_level (src.config_loader.AirBrakesConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.WindConfig.direction_deg">direction_deg (src.config_loader.WindConfig attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-Drag-Coefficient"><strong>Drag Coefficient</strong></a>
+</li>
+      <li><a href="api/index.html#src.config_loader.AirBrakesConfig.drag_coefficient">drag_coefficient (src.config_loader.AirBrakesConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.AirBrakesConfig.drag_coefficient_curve">drag_coefficient_curve (src.config_loader.AirBrakesConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.dry_inertia">dry_inertia (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.dry_mass_kg">dry_mass_kg (src.config_loader.MotorConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.RocketConfig.dry_mass_kg">(src.config_loader.RocketConfig attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.elevation_m">elevation_m (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.AirBrakesConfig.enabled">enabled (src.config_loader.AirBrakesConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.ParachuteConfig.enabled">(src.config_loader.ParachuteConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.utils.ensure_directory_exists">ensure_directory_exists() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.environment_setup.EnvironmentBuilder.environment">environment (src.environment_setup.EnvironmentBuilder attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.flight_simulator.FlightSimulator.environment">(src.flight_simulator.FlightSimulator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.environment_setup.EnvironmentBuilder">EnvironmentBuilder (class in src.environment_setup)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig">EnvironmentConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.validators.EnvironmentValidator">EnvironmentValidator (class in src.validators)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.state_exporter.StateExporter.export_complete">export_complete() (src.state_exporter.StateExporter method)</a>
+</li>
+      <li><a href="api/index.html#src.data_handler.DataHandler.export_complete_dataset">export_complete_dataset() (src.data_handler.DataHandler method)</a>
+</li>
+      <li><a href="api/index.html#src.state_exporter.StateExporter.export_curves_plots">export_curves_plots() (src.state_exporter.StateExporter method)</a>
+</li>
+      <li><a href="api/index.html#src.state_exporter.StateExporter.export_final_state">export_final_state() (src.state_exporter.StateExporter method)</a>
+</li>
+      <li><a href="api/index.html#src.state_exporter.StateExporter.export_initial_state">export_initial_state() (src.state_exporter.StateExporter method)</a>
+</li>
+      <li><a href="api/index.html#src.data_handler.DataHandler.export_kml">export_kml() (src.data_handler.DataHandler method)</a>
+</li>
+      <li><a href="api/index.html#src.data_handler.DataHandler.export_summary_json">export_summary_json() (src.data_handler.DataHandler method)</a>
+</li>
+      <li><a href="api/index.html#src.flight_simulator.FlightSimulator.export_summary_to_dict">export_summary_to_dict() (src.flight_simulator.FlightSimulator method)</a>
+</li>
+      <li><a href="api/index.html#src.data_handler.DataHandler.export_trajectory_csv">export_trajectory_csv() (src.data_handler.DataHandler method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.utils.feet_to_meters">feet_to_meters() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.weather_fetcher.fetch_gfs_forecast_for_location">fetch_gfs_forecast_for_location() (in module src.weather_fetcher)</a>
+</li>
+      <li><a href="api/index.html#src.weather_fetcher.fetch_latest_wyoming_sounding">fetch_latest_wyoming_sounding() (in module src.weather_fetcher)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.WeatherSourceConfig.fetch_real_time">fetch_real_time (src.config_loader.WeatherSourceConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.weather_fetcher.WeatherConfig.fetch_real_time">(src.weather_fetcher.WeatherConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.weather_fetcher.WeatherFetcher.fetch_wyoming_sounding">fetch_wyoming_sounding() (src.weather_fetcher.WeatherFetcher static method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.FinConfig">FinConfig (class in src.config_loader)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.fins">fins (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.flight_simulator.FlightSimulator.flight">flight (src.flight_simulator.FlightSimulator attribute)</a>
+</li>
+      <li><a href="api/index.html#src.flight_simulator.FlightSimulator">FlightSimulator (class in src.flight_simulator)</a>
+</li>
+      <li><a href="api/index.html#src.utils.format_duration">format_duration() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.data_handler.DataHandler.format_summary_text">format_summary_text() (src.data_handler.DataHandler static method)</a>
+</li>
+      <li><a href="api/index.html#src.motor_builder.MotorBuilder.from_eng_file">from_eng_file() (src.motor_builder.MotorBuilder static method)</a>
+</li>
+      <li><a href="api/index.html#src.environment_setup.EnvironmentBuilder.from_location">from_location() (src.environment_setup.EnvironmentBuilder static method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.generate_stability_report">generate_stability_report() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.geometry">geometry (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.GeometryConfig">GeometryConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.environment_setup.EnvironmentBuilder.get_atmospheric_conditions">get_atmospheric_conditions() (src.environment_setup.EnvironmentBuilder method)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController.get_controller_function">get_controller_function() (src.air_brakes_controller.AirBrakesController method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ConfigLoader.get_environment_config">get_environment_config() (src.config_loader.ConfigLoader method)</a>
+</li>
+      <li><a href="api/index.html#src.weather_fetcher.WeatherFetcher.get_era5_reanalysis_params">get_era5_reanalysis_params() (src.weather_fetcher.WeatherFetcher static method)</a>
+</li>
+      <li><a href="api/index.html#src.weather_fetcher.WeatherFetcher.get_gfs_forecast_params">get_gfs_forecast_params() (src.weather_fetcher.WeatherFetcher static method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ConfigLoader.get_motor_config">get_motor_config() (src.config_loader.ConfigLoader method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ConfigLoader.get_rocket_config">get_rocket_config() (src.config_loader.ConfigLoader method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ConfigLoader.get_simulation_config">get_simulation_config() (src.config_loader.ConfigLoader method)</a>
+</li>
+      <li><a href="api/index.html#src.weather_fetcher.get_station_name">get_station_name() (in module src.weather_fetcher)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.environment_setup.EnvironmentBuilder.get_summary">get_summary() (src.environment_setup.EnvironmentBuilder method)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.flight_simulator.FlightSimulator.get_summary">(src.flight_simulator.FlightSimulator method)</a>
+</li>
+        <li><a href="api/index.html#src.motor_builder.MotorBuilder.get_summary">(src.motor_builder.MotorBuilder method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.flight_simulator.FlightSimulator.get_trajectory_data">get_trajectory_data() (src.flight_simulator.FlightSimulator method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.grain_density_kg_m3">grain_density_kg_m3 (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.grain_initial_height_m">grain_initial_height_m (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.grain_initial_inner_radius_m">grain_initial_inner_radius_m (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.grain_number">grain_number (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.grain_outer_radius_m">grain_outer_radius_m (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.grain_separation_m">grain_separation_m (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.grains_center_of_mass_position_m">grains_center_of_mass_position_m (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.gravity_ms2">gravity_ms2 (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.RailConfig.heading_deg">heading_deg (src.config_loader.RailConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.utils.inches_to_meters">inches_to_meters() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RailConfig.inclination_deg">inclination_deg (src.config_loader.RailConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.inertia">inertia (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.InertiaConfig">InertiaConfig (class in src.config_loader)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.interpolation_method">interpolation_method (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="glossary.html#term-ISA"><strong>ISA</strong></a>
+</li>
+      <li><a href="api/index.html#src.config_loader.InertiaConfig.ixx_kg_m2">ixx_kg_m2 (src.config_loader.InertiaConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.InertiaConfig.iyy_kg_m2">iyy_kg_m2 (src.config_loader.InertiaConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.InertiaConfig.izz_kg_m2">izz_kg_m2 (src.config_loader.InertiaConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.kd">kd (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.kd">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.utils.kg_to_lbm">kg_to_lbm() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.ki">ki (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.ki">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.NoseConeConfig.kind">kind (src.config_loader.NoseConeConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.kp">kp (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.kp">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.ParachuteConfig.lag_s">lag_s (src.config_loader.ParachuteConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.latitude_deg">latitude_deg (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.utils.lbf_to_newtons">lbf_to_newtons() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.utils.lbm_to_kg">lbm_to_kg() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.GeometryConfig.length_m">length_m (src.config_loader.GeometryConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.NoseConeConfig.length_m">(src.config_loader.NoseConeConfig attribute)</a>
+</li>
+        <li><a href="api/index.html#src.config_loader.RailConfig.length_m">(src.config_loader.RailConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.weather_fetcher.list_wyoming_stations">list_wyoming_stations() (in module src.weather_fetcher)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.ConfigLoader.load_complete_config">load_complete_config() (src.config_loader.ConfigLoader method)</a>
+</li>
+      <li><a href="api/index.html#src.weather_fetcher.WeatherFetcher.load_custom_atmospheric_profile">load_custom_atmospheric_profile() (src.weather_fetcher.WeatherFetcher static method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ConfigLoader.load_from_yaml">load_from_yaml() (src.config_loader.ConfigLoader method)</a>
+</li>
+      <li><a href="api/index.html#src.data_handler.DataHandler.load_summary_json">load_summary_json() (src.data_handler.DataHandler method)</a>
+</li>
+      <li><a href="api/index.html#src.data_handler.DataHandler.load_trajectory_csv">load_trajectory_csv() (src.data_handler.DataHandler method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ConfigLoader.load_yaml">load_yaml() (src.config_loader.ConfigLoader method)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.log_controller_data">log_controller_data (src.air_brakes_controller.ControllerConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.longitude_deg">longitude_deg (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.max_deployment_rate">max_deployment_rate (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.max_deployment_rate">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.max_expected_height_m">max_expected_height_m (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.SimulationConfig.max_time_s">max_time_s (src.config_loader.SimulationConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.SimulationConfig.max_time_step_s">max_time_step_s (src.config_loader.SimulationConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ConfigLoader.merge_configs">merge_configs() (src.config_loader.ConfigLoader method)</a>
+</li>
+      <li><a href="api/index.html#src.utils.meters_to_feet">meters_to_feet() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.utils.meters_to_inches">meters_to_inches() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.min_activation_altitude_m">min_activation_altitude_m (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.min_activation_altitude_m">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.min_activation_time_s">min_activation_time_s (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.min_activation_time_s">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.config_loader.SimulationConfig.min_time_step_s">min_time_step_s (src.config_loader.SimulationConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.WindConfig.model">model (src.config_loader.WindConfig attribute)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api/index.html#module-src.air_brakes_controller">src.air_brakes_controller</a>
+</li>
+        <li><a href="api/index.html#module-src.config_loader">src.config_loader</a>
+</li>
+        <li><a href="api/index.html#module-src.curve_plotter">src.curve_plotter</a>
+</li>
+        <li><a href="api/index.html#module-src.data_handler">src.data_handler</a>
+</li>
+        <li><a href="api/index.html#module-src.environment_setup">src.environment_setup</a>
+</li>
+        <li><a href="api/index.html#module-src.flight_simulator">src.flight_simulator</a>
+</li>
+        <li><a href="api/index.html#module-src.motor_builder">src.motor_builder</a>
+</li>
+        <li><a href="api/index.html#module-src.state_exporter">src.state_exporter</a>
+</li>
+        <li><a href="api/index.html#module-src.utils">src.utils</a>
+</li>
+        <li><a href="api/index.html#module-src.validators">src.validators</a>
+</li>
+        <li><a href="api/index.html#module-src.visualizer">src.visualizer</a>
+</li>
+        <li><a href="api/index.html#module-src.weather_fetcher">src.weather_fetcher</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.motor_builder.MotorBuilder.motor">motor (src.motor_builder.MotorBuilder attribute)</a>
+</li>
+      <li><a href="glossary.html#term-Motor-Impulse-Class"><strong>Motor Impulse Class</strong></a>
+</li>
+      <li><a href="api/index.html#src.motor_builder.MotorBuilder">MotorBuilder (class in src.motor_builder)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig">MotorConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.validators.MotorValidator">MotorValidator (class in src.validators)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.ParachuteConfig.name">name (src.config_loader.ParachuteConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.RocketConfig.name">(src.config_loader.RocketConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.utils.newtons_to_lbf">newtons_to_lbf() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ParachuteConfig.noise_std">noise_std (src.config_loader.ParachuteConfig attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.nose_cone">nose_cone (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.NoseConeConfig">NoseConeConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.nozzle_position_m">nozzle_position_m (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.nozzle_radius_m">nozzle_radius_m (src.config_loader.MotorConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.AirBrakesConfig.override_cd_s">override_cd_s (src.config_loader.AirBrakesConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.parachute">parachute (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ParachuteConfig">ParachuteConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.visualizer.Visualizer.plot_acceleration_vs_time">plot_acceleration_vs_time() (src.visualizer.Visualizer method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_all_curves">plot_all_curves() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_all_motor_curves">plot_all_motor_curves() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_all_rocket_curves">plot_all_rocket_curves() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_all_stability_curves">plot_all_stability_curves() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.visualizer.Visualizer.plot_altitude_vs_time">plot_altitude_vs_time() (src.visualizer.Visualizer method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_atmospheric_profile">plot_atmospheric_profile() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_burn_characteristics">plot_burn_characteristics() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_center_of_mass">plot_center_of_mass() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_center_of_mass_evolution">plot_center_of_mass_evolution() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_com_vs_cop_comparison">plot_com_vs_cop_comparison() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.visualizer.Visualizer.plot_comparison">plot_comparison() (src.visualizer.Visualizer method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_cp_com_evolution_complete">plot_cp_com_evolution_complete() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_cp_travel_analysis">plot_cp_travel_analysis() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_cp_vs_mach">plot_cp_vs_mach() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_drag_coefficients">plot_drag_coefficients() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_drag_curve">plot_drag_curve() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_grain_geometry">plot_grain_geometry() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_inertia_comparison">plot_inertia_comparison() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_inertia_products">plot_inertia_products() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_inertia_tensor">plot_inertia_tensor() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_lateral_inertia">plot_lateral_inertia() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_mass_components_comparison">plot_mass_components_comparison() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_mass_evolution">plot_mass_evolution() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_motor_schematic">plot_motor_schematic() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_propellant_inertia_tensor">plot_propellant_inertia_tensor() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_rocket_schematic">plot_rocket_schematic() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_single_function">plot_single_function() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_stability_envelope">plot_stability_envelope() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_stability_margin_surface">plot_stability_margin_surface() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_static_margin_enhanced">plot_static_margin_enhanced() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_thrust_curve">plot_thrust_curve() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.visualizer.Visualizer.plot_trajectory_2d">plot_trajectory_2d() (src.visualizer.Visualizer method)</a>
+</li>
+      <li><a href="api/index.html#src.visualizer.Visualizer.plot_trajectory_3d">plot_trajectory_3d() (src.visualizer.Visualizer method)</a>
+</li>
+      <li><a href="api/index.html#src.visualizer.Visualizer.plot_velocity_vs_time">plot_velocity_vs_time() (src.visualizer.Visualizer method)</a>
+</li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.plot_wind_profile">plot_wind_profile() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.AirBrakesConfig.position_m">position_m (src.config_loader.AirBrakesConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.FinConfig.position_m">(src.config_loader.FinConfig attribute)</a>
+</li>
+        <li><a href="api/index.html#src.config_loader.MotorConfig.position_m">(src.config_loader.MotorConfig attribute)</a>
+</li>
+        <li><a href="api/index.html#src.config_loader.NoseConeConfig.position_m">(src.config_loader.NoseConeConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.power_off_drag">power_off_drag (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.power_on_drag">power_on_drag (src.config_loader.RocketConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.flight_simulator.FlightSimulator.print_summary">print_summary() (src.flight_simulator.FlightSimulator method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.flight_simulator.FlightSimulator.quick_simulation">quick_simulation() (src.flight_simulator.FlightSimulator static method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.utils.rad_to_deg">rad_to_deg() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.radius_m">radius_m (src.config_loader.RocketConfig property)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.SimulationConfig.rail">rail (src.config_loader.SimulationConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RailConfig">RailConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="glossary.html#term-RASP"><strong>RASP</strong></a>
+</li>
+      <li><a href="api/index.html#src.config_loader.AirBrakesConfig.reference_area_m2">reference_area_m2 (src.config_loader.AirBrakesConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.reference_pressure">reference_pressure (src.config_loader.MotorConfig attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.air_brakes_controller.AirBrakesController.reset_state">reset_state() (src.air_brakes_controller.AirBrakesController method)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.retraction_altitude_m">retraction_altitude_m (src.air_brakes_controller.ControllerConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.flight_simulator.FlightSimulator.rocket">rocket (src.flight_simulator.FlightSimulator attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig">RocketConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.validators.RocketValidator">RocketValidator (class in src.validators)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.FinConfig.root_chord_m">root_chord_m (src.config_loader.FinConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.SimulationConfig.rtol">rtol (src.config_loader.SimulationConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.flight_simulator.FlightSimulator.run">run() (src.flight_simulator.FlightSimulator method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.sampling_rate_hz">sampling_rate_hz (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.sampling_rate_hz">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+        <li><a href="api/index.html#src.config_loader.ParachuteConfig.sampling_rate_hz">(src.config_loader.ParachuteConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.curve_plotter.CurvePlotter.save_all_schematics">save_all_schematics() (src.curve_plotter.CurvePlotter method)</a>
+</li>
+      <li><a href="api/index.html#src.utils.setup_logging">setup_logging() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.air_brakes_controller.simple_apogee_controller">simple_apogee_controller() (in module src.air_brakes_controller)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.SimulationConfig">SimulationConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.validators.SimulationValidator">SimulationValidator (class in src.validators)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.WeatherSourceConfig.source">source (src.config_loader.WeatherSourceConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.weather_fetcher.WeatherConfig.source">(src.weather_fetcher.WeatherConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.config_loader.FinConfig.span_m">span_m (src.config_loader.FinConfig attribute)</a>
+</li>
+      <li>
+    src.air_brakes_controller
+
+      <ul>
+        <li><a href="api/index.html#module-src.air_brakes_controller">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.config_loader
+
+      <ul>
+        <li><a href="api/index.html#module-src.config_loader">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.curve_plotter
+
+      <ul>
+        <li><a href="api/index.html#module-src.curve_plotter">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.data_handler
+
+      <ul>
+        <li><a href="api/index.html#module-src.data_handler">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    src.environment_setup
+
+      <ul>
+        <li><a href="api/index.html#module-src.environment_setup">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.flight_simulator
+
+      <ul>
+        <li><a href="api/index.html#module-src.flight_simulator">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.motor_builder
+
+      <ul>
+        <li><a href="api/index.html#module-src.motor_builder">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.state_exporter
+
+      <ul>
+        <li><a href="api/index.html#module-src.state_exporter">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.utils
+
+      <ul>
+        <li><a href="api/index.html#module-src.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.validators
+
+      <ul>
+        <li><a href="api/index.html#module-src.validators">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.visualizer
+
+      <ul>
+        <li><a href="api/index.html#module-src.visualizer">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.weather_fetcher
+
+      <ul>
+        <li><a href="api/index.html#module-src.weather_fetcher">module</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.state_exporter.StateExporter">StateExporter (class in src.state_exporter)</a>
+</li>
+      <li><a href="glossary.html#term-Static-Margin"><strong>Static Margin</strong></a>
+</li>
+      <li><a href="api/index.html#src.config_loader.RocketConfig.static_margin_calibers">static_margin_calibers (src.config_loader.RocketConfig property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.target_apogee_m">target_apogee_m (src.air_brakes_controller.ControllerConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.config_loader.AirBrakesControllerConfig.target_apogee_m">(src.config_loader.AirBrakesControllerConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.config_loader.SimulationConfig.terminate_on_apogee">terminate_on_apogee (src.config_loader.SimulationConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.FinConfig.thickness_m">thickness_m (src.config_loader.FinConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.throat_radius_m">throat_radius_m (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="glossary.html#term-Thrust-Curve"><strong>Thrust Curve</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.thrust_source">thrust_source (src.config_loader.MotorConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.FinConfig.tip_chord_m">tip_chord_m (src.config_loader.FinConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.InertiaConfig.to_tuple">to_tuple() (src.config_loader.InertiaConfig method)</a>
+</li>
+      <li><a href="glossary.html#term-Total-Impulse"><strong>Total Impulse</strong></a>
+</li>
+      <li><a href="api/index.html#src.config_loader.ParachuteConfig.trigger">trigger (src.config_loader.ParachuteConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.utils.truncate_string">truncate_string() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.MotorConfig.type">type (src.config_loader.MotorConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.air_brakes_controller.ControllerConfig.use_kalman_filter">use_kalman_filter (src.air_brakes_controller.ControllerConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.validators.EnvironmentValidator.validate">validate() (src.validators.EnvironmentValidator static method)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.validators.MotorValidator.validate">(src.validators.MotorValidator static method)</a>
+</li>
+        <li><a href="api/index.html#src.validators.RocketValidator.validate">(src.validators.RocketValidator static method)</a>
+</li>
+        <li><a href="api/index.html#src.validators.SimulationValidator.validate">(src.validators.SimulationValidator static method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/index.html#src.validators.validate_all_configs">validate_all_configs() (in module src.validators)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.motor_builder.MotorBuilder.validate_thrust_curve">validate_thrust_curve() (src.motor_builder.MotorBuilder method)</a>
+</li>
+      <li><a href="api/index.html#src.validators.ValidationError">ValidationError</a>
+</li>
+      <li><a href="api/index.html#src.validators.ValidationWarning">ValidationWarning (class in src.validators)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.WindConfig.velocity_ms">velocity_ms (src.config_loader.WindConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.SimulationConfig.verbose">verbose (src.config_loader.SimulationConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.visualizer.Visualizer">Visualizer (class in src.visualizer)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.weather">weather (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.weather_fetcher.WeatherConfig">WeatherConfig (class in src.weather_fetcher)</a>
+</li>
+      <li><a href="api/index.html#src.weather_fetcher.WeatherFetcher">WeatherFetcher (class in src.weather_fetcher)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.WeatherSourceConfig">WeatherSourceConfig (class in src.config_loader)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/index.html#src.config_loader.EnvironmentConfig.wind">wind (src.config_loader.EnvironmentConfig attribute)</a>
+</li>
+      <li><a href="api/index.html#src.utils.wind_to_components">wind_to_components() (in module src.utils)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.WindConfig">WindConfig (class in src.config_loader)</a>
+</li>
+      <li><a href="api/index.html#src.config_loader.WeatherSourceConfig.wyoming_station">wyoming_station (src.config_loader.WeatherSourceConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/index.html#src.weather_fetcher.WeatherConfig.wyoming_station">(src.weather_fetcher.WeatherConfig attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1861 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Environment Parameters Reference &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/configuration/environment_params';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Simulation Parameters Reference" href="simulation_params.html" />
+    <link rel="prev" title="Motor Parameters Reference" href="motor_params.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Configuration Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Environment Parameters Reference</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="environment-parameters-reference">
+<span id="config-environment-params"></span><h1>Environment Parameters Reference<a class="headerlink" href="#environment-parameters-reference" title="Link to this heading">#</a></h1>
+<p>This reference documents all parameters in the <code class="docutils literal notranslate"><span class="pre">environment</span></code> configuration section.
+The environment section defines launch site location, atmospheric conditions, wind profile, and environmental models.</p>
+<nav class="contents local" id="on-this-page">
+<p class="topic-title">On this page</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#launch-site-location" id="id4">Launch Site Location</a></p>
+<ul>
+<li><p><a class="reference internal" href="#latitude-deg" id="id5">latitude_deg</a></p></li>
+<li><p><a class="reference internal" href="#longitude-deg" id="id6">longitude_deg</a></p></li>
+<li><p><a class="reference internal" href="#elevation-m" id="id7">elevation_m</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#atmospheric-model" id="id8">Atmospheric Model</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id9">atmospheric_model</a></p></li>
+<li><p><a class="reference internal" href="#atmospheric-model-file" id="id10">atmospheric_model_file</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#weather-data-sources" id="id11">Weather Data Sources</a></p>
+<ul>
+<li><p><a class="reference internal" href="#weather-source" id="id12">weather.source</a></p></li>
+<li><p><a class="reference internal" href="#weather-wyoming-station" id="id13">weather.wyoming_station</a></p></li>
+<li><p><a class="reference internal" href="#weather-custom-file" id="id14">weather.custom_file</a></p></li>
+<li><p><a class="reference internal" href="#weather-fetch-real-time" id="id15">weather.fetch_real_time</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#date-and-time" id="id16">Date and Time</a></p>
+<ul>
+<li><p><a class="reference internal" href="#date" id="id17">date</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#wind-configuration" id="id18">Wind Configuration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#wind-model" id="id19">wind.model</a></p></li>
+<li><p><a class="reference internal" href="#wind-velocity-ms" id="id20">wind.velocity_ms</a></p></li>
+<li><p><a class="reference internal" href="#wind-direction-deg" id="id21">wind.direction_deg</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#gravity" id="id22">Gravity</a></p>
+<ul>
+<li><p><a class="reference internal" href="#gravity-ms2" id="id23">gravity_ms2</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#simulation-limits" id="id24">Simulation Limits</a></p>
+<ul>
+<li><p><a class="reference internal" href="#max-expected-height-m" id="id25">max_expected_height_m</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#complete-examples" id="id26">Complete Examples</a></p>
+<ul>
+<li><p><a class="reference internal" href="#simple-launch-site" id="id27">Simple Launch Site</a></p></li>
+<li><p><a class="reference internal" href="#real-weather-data" id="id28">Real Weather Data</a></p></li>
+<li><p><a class="reference internal" href="#high-altitude-launch" id="id29">High-Altitude Launch</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#see-also" id="id30">See Also</a></p></li>
+</ul>
+</nav>
+<hr class="docutils" />
+<section id="overview">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The environment configuration controls:</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Location</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Launch site coordinates (lat/lon)</p></li>
+<li><p class="sd-card-text">Elevation above sea level</p></li>
+<li><p class="sd-card-text">Gravity</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Atmosphere</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Atmospheric model (standard, custom, real-time)</p></li>
+<li><p class="sd-card-text">Temperature, pressure, density profiles</p></li>
+<li><p class="sd-card-text">Weather data sources</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Wind</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Wind velocity and direction</p></li>
+<li><p class="sd-card-text">Altitude-dependent wind profiles</p></li>
+<li><p class="sd-card-text">Constant, custom, or weather-based models</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>Time</strong></div>
+<ul class="simple">
+<li><p class="sd-card-text">Launch date and time (optional)</p></li>
+<li><p class="sd-card-text">For real-time weather fetching</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="launch-site-location">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Launch Site Location</a><a class="headerlink" href="#launch-site-location" title="Link to this heading">#</a></h2>
+<section id="latitude-deg">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">latitude_deg</a><a class="headerlink" href="#latitude-deg" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Yes</strong></p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>degrees (°)</p>
+</dd>
+<dt class="field-even">Range<span class="colon">:</span></dt>
+<dd class="field-even"><p>-90 to +90</p>
+</dd>
+</dl>
+<p><strong>Latitude of launch site</strong> in decimal degrees.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">39.3897</span><span class="w">  </span><span class="c1"># North latitude (positive)</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Sign convention:</strong></p>
+<ul class="simple">
+<li><p><strong>Positive (+)</strong>: North latitude</p></li>
+<li><p><strong>Negative (−)</strong>: South latitude</p></li>
+</ul>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>Florida, USA: <code class="docutils literal notranslate"><span class="pre">+28.5</span></code></p></li>
+<li><p>Atacama Desert, Chile: <code class="docutils literal notranslate"><span class="pre">−24.5</span></code></p></li>
+</ul>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Find Coordinates</p>
+<p><strong>Method 1: Google Maps</strong></p>
+<ol class="arabic simple">
+<li><p>Navigate to launch site in Google Maps</p></li>
+<li><p>Right-click on location → “What’s here?”</p></li>
+<li><p>Click coordinates at bottom → copy latitude</p></li>
+</ol>
+<p><strong>Method 2: GPS device</strong></p>
+<p>Use smartphone GPS or handheld GPS unit:</p>
+<ul class="simple">
+<li><p>iOS Maps: Drop pin → swipe up → see coordinates</p></li>
+<li><p>Android Maps: Long press → coordinates displayed</p></li>
+</ul>
+<p><strong>Method 3: Launch site databases</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.spaceportamerica.com/">Spaceport America</a>: 32.9903°N</p></li>
+<li><p><a class="reference external" href="https://www.sscspace.com/esrange-space-center/">Esrange Space Center</a>: 67.8900°N</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Alcantara_Launch_Center">Alcantara Space Center</a>: -2.3738°S</p></li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Precision requirements:</strong></p>
+<ul class="simple">
+<li><p><strong>±0.1°</strong> (~11 km error): Acceptable for most simulations</p></li>
+<li><p><strong>±0.01°</strong> (~1 km error): Good for competition launches</p></li>
+<li><p><strong>±0.001°</strong> (~100 m error): High-precision simulations</p></li>
+</ul>
+<p>3-4 decimal places is usually sufficient.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="longitude-deg">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">longitude_deg</a><a class="headerlink" href="#longitude-deg" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Yes</strong></p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>degrees (°)</p>
+</dd>
+<dt class="field-even">Range<span class="colon">:</span></dt>
+<dd class="field-even"><p>-180 to +180</p>
+</dd>
+</dl>
+<p><strong>Longitude of launch site</strong> in decimal degrees.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-8.2889</span><span class="w">  </span><span class="c1"># West longitude (negative)</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Sign convention:</strong></p>
+<ul class="simple">
+<li><p><strong>Positive (+)</strong>: East longitude</p></li>
+<li><p><strong>Negative (−)</strong>: West longitude</p></li>
+</ul>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>London, UK: <code class="docutils literal notranslate"><span class="pre">−0.1276</span></code></p></li>
+<li><p>Tokyo, Japan: <code class="docutils literal notranslate"><span class="pre">+139.6917</span></code></p></li>
+<li><p>New York, USA: <code class="docutils literal notranslate"><span class="pre">−74.0060</span></code></p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="elevation-m">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">elevation_m</a><a class="headerlink" href="#elevation-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Elevation of launch site above mean sea level (MSL)</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1400.0</span><span class="w">  </span><span class="c1"># Launch pad at 1400 m MSL</span>
+</pre></div>
+</div>
+<p>Affects:</p>
+<ul class="simple">
+<li><p>Initial atmospheric pressure/density</p></li>
+<li><p>Gravity calculation</p></li>
+<li><p>Altitude measurements (apogee is <strong>above ground level</strong>, not MSL)</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Find Elevation</p>
+<p><strong>Method 1: Google Earth</strong></p>
+<ol class="arabic simple">
+<li><p>Navigate to launch site</p></li>
+<li><p>Elevation displayed at bottom-right</p></li>
+</ol>
+<p><strong>Method 2: Topographic maps</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ngmdb.usgs.gov/topoview/">USGS TopoView (USA)</a></p></li>
+<li><p><a class="reference external" href="https://opentopomap.org/">OpenTopoMap</a></p></li>
+</ul>
+<p><strong>Method 3: GPS/smartphone</strong></p>
+<ul class="simple">
+<li><p>Many GPS apps show elevation</p></li>
+<li><p>Note: GPS elevation can be ±10-50 m inaccurate</p></li>
+</ul>
+<p><strong>Method 4: Google Maps API</strong></p>
+<p>Use Elevation API with lat/lon coordinates</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Common launch site elevations:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 60.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Launch Site</p></th>
+<th class="head"><p>Elevation (m)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sea level (coastal)</p></td>
+<td><p>0 - 50</p></td>
+</tr>
+<tr class="row-odd"><td><p>Spaceport America, NM, USA</p></td>
+<td><p>1400</p></td>
+</tr>
+<tr class="row-even"><td><p>Black Rock Desert, NV, USA</p></td>
+<td><p>1190</p></td>
+</tr>
+<tr class="row-odd"><td><p>Esrange, Sweden</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-even"><td><p>Interlagos, Portugal</p></td>
+<td><p>100</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>High-altitude launch sites</strong> (&gt;1000 m) have significantly reduced air density!</p>
+<ul class="simple">
+<li><p>Lower drag → higher apogee</p></li>
+<li><p>Different motor performance</p></li>
+<li><p>Adjust parachute sizing accordingly</p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="atmospheric-model">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Atmospheric Model</a><a class="headerlink" href="#atmospheric-model" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">atmospheric_model</a><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;standard_atmosphere&quot;</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;standard_atmosphere&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;custom_atmosphere&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Atmospheric model</strong> for temperature, pressure, and density profiles.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 1.0: </span>Use <code class="docutils literal notranslate"><span class="pre">weather.source</span></code> instead. This parameter is maintained for backward compatibility.</p>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">atmospheric_model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;standard_atmosphere&quot;</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+standard_atmosphere (Default)</label><div class="sd-tab-content docutils">
+<p><strong>International Standard Atmosphere (ISA)</strong></p>
+<ul class="simple">
+<li><p>Standard temperature/pressure profiles</p></li>
+<li><p>No real weather variations</p></li>
+<li><p>Deterministic (same every time)</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">atmospheric_model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;standard_atmosphere&quot;</span>
+</pre></div>
+</div>
+<p>✅ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Design studies, preliminary simulations</p></li>
+<li><p>Competition predictions (conservative)</p></li>
+<li><p>No weather data available</p></li>
+</ul>
+<p>⚠️ <strong>Limitations:</strong></p>
+<ul class="simple">
+<li><p>Ignores real weather (temperature, pressure variations)</p></li>
+<li><p>Not suitable for high-accuracy predictions</p></li>
+</ul>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+custom_atmosphere</label><div class="sd-tab-content docutils">
+<p><strong>Custom atmospheric profile from file</strong></p>
+<p>Load temperature/pressure data from file:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">atmospheric_model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;custom_atmosphere&quot;</span>
+<span class="w">  </span><span class="nt">atmospheric_model_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/atmosphere_2024-03-15.csv&quot;</span>
+</pre></div>
+</div>
+<p>✅ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Custom atmospheric profiles (soundings, reanalysis data)</p></li>
+<li><p>Historical weather conditions</p></li>
+<li><p>Specific atmospheric scenarios</p></li>
+</ul>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#config-environment-weather"><span class="std std-ref">Weather Data Sources</span></a> for modern weather data sources</p></li>
+<li><p><span class="xref std std-ref">how-to-create-custom-atmosphere</span> for file format</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="atmospheric-model-file">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">atmospheric_model_file</a><a class="headerlink" href="#atmospheric-model-file" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Only if <code class="docutils literal notranslate"><span class="pre">atmospheric_model</span> <span class="pre">=</span> <span class="pre">&quot;custom_atmosphere&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Path to custom atmospheric profile file</strong>.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 1.0: </span>Use <code class="docutils literal notranslate"><span class="pre">weather.custom_file</span></code> instead.</p>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">atmospheric_model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;custom_atmosphere&quot;</span>
+<span class="w">  </span><span class="nt">atmospheric_model_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/atmosphere.csv&quot;</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">File Format</p>
+<p>CSV file with altitude, temperature, pressure:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">data/atmosphere.csv</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> # Altitude (m), Temperature (K), Pressure (Pa)
+ 0, 288.15, 101325
+ 500, 284.9, 95460
+ 1000, 281.7, 89870
+ 1500, 278.4, 84550
+ 2000, 275.2, 79490
+ 5000, 255.7, 54020
+ 10000, 223.3, 26430
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Altitude in meters above MSL</p></li>
+<li><p>Temperature in Kelvin</p></li>
+<li><p>Pressure in Pascals</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="weather-data-sources">
+<span id="config-environment-weather"></span><h2><a class="toc-backref" href="#id11" role="doc-backlink">Weather Data Sources</a><a class="headerlink" href="#weather-data-sources" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">weather</span></code> subsection provides access to real-time and historical atmospheric data.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+<span class="w">    </span><span class="nt">wyoming_station</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;72340&quot;</span>
+<span class="w">    </span><span class="nt">fetch_real_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<section id="weather-source">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">weather.source</a><a class="headerlink" href="#weather-source" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;standard_atmosphere&quot;</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;standard_atmosphere&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;wyoming&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;gfs&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;era5&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;custom&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Weather data source</strong> for atmospheric profiles.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+standard_atmosphere (Default)</label><div class="sd-tab-content docutils">
+<p><strong>ISA standard atmosphere</strong></p>
+<ul class="simple">
+<li><p>Same as <code class="docutils literal notranslate"><span class="pre">atmospheric_model:</span> <span class="pre">&quot;standard_atmosphere&quot;</span></code></p></li>
+<li><p>No external data required</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;standard_atmosphere&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+wyoming</label><div class="sd-tab-content docutils">
+<p><strong>University of Wyoming sounding database</strong></p>
+<ul class="simple">
+<li><p>Upper air soundings from worldwide weather stations</p></li>
+<li><p>Historical data back to 1970s</p></li>
+<li><p>Twice-daily soundings (00:00 and 12:00 UTC)</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">37.7749</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-122.4194</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+<span class="w">    </span><span class="nt">wyoming_station</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;72340&quot;</span><span class="w">  </span><span class="c1"># Oakland, CA</span>
+<span class="w">    </span><span class="nt">fetch_real_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2024</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># June 15, 2024, 12:00 UTC</span>
+</pre></div>
+</div>
+<p>✅ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Post-flight analysis (match real conditions)</p></li>
+<li><p>Competition predictions (use historical statistics)</p></li>
+<li><p>Launch sites near weather stations</p></li>
+</ul>
+<p>⚠️ <strong>Requirements:</strong></p>
+<ul class="simple">
+<li><p>Internet connection</p></li>
+<li><p>Valid Wyoming station ID</p></li>
+<li><p>Date within available data range</p></li>
+</ul>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+gfs</label><div class="sd-tab-content docutils">
+<p><strong>NOAA Global Forecast System (GFS)</strong></p>
+<ul class="simple">
+<li><p>Numerical weather prediction model</p></li>
+<li><p>Forecast data (0-16 days ahead)</p></li>
+<li><p>Global coverage, 0.25° resolution</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gfs&quot;</span>
+<span class="w">    </span><span class="nt">fetch_real_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Use latest forecast</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>RocketPy integration required</strong></p>
+<p>Not yet fully supported in rocket-sim. Use RocketPy API directly.</p>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-5">
+custom</label><div class="sd-tab-content docutils">
+<p><strong>Custom atmospheric file</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;custom&quot;</span>
+<span class="w">    </span><span class="nt">custom_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/atmosphere_2024-03-15.csv&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="weather-wyoming-station">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">weather.wyoming_station</a><a class="headerlink" href="#weather-wyoming-station" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Only if <code class="docutils literal notranslate"><span class="pre">weather.source</span> <span class="pre">=</span> <span class="pre">&quot;wyoming&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Wyoming sounding station ID</strong> (5-digit code).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+<span class="w">    </span><span class="nt">wyoming_station</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;72340&quot;</span><span class="w">  </span><span class="c1"># Oakland, CA</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Finding Wyoming Station IDs</p>
+<p><strong>Step 1: Find nearest station</strong></p>
+<p>Browse map: <a class="reference external" href="http://weather.uwyo.edu/upperair/sounding.html">Wyoming Sounding Database</a></p>
+<p><strong>Step 2: Note station ID</strong></p>
+<p>Common stations:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Location</p></th>
+<th class="head"><p>Station Name</p></th>
+<th class="head"><p>ID</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Oakland, CA, USA</p></td>
+<td><p>KOAK</p></td>
+<td><p>72340</p></td>
+</tr>
+<tr class="row-odd"><td><p>Denver, CO, USA</p></td>
+<td><p>KDNR</p></td>
+<td><p>72469</p></td>
+</tr>
+<tr class="row-even"><td><p>Corpus Christi, TX, USA</p></td>
+<td><p>KCRP</p></td>
+<td><p>72250</p></td>
+</tr>
+<tr class="row-odd"><td><p>Lisbon, Portugal</p></td>
+<td><p>LPPT</p></td>
+<td><p>08562</p></td>
+</tr>
+<tr class="row-even"><td><p>Stockholm, Sweden</p></td>
+<td><p>ESSA</p></td>
+<td><p>02365</p></td>
+</tr>
+<tr class="row-odd"><td><p>Adelaide, Australia</p></td>
+<td><p>YPAD</p></td>
+<td><p>94672</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Step 3: Verify data availability</strong></p>
+<p>Check that station has data for your target date:</p>
+<ol class="arabic simple">
+<li><p>Go to Wyoming website</p></li>
+<li><p>Select station, date, time</p></li>
+<li><p>Verify sounding appears</p></li>
+</ol>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Choosing the right station:</strong></p>
+<ul class="simple">
+<li><p>Select station <strong>upwind</strong> of launch site (wind carries air mass)</p></li>
+<li><p>Closer is better (within ~100-200 km)</p></li>
+<li><p>Check data availability for target date range</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="weather-custom-file">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">weather.custom_file</a><a class="headerlink" href="#weather-custom-file" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Only if <code class="docutils literal notranslate"><span class="pre">weather.source</span> <span class="pre">=</span> <span class="pre">&quot;custom&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Path to custom atmospheric profile file</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;custom&quot;</span>
+<span class="w">    </span><span class="nt">custom_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/atmosphere_high_altitude.csv&quot;</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-ref">how-to-create-custom-atmosphere</span> for file format.</p>
+</section>
+<hr class="docutils" />
+<section id="weather-fetch-real-time">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">weather.fetch_real_time</a><a class="headerlink" href="#weather-fetch-real-time" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+</dd>
+</dl>
+<p><strong>Fetch latest available weather data</strong> instead of using <code class="docutils literal notranslate"><span class="pre">date</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+<span class="w">    </span><span class="nt">wyoming_station</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;72340&quot;</span>
+<span class="w">    </span><span class="nt">fetch_real_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Ignore &#39;date&#39;, use latest sounding</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-6">
+false (Default)</label><div class="sd-tab-content docutils">
+<p><strong>Use specified date</strong> from <code class="docutils literal notranslate"><span class="pre">environment.date</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2024</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+<span class="w">    </span><span class="nt">wyoming_station</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;72340&quot;</span>
+<span class="w">    </span><span class="nt">fetch_real_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-7">
+true</label><div class="sd-tab-content docutils">
+<p><strong>Fetch latest available data</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+<span class="w">    </span><span class="nt">wyoming_station</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;72340&quot;</span>
+<span class="w">    </span><span class="nt">fetch_real_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Ignore &#39;date&#39;</span>
+</pre></div>
+</div>
+<p>Useful for:</p>
+<ul class="simple">
+<li><p>Real-time launch decisions</p></li>
+<li><p>Pre-launch simulations with current weather</p></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="date-and-time">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Date and Time</a><a class="headerlink" href="#date-and-time" title="Link to this heading">#</a></h2>
+<section id="date">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">date</a><a class="headerlink" href="#date" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">of</span> <span class="pre">int</span></code> (4 elements) or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Format<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">[year,</span> <span class="pre">month,</span> <span class="pre">day,</span> <span class="pre">hour_utc]</span></code></p>
+</dd>
+</dl>
+<p><strong>Launch date and time</strong> for weather data fetching.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2024</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># June 15, 2024, 12:00 UTC</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Time is in UTC</strong> (Coordinated Universal Time), not local time!</p>
+<p>Convert local time to UTC:</p>
+<ul class="simple">
+<li><p>PDT (UTC-7): Add 7 hours</p></li>
+<li><p>EDT (UTC-4): Add 4 hours</p></li>
+<li><p>CET (UTC+1): Subtract 1 hour</p></li>
+</ul>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-8" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-8">
+null (Default)</label><div class="sd-tab-content docutils">
+<p><strong>No specific date</strong> (use standard atmosphere):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;standard_atmosphere&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-9" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-9">
+Specific date</label><div class="sd-tab-content docutils">
+<p><strong>Historical or forecast date</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2024</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># June 15, 2024, 12:00 UTC</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+<span class="w">    </span><span class="nt">wyoming_station</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;72340&quot;</span>
+</pre></div>
+</div>
+<p>Wyoming soundings available at:</p>
+<ul class="simple">
+<li><p><strong>00:00 UTC</strong> (midnight)</p></li>
+<li><p><strong>12:00 UTC</strong> (noon)</p></li>
+</ul>
+<p>Use nearest time to your launch.</p>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Date Format Examples</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Morning launch (9:00 AM local PDT = 16:00 UTC)</span>
+<span class="c1"># Use 12:00 UTC sounding (closest available)</span>
+<span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2024</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">7</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">20</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># Evening launch (6:00 PM local CET = 17:00 UTC)</span>
+<span class="c1"># Use 12:00 UTC sounding</span>
+<span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2024</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">5</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># Early morning launch (7:00 AM local EST = 12:00 UTC)</span>
+<span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2024</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">9</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">10</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="wind-configuration">
+<h2><a class="toc-backref" href="#id18" role="doc-backlink">Wind Configuration</a><a class="headerlink" href="#wind-configuration" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">wind</span></code> subsection defines wind velocity and direction profiles.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;constant&quot;</span>
+<span class="w">    </span><span class="nt">velocity_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">    </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90.0</span>
+</pre></div>
+</div>
+<section id="wind-model">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">wind.model</a><a class="headerlink" href="#wind-model" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;constant&quot;</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;constant&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;from_weather&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;function&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;custom&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Wind model type</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;constant&quot;</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-10" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-10">
+constant (Default)</label><div class="sd-tab-content docutils">
+<p><strong>Constant wind at all altitudes</strong></p>
+<ul class="simple">
+<li><p>Same velocity and direction from ground to max altitude</p></li>
+<li><p>Simplest model</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;constant&quot;</span>
+<span class="w">    </span><span class="nt">velocity_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">    </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90.0</span><span class="w">  </span><span class="c1"># Easterly wind</span>
+</pre></div>
+</div>
+<p>✅ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Initial design studies</p></li>
+<li><p>Conservative estimates (worst-case wind)</p></li>
+<li><p>No detailed wind data available</p></li>
+</ul>
+</div>
+<input id="sd-tab-item-11" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-11">
+from_weather</label><div class="sd-tab-content docutils">
+<p><strong>Extract wind from weather data source</strong></p>
+<p>Uses wind profile from Wyoming sounding, GFS, etc.:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+<span class="w">    </span><span class="nt">wyoming_station</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;72340&quot;</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;from_weather&quot;</span>
+</pre></div>
+</div>
+<p>✅ <strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>Real weather data available</p></li>
+<li><p>Altitude-dependent wind analysis</p></li>
+<li><p>Competition predictions</p></li>
+</ul>
+</div>
+<input id="sd-tab-item-12" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-12">
+custom</label><div class="sd-tab-content docutils">
+<p><strong>Custom wind profile from file</strong></p>
+<p>Load wind data from CSV:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;custom&quot;</span>
+<span class="w">    </span><span class="c1"># Custom file path defined separately</span>
+</pre></div>
+</div>
+<p>⚠️ <strong>Advanced feature</strong> - requires RocketPy API for file specification</p>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="wind-velocity-ms">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">wind.velocity_ms</a><a class="headerlink" href="#wind-velocity-ms" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Only if <code class="docutils literal notranslate"><span class="pre">wind.model</span> <span class="pre">=</span> <span class="pre">&quot;constant&quot;</span></code></p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters per second (m/s)</p>
+</dd>
+</dl>
+<p><strong>Wind speed</strong> (constant model).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;constant&quot;</span>
+<span class="w">    </span><span class="nt">velocity_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Wind Speed Conversions</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>m/s</p></th>
+<th class="head"><p>km/h</p></th>
+<th class="head"><p>mph (knots)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0 - 2</p></td>
+<td><p>0 - 7</p></td>
+<td><p>Calm (0-4 kt)</p></td>
+</tr>
+<tr class="row-odd"><td><p>2 - 5</p></td>
+<td><p>7 - 18</p></td>
+<td><p>Light breeze (4-10 kt)</p></td>
+</tr>
+<tr class="row-even"><td><p>5 - 10</p></td>
+<td><p>18 - 36</p></td>
+<td><p>Moderate wind (10-20 kt)</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 - 15</p></td>
+<td><p>36 - 54</p></td>
+<td><p>Strong wind (20-30 kt)</p></td>
+</tr>
+<tr class="row-even"><td><p>15 - 20</p></td>
+<td><p>54 - 72</p></td>
+<td><p>Very strong (30-40 kt)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&gt;20</p></td>
+<td><p>&gt;72</p></td>
+<td><p>Dangerous (&gt;40 kt)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Conversion factors:</strong></p>
+<ul class="simple">
+<li><p>mph → m/s: divide by 2.237</p></li>
+<li><p>km/h → m/s: divide by 3.6</p></li>
+<li><p>knots → m/s: divide by 1.944</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Launch wind limits:</strong></p>
+<ul class="simple">
+<li><p><strong>&lt; 5 m/s (10 mph)</strong>: Safe for most rockets</p></li>
+<li><p><strong>5-10 m/s (10-20 mph)</strong>: Experienced fliers, large rockets only</p></li>
+<li><p><strong>&gt; 10 m/s (20 mph)</strong>: Generally unsafe, scrub launch</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="wind-direction-deg">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">wind.direction_deg</a><a class="headerlink" href="#wind-direction-deg" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Only if <code class="docutils literal notranslate"><span class="pre">wind.model</span> <span class="pre">=</span> <span class="pre">&quot;constant&quot;</span></code></p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>degrees (°)</p>
+</dd>
+<dt class="field-even">Range<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 to 360</p>
+</dd>
+</dl>
+<p><strong>Wind direction</strong> in meteorological convention.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;constant&quot;</span>
+<span class="w">    </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90.0</span><span class="w">  </span><span class="c1"># Wind FROM the East</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Meteorological convention:</strong> Direction wind is <strong>coming FROM</strong>, not blowing toward.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>direction_deg = 0°   → Wind from North (northerly)
+direction_deg = 90°  → Wind from East (easterly)
+direction_deg = 180° → Wind from South (southerly)
+direction_deg = 270° → Wind from West (westerly)
+</pre></div>
+</div>
+</div>
+<a class="reference internal image-reference" href="_static/images/wind_direction_compass.png"><img alt="Wind direction compass rose" class="align-center" src="_static/images/wind_direction_compass.png" style="width: 300px;" />
+</a>
+<div class="dropdown admonition">
+<p class="admonition-title">Wind Direction Examples</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scenario 1: Wind blowing toward launch pad from the ocean (West)</span>
+<span class="nt">wind</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">270.0</span><span class="w">  </span><span class="c1"># Westerly wind</span>
+
+<span class="c1"># Scenario 2: Wind from mountains (North-East)</span>
+<span class="nt">wind</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">45.0</span><span class="w">  </span><span class="c1"># NE wind</span>
+
+<span class="c1"># Scenario 3: Onshore breeze (from water, East)</span>
+<span class="nt">wind</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90.0</span><span class="w">  </span><span class="c1"># Easterly wind</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="gravity">
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">Gravity</a><a class="headerlink" href="#gravity" title="Link to this heading">#</a></h2>
+<section id="gravity-ms2">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">gravity_ms2</a><a class="headerlink" href="#gravity-ms2" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">9.80665</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters per second squared (m/s²)</p>
+</dd>
+</dl>
+<p><strong>Gravitational acceleration</strong> at launch site.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gravity_ms2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9.80665</span><span class="w">  </span><span class="c1"># Standard Earth gravity</span>
+</pre></div>
+</div>
+<p>RocketPy can compute gravity from latitude and elevation.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Latitude/Altitude Variations</p>
+<p>Gravity varies by ~0.5% across Earth:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Location</p></th>
+<th class="head"><p>gravity_ms2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Equator, sea level</p></td>
+<td><p>9.7803</p></td>
+</tr>
+<tr class="row-odd"><td><p>45° latitude, sea level</p></td>
+<td><p>9.8062</p></td>
+</tr>
+<tr class="row-even"><td><p>North Pole, sea level</p></td>
+<td><p>9.8322</p></td>
+</tr>
+<tr class="row-odd"><td><p>Mount Everest (8848 m)</p></td>
+<td><p>9.7640</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>For most simulations</strong>, use default <code class="docutils literal notranslate"><span class="pre">9.80665</span></code> (standard gravity).</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Leave at default unless:</p>
+<ul class="simple">
+<li><p>Extreme latitude (polar regions)</p></li>
+<li><p>Very high elevation (&gt;3000 m)</p></li>
+<li><p>High-precision trajectory analysis</p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="simulation-limits">
+<h2><a class="toc-backref" href="#id24" role="doc-backlink">Simulation Limits</a><a class="headerlink" href="#simulation-limits" title="Link to this heading">#</a></h2>
+<section id="max-expected-height-m">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">max_expected_height_m</a><a class="headerlink" href="#max-expected-height-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">10000.0</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Maximum expected altitude</strong> for pre-allocating atmospheric data.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_expected_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000.0</span>
+</pre></div>
+</div>
+<p>RocketPy pre-computes atmospheric properties up to this altitude.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Setting max_expected_height:</strong></p>
+<ul class="simple">
+<li><p>Set ~20-30% above estimated apogee</p></li>
+<li><p>Too low: simulation may fail if rocket exceeds limit</p></li>
+<li><p>Too high: wastes memory, slower initialization</p></li>
+</ul>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>Small model rocket (300 m apogee): <code class="docutils literal notranslate"><span class="pre">max_expected_height_m:</span> <span class="pre">500</span></code></p></li>
+<li><p>High-power L motor (1500 m apogee): <code class="docutils literal notranslate"><span class="pre">max_expected_height_m:</span> <span class="pre">2000</span></code></p></li>
+<li><p>Competition M motor (3000 m apogee): <code class="docutils literal notranslate"><span class="pre">max_expected_height_m:</span> <span class="pre">5000</span></code></p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="complete-examples">
+<h2><a class="toc-backref" href="#id26" role="doc-backlink">Complete Examples</a><a class="headerlink" href="#complete-examples" title="Link to this heading">#</a></h2>
+<section id="simple-launch-site">
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">Simple Launch Site</a><a class="headerlink" href="#simple-launch-site" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Spaceport America, New Mexico, USA</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32.9903</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-106.9750</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1400.0</span>
+
+<span class="w">  </span><span class="c1"># Standard atmosphere, light wind</span>
+<span class="w">  </span><span class="nt">atmospheric_model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;standard_atmosphere&quot;</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;constant&quot;</span>
+<span class="w">    </span><span class="nt">velocity_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+<span class="w">    </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">180.0</span><span class="w">  </span><span class="c1"># Southerly wind</span>
+
+<span class="w">  </span><span class="nt">gravity_ms2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9.80665</span>
+<span class="w">  </span><span class="nt">max_expected_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000.0</span>
+</pre></div>
+</div>
+</section>
+<section id="real-weather-data">
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">Real Weather Data</a><a class="headerlink" href="#real-weather-data" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Competition launch - use historical weather</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">39.3897</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-8.2889</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100.0</span>
+<span class="w">  </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2024</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">15</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">12</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># June 15, 2024, 12:00 UTC</span>
+
+<span class="w">  </span><span class="c1"># Fetch Wyoming sounding</span>
+<span class="w">  </span><span class="nt">weather</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;wyoming&quot;</span>
+<span class="w">    </span><span class="nt">wyoming_station</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;08562&quot;</span><span class="w">  </span><span class="c1"># Lisbon, Portugal</span>
+<span class="w">    </span><span class="nt">fetch_real_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="w">  </span><span class="c1"># Use wind from weather data</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;from_weather&quot;</span>
+
+<span class="w">  </span><span class="nt">max_expected_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3500.0</span>
+</pre></div>
+</div>
+</section>
+<section id="high-altitude-launch">
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">High-Altitude Launch</a><a class="headerlink" href="#high-altitude-launch" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># High-altitude desert launch site</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40.6505</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-119.2053</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1190.0</span><span class="w">  </span><span class="c1"># Black Rock Desert, NV</span>
+
+<span class="w">  </span><span class="c1"># Custom atmosphere file (thin air at altitude)</span>
+<span class="w">  </span><span class="nt">atmospheric_model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;custom_atmosphere&quot;</span>
+<span class="w">  </span><span class="nt">atmospheric_model_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/atmosphere_black_rock.csv&quot;</span>
+
+<span class="w">  </span><span class="c1"># Strong desert wind</span>
+<span class="w">  </span><span class="nt">wind</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;constant&quot;</span>
+<span class="w">    </span><span class="nt">velocity_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.0</span>
+<span class="w">    </span><span class="nt">direction_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">270.0</span><span class="w">  </span><span class="c1"># Westerly wind</span>
+
+<span class="w">  </span><span class="nt">gravity_ms2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9.805</span><span class="w">  </span><span class="c1"># Slightly reduced at latitude 40°N</span>
+<span class="w">  </span><span class="nt">max_expected_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8000.0</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="see-also">
+<h2><a class="toc-backref" href="#id30" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><strong>Configuration References:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="rocket_params.html#config-rocket-params"><span class="std std-ref">Rocket Parameters Reference</span></a> - Rocket geometry and mass properties</p></li>
+<li><p><a class="reference internal" href="motor_params.html#config-motor-params"><span class="std std-ref">Motor Parameters Reference</span></a> - Motor and propulsion system</p></li>
+<li><p><a class="reference internal" href="simulation_params.html#config-simulation-params"><span class="std std-ref">Simulation Parameters Reference</span></a> - Simulation settings and rail configuration</p></li>
+</ul>
+<p><strong>Tutorials:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">tutorial-basic-flight</span> - Complete first simulation</p></li>
+<li><p><span class="xref std std-ref">tutorial-weather-data</span> - Using real atmospheric data</p></li>
+</ul>
+<p><strong>How-To Guides:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">how-to-find-launch-coordinates</span> - Determining lat/lon/elevation</p></li>
+<li><p><span class="xref std std-ref">how-to-wyoming-soundings</span> - Fetching historical weather</p></li>
+<li><p><span class="xref std std-ref">how-to-create-custom-atmosphere</span> - Custom atmospheric profiles</p></li>
+<li><p><span class="xref std std-ref">how-to-wind-analysis</span> - Wind drift prediction</p></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">example-weather-sensitivity</span> - Impact of weather on apogee</p></li>
+<li><p><span class="xref std std-ref">example-multi-location</span> - Comparing launch sites</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<p><strong>Next:</strong> <a class="reference internal" href="simulation_params.html#config-simulation-params"><span class="std std-ref">Simulation Parameters Reference</span></a></p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="motor_params.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Motor Parameters Reference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="simulation_params.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Simulation Parameters Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-site-location">Launch Site Location</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#latitude-deg">latitude_deg</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#longitude-deg">longitude_deg</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#elevation-m">elevation_m</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#atmospheric-model">Atmospheric Model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">atmospheric_model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#atmospheric-model-file">atmospheric_model_file</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weather-data-sources">Weather Data Sources</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weather-source">weather.source</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weather-wyoming-station">weather.wyoming_station</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weather-custom-file">weather.custom_file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weather-fetch-real-time">weather.fetch_real_time</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time">Date and Time</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date">date</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wind-configuration">Wind Configuration</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wind-model">wind.model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wind-velocity-ms">wind.velocity_ms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wind-direction-deg">wind.direction_deg</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gravity">Gravity</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gravity-ms2">gravity_ms2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-limits">Simulation Limits</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-expected-height-m">max_expected_height_m</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-examples">Complete Examples</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-launch-site">Simple Launch Site</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#real-weather-data">Real Weather Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-altitude-launch">High-Altitude Launch</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See Also</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/configuration/environment_params.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

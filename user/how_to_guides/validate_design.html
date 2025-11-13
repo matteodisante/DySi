@@ -1,0 +1,972 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Validate Your Rocket Design &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/how_to_guides/validate_design';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Select the Optimal Motor" href="motor_selection.html" />
+    <link rel="prev" title="How to Measure Your Rocket’s Parameters" href="measure_rocket.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">How-To Guides</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Validate Your Rocket Design</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="validate-your-rocket-design">
+<span id="howto-validate-design"></span><h1>Validate Your Rocket Design<a class="headerlink" href="#validate-your-rocket-design" title="Link to this heading">#</a></h1>
+<p>This guide shows you how to verify that your rocket design is stable, safe, and ready to fly.</p>
+<div class="tip admonition">
+<p class="admonition-title">Quick Answer</p>
+<p>Run your simulation and check the stability margin is between 1.0 and 3.0 calibers.</p>
+</div>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Configuration file created</p></li>
+<li><p>Basic understanding of stability (see <a class="reference internal" href="../tutorials/04_adding_fins.html#tutorial-adding-fins"><span class="std std-ref">Adding and Optimizing Fins</span></a>)</p></li>
+</ul>
+</section>
+<section id="validation-checklist">
+<h2>Validation Checklist<a class="headerlink" href="#validation-checklist" title="Link to this heading">#</a></h2>
+<section id="step-1-check-stability-margin">
+<h3>Step 1: Check Stability Margin<a class="headerlink" href="#step-1-check-stability-margin" title="Link to this heading">#</a></h3>
+<p>Run your simulation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span>configs/my_rocket.yaml<span class="w"> </span>--name<span class="w"> </span>validation_test
+</pre></div>
+</div>
+<p>Check the results:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span><span class="s2">&quot;Stability&quot;</span><span class="w"> </span>outputs/validation_test/final_state_READABLE.txt
+</pre></div>
+</div>
+<p><strong>Expected output:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Initial Stability Margin: 1.8 calibers  ✓
+Out-of-rail Stability: 1.9 calibers    ✓
+</pre></div>
+</div>
+<p><strong>Stability criteria:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Stability Margin</p></th>
+<th class="head"><p>Status</p></th>
+<th class="head"><p>Action Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt; 0.5 calibers</p></td>
+<td><p>❌ <strong>UNSAFE</strong></p></td>
+<td><p>Rocket will tumble - DO NOT FLY</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.5 - 1.0 calibers</p></td>
+<td><p>⚠️ <strong>MARGINAL</strong></p></td>
+<td><p>Increase fin size or add nose weight</p></td>
+</tr>
+<tr class="row-even"><td><p>1.0 - 2.5 calibers</p></td>
+<td><p>✅ <strong>GOOD</strong></p></td>
+<td><p>Ready to fly</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5 - 3.5 calibers</p></td>
+<td><p>✅ <strong>STABLE</strong></p></td>
+<td><p>Good, may weathercock in wind</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt; 3.5 calibers</p></td>
+<td><p>⚠️ <strong>OVER-STABLE</strong></p></td>
+<td><p>Consider reducing fin size</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>If unstable (&lt; 1.0):</strong></p>
+<ol class="arabic simple">
+<li><p>Increase fin span by 20%</p></li>
+<li><p>Move fins closer to tail</p></li>
+<li><p>Add weight to nose cone</p></li>
+<li><p>Reduce motor size (lighter = CoM forward)</p></li>
+</ol>
+</section>
+<section id="step-2-check-rail-exit-velocity">
+<h3>Step 2: Check Rail Exit Velocity<a class="headerlink" href="#step-2-check-rail-exit-velocity" title="Link to this heading">#</a></h3>
+<p>Find rail exit velocity:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span><span class="s2">&quot;Rail Exit&quot;</span><span class="w"> </span>outputs/validation_test/final_state_READABLE.txt
+</pre></div>
+</div>
+<p><strong>Expected:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Rail Exit:
+  Velocity:                    18.2 m/s  ✓
+</pre></div>
+</div>
+<p><strong>Velocity criteria:</strong></p>
+<ul class="simple">
+<li><p><strong>&lt; 15 m/s</strong>: ❌ Too slow - fins not effective yet</p></li>
+<li><p><strong>15-20 m/s</strong>: ⚠️ Marginal - increase rail length or motor</p></li>
+<li><p><strong>20-30 m/s</strong>: ✅ Good - safe flight</p></li>
+<li><p><strong>&gt; 30 m/s</strong>: ✅ Excellent - very stable launch</p></li>
+</ul>
+<p><strong>If too slow:</strong></p>
+<ol class="arabic simple">
+<li><p>Increase rail length (try 5m → 7m)</p></li>
+<li><p>Use more powerful motor</p></li>
+<li><p>Reduce rocket mass</p></li>
+</ol>
+</section>
+<section id="step-3-validate-mass-distribution">
+<h3>Step 3: Validate Mass Distribution<a class="headerlink" href="#step-3-validate-mass-distribution" title="Link to this heading">#</a></h3>
+<p>Check center of mass vs. center of pressure:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="s2">&quot;Center of Mass&quot;</span><span class="w"> </span>outputs/validation_test/final_state_READABLE.txt
+grep<span class="w"> </span>-A<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="s2">&quot;Center of Pressure&quot;</span><span class="w"> </span>outputs/validation_test/final_state_READABLE.txt
+</pre></div>
+</div>
+<p><strong>Expected pattern:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Center of Mass (dry): 1.30 m from tail
+Center of Pressure:   2.10 m from tail
+
+Distance (CP - CoM):  0.80 m = 6.3 calibers ✓
+</pre></div>
+</div>
+<p>CP must be <strong>aft</strong> (toward tail) of CoM!</p>
+</section>
+<section id="step-4-check-landing-velocity">
+<h3>Step 4: Check Landing Velocity<a class="headerlink" href="#step-4-check-landing-velocity" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span><span class="s2">&quot;Impact&quot;</span><span class="w"> </span>outputs/validation_test/final_state_READABLE.txt
+</pre></div>
+</div>
+<p><strong>Expected:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Impact:
+  Velocity:                    -5.4 m/s  ✓
+</pre></div>
+</div>
+<p><strong>Landing velocity criteria:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Landing Velocity</p></th>
+<th class="head"><p>Status</p></th>
+<th class="head"><p>Assessment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt; 5 m/s</p></td>
+<td><p>✅ <strong>SAFE</strong></p></td>
+<td><p>Minimal risk of damage</p></td>
+</tr>
+<tr class="row-odd"><td><p>5-8 m/s</p></td>
+<td><p>✅ <strong>ACCEPTABLE</strong></p></td>
+<td><p>Safe with proper padding</p></td>
+</tr>
+<tr class="row-even"><td><p>8-12 m/s</p></td>
+<td><p>⚠️ <strong>RISKY</strong></p></td>
+<td><p>Risk of damage, increase chute size</p></td>
+</tr>
+<tr class="row-odd"><td><p>&gt; 12 m/s</p></td>
+<td><p>❌ <strong>UNSAFE</strong></p></td>
+<td><p>Likely damage - increase parachute</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>If too fast:</strong></p>
+<ol class="arabic simple">
+<li><p>Increase parachute Cd×S by 30%</p></li>
+<li><p>Add second parachute</p></li>
+<li><p>Check deployment altitude</p></li>
+</ol>
+</section>
+<section id="step-5-verify-motor-performance">
+<h3>Step 5: Verify Motor Performance<a class="headerlink" href="#step-5-verify-motor-performance" title="Link to this heading">#</a></h3>
+<p>Check motor classification matches expectations:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s2">&quot;Performance:&quot;</span><span class="w"> </span>outputs/validation_test/final_state_READABLE.txt
+</pre></div>
+</div>
+<p><strong>Verify:</strong></p>
+<ul class="simple">
+<li><p>Total impulse matches motor designation</p></li>
+<li><p>Burn time is reasonable (not too short/long)</p></li>
+<li><p>Max thrust within structural limits</p></li>
+</ul>
+</section>
+</section>
+<section id="quick-validation-script">
+<h2>Quick Validation Script<a class="headerlink" href="#quick-validation-script" title="Link to this heading">#</a></h2>
+<p>Create <code class="docutils literal notranslate"><span class="pre">scripts/quick_validate.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;Quick validation of rocket design.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_rocket</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate rocket from simulation output.&quot;&quot;&quot;</span>
+
+    <span class="n">summary_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;trajectory&quot;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_summary.json&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">summary_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Summary file not found: </span><span class="si">{</span><span class="n">summary_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">summary_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Validation checks</span>
+    <span class="n">checks</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># 1. Stability</span>
+    <span class="n">stability</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;initial_stability_margin_calibers&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">stability</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;❌&#39;</span><span class="p">,</span> <span class="s1">&#39;STABILITY&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">stability</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> cal - UNSTABLE!&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">stability</span> <span class="o">&gt;</span> <span class="mf">3.5</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;⚠️&#39;</span><span class="p">,</span> <span class="s1">&#39;STABILITY&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">stability</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> cal - Over-stable&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;✅&#39;</span><span class="p">,</span> <span class="s1">&#39;STABILITY&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">stability</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> cal - Good&#39;</span><span class="p">))</span>
+
+    <span class="c1"># 2. Rail exit velocity</span>
+    <span class="n">rail_v</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;out_of_rail_velocity_ms&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">rail_v</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;⚠️&#39;</span><span class="p">,</span> <span class="s1">&#39;RAIL EXIT&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">rail_v</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> m/s - Low&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;✅&#39;</span><span class="p">,</span> <span class="s1">&#39;RAIL EXIT&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">rail_v</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> m/s - Good&#39;</span><span class="p">))</span>
+
+    <span class="c1"># 3. Landing velocity</span>
+    <span class="n">landing_v</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;impact_velocity_ms&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">landing_v</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;❌&#39;</span><span class="p">,</span> <span class="s1">&#39;LANDING&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">landing_v</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> m/s - Too fast!&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">landing_v</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;⚠️&#39;</span><span class="p">,</span> <span class="s1">&#39;LANDING&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">landing_v</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> m/s - Marginal&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;✅&#39;</span><span class="p">,</span> <span class="s1">&#39;LANDING&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">landing_v</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> m/s - Safe&#39;</span><span class="p">))</span>
+
+    <span class="c1"># 4. Apogee sanity</span>
+    <span class="n">apogee</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">apogee</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;⚠️&#39;</span><span class="p">,</span> <span class="s1">&#39;APOGEE&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">apogee</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> m - Very low&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">apogee</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;⚠️&#39;</span><span class="p">,</span> <span class="s1">&#39;APOGEE&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">apogee</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> m - Very high&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;✅&#39;</span><span class="p">,</span> <span class="s1">&#39;APOGEE&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">apogee</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> m - Reasonable&#39;</span><span class="p">))</span>
+
+    <span class="c1"># Print results</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ROCKET VALIDATION RESULTS&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">icon</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">icon</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">category</span><span class="si">:</span><span class="s2">12</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+    <span class="c1"># Overall assessment</span>
+    <span class="n">failures</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">icon</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">checks</span> <span class="k">if</span> <span class="n">icon</span> <span class="o">==</span> <span class="s1">&#39;❌&#39;</span><span class="p">)</span>
+    <span class="n">warnings</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">icon</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">checks</span> <span class="k">if</span> <span class="n">icon</span> <span class="o">==</span> <span class="s1">&#39;⚠️&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">failures</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ DESIGN NOT READY - Fix critical issues!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="n">warnings</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️ DESIGN MARGINAL - Review warnings&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ DESIGN VALIDATED - Ready to fly!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Usage: python scripts/quick_validate.py outputs/my_rocket&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">success</span> <span class="o">=</span> <span class="n">validate_rocket</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">success</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Usage:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/quick_validate.py<span class="w"> </span>outputs/my_rocket
+</pre></div>
+</div>
+</section>
+<section id="common-validation-failures">
+<h2>Common Validation Failures<a class="headerlink" href="#common-validation-failures" title="Link to this heading">#</a></h2>
+<section id="problem-unstable-rocket">
+<h3>Problem: Unstable Rocket<a class="headerlink" href="#problem-unstable-rocket" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Stability margin &lt; 1.0 calibers</p>
+<p><strong>Quick fixes:</strong></p>
+<ol class="arabic">
+<li><p><strong>Increase fin span</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span><span class="w">  </span><span class="c1"># Was 0.10, increased 20%</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Move fins aft</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span><span class="w">  </span><span class="c1"># Was 0.35, moved closer to tail</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Add nose weight</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9.0</span><span class="w">  </span><span class="c1"># Was 8.5, added 500g to nose</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="problem-rail-exit-too-slow">
+<h3>Problem: Rail Exit Too Slow<a class="headerlink" href="#problem-rail-exit-too-slow" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Rail exit velocity &lt; 20 m/s</p>
+<p><strong>Quick fixes:</strong></p>
+<ol class="arabic">
+<li><p><strong>Longer rail</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.0</span><span class="w">  </span><span class="c1"># Was 4.0</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>More powerful motor</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/Cesaroni_M1670.eng&quot;</span><span class="w">  </span><span class="c1"># Bigger motor</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="problem-landing-too-hard">
+<h3>Problem: Landing Too Hard<a class="headerlink" href="#problem-landing-too-hard" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Impact velocity &gt; 8 m/s</p>
+<p><strong>Quick fix:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span><span class="w">  </span><span class="c1"># Was 6.0, increased by 67%</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Validate early and often</strong> - Don’t wait until build is complete</p></li>
+<li><p><strong>Use conservative margins</strong> - Target 1.5-2.0 caliber stability</p></li>
+<li><p><strong>Document assumptions</strong> - Note where you estimated parameters</p></li>
+<li><p><strong>Compare with similar rockets</strong> - Sanity check against proven designs</p></li>
+<li><p><strong>Test incrementally</strong> - Validate subsystems before full rocket</p></li>
+</ol>
+</section>
+<section id="pre-flight-final-checks">
+<h2>Pre-Flight Final Checks<a class="headerlink" href="#pre-flight-final-checks" title="Link to this heading">#</a></h2>
+<p>Before launch day:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Re-validate with actual launch site elevation</span>
+<span class="c1"># 2. Check with expected day-of weather</span>
+<span class="c1"># 3. Verify all measurements are current</span>
+<span class="c1"># 4. Confirm parachute size matches actual chute</span>
+</pre></div>
+</div>
+<p>✅ <strong>Final validation passed = Ready to build and fly!</strong></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../tutorials/04_adding_fins.html#tutorial-adding-fins"><span class="std std-ref">Adding and Optimizing Fins</span></a> - Understanding stability</p></li>
+<li><p><a class="reference internal" href="../tutorials/05_recovery_system.html#tutorial-recovery-system"><span class="std std-ref">Configuring Recovery Systems</span></a> - Parachute sizing</p></li>
+<li><p><span class="xref std std-ref">howto_troubleshooting_simulation</span> - Debug simulation issues</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="measure_rocket.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">How to Measure Your Rocket’s Parameters</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="motor_selection.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Select the Optimal Motor</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-checklist">Validation Checklist</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-check-stability-margin">Step 1: Check Stability Margin</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-check-rail-exit-velocity">Step 2: Check Rail Exit Velocity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-validate-mass-distribution">Step 3: Validate Mass Distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-check-landing-velocity">Step 4: Check Landing Velocity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-verify-motor-performance">Step 5: Verify Motor Performance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-validation-script">Quick Validation Script</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-validation-failures">Common Validation Failures</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-unstable-rocket">Problem: Unstable Rocket</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-rail-exit-too-slow">Problem: Rail Exit Too Slow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-landing-too-hard">Problem: Landing Too Hard</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-flight-final-checks">Pre-Flight Final Checks</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/how_to_guides/validate_design.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

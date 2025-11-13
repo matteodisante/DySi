@@ -1,0 +1,1310 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Using Custom Motor Data &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/tutorials/03_custom_motor';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Adding and Optimizing Fins" href="04_adding_fins.html" />
+    <link rel="prev" title="Understanding Simulation Outputs" href="02_understanding_outputs.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Using Custom Motor Data</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="using-custom-motor-data">
+<span id="tutorial-custom-motor"></span><h1>Using Custom Motor Data<a class="headerlink" href="#using-custom-motor-data" title="Link to this heading">#</a></h1>
+<p>While <code class="docutils literal notranslate"><span class="pre">rocket-sim</span></code> includes some motor thrust curves, you’ll often need to use motors specific to your rocket. This tutorial teaches you how to import custom motor thrust curves from various sources and validate the data for accurate simulations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial assumes you’ve completed <span class="xref std std-ref">tutorial_basic_flight</span>. We’ll build upon the basic configuration to use a custom motor.</p>
+</div>
+<section id="motor-data-formats">
+<h2>Motor Data Formats<a class="headerlink" href="#motor-data-formats" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">rocket-sim</span></code> (via RocketPy) supports two primary thrust curve formats:</p>
+<ol class="arabic simple">
+<li><p><strong>RASP .eng files</strong> - Industry standard format from ThrustCurve.org</p></li>
+<li><p><strong>CSV files</strong> - Custom thrust data in simple text format</p></li>
+</ol>
+<section id="rasp-eng-format">
+<h3>RASP .eng Format<a class="headerlink" href="#rasp-eng-format" title="Link to this heading">#</a></h3>
+<p>The RASP .eng format is the most common thrust curve format, used by thousands of commercially available motors. It’s supported by:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.thrustcurve.org/">ThrustCurve.org</a> - Database of commercial motors</p></li>
+<li><p>Motor manufacturers (Cesaroni, AeroTech, etc.)</p></li>
+<li><p>Test stand software (many data loggers export to .eng)</p></li>
+</ul>
+<p><strong>File structure:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>; Motor Name and Metadata
+MotorName Diameter Length Propellant TotalWeight PropellantWeight Manufacturer
+   time1 thrust1
+   time2 thrust2
+   ...
+   timeN thrustN
+</pre></div>
+</div>
+<p><strong>Example</strong> (<code class="docutils literal notranslate"><span class="pre">Cesaroni_7579M1520-P.eng</span></code>):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>; Pro98-3G 7579M1520-BS P
+M1520-BS 98 548 P 3.737 6.718 CTI
+   0.04 1427.795
+   0.082 1706.389
+   0.176 1620.489
+   0.748 1734.249
+   1.652 1827.113
+   2.676 1715.676
+   3.89 1423.152
+   4.399 1404.579
+   4.616 661.661
+   4.877 69.649
+   4.897 0.0
+</pre></div>
+</div>
+<p><strong>Header fields:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MotorName</p></td>
+<td><p>—</p></td>
+<td><p>Designation (e.g., M1520-BS)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Diameter</p></td>
+<td><p>mm</p></td>
+<td><p>Motor case outer diameter</p></td>
+</tr>
+<tr class="row-even"><td><p>Length</p></td>
+<td><p>mm</p></td>
+<td><p>Motor case length</p></td>
+</tr>
+<tr class="row-odd"><td><p>Propellant</p></td>
+<td><p>—</p></td>
+<td><p>Propellant type code</p></td>
+</tr>
+<tr class="row-even"><td><p>TotalWeight</p></td>
+<td><p>kg</p></td>
+<td><p>Loaded motor weight</p></td>
+</tr>
+<tr class="row-odd"><td><p>PropellantWeight</p></td>
+<td><p>kg</p></td>
+<td><p>Propellant mass only</p></td>
+</tr>
+<tr class="row-even"><td><p>Manufacturer</p></td>
+<td><p>—</p></td>
+<td><p>Manufacturer code (CTI, AT, etc.)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Data columns:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Time</p></td>
+<td><p>seconds</p></td>
+<td><p>Time from ignition</p></td>
+</tr>
+<tr class="row-odd"><td><p>Thrust</p></td>
+<td><p>Newtons</p></td>
+<td><p>Thrust force at this time point</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Where to find .eng files:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>ThrustCurve.org</strong> - Search by motor designation, download .eng file</p></li>
+<li><p><strong>Manufacturer websites</strong> - Often provide thrust curves for their motors</p></li>
+<li><p><strong>Motor testing</strong> - Export from your own static test stand data</p></li>
+</ol>
+</div>
+</section>
+<section id="csv-format">
+<h3>CSV Format<a class="headerlink" href="#csv-format" title="Link to this heading">#</a></h3>
+<p>For custom motors or test stand data, you can use CSV format with time-thrust pairs:</p>
+<p><strong>Simple format</strong> (time, thrust):</p>
+<div class="highlight-csv notranslate"><div class="highlight"><pre><span></span># Custom Motor Thrust Curve
+# Time (s), Thrust (N)
+0.0, 0.0
+0.1, 450.5
+0.5, 1200.8
+1.5, 1450.2
+2.5, 1380.6
+3.0, 890.3
+3.5, 120.7
+3.6, 0.0
+</pre></div>
+</div>
+<p><strong>Rules for CSV files:</strong></p>
+<ul class="simple">
+<li><p>First column: time in seconds</p></li>
+<li><p>Second column: thrust in Newtons</p></li>
+<li><p>Lines starting with <code class="docutils literal notranslate"><span class="pre">#</span></code> are comments (optional)</p></li>
+<li><p>Must start at t=0 and end when thrust reaches zero</p></li>
+<li><p>Data points should be evenly spaced for best interpolation</p></li>
+</ul>
+</section>
+</section>
+<section id="tutorial-using-a-thrustcurve-org-motor">
+<h2>Tutorial: Using a ThrustCurve.org Motor<a class="headerlink" href="#tutorial-using-a-thrustcurve-org-motor" title="Link to this heading">#</a></h2>
+<p>Let’s download and use a real motor from ThrustCurve.org.</p>
+<section id="step-1-find-your-motor">
+<h3>Step 1: Find Your Motor<a class="headerlink" href="#step-1-find-your-motor" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Visit <a class="reference external" href="https://www.thrustcurve.org/simfilesearch.jsp">thrustcurve.org/simfilesearch.jsp</a></p></li>
+<li><p>Search for your motor (e.g., “Cesaroni M1520”)</p></li>
+<li><p>Click on your motor in the results</p></li>
+<li><p>Click “Download RASAero (.eng)” button</p></li>
+<li><p>Save the <code class="docutils literal notranslate"><span class="pre">.eng</span></code> file to <code class="docutils literal notranslate"><span class="pre">data/motors/</span></code> in your project</p></li>
+</ol>
+<a class="reference internal image-reference" href="_static/images/thrustcurve_download.png"><img alt="Downloading motor file from ThrustCurve.org" class="align-center" src="_static/images/thrustcurve_download.png" style="width: 600px;" />
+</a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the image is not available, simply:</p>
+<ol class="arabic simple">
+<li><p>Search for your motor on ThrustCurve.org</p></li>
+<li><p>Look for the “Download” or “Simfiles” section</p></li>
+<li><p>Download the .eng format file</p></li>
+</ol>
+</div>
+</section>
+<section id="step-2-inspect-the-file">
+<h3>Step 2: Inspect the File<a class="headerlink" href="#step-2-inspect-the-file" title="Link to this heading">#</a></h3>
+<p>Before using the motor, verify the file contents:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>data/motors/Cesaroni_7579M1520-P.eng
+</pre></div>
+</div>
+<p>Check that:</p>
+<p>✅ File has header line with motor name and parameters</p>
+<p>✅ Thrust data starts at time = 0</p>
+<p>✅ Thrust data ends at approximately zero thrust</p>
+<p>✅ No negative thrust values</p>
+<p>✅ No missing data points or corrupted lines</p>
+</section>
+<section id="step-3-configure-your-motor">
+<h3>Step 3: Configure Your Motor<a class="headerlink" href="#step-3-configure-your-motor" title="Link to this heading">#</a></h3>
+<p>Create or modify your YAML configuration file (<code class="docutils literal notranslate"><span class="pre">configs/my_custom_motor.yaml</span></code>):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Motor configuration with custom thrust curve</span>
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SolidMotor&quot;</span>
+
+<span class="w">  </span><span class="c1"># Path to your custom thrust curve</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/Cesaroni_7579M1520-P.eng&quot;</span>
+
+<span class="w">  </span><span class="c1"># Coordinate system (see below for explanation)</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nozzle_to_combustion_chamber&quot;</span>
+
+<span class="w">  </span><span class="c1"># Dry mass (motor hardware without propellant)</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.815</span>
+
+<span class="w">  </span><span class="c1"># Nozzle dimensions</span>
+<span class="w">  </span><span class="nt">nozzle_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span>
+<span class="w">  </span><span class="nt">throat_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.011</span>
+
+<span class="w">  </span><span class="c1"># Grain geometry (5 cylindrical grains)</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">grain_density_kg_m3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1815</span>
+<span class="w">  </span><span class="nt">grain_outer_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span>
+<span class="w">  </span><span class="nt">grain_initial_inner_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.015</span>
+<span class="w">  </span><span class="nt">grain_initial_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span>
+<span class="w">  </span><span class="nt">grain_separation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span>
+
+<span class="w">  </span><span class="c1"># Positions (in motor coordinate system)</span>
+<span class="w">  </span><span class="nt">nozzle_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">grains_center_of_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span>
+<span class="w">  </span><span class="nt">center_of_dry_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Key parameters to verify:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">thrust_source</span></code> - Path must be correct (relative to project root)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dry_mass_kg</span></code> - Motor case mass WITHOUT propellant</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">grain_density_kg_m3</span></code> - Propellant density (typically 1600-1850 kg/m³)</p></li>
+<li><p>Grain dimensions must match your actual motor</p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="understanding-coordinate-systems">
+<h2>Understanding Coordinate Systems<a class="headerlink" href="#understanding-coordinate-systems" title="Link to this heading">#</a></h2>
+<p>RocketPy motors use a local coordinate system for positioning components. Understanding this is crucial for correct simulation.</p>
+<section id="motor-coordinate-system-options">
+<h3>Motor Coordinate System Options<a class="headerlink" href="#motor-coordinate-system-options" title="Link to this heading">#</a></h3>
+<p><strong>Option 1: ``nozzle_to_combustion_chamber`` (RECOMMENDED)</strong></p>
+<p>Origin at the nozzle exit, positive direction toward combustion chamber:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Nozzle Exit                           Combustion Chamber
+     |                                        |
+     |&lt;-------- Motor Length ----------------&gt;|
+     0         Grains CoM              Dry CoM
+     |             |                      |
+     +-------------+----------------------+
+
+Position values are POSITIVE, measured from nozzle
+</pre></div>
+</div>
+<p><strong>Option 2: ``combustion_chamber_to_nozzle``</strong></p>
+<p>Origin at combustion chamber end, positive direction toward nozzle:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Combustion Chamber                     Nozzle Exit
+     |                                        |
+     |&lt;-------- Motor Length ----------------&gt;|
+  Dry CoM      Grains CoM                     0
+     |             |                          |
+     +-------------+-------------------------+
+
+Position values are POSITIVE, measured from chamber
+</pre></div>
+</div>
+<p><strong>Which to use?</strong></p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">nozzle_to_combustion_chamber</span></code> for consistency with most motor documentation</p></li>
+<li><p>Ensures positive position values (easier to verify)</p></li>
+<li><p>Matches typical motor diagrams</p></li>
+</ul>
+</section>
+<section id="position-parameters-explained">
+<h3>Position Parameters Explained<a class="headerlink" href="#position-parameters-explained" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nozzle_position_m</span></code></p></td>
+<td><p>Position of nozzle exit (typically 0.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">grains_center_of_mass_position_m</span></code></p></td>
+<td><p>Distance from nozzle to grains CoM</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">center_of_dry_mass_position_m</span></code></p></td>
+<td><p>Distance from nozzle to dry mass CoM (empty motor)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>How to determine positions:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Nozzle position</strong>: Almost always 0.0 (reference point)</p></li>
+<li><p><strong>Grains CoM</strong>: Measure from nozzle to center of propellant stack</p></li>
+<li><p><strong>Dry mass CoM</strong>: Often approximately at motor case center</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you don’t have exact CoM measurements:</p>
+<ul class="simple">
+<li><p><strong>Grains CoM</strong>: Assume at geometric center of grain stack</p></li>
+<li><p><strong>Dry mass CoM</strong>: Assume at geometric center of motor case</p></li>
+</ul>
+<p>These approximations are usually sufficient for preliminary designs.</p>
+</div>
+</section>
+</section>
+<section id="tutorial-creating-csv-thrust-curve">
+<h2>Tutorial: Creating CSV Thrust Curve<a class="headerlink" href="#tutorial-creating-csv-thrust-curve" title="Link to this heading">#</a></h2>
+<p>For custom motors or test stand data, you can create CSV thrust curves.</p>
+<section id="step-1-collect-thrust-data">
+<h3>Step 1: Collect Thrust Data<a class="headerlink" href="#step-1-collect-thrust-data" title="Link to this heading">#</a></h3>
+<p>Sources of thrust data:</p>
+<ul class="simple">
+<li><p><strong>Static test stand</strong> - Measured from your motor firing</p></li>
+<li><p><strong>Simulation software</strong> - ProPep, MotorSim, etc.</p></li>
+<li><p><strong>Manufacturer data</strong> - Sometimes provided as tables</p></li>
+<li><p><strong>Literature</strong> - Research papers on propellant formulations</p></li>
+</ul>
+</section>
+<section id="step-2-format-as-csv">
+<h3>Step 2: Format as CSV<a class="headerlink" href="#step-2-format-as-csv" title="Link to this heading">#</a></h3>
+<p>Create <code class="docutils literal notranslate"><span class="pre">data/motors/custom_motor.csv</span></code>:</p>
+<div class="highlight-csv notranslate"><div class="highlight"><pre><span></span># Custom K-class motor thrust curve
+# Static test: 2025-10-15
+# Propellant: KNDX
+# Total impulse: ~1500 N·s
+#
+# Time (s), Thrust (N)
+0.0, 0.0
+0.05, 180.5
+0.10, 520.3
+0.20, 850.7
+0.50, 950.2
+1.00, 940.8
+1.50, 920.4
+2.00, 880.6
+2.50, 820.3
+3.00, 720.8
+3.50, 580.2
+4.00, 380.5
+4.50, 150.3
+4.80, 50.2
+5.00, 0.0
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Critical CSV requirements:</strong></p>
+<ul class="simple">
+<li><p>✅ First point must be at t=0</p></li>
+<li><p>✅ Last point must have thrust ≈ 0</p></li>
+<li><p>✅ Time must be monotonically increasing</p></li>
+<li><p>✅ No negative thrust values</p></li>
+<li><p>✅ Units: seconds and Newtons (not milliseconds, not pounds)</p></li>
+</ul>
+</div>
+</section>
+<section id="step-3-configure-motor">
+<h3>Step 3: Configure Motor<a class="headerlink" href="#step-3-configure-motor" title="Link to this heading">#</a></h3>
+<p>In your YAML configuration:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SolidMotor&quot;</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/custom_motor.csv&quot;</span>
+
+<span class="w">  </span><span class="c1"># Note: For CSV, you MUST provide burn_time explicitly</span>
+<span class="w">  </span><span class="nt">burn_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span><span class="w">  </span><span class="c1"># Match the last time point in CSV</span>
+
+<span class="w">  </span><span class="c1"># ... rest of motor parameters ...</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When using CSV files, <code class="docutils literal notranslate"><span class="pre">burn_time_s</span></code> is <strong>required</strong> because CSV files don’t include motor metadata like .eng files do.</p>
+</div>
+</section>
+</section>
+<section id="validating-motor-data">
+<h2>Validating Motor Data<a class="headerlink" href="#validating-motor-data" title="Link to this heading">#</a></h2>
+<p>After configuring your motor, validate it before running full simulations.</p>
+<section id="quick-validation-script">
+<h3>Quick Validation Script<a class="headerlink" href="#quick-validation-script" title="Link to this heading">#</a></h3>
+<p>Create <code class="docutils literal notranslate"><span class="pre">scripts/validate_motor.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;Quick motor validation script.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">))</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.motor_builder</span><span class="w"> </span><span class="kn">import</span> <span class="n">MotorBuilder</span>
+
+<span class="c1"># Load configuration</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">ConfigLoader</span><span class="p">()</span>
+<span class="n">loader</span><span class="o">.</span><span class="n">load_from_yaml</span><span class="p">(</span><span class="s2">&quot;configs/my_custom_motor.yaml&quot;</span><span class="p">)</span>
+<span class="n">motor_config</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_motor_config</span><span class="p">()</span>
+
+<span class="c1"># Build motor</span>
+<span class="n">builder</span> <span class="o">=</span> <span class="n">MotorBuilder</span><span class="p">(</span><span class="n">motor_config</span><span class="p">)</span>
+<span class="n">motor</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+
+<span class="c1"># Print summary</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MOTOR VALIDATION SUMMARY&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="n">summary</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">get_summary</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Performance:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Total Impulse:    </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;total_impulse_ns&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> N·s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Average Thrust:   </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;average_thrust_n&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Max Thrust:       </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;max_thrust_n&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Burn Time:        </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;burn_time_s&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Mass Properties:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Propellant Mass:  </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;propellant_mass_kg&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kg&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Total Mass:       </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;total_mass_kg&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kg&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Motor Classification:&quot;</span><span class="p">)</span>
+<span class="c1"># Classify motor by total impulse</span>
+<span class="n">impulse</span> <span class="o">=</span> <span class="n">summary</span><span class="p">[</span><span class="s1">&#39;total_impulse_ns&#39;</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">impulse</span> <span class="o">&lt;</span> <span class="mi">160</span><span class="p">:</span>
+    <span class="n">class_letter</span> <span class="o">=</span> <span class="s2">&quot;G or lower&quot;</span>
+<span class="k">elif</span> <span class="n">impulse</span> <span class="o">&lt;</span> <span class="mi">320</span><span class="p">:</span>
+    <span class="n">class_letter</span> <span class="o">=</span> <span class="s2">&quot;H&quot;</span>
+<span class="k">elif</span> <span class="n">impulse</span> <span class="o">&lt;</span> <span class="mi">640</span><span class="p">:</span>
+    <span class="n">class_letter</span> <span class="o">=</span> <span class="s2">&quot;I&quot;</span>
+<span class="k">elif</span> <span class="n">impulse</span> <span class="o">&lt;</span> <span class="mi">1280</span><span class="p">:</span>
+    <span class="n">class_letter</span> <span class="o">=</span> <span class="s2">&quot;J&quot;</span>
+<span class="k">elif</span> <span class="n">impulse</span> <span class="o">&lt;</span> <span class="mi">2560</span><span class="p">:</span>
+    <span class="n">class_letter</span> <span class="o">=</span> <span class="s2">&quot;K&quot;</span>
+<span class="k">elif</span> <span class="n">impulse</span> <span class="o">&lt;</span> <span class="mi">5120</span><span class="p">:</span>
+    <span class="n">class_letter</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+<span class="k">elif</span> <span class="n">impulse</span> <span class="o">&lt;</span> <span class="mi">10240</span><span class="p">:</span>
+    <span class="n">class_letter</span> <span class="o">=</span> <span class="s2">&quot;M&quot;</span>
+<span class="k">elif</span> <span class="n">impulse</span> <span class="o">&lt;</span> <span class="mi">20480</span><span class="p">:</span>
+    <span class="n">class_letter</span> <span class="o">=</span> <span class="s2">&quot;N&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">class_letter</span> <span class="o">=</span> <span class="s2">&quot;O or higher&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Class:            </span><span class="si">{</span><span class="n">class_letter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Avg Thrust:       </span><span class="si">{</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;average_thrust_n&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Designation:      </span><span class="si">{</span><span class="n">class_letter</span><span class="si">}{</span><span class="nb">int</span><span class="p">(</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;average_thrust_n&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✓ Motor validated successfully!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run validation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/validate_motor.py
+</pre></div>
+</div>
+<p>Expected output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>============================================================
+MOTOR VALIDATION SUMMARY
+============================================================
+
+Performance:
+  Total Impulse:    5467 N·s
+  Average Thrust:   2189 N
+  Max Thrust:       2663 N
+  Burn Time:        2.50 s
+
+Mass Properties:
+  Propellant Mass:  2.956 kg
+  Total Mass:       4.771 kg
+
+Motor Classification:
+  Class:            M
+  Avg Thrust:       2189 N
+  Designation:      M2189
+
+✓ Motor validated successfully!
+</pre></div>
+</div>
+</section>
+<section id="visual-validation">
+<h3>Visual Validation<a class="headerlink" href="#visual-validation" title="Link to this heading">#</a></h3>
+<p>RocketPy motors have built-in plotting capabilities. Add to your validation script:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot thrust curve</span>
+<span class="n">motor</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">thrust</span><span class="p">()</span>
+
+<span class="c1"># Plot total mass over time</span>
+<span class="n">motor</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">total_mass</span><span class="p">()</span>
+
+<span class="c1"># Plot center of mass over time</span>
+<span class="n">motor</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">center_of_mass</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This generates plots showing:</p>
+<ul class="simple">
+<li><p><strong>Thrust curve</strong> - Verify shape matches expectations</p></li>
+<li><p><strong>Mass over time</strong> - Should decrease smoothly as propellant burns</p></li>
+<li><p><strong>Center of mass</strong> - Should shift as propellant burns</p></li>
+</ul>
+</section>
+</section>
+<section id="common-motor-issues-and-solutions">
+<h2>Common Motor Issues and Solutions<a class="headerlink" href="#common-motor-issues-and-solutions" title="Link to this heading">#</a></h2>
+<section id="issue-1-thrust-curve-file-not-found">
+<h3>Issue 1: Thrust Curve File Not Found<a class="headerlink" href="#issue-1-thrust-curve-file-not-found" title="Link to this heading">#</a></h3>
+<p><strong>Error:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>FileNotFoundError: Thrust curve file not found: data/motors/my_motor.eng
+</pre></div>
+</div>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Check file path is correct relative to project root</p></li>
+<li><p>Verify file exists: <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-la</span> <span class="pre">data/motors/my_motor.eng</span></code></p></li>
+<li><p>Check for typos in filename (case-sensitive on Linux/Mac)</p></li>
+<li><p>Ensure file is in correct directory</p></li>
+</ol>
+</section>
+<section id="issue-2-negative-thrust-values">
+<h3>Issue 2: Negative Thrust Values<a class="headerlink" href="#issue-2-negative-thrust-values" title="Link to this heading">#</a></h3>
+<p><strong>Error:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ValueError: Thrust curve contains negative values
+</pre></div>
+</div>
+<p><strong>Cause:</strong> Test stand noise or data processing errors</p>
+<p><strong>Solution:</strong></p>
+<p>Clean your CSV data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;raw_thrust_data.csv&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+
+<span class="c1"># Remove negative thrust</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;thrust&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;thrust&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Save cleaned data</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data/motors/cleaned_motor.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="issue-3-unrealistic-total-impulse">
+<h3>Issue 3: Unrealistic Total Impulse<a class="headerlink" href="#issue-3-unrealistic-total-impulse" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Calculated total impulse doesn’t match expected motor class</p>
+<p><strong>Check:</strong></p>
+<ol class="arabic simple">
+<li><p>Verify thrust units are Newtons (not pounds-force)</p></li>
+<li><p>Verify time units are seconds (not milliseconds)</p></li>
+<li><p>Check grain geometry parameters are realistic</p></li>
+<li><p>Validate propellant density (typically 1600-1850 kg/m³)</p></li>
+</ol>
+<p><strong>Example conversion</strong> (if data is in pounds-force):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert lbf to N (1 lbf = 4.448222 N)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;thrust_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;thrust_lbf&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">4.448222</span>
+</pre></div>
+</div>
+</section>
+<section id="issue-4-motor-class-mismatch">
+<h3>Issue 4: Motor Class Mismatch<a class="headerlink" href="#issue-4-motor-class-mismatch" title="Link to this heading">#</a></h3>
+<p><strong>Problem:</strong> Motor designated as “M1520” but calculations show different impulse</p>
+<p><strong>Explanation:</strong> Motor designations format: <code class="docutils literal notranslate"><span class="pre">[Class][AvgThrust]</span></code></p>
+<ul class="simple">
+<li><p><strong>Class letter</strong> = Total impulse range</p></li>
+<li><p><strong>Number</strong> = Average thrust in Newtons</p></li>
+</ul>
+<p>Your calculations should approximately match the designation. Small differences (5-10%) are normal due to rounding.</p>
+</section>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Always validate</strong> motors before full simulations</p></li>
+<li><p><strong>Keep original files</strong> - Don’t overwrite downloaded .eng files</p></li>
+<li><p><strong>Document sources</strong> - Add comments to CSV files noting data origin</p></li>
+<li><p><strong>Version control</strong> - Track motor files in git for reproducibility</p></li>
+<li><p><strong>Test incrementally</strong> - Validate motor → simple flight → full simulation</p></li>
+<li><p><strong>Compare with manufacturer</strong> - If available, verify calculated impulse matches specs</p></li>
+</ol>
+</section>
+<section id="advanced-custom-interpolation">
+<h2>Advanced: Custom Interpolation<a class="headerlink" href="#advanced-custom-interpolation" title="Link to this heading">#</a></h2>
+<p>RocketPy interpolates thrust curves for smooth simulation. You can control interpolation:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># ... other parameters ...</span>
+
+<span class="w">  </span><span class="c1"># Interpolation method: &quot;linear&quot; or &quot;spline&quot;</span>
+<span class="w">  </span><span class="nt">interpolation_method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;linear&quot;</span><span class="w">  </span><span class="c1"># More conservative, avoids overshoot</span>
+<span class="w">  </span><span class="c1"># interpolation_method: &quot;spline&quot;  # Smoother, may overshoot</span>
+</pre></div>
+</div>
+<p><strong>When to use linear:</strong></p>
+<ul class="simple">
+<li><p>Sparse data points (&lt; 20 points)</p></li>
+<li><p>Noisy test stand data</p></li>
+<li><p>Thrust curves with sharp transitions</p></li>
+</ul>
+<p><strong>When to use spline:</strong></p>
+<ul class="simple">
+<li><p>High-resolution data (&gt; 50 points)</p></li>
+<li><p>Clean manufacturer data</p></li>
+<li><p>Smooth thrust profiles</p></li>
+</ul>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>Now that you can use custom motors:</p>
+<ol class="arabic simple">
+<li><p><strong>Design fins</strong> - Continue to <a class="reference internal" href="04_adding_fins.html#tutorial-adding-fins"><span class="std std-ref">Adding and Optimizing Fins</span></a> to ensure stability</p></li>
+<li><p><strong>Add recovery</strong> - See <a class="reference internal" href="05_recovery_system.html#tutorial-recovery-system"><span class="std std-ref">Configuring Recovery Systems</span></a> for safe landings</p></li>
+<li><p><strong>Compare motors</strong> - Run simulations with different motors to optimize performance</p></li>
+<li><p><strong>Build motor library</strong> - Collect .eng files for all your available motors</p></li>
+</ol>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">configuration_motor_params</span> - Complete motor parameter reference</p></li>
+<li><p><span class="xref std std-ref">howto_measure_rocket</span> - Measuring motor positions accurately</p></li>
+<li><p><a class="reference external" href="https://www.thrustcurve.org/">ThrustCurve.org</a> - Motor database</p></li>
+<li><p><a class="reference external" href="https://docs.rocketpy.org/en/latest/user/motors.html">RocketPy Motor Documentation</a> - Advanced motor features</p></li>
+</ul>
+</div>
+</section>
+<section id="common-motor-sources">
+<h2>Common Motor Sources<a class="headerlink" href="#common-motor-sources" title="Link to this heading">#</a></h2>
+<section id="free-eng-file-databases">
+<h3>Free .eng File Databases<a class="headerlink" href="#free-eng-file-databases" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>ThrustCurve.org</strong> - 6000+ commercial motors</p></li>
+<li><p><strong>RASP.org</strong> - Original RASP engine database</p></li>
+<li><p><strong>Manufacturer websites</strong> - Cesaroni, AeroTech, Loki, etc.</p></li>
+</ul>
+</section>
+<section id="motor-simulation-software">
+<h3>Motor Simulation Software<a class="headerlink" href="#motor-simulation-software" title="Link to this heading">#</a></h3>
+<p>For creating custom motor designs:</p>
+<ul class="simple">
+<li><p><strong>ProPep 3</strong> - Professional propellant evaluation (free for students)</p></li>
+<li><p><strong>MotorSim</strong> - Open-source solid motor design</p></li>
+<li><p><strong>SRM</strong> - Solid rocket motor design tool</p></li>
+</ul>
+</section>
+<section id="static-test-stand-data-loggers">
+<h3>Static Test Stand Data Loggers<a class="headerlink" href="#static-test-stand-data-loggers" title="Link to this heading">#</a></h3>
+<p>Export .eng files directly:</p>
+<ul class="simple">
+<li><p><strong>RocketCertifier</strong> - Commercial test stand software</p></li>
+<li><p><strong>AeroTech RATSv2</strong> - RocketApp Test Stand software</p></li>
+<li><p><strong>DIY Arduino loggers</strong> - Many export CSV that can be converted</p></li>
+</ul>
+</section>
+<section id="converting-other-formats">
+<h3>Converting Other Formats<a class="headerlink" href="#converting-other-formats" title="Link to this heading">#</a></h3>
+<p>If you have thrust data in other formats:</p>
+<p><strong>Excel to CSV:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;motor_data.xlsx&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Time_s&#39;</span><span class="p">,</span> <span class="s1">&#39;Thrust_N&#39;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data/motors/converted_motor.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>RASP to CSV:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parse .eng file and export as CSV</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;motor.eng&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+<span class="c1"># Skip header, extract time-thrust pairs</span>
+<span class="n">data_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">l</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)]</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;motor.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;# time_s, thrust_n</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data_lines</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_understanding_outputs.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Understanding Simulation Outputs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04_adding_fins.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Adding and Optimizing Fins</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-data-formats">Motor Data Formats</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rasp-eng-format">RASP .eng Format</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-format">CSV Format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-using-a-thrustcurve-org-motor">Tutorial: Using a ThrustCurve.org Motor</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-find-your-motor">Step 1: Find Your Motor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-inspect-the-file">Step 2: Inspect the File</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-configure-your-motor">Step 3: Configure Your Motor</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-coordinate-systems">Understanding Coordinate Systems</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-coordinate-system-options">Motor Coordinate System Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#position-parameters-explained">Position Parameters Explained</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-creating-csv-thrust-curve">Tutorial: Creating CSV Thrust Curve</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-collect-thrust-data">Step 1: Collect Thrust Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-format-as-csv">Step 2: Format as CSV</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-configure-motor">Step 3: Configure Motor</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validating-motor-data">Validating Motor Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-validation-script">Quick Validation Script</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-validation">Visual Validation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-motor-issues-and-solutions">Common Motor Issues and Solutions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issue-1-thrust-curve-file-not-found">Issue 1: Thrust Curve File Not Found</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issue-2-negative-thrust-values">Issue 2: Negative Thrust Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issue-3-unrealistic-total-impulse">Issue 3: Unrealistic Total Impulse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issue-4-motor-class-mismatch">Issue 4: Motor Class Mismatch</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-custom-interpolation">Advanced: Custom Interpolation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-motor-sources">Common Motor Sources</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#free-eng-file-databases">Free .eng File Databases</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-simulation-software">Motor Simulation Software</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-test-stand-data-loggers">Static Test Stand Data Loggers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-other-formats">Converting Other Formats</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/tutorials/03_custom_motor.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
