@@ -1,6 +1,6 @@
 # Rocket Simulation Framework
 
-[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/rocket-sim/)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://matteodisante.github.io/DySi/)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
