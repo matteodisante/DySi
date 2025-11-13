@@ -25,6 +25,12 @@ effectively use rocket-sim for your rocket trajectory simulations.
 
       Complete parameter documentation
 
+   .. grid-item-card:: 🔬 Technical Deep Dives
+      :link: technical/index
+      :link-type: doc
+
+      Theory, physics, and advanced concepts
+
    .. grid-item-card:: 📊 Examples
       :link: examples/index
       :link-type: doc
@@ -53,6 +59,12 @@ This user guide follows the `Diátaxis framework <https://diataxis.fr/>`_ and is
    Use this when you need detailed information about a specific parameter.
    
    :doc:`configuration/index`
+
+**Technical Deep Dives** - *Understanding-oriented*
+   Theoretical background, physics, and detailed explanations of complex concepts.
+   Use this when you need to deeply understand how things work.
+   
+   :doc:`technical/index`
 
 **Examples** - *Practical applications*
    Real-world rocket configurations with complete explanations. Use these as
@@ -107,6 +119,15 @@ Quick Navigation
    * :doc:`configuration/environment_params` - Environment and weather
    * :doc:`configuration/simulation_params` - Launch and simulation settings
 
+.. dropdown:: I need to understand the theory
+   :color: secondary
+   :icon: mortar-board
+
+   Check the technical documentation:
+   
+   * :doc:`technical/stability_analysis` - Complete stability theory (CM, CP, margins)
+   * More technical topics coming soon
+
 Table of Contents
 -----------------
 
@@ -117,6 +138,7 @@ Table of Contents
    tutorials/index
    how_to_guides/index
    configuration/index
+   technical/index
    examples/index
 
 Common Questions
