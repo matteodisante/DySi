@@ -6,7 +6,7 @@
 
 A modular, production-ready rocket dynamics simulation framework built on [RocketPy](https://github.com/RocketPy-Team/RocketPy). This project provides a clean, maintainable architecture for rocket trajectory simulations with advanced features like air brakes control and real-time weather data integration.
 
-📚 **[View Full Documentation](docs/)**
+📚 **[View Full Documentation](https://matteodisante.github.io/DySi/)**
 
 ---
 
