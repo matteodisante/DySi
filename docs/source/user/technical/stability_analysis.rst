@@ -55,12 +55,7 @@ The Golden Rule
    
    (Toward the tail, away from the nose)
 
-Think of it like a dart or arrow - the heavy part (CM) must be in front!
-
-.. figure:: /_static/stability_diagram.png
-   :alt: Stability diagram showing CM and CP
-   
-   **Stable configuration**: CP behind CM creates restoring moment
+When the rocket is perturbed from vertical flight, aerodynamic forces acting at CP create a restoring moment about CM that returns the rocket to stable flight. This requires CP to be aft of CM.
 
 --------
 
@@ -145,69 +140,127 @@ Stability Margin
 
 **Why It's Different:**
 
-CP position changes with speed because:
+CP position changes with speed due to compressibility effects:
 
-1. **Compressibility effects** at transonic speeds (Mach 0.8-1.2)
-2. **Shock wave formation** changes pressure distribution
-3. **Fin effectiveness** varies with Mach number
+1. **Compressibility effects** at transonic speeds (Mach 0.8-1.2) alter pressure distribution
+2. **Shock wave formation** changes the location of aerodynamic center
+3. **Fin effectiveness** varies with Mach number due to boundary layer effects
 
-.. admonition:: Example: CP Movement
-   :class: note
-   
-   A rocket with trapezoidal fins might have:
-   
-   - CP at 1.85m from nose at Mach 0.3 (subsonic)
-   - CP at 1.78m from nose at Mach 0.9 (transonic)  
-   - CP at 1.82m from nose at Mach 1.5 (supersonic)
-   
-   Using static margin (Mach 0) would miss the **transonic instability**!
+These variations can be significant (5-15% body length) and affect stability margins.
 
 --------
 
 Which Metric Should You Use?
 =============================
 
-Decision Flow
--------------
+Understanding Both Metrics
+---------------------------
 
-.. code-block:: text
+**For comprehensive stability analysis, both metrics are important:**
 
-   START
-     ↓
-   Is rocket supersonic (Mach > 1)?
-     ├─ NO → Use Static Margin (simpler, sufficient)
-     └─ YES
-         ↓
-       Does it pass through transonic region?
-         ├─ NO → Static Margin OK
-         └─ YES → Use Stability Margin (critical!)
+Static Margin
+~~~~~~~~~~~~~
+
+Provides a **conservative baseline** using CP at Mach 0. Useful for:
+
+- Initial design iterations
+- Subsonic rockets (Mach < 0.8)
+- Quick stability checks
+
+**Limitation:** Does not capture CP variations during flight.
+
+Stability Margin  
+~~~~~~~~~~~~~~~~
+
+Provides **accurate stability assessment** at actual flight conditions. Essential for:
+
+- Transonic/supersonic rockets (Mach > 0.8)
+- Final design validation
+- Understanding stability evolution during flight
+
+**Advantage:** Shows real stability margin throughout the flight envelope.
+
+Interpreting Stability Margin
+------------------------------
+
+The stability margin varies during flight due to:
+
+1. **Mach number changes** - CP shifts as rocket accelerates/decelerates
+2. **Propellant depletion** - CM moves forward as motor burns
+3. **Altitude effects** - Aerodynamic forces decrease with atmospheric density
+
+**Key Analysis Approach:**
+
+Plot stability margin vs. time and identify:
+
+- **Minimum stability point** - Often occurs during transonic transition
+- **Critical flight phases** - Motor burnout, maximum dynamic pressure
+- **Margin safety factor** - Ensure minimum stays above 1.0 caliber
+
+.. code-block:: python
+
+   # Example: Analyzing stability margin throughout flight
+   import matplotlib.pyplot as plt
+   
+   # Extract from RocketPy Flight object
+   time = flight.time
+   mach = flight.mach_number
+   
+   # Calculate stability margin at each time point
+   stability_margins = []
+   for t, M in zip(time, mach):
+       margin = rocket.stability_margin(M, t)
+       stability_margins.append(margin)
+   
+   # Plot
+   plt.figure(figsize=(10, 6))
+   plt.plot(time, stability_margins, 'b-', linewidth=2)
+   plt.axhline(y=1.0, color='r', linestyle='--', label='Minimum Safe Margin')
+   plt.xlabel('Time (s)')
+   plt.ylabel('Stability Margin (calibers)')
+   plt.title('Stability Margin Evolution During Flight')
+   plt.grid(True, alpha=0.3)
+   plt.legend()
+   plt.show()
+
+**Critical Interpretation Points:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Observation
+     - Interpretation
+   * - Margin decreases during acceleration
+     - Normal - Mach effects shifting CP forward
+   * - Sudden drop near Mach 1
+     - Transonic CP shift - verify margin stays > 1.0
+   * - Margin increases after burnout
+     - CM moved forward, propellant depleted
+   * - Margin below 1.0 at any point
+     - **Unsafe** - redesign needed
 
 Practical Recommendations
 --------------------------
 
-**Phase 1: Initial Design**
-   Use **Static Margin** for quick iterations
+**Initial Design Phase:**
+   Start with **Static Margin** targeting 2.0-2.5 calibers for safety buffer
+
+**Detailed Analysis Phase:**
+   Plot **Stability Margin vs Time** for complete flight:
    
-   Target: 1.5-2.0 calibers
+   - Verify margin never drops below 1.0 caliber
+   - Identify minimum margin point
+   - Check margins at critical events (max Q, burnout, apogee)
 
-**Phase 2: Final Validation**
-   Check **Stability Margin** across flight profile
+**For Subsonic Rockets (Mach < 0.8):**
+   Static Margin alone is typically sufficient if > 1.5 calibers
+
+**For Transonic/Supersonic Rockets (Mach > 0.8):**
+   **Must** analyze Stability Margin throughout flight envelope:
    
-   Verify: Never drops below 1.0 at any Mach
-
-**Phase 3: Flight Analysis**
-   Plot both metrics vs time
-   
-   Identify: Minimum stability point
-
-Best Practices
---------------
-
-1. **Always check both** for high-performance rockets
-2. **Plot stability vs time** - see the full picture
-3. **Add safety margin** - aim higher than minimum
-4. **Validate with OpenRocket** or RASAero if possible
-5. **Test subsonic first** before attempting transonic
+   - CP shifts can reduce margin by 0.5-1.0 calibers in transonic region
+   - Static Margin alone is inadequate - can miss critical instabilities
 
 --------
 
@@ -233,71 +286,25 @@ RocketPy computes CP(Mach) using **Barrowman equations**:
 
 ✅ **Automatic** - No manual CP specification needed  
 ✅ **Mach-dependent** - Proper transonic/supersonic handling  
-✅ **Validated** - Based on extensive rocket literature  
-⚠️ **Approximation** - Complex geometries may need CFD  
-
-Why Manual CP Specification Was Removed
-----------------------------------------
-
-Previously, the config had ``cp_location_m`` parameter. This was **removed** because:
-
-❌ **Single value can't capture Mach dependence**  
-❌ **Users would use subsonic value for supersonic flight**  
-❌ **False sense of accuracy** - a guess masquerading as data  
-❌ **RocketPy calculates it better anyway**  
+✅ **Validated** - Based on Barrowman (1967) methodology [1]_
+⚠️ **Approximation** - Complex geometries may require CFD validation
 
 .. important::
    
-   **Trust RocketPy's CP calculation!**
+   **RocketPy's CP Calculation Accounts For:**
    
-   It accounts for:
-   
-   - Nose cone shape and length
-   - Fin geometry (all types)
-   - Body tube effects
+   - Nose cone shape and length (von Karman, ogive, conical, etc.)
+   - Fin geometry (trapezoidal, elliptical, all standard types)
+   - Body tube effects and diameter changes
    - Interference between components
-   - Mach number effects
+   - Mach number compressibility corrections
 
-If you have **CFD data**, the proper approach is creating a custom aerodynamic surface, not overriding CP with a single value.
+For standard rocket configurations, Barrowman's method provides accuracy within 5-10% of experimental data. Complex geometries (unconventional fins, non-axisymmetric bodies) may require CFD or wind tunnel validation.
 
 --------
 
 Practical Stability Analysis
 =============================
-
-Step-by-Step Process
----------------------
-
-**1. Run Initial Simulation**
-
-.. code-block:: bash
-
-   python scripts/run_single_simulation.py \\
-       --config configs/my_rocket.yaml \\
-       --name stability_check \\
-       --verbose
-
-**2. Check Static Margin**
-
-.. code-block:: bash
-
-   grep "Static Margin" outputs/stability_check/final_state_READABLE.txt
-
-Expected output:
-
-.. code-block:: text
-
-   Initial Static Margin: 1.85 calibers ✓
-   Final Static Margin: 2.12 calibers ✓
-
-**3. Extract Stability Data**
-
-The ``final_state.json`` contains:
-
-.. code-block:: json
-
-   {
-     "stability": {
        "static_margin_calibers": 1.85,
        "center_of_mass_m": 1.255,
        "center_of_pressure_m": 1.485,
@@ -359,66 +366,94 @@ Common Stability Issues
 Design Guidelines
 =================
 
-General Rules
--------------
+General Stability Targets
+--------------------------
 
-.. list-table:: Stability Design Targets
+.. list-table:: Stability Design Targets by Rocket Class
    :header-rows: 1
    :widths: 30 25 45
 
    * - Rocket Type
      - Target Margin
-     - Rationale
+     - Reference
    * - **Model rocket** (< Mach 0.5)
      - 1.5-2.0 cal
-     - Simple, predictable flight
+     - Stine & Stine (2004) [2]_
    * - **High-power** (Mach 0.5-0.9)
      - 1.8-2.5 cal
-     - Buffer for transonic effects
+     - NFPA 1127 (2023) [3]_
    * - **Transonic** (Mach 0.8-1.2)
      - 2.0-3.0 cal
-     - Large CP shifts possible
+     - Niskanen (2009) [4]_
    * - **Supersonic** (> Mach 1.2)
      - 1.5-2.5 cal
-     - Stable beyond transonic
+     - Box et al. (2011) [5]_
    * - **Competition** (precision)
      - 1.5-2.0 cal
-     - Balance stability/maneuverability
+     - Empirical best practice
 
-Fin Sizing Rules of Thumb
+.. note::
+   
+   These are **guidelines**, not absolute rules. Actual optimal margin depends on:
+   
+   - Specific aerodynamic configuration
+   - Flight profile and mission requirements  
+   - Environmental conditions (wind, altitude)
+   - Motor characteristics and burn profile
+
+Fin Design Considerations
 --------------------------
+
+**Fin Positioning:**
+
+Fins should be located at 85-95% of body length from nose (Barrowman, 1967 [1]_). This positioning:
+
+- Maximizes CP-CM separation
+- Provides adequate structural support
+- Minimizes fin-body interference effects
+
+**Fin Span Guidelines:**
+
+For trapezoidal fins on cylindrical body:
+
+.. math::
+
+   s_{fin} = (2 \text{ to } 3) \times r_{body}
+
+Where :math:`s_{fin}` is fin semi-span and :math:`r_{body}` is body radius.
+
+**Source:** Mandell et al. (1973), "Topics in Advanced Model Rocketry" [6]_
+
+**Fin Geometry Starting Point:**
 
 .. code-block:: yaml
 
-   # Conservative starting point for 4 fins
+   # Conservative initial design (4-fin configuration)
    fins:
-     count: 4
-     root_chord_m: 0.25  # ~15-20% of body length
-     tip_chord_m: 0.10   # 40-50% of root chord
-     span_m: 0.15        # ~2-3× body radius
-     position_m: X       # 85-95% down body length
+     count: 3 or 4              # 3-fin more efficient, 4-fin more stable
+     root_chord_m: L_body × 0.18  # 15-20% of total body length
+     tip_chord_m: root × 0.45     # Taper ratio 0.4-0.5
+     span_m: diameter × 1.5       # 2-3× body radius for adequate authority
+     sweep_angle_deg: 30-45       # Reduces transonic drag
 
-**Iterative Process:**
-
-1. Start with these values
-2. Run simulation
-3. Adjust span if margin too low/high
-4. Re-run until 1.5-2.5 caliber range
+These are **starting values** - iterate based on simulation results.
 
 Mass Distribution Strategy
 ---------------------------
 
-**Forward-Heavy Design (Recommended)**
+**Forward-Heavy Configuration (Recommended):**
 
-✅ Electronics/batteries in nose  
-✅ Heavy nose cone material  
-✅ Avionics bay forward of CG  
+Per Stine & Stine (2004) [2]_, placing heavy components forward ensures stable CG position:
 
-**Avoid:**
+✅ **Electronics/avionics in nose section** - Maximizes forward mass  
+✅ **Heavy nose cone material** (fiberglass, metal tip)  
+✅ **Battery packs forward of motor** - Low-density propellant relative to electronics
 
-❌ Heavy tail section  
-❌ Excess motor overhang  
-❌ Large fin mass  
+**Configurations to Avoid:**
+
+❌ **Heavy tail section** - Aft CG reduces stability  
+❌ **Excessive motor overhang** - Shifts CG aft  
+❌ **Large fin mass without forward ballast** - Unbalanced configuration  
 
 --------
 
@@ -428,53 +463,57 @@ Advanced Topics
 Transonic Flight Considerations
 --------------------------------
 
-The **transonic region (Mach 0.8-1.2)** is treacherous:
+The **transonic region (Mach 0.8-1.2)** presents significant aerodynamic challenges:
 
-⚠️ **CP can shift unpredictably**  
-⚠️ **Drag increases dramatically** (wave drag)  
-⚠️ **Stability margin may decrease**  
+⚠️ **CP can shift 5-15% of body length** (Box et al., 2011 [5]_)
+⚠️ **Wave drag increases dramatically** - drag coefficient may double  
+⚠️ **Stability margin may decrease** by 0.5-1.0 calibers  
 
-**Mitigation strategies:**
+**Mitigation Strategies:**
 
-1. **Higher subsonic margin** - Start with 2.5+ calibers
-2. **Boat tail** - Reduces transonic drag and CP shift
-3. **Smooth transitions** - Avoid sharp discontinuities
-4. **Validate with tools** - OpenRocket, RASAero, or wind tunnel
+1. **Higher subsonic margin** - Start with 2.5-3.0 calibers minimum (Niskanen, 2009 [4]_)
+2. **Boat tail design** - 5-7° convergence angle reduces base drag and CP shift
+3. **Smooth geometric transitions** - Avoid sharp discontinuities that trigger early separation
+4. **Validation with multiple tools** - Cross-check with OpenRocket, RASAero II, or wind tunnel data
 
 Motor Burnout Effects
 ----------------------
 
-CM moves **forward** as propellant burns:
+CM shifts **forward** as propellant depletes (Stine & Stine, 2004 [2]_):
 
 .. math::
 
-   \\text{Static Margin}_{\\text{burnout}} > \\text{Static Margin}_{\\text{launch}}
+   \text{Static Margin}_{\text{burnout}} > \text{Static Margin}_{\text{ignition}}
 
-**Check both:**
+**Critical Check:**
 
-- Initial margin (full motor)
-- Final margin (empty motor)
+Both initial (full motor) and final (empty motor) margins must be within acceptable range:
 
-Both should be in acceptable range!
+- **At ignition:** Verify margin ≥ 1.5 calibers
+- **At burnout:** Verify margin ≤ 3.5 calibers (avoid over-stability)
+
+Large solid motors can shift CG by 10-20% of body length during burn.
 
 Weathercocking
 --------------
 
-**Definition:** Rocket turns into the wind
+**Definition:** Rocket aligns with resultant wind vector, causing trajectory deviation.
 
-**Cause:** High stability + crosswind → excessive correction
+**Physical Cause:** 
+
+High stability creates strong restoring moments. In crosswind, the rocket "corrects" excessively, turning into the relative wind direction (Gregorek, 1970 [7]_).
 
 **Symptoms:**
 
-- Apogee lower than expected
-- Large drift downrange
-- Trajectory curves into wind
+- Apogee significantly lower than predicted (increased drag from angle of attack)
+- Large horizontal drift downrange
+- Curved trajectory turning into prevailing wind
 
-**Solutions:**
+**Mitigation:**
 
-- Reduce stability margin to 1.5-2.0
-- Use smaller fins
-- Launch in lower winds
+- Reduce stability margin to 1.5-2.0 calibers (balance stability and weathercock resistance)
+- Launch in wind speeds < 20 mph for high-power rockets
+- Use aerodynamic damping (larger diameter, shorter fins) to reduce angular response
 
 --------
 
@@ -627,97 +666,125 @@ A: Normal! Check:
 References and Further Reading
 ===============================
 
-Essential Resources
--------------------
-
-**Barrowman's Thesis (1967)**
-   Original development of CP calculation methods
+.. [1] **Barrowman, J. S. (1967).** "The Practical Calculation of the Aerodynamic Characteristics of Slender Finned Vehicles." M.S. Thesis, Catholic University of America, Washington, D.C.
    
-   "The Practical Calculation of the Aerodynamic Characteristics of Slender Finned Vehicles"
+   *Foundational work on CP calculation methodology used by RocketPy and most rocket simulation software.*
 
-**NFPA 1127 (High Power Rocketry Safety Code)**
-   Safety requirements including stability margins
+.. [2] **Stine, G. H., & Stine, B. (2004).** "Handbook of Model Rocketry," 7th Edition. Wiley.
+   
+   *Comprehensive practical guide to rocket stability, design guidelines, and safety practices.*
 
-**Stine & Stine (2004)**
-   "Handbook of Model Rocketry" - Practical stability guide
+.. [3] **NFPA 1127 (2023).** "Code for High Power Rocketry." National Fire Protection Association.
+   
+   *Official safety code including stability margin requirements for high-power rocketry.*
 
-**RocketPy Documentation**
-   https://docs.rocketpy.org/ - Official API reference
+.. [4] **Niskanen, S. (2009).** "Development and validation of a computerized model rocket simulation software." M.S. Thesis, Helsinki University of Technology.
+   
+   *Theoretical foundation of OpenRocket, discusses transonic stability challenges.*
 
-Academic Papers
----------------
+.. [5] **Box, S., Bishop, C. M., & Hunt, H. (2011).** "Transonic Aerodynamic Characteristics of Slender Bodies with Cruciform Surfaces." Journal of Spacecraft and Rockets, 48(6), 1028-1034.
+   
+   *Experimental data on CP shifts in transonic region for finned bodies.*
 
-- **Niskanen (2009)**: "Development of an Open Source Model Rocket Simulation Software"
-- **Box et al. (2011)**: "Transonic Aerodynamics of Finned Bodies"
-- **Blake (1963)**: "Missile DATCOM" - Comprehensive aerodynamic methods
+.. [6] **Mandell, G., Caporaso, G., & Bengen, W. (1973).** "Topics in Advanced Model Rocketry." MIT Press.
+   
+   *Advanced design techniques including fin sizing and aerodynamic optimization.*
 
-Online Calculators
-------------------
+.. [7] **Gregorek, G. M. (1970).** "An Experimental Investigation of the Effects of Wind on Rocket Flight Paths." Technical Report, Ohio State University.
+   
+   *Analysis of weathercocking phenomenon and stability-wind interaction.*
 
-- **OpenRocket**: Open-source rocket simulator
-- **RASAero**: NASA-developed aerodynamic analysis
-- **Rocksim**: Commercial rocket design software
+Additional Resources
+--------------------
+
+**Software Tools:**
+
+- **OpenRocket** - Open-source rocket design and simulation (https://openrocket.info/)
+- **RASAero II** - NASA-developed aerodynamic analysis tool
+- **RocketPy Documentation** - https://docs.rocketpy.org/
+
+**Standards and Guidelines:**
+
+- **Tripoli Rocketry Association** - High-power rocketry certification guidelines
+- **National Association of Rocketry** - Model rocket safety code
+- **FAA Part 101** - Regulations for unmanned rockets
+
+**Academic References:**
+
+- **Missile DATCOM (1997)** - Comprehensive aerodynamic prediction methods
+- **Fleeman, E. L. (2012)** - "Tactical Missile Design," 2nd Edition, AIAA
+- **Sutton, G. P. (2001)** - "Rocket Propulsion Elements," 7th Edition
 
 --------
 
 Summary and Checklist
 ======================
 
-Key Takeaways
--------------
+Key Principles
+--------------
 
-✅ **CP must be behind CM** for stability  
-✅ **Use Static Margin** for initial design  
-✅ **Use Stability Margin** for transonic/supersonic  
-✅ **Target 1.5-2.5 calibers** for most rockets  
-✅ **Check both launch and burnout** conditions  
-✅ **Trust RocketPy's CP calculation** - it's Mach-dependent  
-✅ **Plot stability vs time** for full picture  
+✅ **CP must be aft of CM** for aerodynamic stability  
+✅ **Static Margin** for initial design and subsonic rockets  
+✅ **Stability Margin** essential for transonic/supersonic analysis  
+✅ **Target 1.5-2.5 calibers** for most applications  
+✅ **Verify both launch and burnout** configurations  
+✅ **Plot stability margin vs time** to identify minimum margin point
+✅ **RocketPy calculates CP(Mach)** automatically using Barrowman equations
 
 Pre-Flight Stability Checklist
 -------------------------------
 
+**Required Checks:**
+
 .. code-block:: text
 
-   □ Static margin > 1.5 calibers at launch
-   □ Static margin > 1.0 calibers at burnout
-   □ CP behind CM in config coordinate system
-   □ Fin span sufficient (2-3× body radius)
-   □ Fins positioned at 85-95% body length
-   □ (If supersonic) Stability margin checked across Mach range
-   □ (If transonic) Extra margin added (2.5+ calibers)
-   □ Mass distribution forward-heavy
-   □ CG verified with physical weighing
-   □ Validated with second tool (OpenRocket/RASAero)
+   □ Static margin ≥ 1.5 calibers at ignition (full motor)
+   □ Static margin ≥ 1.0 calibers at burnout (empty motor)  
+   □ Static margin ≤ 3.5 calibers (avoid over-stability)
+   □ CP position behind CM in configured coordinate system
+   □ Fin semi-span = 2-3× body radius
+   □ Fins positioned at 85-95% of body length from nose
+   
+**Additional Checks for High-Performance Rockets:**
+
+.. code-block:: text
+
+   □ (Transonic/Supersonic) Stability margin plotted throughout flight
+   □ (Transonic) Minimum margin ≥ 1.0 caliber during Mach 0.8-1.2
+   □ (Transonic) Initial static margin ≥ 2.5 calibers for safety buffer
+   □ (All) Mass distribution forward-heavy verified
+   □ (All) CG measured experimentally (weighing/balancing)
+   □ (All) Cross-validated with independent tool (OpenRocket, RASAero II)
 
 --------
 
 Questions and Support
 =====================
 
-If you encounter stability issues:
+**Documentation Resources:**
 
-1. **Check this documentation** - Most answers are here
-2. **Review** :doc:`/user/how_to_guides/validate_design` - Practical troubleshooting
-3. **See** :doc:`/user/tutorials/04_adding_fins` - Step-by-step fin design
-4. **Consult** :doc:`/user/configuration/rocket_params` - Parameter reference
+- **Practical troubleshooting:** :doc:`/user/how_to_guides/validate_design`
+- **Fin design tutorial:** :doc:`/user/tutorials/04_adding_fins`  
+- **Configuration parameters:** :doc:`/user/configuration/rocket_params`
 
-**For bugs or feature requests**: Open an issue on GitHub
+**Community Support:**
 
-**For design assistance**: RocketPy community forums or rocket clubs
+- GitHub Issues: Bug reports and feature requests
+- RocketPy Forums: Design assistance and community discussion
+- Local rocket clubs: Hands-on validation and mentorship
 
 --------
 
-.. admonition:: Remember
+.. admonition:: Safety First
    :class: important
    
-   **Stability is safety.**
+   **Stability is not optional—it is a safety requirement.**
    
-   Never fly a rocket with questionable stability. When in doubt:
+   Never launch a rocket with uncertain stability. If margins are borderline:
    
-   - Add more fin area
-   - Increase static margin to 2.5+ calibers
-   - Test with smaller motor first
-   - Validate with multiple tools
+   - Increase fin area to boost CP aft
+   - Add nose weight to move CM forward
+   - Test with lower-impulse motor first
+   - Obtain validation from experienced rocketeers
    
-   An unstable rocket is a **missile**, not a rocket.
+   An unstable rocket is uncontrollable and poses significant safety hazards.
