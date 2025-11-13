@@ -358,6 +358,7 @@ Location of rocket's **center of pressure (CP)** measured from the coordinate sy
 
 .. seealso::
    - :ref:`tutorial-basic-flight-stability` for static margin examples
+   - :ref:`technical-stability-analysis` for comprehensive stability theory (Static Margin vs Stability Margin)
    - :ref:`how-to-optimize-static-margin` for design iteration
 
 --------
@@ -1891,6 +1892,10 @@ See Also
    
    - :ref:`how-to-measure-rocket` - Physical parameter measurement techniques
    - :ref:`how-to-optimize-static-margin` - Iterative design for stability
+   
+   **Technical Deep Dives:**
+   
+   - :ref:`technical-stability-analysis` - Comprehensive stability theory and metrics
    - :ref:`how-to-dual-deployment` - Setting up drogue + main parachute
    
    **Examples:**
