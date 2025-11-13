@@ -87,8 +87,6 @@ class StateExporter:
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        logger.info(f"Exporting initial state to {output_path}")
-
         # Build complete state dictionary
         state = {
             "metadata": self._create_metadata(),
@@ -106,7 +104,7 @@ class StateExporter:
         readable_path = output_path.parent / f"{output_path.stem}_READABLE.txt"
         self._export_human_readable(state, readable_path, include_flight=False)
 
-        logger.info(f"Initial state exported to {output_path}")
+        logger.info(f"Initial state exported to {output_path} (+ readable TXT)")
         return output_path
 
     def export_final_state(
@@ -133,8 +131,6 @@ class StateExporter:
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        logger.info(f"Exporting final state to {output_path}")
-
         # Build complete state (initial + results)
         state = {
             "metadata": self._create_metadata(include_flight=True),
@@ -153,7 +149,7 @@ class StateExporter:
         readable_path = output_path.parent / f"{output_path.stem}_READABLE.txt"
         self._export_human_readable(state, readable_path, include_flight=True)
 
-        logger.info(f"Final state exported to {output_path}")
+        logger.info(f"Final state exported to {output_path} (+ readable TXT)")
         return output_path
 
     def export_complete(
@@ -200,16 +196,18 @@ class StateExporter:
         logger.info(f"Complete state exported to {output_dir}")
         return paths
 
-    def export_curves_plots(self, output_dir: str) -> Dict[str, Path]:
+    def export_curves_plots(self, output_dir: str, max_mach: float = 2.0, flight=None) -> Dict[str, Path]:
         """Generate and save plots of all curves (thrust, drag, wind, etc.).
 
         Args:
             output_dir: Directory for plot PNG files
+            max_mach: Maximum Mach number reached during flight (default 2.0)
+            flight: RocketPy Flight object (optional, for simulation data)
 
         Returns:
             Dictionary mapping plot name to path
         """
-        plotter = CurvePlotter(self.motor, self.rocket, self.environment)
+        plotter = CurvePlotter(self.motor, self.rocket, self.environment, max_mach=max_mach, flight=flight)
         return plotter.plot_all_curves(output_dir)
 
     def _create_metadata(self, include_flight: bool = False) -> Dict[str, Any]:
@@ -610,6 +608,18 @@ class StateExporter:
             summary['max_values']['mach_number'] = float(flight.max_mach_number)
         if hasattr(flight, 'max_acceleration'):
             summary['max_values']['acceleration_ms2'] = float(flight.max_acceleration)
+        if hasattr(flight, 'max_dynamic_pressure'):
+            summary['max_values']['dynamic_pressure_pa'] = float(flight.max_dynamic_pressure)
+            summary['max_values']['dynamic_pressure_time_s'] = float(flight.max_dynamic_pressure_time)
+        
+        # Maximum aerodynamic forces
+        if hasattr(flight, 'aerodynamic_drag'):
+            try:
+                # Get drag at max-Q time (typically where max drag occurs)
+                max_q_time = float(flight.max_dynamic_pressure_time) if hasattr(flight, 'max_dynamic_pressure_time') else 0
+                summary['max_values']['aerodynamic_drag_n'] = float(flight.aerodynamic_drag.get_value_opt(max_q_time))
+            except:
+                pass
 
         # Rail exit
         if hasattr(flight, 'out_of_rail_velocity'):
@@ -1449,6 +1459,12 @@ class StateExporter:
             f.write(f"  Velocity:                    {self._format_value(max_vals.get('velocity_ms'), '.2f')} m/s\n")
             f.write(f"  Mach Number:                 {self._format_value(max_vals.get('mach_number'), '.3f')}\n")
             f.write(f"  Acceleration:                {self._format_value(max_vals.get('acceleration_ms2'), '.2f')} m/s² ({max_vals.get('acceleration_ms2', 0)/9.80665:.2f} g)\n")
+            if 'dynamic_pressure_pa' in max_vals:
+                max_q_kpa = max_vals.get('dynamic_pressure_pa', 0) / 1000.0
+                max_q_time = max_vals.get('dynamic_pressure_time_s', 0)
+                f.write(f"  Dynamic Pressure (Max-Q):    {max_q_kpa:.2f} kPa ({max_vals.get('dynamic_pressure_pa', 0):.0f} Pa) @ {self._format_value(max_q_time, '.2f')} s\n")
+            if 'aerodynamic_drag_n' in max_vals:
+                f.write(f"  Aerodynamic Drag (Max-Q):    {self._format_value(max_vals.get('aerodynamic_drag_n'), '.2f')} N\n")
             f.write("\n")
 
         # Rail Exit

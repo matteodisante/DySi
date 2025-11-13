@@ -66,8 +66,6 @@ class DataHandler:
         # Ensure parent directory exists
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        logger.info(f"Exporting trajectory data to {output_path}")
-
         # Get column names and ensure time is first
         columns = list(trajectory_data.keys())
         if "time_s" in columns:
@@ -120,12 +118,10 @@ class DataHandler:
         # Ensure parent directory exists
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        logger.info(f"Exporting summary data to {output_path}")
-
         with open(output_path, "w") as f:
             json.dump(summary_data, f, indent=indent)
 
-        logger.info(f"Exported summary to {output_path}")
+        logger.info(f"Exported summary → {output_path}")
         return output_path
 
     def export_complete_dataset(
