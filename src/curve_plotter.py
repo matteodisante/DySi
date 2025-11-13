@@ -19,17 +19,57 @@ logger = logging.getLogger(__name__)
 class CurvePlotter:
     """Generate plots of simulation input curves."""
 
-    def __init__(self, motor, rocket, environment):
+    def __init__(self, motor, rocket, environment, max_mach: float = 2.0, flight=None):
         """Initialize CurvePlotter.
 
         Args:
             motor: RocketPy Motor object
             rocket: RocketPy Rocket object
             environment: RocketPy Environment object
+            max_mach: Maximum Mach number reached during flight (default 2.0)
+            flight: RocketPy Flight object (optional, for simulation data)
         """
         self.motor = motor
         self.rocket = rocket
         self.environment = environment
+        self.max_mach = max_mach
+        self.flight = flight
+        
+        logger.info(f"🚀 CurvePlotter initialized with max_mach={max_mach:.3f}, flight={'provided' if flight else 'None'}")
+        
+        # Extract critical flight events if flight object available
+        self.burnout_time = None
+        self.max_q_time = None
+        self.apogee_time = None
+        self.parachute_deploy_time = None
+        
+        if self.flight is not None:
+            try:
+                self.burnout_time = float(self.flight.rocket.motor.burn_out_time)
+            except:
+                pass
+            try:
+                self.max_q_time = float(self.flight.max_dynamic_pressure_time)
+                self.max_q_pressure = float(self.flight.max_dynamic_pressure)  # Pa
+            except:
+                self.max_q_pressure = None
+            try:
+                self.apogee_time = float(self.flight.apogee_time)
+            except:
+                pass
+            try:
+                # Calculate parachute deployment time (apogee + lag for first parachute)
+                if hasattr(self.flight.rocket, 'parachutes') and len(self.flight.rocket.parachutes) > 0:
+                    first_parachute = self.flight.rocket.parachutes[0]
+                    # Check if trigger is apogee
+                    if hasattr(first_parachute, 'trigger') and first_parachute.trigger == 'apogee':
+                        lag = float(first_parachute.lag) if hasattr(first_parachute, 'lag') else 0
+                        if self.apogee_time is not None:
+                            self.parachute_deploy_time = self.apogee_time + lag
+                            logger.info(f"📍 Parachute deployment detected: {self.parachute_deploy_time:.2f}s (apogee {self.apogee_time:.2f}s + lag {lag:.2f}s)")
+            except Exception as e:
+                logger.debug(f"Could not extract parachute deployment time: {e}")
+                pass
 
     def plot_all_curves(self, output_dir: str) -> dict:
         """Generate all available curve plots.
@@ -56,6 +96,11 @@ class CurvePlotter:
         if self.rocket:
             rocket_paths = self.plot_all_rocket_curves(output_dir)
             paths.update(rocket_paths)
+
+        # Plot all stability curves (organized in stability/ subdirectory)
+        if self.rocket:
+            stability_paths = self.plot_all_stability_curves(output_dir)
+            paths.update(stability_paths)
 
         # Plot environment profiles (organized in environment/ subdirectory)
         env_dir = output_dir / "environment"
@@ -331,7 +376,7 @@ class CurvePlotter:
             return None
 
     def _sample_function(self, func, num_points: int = 200):
-        """Sample a RocketPy Function object.
+        """Sample a RocketPy Function object (time-based).
 
         Args:
             func: RocketPy Function to sample
@@ -359,6 +404,39 @@ class CurvePlotter:
             return np.column_stack([t_array, values])
         except Exception as e:
             logger.warning(f"Could not sample function: {e}")
+            return None
+
+    def _sample_mach_function(self, func, num_points: int = 300):
+        """Sample a RocketPy Function object that depends on Mach number.
+
+        Uses actual maximum Mach number reached during flight with small margin.
+        For subsonic flights (< M=1.0), shows up to max_mach + 5%.
+        For transonic/supersonic, shows up to max_mach + 10%.
+
+        Args:
+            func: RocketPy Function to sample (must accept Mach as input)
+            num_points: Number of sample points
+
+        Returns:
+            Numpy array with shape (n, 2) of [mach, value] pairs
+        """
+        try:
+            # Use smaller margin for subsonic, larger for supersonic
+            if self.max_mach < 1.0:
+                # Subsonic: show only +5% beyond actual flight
+                mach_max = self.max_mach * 1.05
+                logger.debug(f"Subsonic flight: max_mach={self.max_mach:.3f}, plotting to {mach_max:.3f}")
+            else:
+                # Transonic/Supersonic: show +10% for safety analysis
+                mach_max = self.max_mach * 1.1
+                logger.debug(f"Supersonic flight: max_mach={self.max_mach:.3f}, plotting to {mach_max:.3f}")
+            
+            mach_array = np.linspace(0, mach_max, num_points)
+            values = np.array([func(m) for m in mach_array])
+            
+            return np.column_stack([mach_array, values])
+        except Exception as e:
+            logger.warning(f"Could not sample Mach function: {e}")
             return None
 
     def plot_mass_evolution(self, output_dir: Path) -> Optional[Path]:
@@ -950,51 +1028,15 @@ class CurvePlotter:
             if path:
                 paths['rocket_cp_position'] = path
         
-        # 13. Lift coefficient derivative vs Mach
-        if hasattr(self.rocket, 'total_lift_coeff_der'):
-            path = self.plot_single_function(
-                self.rocket.total_lift_coeff_der,
-                "Total Lift Coefficient Derivative vs Mach",
-                "Mach Number",
-                "CLα (1/rad)",
-                rocket_dir / "lift_coefficient_derivative_vs_mach.png"
-            )
-            if path:
-                paths['rocket_lift_coefficient'] = path
-        
-        # === STABILITY (2 plots) ===
-        
-        # 14. Static margin vs time
-        if hasattr(self.rocket, 'static_margin'):
-            path = self.plot_single_function(
-                self.rocket.static_margin,
-                "Static Margin vs Time",
-                "Time (s)",
-                "Static Margin (calibers)",
-                rocket_dir / "static_margin_vs_time.png"
-            )
-            if path:
-                paths['rocket_static_margin'] = path
-        
-        # 15. Stability margin surface (3D plot: Mach vs Time)
-        if hasattr(self.rocket, 'stability_margin'):
-            path = self.plot_stability_margin_surface(rocket_dir)
-            if path:
-                paths['rocket_stability_margin_surface'] = path
-        
+        # 13. Lift coefficient derivative vs Mach (skip - not plottable as-is)
+        # The total_lift_coeff_der is a function object that requires special handling
+        # Uncomment if RocketPy provides a plottable version in future releases
+
         # === PERFORMANCE (1 plot) ===
         
-        # 16. Thrust-to-weight ratio vs time
-        if hasattr(self.rocket, 'thrust_to_weight'):
-            path = self.plot_single_function(
-                self.rocket.thrust_to_weight,
-                "Thrust-to-Weight Ratio vs Time",
-                "Time (s)",
-                "T/W Ratio",
-                rocket_dir / "thrust_to_weight_vs_time.png"
-            )
-            if path:
-                paths['rocket_thrust_to_weight'] = path
+        # 16. Thrust-to-weight ratio vs time (skip - not plottable as-is)
+        # The thrust_to_weight is a function object that requires special handling
+        # Uncomment if RocketPy provides a plottable version in future releases
         
         # === VISUALIZATION (1 plot) ===
         
@@ -1452,14 +1494,26 @@ class CurvePlotter:
         try:
             output_path = output_dir / "cp_position_vs_mach.png"
             
-            data = self._sample_function(self.rocket.cp_position)
+            data = self._sample_mach_function(self.rocket.cp_position)
             if data is None or len(data) == 0:
                 logger.warning("No center of pressure data available")
                 return None
             
             fig, ax = plt.subplots(figsize=(12, 7))
             
-            ax.plot(data[:, 0], data[:, 1], 'b-', linewidth=2.5, label='Center of Pressure')
+            # Distinguish simulated vs theoretical data
+            simulated_mask = data[:, 0] <= self.max_mach
+            theoretical_mask = data[:, 0] >= self.max_mach
+            
+            ax.plot(data[simulated_mask, 0], data[simulated_mask, 1], 
+                   'b-', linewidth=3, label='CP (Simulated)', zorder=5)
+            if np.any(theoretical_mask):
+                ax.plot(data[theoretical_mask, 0], data[theoretical_mask, 1], 
+                       'b--', linewidth=2, alpha=0.6, label='CP (Theoretical)', zorder=4)
+            
+            # Mark max Mach
+            ax.axvline(x=self.max_mach, color='darkblue', linestyle='-.', linewidth=2,
+                      alpha=0.7, label=f'Max Mach: {self.max_mach:.3f}', zorder=6)
             
             # Add reference line for center of mass (if constant)
             if hasattr(self.rocket, 'center_of_mass_without_motor'):
@@ -1487,7 +1541,10 @@ class CurvePlotter:
         """Plot stability margin as a 2D surface (Mach vs Time).
         
         Creates a contour plot showing how stability margin varies with both
-        Mach number and time during flight.
+        Mach number and time during flight. This uses rocket.stability_margin(mach, time)
+        which accounts for CP movement with Mach number.
+        
+        Note: This is different from static_margin which assumes Mach=0 (CP fixed).
         
         Args:
             output_dir: Output directory
@@ -1499,7 +1556,9 @@ class CurvePlotter:
             output_path = output_dir / "stability_margin_surface.png"
             
             # Sample the stability_margin function over Mach and time grid
-            mach_range = np.linspace(0, 3, 50)
+            # Use adaptive margin: +5% for subsonic, +10% for supersonic
+            mach_max = self.max_mach * 1.05 if self.max_mach < 1.0 else self.max_mach * 1.1
+            mach_range = np.linspace(0, mach_max, 50)
             time_range = np.linspace(0, 10, 50)
             
             # Get burn out time if available
@@ -1535,7 +1594,7 @@ class CurvePlotter:
             
             ax.set_xlabel("Mach Number", fontsize=12, fontweight='bold')
             ax.set_ylabel("Time (s)", fontsize=12, fontweight='bold')
-            ax.set_title("Stability Margin Surface (Mach vs Time)", fontsize=14, fontweight='bold')
+            ax.set_title("Stability Margin (function of Mach & Time)", fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3, linestyle='--')
             plt.tight_layout()
             
@@ -1549,37 +1608,375 @@ class CurvePlotter:
             logger.warning(f"Could not plot stability margin surface: {e}")
             return None
 
-    def plot_rocket_schematic(self, output_dir: Path) -> Optional[Path]:
-        """Save rocket schematic using rocket.draw() method.
-        
+    def plot_static_margin_enhanced(self, output_dir: Path) -> Optional[Path]:
+        """Plot actual stability margin vs time with aerospace guideline thresholds.
+
+        Enhanced version showing REAL stability margin (accounting for CP movement with Mach):
+        - Uses rocket.stability_margin(mach, time) for accurate flight behavior
+        - Critical threshold at 1.0 caliber (minimum safety)
+        - Recommended threshold at 1.5 calibers (subsonic)
+        - Design target zone at 2.0-2.5 calibers
+        - Critical flight events markers
+        - Parachute deployment marker
+
         Args:
             output_dir: Output directory
+
+        Returns:
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "stability_margin_enhanced.png"
+
+            # Calculate actual stability margin using real Mach number at each time
+            if self.flight is None:
+                logger.warning("Flight object required for stability margin - falling back to static margin")
+                data = self._sample_function(self.rocket.static_margin)
+                using_static = True
+            else:
+                # Determine time range: extend to shortly after parachute deployment
+                t_max = self.flight.t_final
+                if self.parachute_deploy_time is not None and self.parachute_deploy_time < self.flight.t_final:
+                    t_max = min(self.parachute_deploy_time + 10, self.parachute_deploy_time * 1.2, self.flight.t_final)
+                
+                # Sample time points
+                time_points = np.linspace(0, t_max, 200)
+                stability_values = []
+                
+                for t in time_points:
+                    try:
+                        # Get Mach number at this time from flight data
+                        mach = float(self.flight.mach_number(t))
+                        # Calculate stability margin at this Mach and time
+                        sm = float(self.rocket.stability_margin(mach, t))
+                        stability_values.append([t, sm])
+                    except Exception as e:
+                        if len(stability_values) == 0:
+                            logger.warning(f"Failed to compute stability margin at t={t:.2f}s: {e}")
+                        pass
+                
+                if len(stability_values) == 0:
+                    logger.warning("Could not compute stability margin data - falling back to static margin")
+                    data = self._sample_function(self.rocket.static_margin)
+                    using_static = True
+                else:
+                    data = np.array(stability_values)
+                    using_static = False
             
+            if data is None or len(data) == 0:
+                logger.warning("No stability margin data available")
+                return None
+
+            fig, ax = plt.subplots(figsize=(14, 8))
+
+            # Plot stability margin
+            margin_label = 'Static Margin (at Mach=0)' if using_static else 'Stability Margin (actual flight)'
+            ax.plot(data[:, 0], data[:, 1], 'b-', linewidth=3, label=margin_label, zorder=5)
+
+            # Add threshold lines and zones
+            ax.axhline(y=1.0, color='red', linestyle='--', linewidth=2,
+                      alpha=0.7, label='Minimum Safety (1.0 cal)', zorder=3)
+            ax.axhline(y=1.5, color='orange', linestyle='--', linewidth=2,
+                      alpha=0.7, label='Recommended Subsonic (1.5 cal)', zorder=3)
+
+            # Design target zone (2.0-2.5 calibers)
+            ax.axhspan(2.0, 2.5, alpha=0.15, color='green',
+                      label='Design Target Zone (2.0-2.5 cal)', zorder=1)
+
+            # Unsafe zone (below 1.0)
+            ax.axhspan(ax.get_ylim()[0], 1.0, alpha=0.1, color='red', zorder=1)
+
+            # Marginal zone (1.0-1.5)
+            ax.axhspan(1.0, 1.5, alpha=0.1, color='yellow', zorder=1)
+
+            # Mark critical flight events
+            events_marked = []
+            
+            # Burnout
+            if self.burnout_time is not None and self.burnout_time < data[-1, 0]:
+                burn_out = self.burnout_time
+                ax.axvline(x=burn_out, color='purple', linestyle=':', linewidth=2,
+                          alpha=0.7, label=f'Burn Out ({burn_out:.2f}s)', zorder=4)
+                
+                # Get stability margin at burnout (use actual if available)
+                if not using_static and self.flight is not None:
+                    mach_bo = float(self.flight.mach_number(burn_out))
+                    sm_at_burnout = float(self.rocket.stability_margin(mach_bo, burn_out))
+                else:
+                    sm_at_burnout = self.rocket.static_margin(burn_out)
+                    
+                ax.plot(burn_out, sm_at_burnout, 'mo', markersize=12, zorder=6)
+                ax.annotate(f'SM @ Burnout\n{sm_at_burnout:.2f} cal',
+                           xy=(burn_out, sm_at_burnout),
+                           xytext=(burn_out * 1.15, sm_at_burnout),
+                           fontsize=9, fontweight='bold',
+                           bbox=dict(boxstyle='round,pad=0.4', facecolor='mediumpurple', alpha=0.7),
+                           arrowprops=dict(arrowstyle='->', color='purple', lw=1.5))
+                events_marked.append('burnout')
+            
+            # Max dynamic pressure
+            if self.max_q_time is not None and self.max_q_time < data[-1, 0]:
+                max_q_t = self.max_q_time
+                # Format pressure value
+                max_q_label = f'Max-Q ({max_q_t:.2f}s)'
+                if self.max_q_pressure is not None:
+                    max_q_kpa = self.max_q_pressure / 1000.0  # Convert Pa to kPa
+                    max_q_label = f'Max-Q ({max_q_t:.2f}s, {max_q_kpa:.1f} kPa)'
+                
+                ax.axvline(x=max_q_t, color='orange', linestyle=':', linewidth=2,
+                          alpha=0.7, label=max_q_label, zorder=4)
+                
+                # Get stability margin at Max-Q (use actual if available)
+                if not using_static and self.flight is not None:
+                    mach_mq = float(self.flight.mach_number(max_q_t))
+                    sm_at_maxq = float(self.rocket.stability_margin(mach_mq, max_q_t))
+                else:
+                    sm_at_maxq = self.rocket.static_margin(max_q_t)
+                    
+                ax.plot(max_q_t, sm_at_maxq, 'o', color='orange', markersize=12, zorder=6)
+                
+                # Annotation with SM and pressure
+                annotation_text = f'SM @ Max-Q\n{sm_at_maxq:.2f} cal'
+                if self.max_q_pressure is not None:
+                    max_q_kpa = self.max_q_pressure / 1000.0
+                    annotation_text = f'SM @ Max-Q\n{sm_at_maxq:.2f} cal\nQ = {max_q_kpa:.1f} kPa'
+                
+                ax.annotate(annotation_text,
+                           xy=(max_q_t, sm_at_maxq),
+                           xytext=(max_q_t * 1.15, sm_at_maxq - 0.2),
+                           fontsize=9, fontweight='bold',
+                           bbox=dict(boxstyle='round,pad=0.4', facecolor='orange', alpha=0.7),
+                           arrowprops=dict(arrowstyle='->', color='orange', lw=1.5))
+                events_marked.append('max_q')
+            
+            # Apogee
+            if self.apogee_time is not None and self.apogee_time < data[-1, 0]:
+                apogee_t = self.apogee_time
+                ax.axvline(x=apogee_t, color='green', linestyle=':', linewidth=2,
+                          alpha=0.7, label=f'Apogee ({apogee_t:.2f}s)', zorder=4)
+                
+                # Get stability margin at apogee (use actual if available)
+                if not using_static and self.flight is not None:
+                    mach_ap = float(self.flight.mach_number(apogee_t))
+                    sm_at_apogee = float(self.rocket.stability_margin(mach_ap, apogee_t))
+                else:
+                    sm_at_apogee = self.rocket.static_margin(apogee_t)
+                    
+                ax.plot(apogee_t, sm_at_apogee, 'go', markersize=12, zorder=6)
+                ax.annotate(f'SM @ Apogee\n{sm_at_apogee:.2f} cal',
+                           xy=(apogee_t, sm_at_apogee),
+                           xytext=(apogee_t * 0.85, sm_at_apogee + 0.2),
+                           fontsize=9, fontweight='bold',
+                           bbox=dict(boxstyle='round,pad=0.4', facecolor='lightgreen', alpha=0.7),
+                           arrowprops=dict(arrowstyle='->', color='green', lw=1.5))
+                events_marked.append('apogee')
+            
+            # Parachute deployment
+            if self.parachute_deploy_time is not None and self.parachute_deploy_time < data[-1, 0]:
+                chute_t = self.parachute_deploy_time
+                ax.axvline(x=chute_t, color='cyan', linestyle=':', linewidth=2.5,
+                          alpha=0.7, label=f'Parachute Deploy ({chute_t:.2f}s)', zorder=4)
+                events_marked.append('parachute')
+
+            # Find and annotate minimum static margin
+            min_idx = np.argmin(data[:, 1])
+            min_time = data[min_idx, 0]
+            min_sm = data[min_idx, 1]
+            ax.plot(min_time, min_sm, 'ro', markersize=12, zorder=6)
+            ax.annotate(f'Minimum: {min_sm:.2f} cal @ {min_time:.2f}s',
+                       xy=(min_time, min_sm),
+                       xytext=(min_time, min_sm - 0.5),
+                       fontsize=10, fontweight='bold',
+                       bbox=dict(boxstyle='round,pad=0.5', facecolor='orange', alpha=0.7),
+                       arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0', color='red'))
+
+            ax.set_xlabel("Time (s)", fontsize=13, fontweight='bold')
+            ax.set_ylabel("Stability Margin (calibers)", fontsize=13, fontweight='bold')
+            
+            # Set title based on what data we're using
+            if using_static:
+                title = "Static Margin vs Time (at Mach=0 - Aerospace Guidelines)"
+            else:
+                title = "Stability Margin vs Time (Actual Flight - CP varies with Mach)"
+            ax.set_title(title, fontsize=15, fontweight='bold')
+            ax.legend(loc='best', fontsize=10, framealpha=0.9)
+            ax.grid(True, alpha=0.3, linestyle='--')
+            ax.set_xlim(left=0)
+
+            # Add text box with verdict
+            verdict = "SAFE" if min_sm >= 1.5 else ("MARGINAL" if min_sm >= 1.0 else "UNSAFE")
+            verdict_color = 'green' if min_sm >= 1.5 else ('orange' if min_sm >= 1.0 else 'red')
+            textstr = f'Verdict: {verdict}\nMin SM: {min_sm:.2f} cal'
+            props = dict(boxstyle='round', facecolor=verdict_color, alpha=0.3, linewidth=2, edgecolor='black')
+            ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=12, fontweight='bold',
+                   verticalalignment='top', bbox=props)
+
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+
+            logger.debug(f"Enhanced stability margin plot saved to {output_path}")
+            return output_path
+
+        except Exception as e:
+            logger.warning(f"Could not plot enhanced static margin: {e}")
+            return None
+
+    def plot_cp_travel_analysis(self, output_dir: Path) -> Optional[Path]:
+        """Plot center of pressure travel vs Mach with transonic region analysis.
+
+        Highlights:
+        - CP position variation with Mach number
+        - Transonic region (0.8-1.2 Mach) where CP shifts occur
+        - CP travel range
+        - Subsonic/Transonic/Supersonic regions
+
+        Args:
+            output_dir: Output directory
+
+        Returns:
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "cp_travel_analysis.png"
+
+            # Sample CP position vs Mach (adaptive margin based on flight regime)
+            mach_max = self.max_mach * 1.05 if self.max_mach < 1.0 else self.max_mach * 1.1
+            mach_array = np.linspace(0, mach_max, 300)
+            cp_values = [self.rocket.cp_position(m) for m in mach_array]
+
+            fig, ax = plt.subplots(figsize=(14, 8))
+
+            # Split data into simulated and theoretical regions
+            simulated_mask = mach_array <= self.max_mach
+            theoretical_mask = mach_array >= self.max_mach
+            
+            # Plot simulated region (solid line)
+            ax.plot(mach_array[simulated_mask], np.array(cp_values)[simulated_mask], 
+                   'b-', linewidth=3.5, label='CP (Simulated Flight Envelope)', zorder=5)
+            
+            # Plot theoretical extension (dashed line)
+            if np.any(theoretical_mask):
+                ax.plot(mach_array[theoretical_mask], np.array(cp_values)[theoretical_mask], 
+                       'b--', linewidth=2, alpha=0.6, label='CP (Theoretical Extension)', zorder=4)
+            
+            # Mark maximum Mach reached
+            cp_at_max_mach = self.rocket.cp_position(self.max_mach)
+            ax.axvline(x=self.max_mach, color='darkblue', linestyle='-.', linewidth=2.5,
+                      alpha=0.8, label=f'Max Mach Reached: {self.max_mach:.3f}', zorder=6)
+            ax.plot(self.max_mach, cp_at_max_mach, 'o', color='darkblue', 
+                   markersize=12, zorder=7, markeredgewidth=2, markeredgecolor='white')
+
+            # Only show transonic/supersonic regions if relevant to flight
+            # Subsonic region (always shown)
+            subsonic_end = min(0.8, mach_max)
+            ax.axvspan(0, subsonic_end, alpha=0.1, color='green', label='Subsonic (<0.8)', zorder=1)
+            
+            # Transonic region (only if max_mach >= 0.8)
+            if self.max_mach >= 0.8:
+                transonic_end = min(1.2, mach_max)
+                ax.axvspan(0.8, transonic_end, alpha=0.2, color='orange',
+                          label='Transonic Region (0.8-1.2 Mach)', zorder=1)
+                
+                # Mark Mach 1 (only if we plot that far)
+                if mach_max >= 1.0:
+                    ax.axvline(x=1.0, color='red', linestyle='--', linewidth=2,
+                              alpha=0.7, label='Sonic (M=1.0)', zorder=3)
+            
+            # Supersonic region (only if max_mach > 1.2)
+            if mach_max > 1.2:
+                ax.axvspan(1.2, mach_max, alpha=0.1, color='blue',
+                          label='Supersonic (>1.2)', zorder=1)
+
+            # Calculate and annotate CP travel in transonic region (only if relevant)
+            if self.max_mach >= 0.8:
+                cp_at_08 = self.rocket.cp_position(0.8)
+                eval_mach_high = min(1.2, self.max_mach)  # Don't go beyond actual flight
+                cp_at_high = self.rocket.cp_position(eval_mach_high)
+                cp_shift = abs(cp_at_high - cp_at_08)
+
+                ax.plot([0.8, eval_mach_high], [cp_at_08, cp_at_high], 'ro-', linewidth=2, markersize=8, zorder=6)
+                
+                # Position annotation intelligently
+                annot_x = min(1.0, self.max_mach * 0.95)
+                annot_text_x = min(annot_x * 1.1, mach_max * 0.95)  # Keep annotation within plot
+                ax.annotate(f'CP Shift:\n{cp_shift:.4f} m\n({cp_shift*100:.2f} cm)',
+                           xy=(annot_x, (cp_at_08 + cp_at_high)/2),
+                           xytext=(annot_text_x, (cp_at_08 + cp_at_high)/2),
+                           fontsize=11, fontweight='bold',
+                           bbox=dict(boxstyle='round,pad=0.5', facecolor='orange', alpha=0.8),
+                           arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.3', color='red', lw=2))
+
+            # Calculate total CP travel range
+            cp_min = min(cp_values)
+            cp_max = max(cp_values)
+            cp_range = cp_max - cp_min
+
+            ax.axhline(y=cp_min, color='gray', linestyle=':', linewidth=1, alpha=0.5)
+            ax.axhline(y=cp_max, color='gray', linestyle=':', linewidth=1, alpha=0.5)
+
+            # Add CoM reference line if available
+            if hasattr(self.rocket, 'center_of_mass_without_motor'):
+                com = float(self.rocket.center_of_mass_without_motor)
+                ax.axhline(y=com, color='green', linestyle='--', linewidth=2.5,
+                          label=f'CoM (without motor) = {com:.3f} m', zorder=4)
+
+            ax.set_xlabel("Mach Number", fontsize=13, fontweight='bold')
+            ax.set_ylabel("CP Position (m)", fontsize=13, fontweight='bold')
+            ax.set_title("Center of Pressure Travel Analysis vs Mach", fontsize=15, fontweight='bold')
+            ax.legend(loc='best', fontsize=10, framealpha=0.9)
+            ax.grid(True, alpha=0.3, linestyle='--')
+            ax.set_xlim(left=0, right=mach_max)  # Force X-axis to match actual plot range
+
+            # Add text box with CP travel statistics
+            textstr = f'CP Travel Range: {cp_range:.4f} m ({cp_range*100:.2f} cm)\n'
+            textstr += f'CP Min: {cp_min:.4f} m\nCP Max: {cp_max:.4f} m'
+            props = dict(boxstyle='round', facecolor='lightblue', alpha=0.8, linewidth=2, edgecolor='black')
+            ax.text(0.02, 0.02, textstr, transform=ax.transAxes, fontsize=10, fontweight='bold',
+                   verticalalignment='bottom', bbox=props)
+
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+
+            logger.debug(f"CP travel analysis plot saved to {output_path}")
+            return output_path
+
+        except Exception as e:
+            logger.warning(f"Could not plot CP travel analysis: {e}")
+            return None
+
+    def plot_rocket_schematic(self, output_dir: Path) -> Optional[Path]:
+        """Save rocket schematic using rocket.draw() method.
+
+        Args:
+            output_dir: Output directory
+
         Returns:
             Path to created plot or None if failed or draw() not available
         """
         try:
             output_path = output_dir / "rocket_schematic.png"
-            
+
             # Check if draw method exists
             if not hasattr(self.rocket, 'draw'):
                 logger.debug("Rocket.draw() method not available")
                 return None
-            
+
             # Call rocket.draw() which creates a matplotlib figure
             # Save the current figure after draw() is called
             self.rocket.draw()
-            
+
             # Get the current figure
             fig = plt.gcf()
-            
+
             # Save it
             plt.savefig(output_path, dpi=300, bbox_inches='tight')
             plt.close(fig)
-            
+
             logger.debug(f"Rocket schematic saved to {output_path}")
             return output_path
-            
+
         except Exception as e:
             logger.warning(f"Could not save rocket schematic: {e}")
             return None
@@ -1622,12 +2019,585 @@ class CurvePlotter:
             logger.warning(f"Could not save motor schematic: {e}")
             return None
 
-    def save_all_schematics(self, output_dir: str) -> dict:
-        """Save all technical drawings (rocket and motor schematics).
+    def plot_cp_com_evolution_complete(self, output_dir: Path) -> Optional[Path]:
+        """Plot comprehensive CP and CoM evolution during flight.
+        
+        Shows:
+        - CP position varying with Mach (real flight data)
+        - CoM position varying with time (propellant consumption)
+        - Stability margin evolution
+        - All on same time axis for direct comparison
         
         Args:
-            output_dir: Directory for output PNG files
+            output_dir: Output directory
             
+        Returns:
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "cp_com_complete_evolution.png"
+            
+            if self.flight is None:
+                logger.warning("Flight object required for complete CP/CoM evolution plot")
+                return None
+            
+            # Determine time range (up to parachute deployment + buffer)
+            t_max = self.flight.t_final
+            if self.parachute_deploy_time is not None and self.parachute_deploy_time < self.flight.t_final:
+                t_max = min(self.parachute_deploy_time + 10, self.parachute_deploy_time * 1.2, self.flight.t_final)
+            
+            time_points = np.linspace(0, t_max, 300)
+            
+            # Get CoM evolution (changes as propellant burns)
+            com_values = [float(self.rocket.center_of_mass(t)) for t in time_points]
+            
+            # Get CP evolution (varies with Mach during flight)
+            cp_values = []
+            mach_values = []
+            for t in time_points:
+                try:
+                    mach = float(self.flight.mach_number(t))
+                    cp = float(self.rocket.cp_position(mach))
+                    cp_values.append(cp)
+                    mach_values.append(mach)
+                except:
+                    cp_values.append(np.nan)
+                    mach_values.append(np.nan)
+            
+            # Calculate stability margin in calibers
+            rocket_radius = float(self.rocket.radius)
+            stability_margin_values = [(cp - com) / (2 * rocket_radius) for cp, com in zip(cp_values, com_values)]
+            
+            # Create figure with 3 subplots
+            fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(14, 12), sharex=True)
+            
+            # --- SUBPLOT 1: CP and CoM positions ---
+            ax1.plot(time_points, com_values, 'b-', linewidth=3, label='Center of Mass (CoM)', zorder=5)
+            ax1.plot(time_points, cp_values, 'r-', linewidth=3, label='Center of Pressure (CP - varies with Mach)', zorder=5)
+            
+            # Fill area between
+            ax1.fill_between(time_points, com_values, cp_values, alpha=0.2, color='green',
+                            label='CP-CoM Distance', zorder=1)
+            
+            # Mark critical events
+            if self.burnout_time is not None and self.burnout_time < t_max:
+                ax1.axvline(x=self.burnout_time, color='purple', linestyle=':', linewidth=2,
+                          alpha=0.7, label=f'Burnout ({self.burnout_time:.2f}s)', zorder=4)
+            if self.max_q_time is not None and self.max_q_time < t_max:
+                ax1.axvline(x=self.max_q_time, color='orange', linestyle=':', linewidth=2,
+                          alpha=0.7, label=f'Max-Q ({self.max_q_time:.2f}s)', zorder=4)
+            if self.apogee_time is not None and self.apogee_time < t_max:
+                ax1.axvline(x=self.apogee_time, color='green', linestyle=':', linewidth=2,
+                          alpha=0.7, label=f'Apogee ({self.apogee_time:.2f}s)', zorder=4)
+            if self.parachute_deploy_time is not None and self.parachute_deploy_time < t_max:
+                ax1.axvline(x=self.parachute_deploy_time, color='cyan', linestyle=':', linewidth=2.5,
+                          alpha=0.7, label=f'Parachute ({self.parachute_deploy_time:.2f}s)', zorder=4)
+            
+            ax1.set_ylabel("Position from Tail (m)", fontsize=13, fontweight='bold')
+            ax1.set_title("CP and CoM Evolution During Flight (CP varies with actual Mach)", fontsize=15, fontweight='bold')
+            ax1.legend(loc='best', fontsize=10, framealpha=0.9)
+            ax1.grid(True, alpha=0.3, linestyle='--')
+            
+            # --- SUBPLOT 2: Mach number evolution ---
+            ax2.plot(time_points, mach_values, 'darkblue', linewidth=3, label='Mach Number', zorder=5)
+            ax2.axhline(y=0.8, color='orange', linestyle='--', linewidth=1.5, alpha=0.6, label='Transonic Start (M=0.8)')
+            ax2.axhline(y=1.0, color='red', linestyle='--', linewidth=1.5, alpha=0.6, label='Sonic (M=1.0)')
+            
+            # Shade transonic region
+            ax2.axhspan(0.8, 1.2, alpha=0.1, color='orange', label='Transonic Region')
+            
+            # Mark max Mach
+            max_mach_idx = np.argmax(mach_values)
+            ax2.plot(time_points[max_mach_idx], mach_values[max_mach_idx], 'ro', markersize=12, zorder=6,
+                    label=f'Max Mach: {mach_values[max_mach_idx]:.3f}')
+            
+            ax2.set_ylabel("Mach Number", fontsize=13, fontweight='bold')
+            ax2.set_title("Mach Number Evolution", fontsize=14, fontweight='bold')
+            ax2.legend(loc='best', fontsize=10, framealpha=0.9)
+            ax2.grid(True, alpha=0.3, linestyle='--')
+            ax2.set_ylim(bottom=0)
+            
+            # --- SUBPLOT 3: Stability margin ---
+            ax3.plot(time_points, stability_margin_values, 'g-', linewidth=3, label='Stability Margin (actual)', zorder=5)
+            
+            # Add threshold lines
+            ax3.axhline(y=1.0, color='red', linestyle='--', linewidth=2,
+                       alpha=0.7, label='Minimum (1.0 cal)', zorder=3)
+            ax3.axhline(y=1.5, color='orange', linestyle='--', linewidth=2,
+                       alpha=0.7, label='Recommended (1.5 cal)', zorder=3)
+            ax3.axhspan(2.0, 2.5, alpha=0.15, color='green', label='Design Target', zorder=1)
+            
+            # Shade unsafe zone
+            ax3.axhspan(ax3.get_ylim()[0], 1.0, alpha=0.1, color='red', zorder=1)
+            
+            # Mark minimum
+            min_idx = np.argmin(stability_margin_values)
+            ax3.plot(time_points[min_idx], stability_margin_values[min_idx], 'ro', markersize=12, zorder=6)
+            ax3.annotate(f'Min: {stability_margin_values[min_idx]:.2f} cal @ {time_points[min_idx]:.1f}s',
+                        xy=(time_points[min_idx], stability_margin_values[min_idx]),
+                        xytext=(time_points[min_idx] * 1.1, stability_margin_values[min_idx] - 0.3),
+                        fontsize=10, fontweight='bold',
+                        bbox=dict(boxstyle='round,pad=0.4', facecolor='orange', alpha=0.7),
+                        arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
+            
+            ax3.set_xlabel("Time (s)", fontsize=13, fontweight='bold')
+            ax3.set_ylabel("Stability Margin (calibers)", fontsize=13, fontweight='bold')
+            ax3.set_title("Stability Margin (accounting for CP movement with Mach)", fontsize=14, fontweight='bold')
+            ax3.legend(loc='best', fontsize=10, framealpha=0.9)
+            ax3.grid(True, alpha=0.3, linestyle='--')
+            ax3.set_xlim(left=0, right=t_max)
+            
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+            
+            logger.debug(f"Complete CP/CoM evolution plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot complete CP/CoM evolution: {e}")
+            return None
+
+    def plot_all_stability_curves(self, output_dir: Path) -> dict:
+        """Generate all comprehensive stability analysis plots.
+
+        Creates a dedicated stability/ subdirectory with all stability plots
+        following aerospace engineering best practices.
+
+        Args:
+            output_dir: Base output directory
+
+        Returns:
+            Dictionary mapping plot name to file path
+        """
+        stability_dir = output_dir / "stability"
+        stability_dir.mkdir(parents=True, exist_ok=True)
+
+        logger.info(f"Generating comprehensive stability analysis plots in {stability_dir}")
+
+        paths = {}
+
+        # 1. Stability envelope - BEST: actual stability margin + safety zones + critical events + parachute
+        path = self.plot_stability_envelope(stability_dir)
+        if path:
+            paths['stability_envelope'] = path
+
+        # 2. Stability margin surface (3D: Mach vs Time) - shows relationship between Mach, Time, and Stability
+        if hasattr(self.rocket, 'stability_margin'):
+            path = self.plot_stability_margin_surface(stability_dir)
+            if path:
+                paths['stability_margin_surface'] = path
+
+        # 3. CP travel analysis - shows CP movement vs Mach with flight regime regions
+        path = self.plot_cp_travel_analysis(stability_dir)
+        if path:
+            paths['stability_cp_travel'] = path
+
+        # 4. CP and CoM evolution - comprehensive view of how both change during flight
+        path = self.plot_cp_com_evolution_complete(stability_dir)
+        if path:
+            paths['stability_cp_com_evolution'] = path
+
+        # 5. Stability margin enhanced - RECOMMENDED: uses actual flight stability margin
+        # Accounts for CP movement with Mach (more accurate than static margin for transonic flights)
+        path = self.plot_static_margin_enhanced(stability_dir)
+        if path:
+            paths['stability_margin_enhanced'] = path
+
+        # 5. Generate comprehensive text report
+        path = self.generate_stability_report(stability_dir)
+        if path:
+            paths['stability_report'] = path
+
+        logger.info(f"Generated {len(paths)} stability analysis plots and reports")
+        return paths
+
+    def plot_com_vs_cop_comparison(self, output_dir: Path) -> Optional[Path]:
+        """Plot CoM and CoP evolution comparison over time.
+
+        Shows how center of mass and center of pressure change during flight,
+        and the distance between them (which determines stability margin).
+
+        Args:
+            output_dir: Output directory
+
+        Returns:
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "com_vs_cop_evolution.png"
+
+            fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10), sharex=True)
+
+            # Get burn out time for x-axis limit
+            burn_out = 10.0
+            if hasattr(self.rocket, 'motor') and self.rocket.motor:
+                if hasattr(self.rocket.motor, 'burn_out_time'):
+                    burn_out = float(self.rocket.motor.burn_out_time)
+
+            time_array = np.linspace(0, burn_out, 200)
+
+            # Get CoM evolution
+            com_values = [self.rocket.center_of_mass(t) for t in time_array]
+
+            # Get CoP at Mach 0 (static)
+            cp_value = self.rocket.cp_position(0)
+
+            # Plot 1: CoM and CoP positions
+            ax1.plot(time_array, com_values, 'b-', linewidth=3, label='Center of Mass (CoM)', zorder=5)
+            ax1.axhline(y=cp_value, color='red', linestyle='--', linewidth=3,
+                       label=f'Center of Pressure (CoP @ M=0) = {cp_value:.3f} m', zorder=4)
+
+            # Fill area between CoM and CoP
+            ax1.fill_between(time_array, com_values, cp_value, alpha=0.2, color='green',
+                            label='CP-CM Distance', zorder=1)
+
+            ax1.set_ylabel("Position (m)", fontsize=13, fontweight='bold')
+            ax1.set_title("Center of Mass and Center of Pressure Evolution", fontsize=15, fontweight='bold')
+            ax1.legend(loc='best', fontsize=11, framealpha=0.9)
+            ax1.grid(True, alpha=0.3, linestyle='--')
+
+            # Mark burn out
+            ax1.axvline(x=burn_out, color='purple', linestyle=':', linewidth=2,
+                       alpha=0.7, label=f'Burn Out ({burn_out:.2f}s)', zorder=4)
+
+            # Plot 2: CP-CM distance (stability indicator)
+            cp_cm_distance = [cp_value - com for com in com_values]
+            rocket_radius = float(self.rocket.radius) if hasattr(self.rocket, 'radius') else 0.1
+            stability_calibers = [dist / (2 * rocket_radius) for dist in cp_cm_distance]
+
+            ax2.plot(time_array, stability_calibers, 'g-', linewidth=3, label='Static Margin (at Mach=0)', zorder=5)
+
+            # Add threshold lines
+            ax2.axhline(y=1.0, color='red', linestyle='--', linewidth=2,
+                       alpha=0.7, label='Minimum (1.0 cal)', zorder=3)
+            ax2.axhline(y=1.5, color='orange', linestyle='--', linewidth=2,
+                       alpha=0.7, label='Recommended (1.5 cal)', zorder=3)
+            ax2.axhspan(2.0, 2.5, alpha=0.15, color='green', label='Design Target', zorder=1)
+
+            # Mark burn out
+            ax2.axvline(x=burn_out, color='purple', linestyle=':', linewidth=2,
+                       alpha=0.7, zorder=4)
+
+            ax2.set_xlabel("Time (s)", fontsize=13, fontweight='bold')
+            ax2.set_ylabel("Static Margin (calibers)", fontsize=13, fontweight='bold')
+            ax2.set_title("Static Margin (at Mach=0) Derived from CP-CM Distance", fontsize=15, fontweight='bold')
+            ax2.legend(loc='best', fontsize=11, framealpha=0.9)
+            ax2.grid(True, alpha=0.3, linestyle='--')
+            ax2.set_xlim(left=0, right=burn_out * 1.1)
+
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+
+            logger.debug(f"CoM vs CoP comparison plot saved to {output_path}")
+            return output_path
+
+        except Exception as e:
+            logger.warning(f"Could not plot CoM vs CoP comparison: {e}")
+            return None
+
+    def plot_stability_envelope(self, output_dir: Path) -> Optional[Path]:
+        """Plot stability envelope showing safe/marginal/unsafe zones.
+
+        Creates a diagram showing the actual stability margin throughout the flight
+        accounting for CP movement with Mach number. This uses rocket.stability_margin(mach, time)
+        which is more accurate than static_margin for transonic/supersonic flights.
+
+        Args:
+            output_dir: Output directory
+
+        Returns:
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "stability_envelope.png"
+
+            # Calculate actual stability margin using real Mach number at each time
+            if self.flight is None:
+                logger.warning("Flight object required for stability envelope - falling back to static margin")
+                data = self._sample_function(self.rocket.static_margin)
+            else:
+                # Determine time range: extend to shortly after parachute deployment
+                t_max = self.flight.t_final
+                if self.parachute_deploy_time is not None and self.parachute_deploy_time < self.flight.t_final:
+                    # Extend to 10s after deployment or 20% beyond, whichever is less
+                    t_max = min(self.parachute_deploy_time + 10, self.parachute_deploy_time * 1.2, self.flight.t_final)
+                
+                # Sample time points
+                time_points = np.linspace(0, t_max, 200)
+                stability_values = []
+                
+                for t in time_points:
+                    try:
+                        # Get Mach number at this time from flight data
+                        mach = float(self.flight.mach_number(t))
+                        # Calculate stability margin at this Mach and time
+                        # Note: stability_margin is a Function object, call it directly
+                        sm = float(self.rocket.stability_margin(mach, t))
+                        stability_values.append([t, sm])
+                    except Exception as e:
+                        # Log first error for debugging
+                        if len(stability_values) == 0:
+                            logger.warning(f"Failed to compute stability margin at t={t:.2f}s, mach={mach if 'mach' in locals() else 'N/A'}: {e}")
+                        pass
+                
+                if len(stability_values) == 0:
+                    logger.warning("Could not compute stability margin data for envelope plot")
+                    return None
+                
+                data = np.array(stability_values)
+            
+            if data is None or len(data) == 0:
+                logger.warning("No stability margin data available for envelope plot")
+                return None
+
+            fig, ax = plt.subplots(figsize=(14, 8))
+
+            # Define stability zones
+            zones = [
+                {'ymin': -np.inf, 'ymax': 0, 'color': 'darkred', 'alpha': 0.3, 'label': 'UNSTABLE (SM<0)'},
+                {'ymin': 0, 'ymax': 1.0, 'color': 'red', 'alpha': 0.2, 'label': 'UNSAFE (0<SM<1.0)'},
+                {'ymin': 1.0, 'ymax': 1.5, 'color': 'yellow', 'alpha': 0.2, 'label': 'MARGINAL (1.0<SM<1.5)'},
+                {'ymin': 1.5, 'ymax': 2.0, 'color': 'lightgreen', 'alpha': 0.2, 'label': 'ACCEPTABLE (1.5<SM<2.0)'},
+                {'ymin': 2.0, 'ymax': 2.5, 'color': 'green', 'alpha': 0.3, 'label': 'DESIGN TARGET (2.0<SM<2.5)'},
+                {'ymin': 2.5, 'ymax': np.inf, 'color': 'lightblue', 'alpha': 0.15, 'label': 'VERY STABLE (SM>2.5)'},
+            ]
+
+            # Get y-axis limits based on data
+            y_min = min(data[:, 1])
+            y_max = max(data[:, 1])
+            y_range = y_max - y_min
+            y_plot_min = y_min - 0.2 * y_range
+            y_plot_max = y_max + 0.2 * y_range
+
+            # Plot zones
+            for zone in zones:
+                ymin = max(zone['ymin'], y_plot_min)
+                ymax = min(zone['ymax'], y_plot_max)
+                if ymin < ymax:
+                    ax.axhspan(ymin, ymax, alpha=zone['alpha'], color=zone['color'],
+                              label=zone['label'], zorder=1)
+
+            # Plot stability margin trajectory
+            ax.plot(data[:, 0], data[:, 1], 'b-', linewidth=3.5,
+                   label='Flight Stability Margin', zorder=5, marker='o', markersize=4, markevery=10)
+
+            # Add zone boundary lines
+            for threshold in [0, 1.0, 1.5, 2.0, 2.5]:
+                if y_plot_min <= threshold <= y_plot_max:
+                    ax.axhline(y=threshold, color='black', linestyle='--',
+                              linewidth=1, alpha=0.5, zorder=2)
+
+            # Mark critical points
+            min_idx = np.argmin(data[:, 1])
+            max_idx = np.argmax(data[:, 1])
+            ax.plot(data[min_idx, 0], data[min_idx, 1], 'ro',
+                   markersize=15, zorder=6, label=f'Minimum: {data[min_idx, 1]:.2f} cal @ {data[min_idx, 0]:.1f}s')
+            ax.plot(data[max_idx, 0], data[max_idx, 1], 'go',
+                   markersize=15, zorder=6, label=f'Maximum: {data[max_idx, 1]:.2f} cal @ {data[max_idx, 0]:.1f}s')
+            
+            # Mark critical flight events
+            if self.burnout_time is not None:
+                ax.axvline(x=self.burnout_time, color='purple', linestyle=':', 
+                          linewidth=2, alpha=0.6, label=f'Burnout ({self.burnout_time:.1f}s)', zorder=4)
+            if self.max_q_time is not None:
+                ax.axvline(x=self.max_q_time, color='orange', linestyle=':', 
+                          linewidth=2, alpha=0.6, label=f'Max-Q ({self.max_q_time:.1f}s)', zorder=4)
+            if self.apogee_time is not None and self.apogee_time < data[-1, 0]:
+                ax.axvline(x=self.apogee_time, color='green', linestyle=':', 
+                          linewidth=2, alpha=0.6, label=f'Apogee ({self.apogee_time:.1f}s)', zorder=4)
+            if self.parachute_deploy_time is not None and self.parachute_deploy_time < data[-1, 0]:
+                ax.axvline(x=self.parachute_deploy_time, color='cyan', linestyle=':', 
+                          linewidth=2.5, alpha=0.7, label=f'Parachute Deploy ({self.parachute_deploy_time:.1f}s)', zorder=4)
+
+            ax.set_xlabel("Time (s)", fontsize=13, fontweight='bold')
+            ax.set_ylabel("Stability Margin (calibers)", fontsize=13, fontweight='bold')
+            ax.set_title("Stability Envelope - Actual Flight Stability (function of Mach & Time)", fontsize=15, fontweight='bold')
+            ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=10, framealpha=0.95)
+            ax.grid(True, alpha=0.3, linestyle='--', zorder=0)
+            ax.set_xlim(left=0)
+            ax.set_ylim(y_plot_min, y_plot_max)
+
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+
+            logger.debug(f"Stability envelope plot saved to {output_path}")
+            return output_path
+
+        except Exception as e:
+            logger.warning(f"Could not plot stability envelope: {e}")
+            return None
+
+    def generate_stability_report(self, output_dir: Path) -> Optional[Path]:
+        """Generate comprehensive stability analysis text report.
+
+        Creates a detailed text report following aerospace engineering guidelines
+        for rocket stability analysis.
+
+        Args:
+            output_dir: Output directory
+
+        Returns:
+            Path to created report or None if failed
+        """
+        try:
+            output_path = output_dir / "STABILITY_REPORT.txt"
+
+            # Sample static margin data
+            data = self._sample_function(self.rocket.static_margin)
+            if data is None or len(data) == 0:
+                logger.warning("No static margin data available for stability report")
+                return None
+
+            # Calculate key metrics
+            min_idx = np.argmin(data[:, 1])
+            max_idx = np.argmax(data[:, 1])
+            min_sm = data[min_idx, 1]
+            min_sm_time = data[min_idx, 0]
+            max_sm = data[max_idx, 1]
+            max_sm_time = data[max_idx, 0]
+            initial_sm = data[0, 1]
+
+            # Get burn out time and SM at burnout
+            burn_out = None
+            sm_at_burnout = None
+            if hasattr(self.rocket, 'motor') and self.rocket.motor:
+                if hasattr(self.rocket.motor, 'burn_out_time'):
+                    burn_out = float(self.rocket.motor.burn_out_time)
+                    sm_at_burnout = self.rocket.static_margin(burn_out)
+
+            # Calculate CP travel in transonic region
+            cp_at_08 = self.rocket.cp_position(0.8)
+            cp_at_12 = self.rocket.cp_position(1.2)
+            cp_shift_transonic = abs(cp_at_12 - cp_at_08)
+
+            # Determine stability verdict
+            if min_sm < 0:
+                verdict = "UNSTABLE - FLIGHT NOT RECOMMENDED"
+                verdict_color = "CRITICAL"
+            elif min_sm < 1.0:
+                verdict = "UNSAFE - HIGH RISK OF INSTABILITY"
+                verdict_color = "DANGER"
+            elif min_sm < 1.5:
+                verdict = "MARGINAL - Acceptable only for subsonic flight"
+                verdict_color = "WARNING"
+            elif min_sm < 2.0:
+                verdict = "ACCEPTABLE - Good for most applications"
+                verdict_color = "ACCEPTABLE"
+            else:
+                verdict = "SAFE - Excellent stability margin"
+                verdict_color = "SAFE"
+
+            # Write report
+            with open(output_path, 'w') as f:
+                f.write("=" * 80 + "\n")
+                f.write("COMPREHENSIVE ROCKET STABILITY ANALYSIS REPORT\n")
+                f.write("=" * 80 + "\n\n")
+
+                f.write("EXECUTIVE SUMMARY\n")
+                f.write("-" * 80 + "\n")
+                f.write(f"Overall Stability Verdict: {verdict}\n")
+                f.write(f"Assessment Level: [{verdict_color}]\n")
+                f.write(f"Minimum Stability Margin: {min_sm:.3f} calibers @ t={min_sm_time:.2f}s\n\n")
+
+                f.write("=" * 80 + "\n")
+                f.write("1. STABILITY MARGIN ANALYSIS\n")
+                f.write("=" * 80 + "\n\n")
+
+                f.write("1.1 Key Stability Metrics:\n")
+                f.write("-" * 40 + "\n")
+                f.write(f"  Initial Stability Margin (t=0):        {initial_sm:.3f} calibers\n")
+                f.write(f"  Minimum Stability Margin:              {min_sm:.3f} calibers @ t={min_sm_time:.2f}s\n")
+                f.write(f"  Maximum Stability Margin:              {max_sm:.3f} calibers @ t={max_sm_time:.2f}s\n")
+                if burn_out is not None and sm_at_burnout is not None:
+                    f.write(f"  Stability Margin at Burnout:           {sm_at_burnout:.3f} calibers @ t={burn_out:.2f}s\n")
+                f.write(f"  Stability Margin Variation:            {max_sm - min_sm:.3f} calibers\n\n")
+
+                f.write("1.2 Aerospace Engineering Guidelines:\n")
+                f.write("-" * 40 + "\n")
+                f.write("  Minimum Safety Threshold:              1.0 calibers\n")
+                f.write("  Recommended for Subsonic Flight:       1.5 calibers\n")
+                f.write("  Design Target Range:                   2.0 - 2.5 calibers\n\n")
+
+                f.write("1.3 Compliance Assessment:\n")
+                f.write("-" * 40 + "\n")
+                f.write(f"  Above 1.0 caliber (minimum):          {'YES' if min_sm >= 1.0 else 'NO [CRITICAL]'}\n")
+                f.write(f"  Above 1.5 calibers (recommended):     {'YES' if min_sm >= 1.5 else 'NO'}\n")
+                f.write(f"  In design target (2.0-2.5):           {'YES' if 2.0 <= min_sm <= 2.5 else 'NO'}\n\n")
+
+                f.write("=" * 80 + "\n")
+                f.write("2. CENTER OF PRESSURE ANALYSIS\n")
+                f.write("=" * 80 + "\n\n")
+
+                f.write("2.1 CP Travel in Transonic Region (M=0.8 to M=1.2):\n")
+                f.write("-" * 40 + "\n")
+                f.write(f"  CP Position at M=0.8:                  {cp_at_08:.4f} m\n")
+                f.write(f"  CP Position at M=1.2:                  {cp_at_12:.4f} m\n")
+                f.write(f"  CP Shift (transonic):                  {cp_shift_transonic:.4f} m ({cp_shift_transonic*100:.2f} cm)\n\n")
+
+                f.write("2.2 Transonic Stability Considerations:\n")
+                f.write("-" * 40 + "\n")
+                if cp_shift_transonic > 0.01:  # 1 cm
+                    f.write(f"  WARNING: Significant CP shift detected ({cp_shift_transonic*100:.2f} cm)\n")
+                    f.write("  This can reduce stability margin by 0.5-1.0 calibers in transonic region.\n")
+                    f.write("  Static margin alone is INADEQUATE for supersonic flight analysis.\n")
+                    f.write("  Review stability margin surface plot (Mach vs Time) carefully.\n")
+                else:
+                    f.write("  Minimal CP travel detected in transonic region.\n")
+                    f.write("  Static margin analysis is likely sufficient.\n")
+                f.write("\n")
+
+                f.write("=" * 80 + "\n")
+                f.write("3. RECOMMENDATIONS & ACTION ITEMS\n")
+                f.write("=" * 80 + "\n\n")
+
+                if min_sm < 0:
+                    f.write("  CRITICAL ACTIONS REQUIRED:\n")
+                    f.write("  - DO NOT FLY - Rocket is aerodynamically unstable\n")
+                    f.write("  - Increase fin size significantly (area and/or span)\n")
+                    f.write("  - Move fins further aft on the rocket body\n")
+                    f.write("  - Reduce nose weight or move CG forward\n")
+                    f.write("  - Re-run analysis after design changes\n\n")
+                elif min_sm < 1.0:
+                    f.write("  HIGH PRIORITY ACTIONS:\n")
+                    f.write("  - Flight is NOT RECOMMENDED with current configuration\n")
+                    f.write("  - Increase fin size or adjust fin position to achieve SM >= 1.5 cal\n")
+                    f.write("  - Consider adding ballast to move CG forward\n")
+                    f.write("  - Re-analyze after modifications\n\n")
+                elif min_sm < 1.5:
+                    f.write("  RECOMMENDED IMPROVEMENTS:\n")
+                    f.write("  - Stability is marginal - increase to >= 1.5 calibers for safety\n")
+                    f.write("  - Consider slightly larger fins or move fins aft\n")
+                    f.write("  - Acceptable for subsonic flight only\n\n")
+                elif min_sm < 2.0:
+                    f.write("  OPTIONAL OPTIMIZATIONS:\n")
+                    f.write("  - Stability is acceptable for most applications\n")
+                    f.write("  - Consider targeting 2.0-2.5 calibers for optimal safety margin\n\n")
+                else:
+                    f.write("  DESIGN APPROVED:\n")
+                    f.write("  - Excellent stability margin\n")
+                    f.write("  - Safe for flight\n")
+                    f.write("  - Well within aerospace engineering guidelines\n\n")
+
+                f.write("=" * 80 + "\n")
+                f.write("END OF REPORT\n")
+                f.write("=" * 80 + "\n")
+
+            logger.debug(f"Stability analysis report saved to {output_path}")
+            return output_path
+
+        except Exception as e:
+            logger.warning(f"Could not generate stability report: {e}")
+            return None
+
+    def save_all_schematics(self, output_dir: str) -> dict:
+        """Save all technical drawings (rocket and motor schematics).
+
+        Args:
+            output_dir: Directory for output PNG files
+
         Returns:
             Dictionary mapping schematic name to file path
         """
