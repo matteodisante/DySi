@@ -32,7 +32,7 @@ class Visualizer:
         >>> visualizer.plot_altitude_vs_time(trajectory_data, "outputs/plots/altitude.png")
     """
 
-    def __init__(self, output_dir: str = "outputs/plots", style: str = "seaborn-v0_8-darkgrid"):
+    def __init__(self, output_dir: str = "outputs/plots/trajectory", style: str = "seaborn-v0_8-darkgrid"):
         """Initialize Visualizer.
 
         Args:

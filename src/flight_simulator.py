@@ -186,12 +186,24 @@ class FlightSimulator:
 
                 # Generate curve plots
                 curves_dir = output_path / "curves"
-                curve_paths = state_exporter.export_curves_plots(str(curves_dir))
+                max_mach = float(self.flight.max_mach_number) if self.flight else 2.0
+                logger.info(f"Generating curve plots with max_mach={max_mach:.3f}")
+                curve_paths = state_exporter.export_curves_plots(
+                    str(curves_dir), 
+                    max_mach=max_mach, 
+                    flight=self.flight
+                )
                 logger.info(f"Generated {len(curve_paths)} curve plots")
 
                 # Generate technical schematics (rocket.draw() and motor.draw())
                 from src.curve_plotter import CurvePlotter
-                plotter = CurvePlotter(self.rocket.motor, self.rocket, self.environment)
+                plotter = CurvePlotter(
+                    self.rocket.motor, 
+                    self.rocket, 
+                    self.environment, 
+                    max_mach=max_mach, 
+                    flight=self.flight
+                )
                 schematic_paths = plotter.save_all_schematics(str(output_path))
                 logger.info(f"Saved {len(schematic_paths)} technical schematics")
 
@@ -202,6 +214,21 @@ class FlightSimulator:
         except Exception as e:
             logger.error(f"Simulation failed: {e}", exc_info=True)
             raise RuntimeError(f"Flight simulation failed: {e}") from e
+    
+    def _safe_get_rail_force(self, force_getter) -> float:
+        """Safely get rail button force, returning 0.0 if not available.
+        
+        Args:
+            force_getter: Lambda function to get force value
+            
+        Returns:
+            Force value in N, or 0.0 if rail buttons not defined
+        """
+        try:
+            value = force_getter()
+            return float(value) if value is not None else 0.0
+        except (AttributeError, TypeError, ValueError):
+            return 0.0
 
     def get_summary(self) -> Dict[str, Any]:
         """Get comprehensive flight summary.
@@ -260,6 +287,19 @@ class FlightSimulator:
             # Mach and dynamic pressure
             "max_mach_number": float(self.flight.max_mach_number),
             "max_mach_number_time_s": float(self.flight.max_mach_number_time),
+            "max_dynamic_pressure_pa": float(self.flight.max_dynamic_pressure),
+            "max_dynamic_pressure_time_s": float(self.flight.max_dynamic_pressure_time),
+
+            # Aerodynamic forces (at max-Q)
+            "max_aerodynamic_drag_n": float(self.flight.aerodynamic_drag.get_value_opt(self.flight.max_dynamic_pressure_time)),
+            "max_aerodynamic_lift_n": float(self.flight.aerodynamic_lift.get_value_opt(self.flight.max_dynamic_pressure_time)),
+            "max_bending_moment_nm": float(self.flight.aerodynamic_bending_moment.get_value_opt(self.flight.max_dynamic_pressure_time)),
+
+            # Rail button forces (if rail buttons are defined)
+            "max_rail_button1_normal_force_n": self._safe_get_rail_force(lambda: self.flight.max_rail_button1_normal_force),
+            "max_rail_button1_shear_force_n": self._safe_get_rail_force(lambda: self.flight.max_rail_button1_shear_force),
+            "max_rail_button2_normal_force_n": self._safe_get_rail_force(lambda: self.flight.max_rail_button2_normal_force),
+            "max_rail_button2_shear_force_n": self._safe_get_rail_force(lambda: self.flight.max_rail_button2_shear_force),
 
             # Impact metrics
             "x_impact_m": float(self.flight.x_impact),

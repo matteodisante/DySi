@@ -523,16 +523,10 @@ def validate_all_configs(
     """
     all_warnings = []
 
-    logger.info("Validating rocket configuration...")
+    # Validate all components
     all_warnings.extend(RocketValidator.validate(rocket))
-
-    logger.info("Validating motor configuration...")
     all_warnings.extend(MotorValidator.validate(motor))
-
-    logger.info("Validating environment configuration...")
     all_warnings.extend(EnvironmentValidator.validate(environment))
-
-    logger.info("Validating simulation configuration...")
     all_warnings.extend(SimulationValidator.validate(simulation))
 
     # Cross-configuration validation

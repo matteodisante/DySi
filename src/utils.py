@@ -253,8 +253,6 @@ def setup_logging(level: str = "INFO", log_file: str = None) -> None:
     logging.getLogger('PIL').setLevel(logging.WARNING)
     logging.getLogger('urllib3').setLevel(logging.WARNING)
 
-    logger.info(f"Logging configured with level={level}")
-
 
 def ensure_directory_exists(directory_path: str) -> None:
     """Ensure a directory exists, creating it if necessary.
