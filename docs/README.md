@@ -1,45 +1,94 @@
 # Documentation Index
 
-Welcome to the rocket-sim documentation!
+Welcome to the DySi rocket simulation framework documentation!
 
 ---
 
-## � Quick Start
+## 🚀 Quick Start
 
-New to rocket-sim? Start here:
+New to DySi? Start here:
 
 1. **[Main README](../README.md)** - Project overview and installation
-2. **[Configuration Reference](user/CONFIGURATION_REFERENCE.md)** - Setup your first simulation
-3. **[Examples](../examples/)** - Runnable code examples
+2. **[Sphinx Documentation](source/index.rst)** - Complete online documentation
+3. **[Quick Plot Reference](source/user/quick_plot_reference.rst)** - Interpret simulation plots
+4. **[Examples](../examples/)** - Runnable code examples
 
 ---
 
-## 📚 User Guides
+## 📚 Documentation Structure
 
-Complete guides for users:
+### Sphinx Documentation (source/)
 
-- **[Configuration Reference](user/CONFIGURATION_REFERENCE.md)** - YAML configuration guide
-- **[Motor State Export Guide](user/MOTOR_STATE_EXPORT_GUIDE.md)** - Motor state export and visualization
-- **[Plots and Output Reference](user/PLOTS_AND_OUTPUT_REFERENCE.md)** - Understanding simulation outputs
-- **[Troubleshooting](user/TROUBLESHOOTING.md)** - Common issues and solutions
+Complete, browsable documentation with search and cross-references:
 
-### � To Be Created
-- Installation Guide *(coming soon)*
-- Quick Start Tutorial (5 min) *(coming soon)*
-- Air Brakes Control Guide *(coming soon)*
-- Weather Integration Guide *(coming soon)*
+- **Getting Started**: Installation, quickstart, key concepts
+- **User Guide**: 
+  - **Quick Plot Reference** - At-a-glance plot interpretation ⭐ NEW
+  - Tutorials - Step-by-step learning
+  - How-To Guides - Task-focused recipes
+  - Configuration Reference - All parameters
+  - **Technical Deep Dives**:
+    - **Plot Interpretation** - Complete guide for all 27 plot types ⭐ NEW
+    - Stability Analysis - Theory and practice
+  - Examples - Real-world configurations
+- **API Reference**: Complete module documentation
+- **Developer Guide**: Architecture, contributing, extending
+
+### Developer Documentation (developer/)
+
+Markdown files for technical details:
+
+- **[PLOT_DOCUMENTATION_UPDATE.md](developer/PLOT_DOCUMENTATION_UPDATE.md)** - Documentation update summary ⭐ NEW
+- **[STATIC_MARGIN_PLOT_EXPLANATION.md](developer/STATIC_MARGIN_PLOT_EXPLANATION.md)** - Static vs stability margin ⭐ NEW
+- **[NEW_FLIGHT_PLOTS_IMPLEMENTATION.md](developer/NEW_FLIGHT_PLOTS_IMPLEMENTATION.md)** - Implementation details ⭐ NEW
+- **[STABILITY_MARGIN_CLARIFICATION.md](developer/STABILITY_MARGIN_CLARIFICATION.md)** - Stability theory clarification
+- **[ARCHITECTURE.md](developer/ARCHITECTURE.md)** - System architecture and design decisions
+- **[API_REFERENCE.md](developer/API_REFERENCE.md)** - Complete API documentation
+- **[MODULE_REFERENCE.md](developer/MODULE_REFERENCE.md)** - Detailed module documentation
+- **[MOTOR_ATTRIBUTES_CLASSIFICATION.md](developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md)** - RocketPy motor attributes
+- **[CONTRIBUTING.md](developer/CONTRIBUTING.md)** - How to contribute
 
 ---
 
-## �👨‍💻 Developer Documentation
+## 🎯 Finding What You Need
 
-For contributors and advanced users:
+### I want to interpret simulation plots
+→ **[Quick Plot Reference](source/user/quick_plot_reference.rst)** (compact) or **[Plot Interpretation Guide](source/user/technical/plot_interpretation.rst)** (detailed)
 
-- **[Architecture](developer/ARCHITECTURE.md)** - System architecture and design decisions
-- **[API Reference](developer/API_REFERENCE.md)** - Complete API documentation
-- **[Module Reference](developer/MODULE_REFERENCE.md)** - Detailed module documentation
-- **[Motor Attributes Classification](developer/MOTOR_ATTRIBUTES_CLASSIFICATION.md)** - RocketPy SolidMotor attributes
-- **[Contributing](developer/CONTRIBUTING.md)** - How to contribute
+### I want to understand stability margins
+→ **[Stability Analysis](source/user/technical/stability_analysis.rst)** or **[Static Margin Explanation](developer/STATIC_MARGIN_PLOT_EXPLANATION.md)**
+
+### I want to learn the system
+→ **[Tutorials](source/user/tutorials/)** or **[Examples](../examples/)**
+
+### I want to configure a simulation
+→ **[Configuration Reference](source/user/configuration/)**
+
+### I want to contribute code
+→ **[Contributing Guide](developer/CONTRIBUTING.md)** and **[Architecture](developer/ARCHITECTURE.md)**
+
+---
+
+## 📊 Recent Updates (November 13, 2025)
+
+### New Plot Interpretation Documentation
+
+Added comprehensive documentation for interpreting simulation output plots:
+
+✅ **Quick Plot Reference** - Compact reference card with checklists and typical values
+
+✅ **Complete Plot Interpretation Guide** - Detailed explanations for all 27 plot types:
+- Motor plots (thrust, mass, Kn, inertia, etc.)
+- Rocket plots (drag coefficient, CP position)
+- Stability plots (envelope, surface, CP travel)
+- Flight plots (attitude, kinematics, forces, energy, fluid mechanics)
+- Environment plots (wind, atmospheric profiles)
+
+✅ **Developer Documentation** - Implementation details and design decisions
+
+✅ **7 New Flight Plots** - Comprehensive flight data analysis
+
+See **[PLOT_DOCUMENTATION_UPDATE.md](developer/PLOT_DOCUMENTATION_UPDATE.md)** for complete details.
 
 ---
 

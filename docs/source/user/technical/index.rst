@@ -16,6 +16,7 @@ Contents
 .. toctree::
    :maxdepth: 2
    
+   plot_interpretation
    stability_analysis
 
 Overview
@@ -23,6 +24,7 @@ Overview
 
 The technical documentation covers:
 
+- **Output Interpretation**: How to read and analyze simulation plots
 - **Rocket Physics**: Aerodynamics, stability theory, flight dynamics
 - **Simulation Methods**: RocketPy's calculation approaches
 - **Advanced Concepts**: Detailed explanations of parameters and metrics

@@ -102,6 +102,11 @@ class CurvePlotter:
             stability_paths = self.plot_all_stability_curves(output_dir)
             paths.update(stability_paths)
 
+        # Plot all flight data curves (organized in flight/ subdirectory)
+        if self.flight:
+            flight_paths = self.plot_all_flight_curves(output_dir)
+            paths.update(flight_paths)
+
         # Plot environment profiles (organized in environment/ subdirectory)
         env_dir = output_dir / "environment"
         env_dir.mkdir(parents=True, exist_ok=True)
@@ -2590,6 +2595,1092 @@ class CurvePlotter:
 
         except Exception as e:
             logger.warning(f"Could not generate stability report: {e}")
+            return None
+
+    def _get_plot_time_limit(self) -> float:
+        """Determine appropriate time limit for flight plots.
+        
+        Returns time that includes parachute deployment events to show
+        dynamics during and after deployment.
+        
+        Returns
+        -------
+        float
+            Time limit in seconds
+        """
+        # Default: full flight time
+        time_limit = self.flight.t_final
+        
+        # If we have parachute events, extend beyond first parachute
+        if hasattr(self.flight, 'parachute_events') and self.flight.parachute_events:
+            # Get time of last parachute deployment
+            last_chute_time = max(event[0] for event in self.flight.parachute_events)
+            # Add 10% of flight time after last chute or 20 seconds, whichever is less
+            extension = min(0.1 * self.flight.t_final, 20.0)
+            time_limit = min(last_chute_time + extension, self.flight.t_final)
+        # Otherwise use apogee + extension if available
+        elif hasattr(self.flight, 'apogee_time') and self.flight.apogee_time > 0:
+            # Add 30% of time to apogee or 30 seconds after apogee
+            extension = min(0.3 * self.flight.apogee_time, 30.0)
+            time_limit = min(self.flight.apogee_time + extension, self.flight.t_final)
+        
+        return time_limit
+
+    def plot_all_flight_curves(self, output_dir: Path) -> dict:
+        """Generate all flight data plots.
+        
+        Args:
+            output_dir: Base output directory
+            
+        Returns:
+            Dictionary mapping curve name to file path
+        """
+        flight_dir = output_dir / "flight"
+        flight_dir.mkdir(parents=True, exist_ok=True)
+        
+        paths = {}
+        
+        logger.info(f"Generating flight curve plots in {flight_dir}")
+        
+        # 1. 3D Trajectory
+        path = self.plot_trajectory_3d(flight_dir)
+        if path:
+            paths['flight_trajectory_3d'] = path
+        
+        # 2. Position data (x, y, z vs time)
+        path = self.plot_position_data(flight_dir)
+        if path:
+            paths['flight_position_data'] = path
+        
+        # 3. Linear kinematics (velocities and accelerations)
+        path = self.plot_linear_kinematics_data(flight_dir)
+        if path:
+            paths['flight_linear_kinematics'] = path
+        
+        # 4. Flight path angle
+        path = self.plot_flight_path_angle_data(flight_dir)
+        if path:
+            paths['flight_path_angle'] = path
+        
+        # 5. Attitude data (Euler angles)
+        path = self.plot_attitude_data(flight_dir)
+        if path:
+            paths['flight_attitude_data'] = path
+        
+        # 6. Angular kinematics (angular velocities and accelerations)
+        path = self.plot_angular_kinematics_data(flight_dir)
+        if path:
+            paths['flight_angular_kinematics'] = path
+        
+        # 7. Aerodynamic forces (lift, drag, moments)
+        path = self.plot_aerodynamic_forces(flight_dir)
+        if path:
+            paths['flight_aerodynamic_forces'] = path
+        
+        # 8. Rail buttons forces
+        path = self.plot_rail_buttons_forces(flight_dir)
+        if path:
+            paths['flight_rail_buttons_forces'] = path
+        
+        # 9. Energy data (kinetic, potential, thrust power, drag power)
+        path = self.plot_energy_data(flight_dir)
+        if path:
+            paths['flight_energy_data'] = path
+        
+        # 10. Fluid mechanics data (Mach, Reynolds, pressures, angles of attack)
+        path = self.plot_fluid_mechanics_data(flight_dir)
+        if path:
+            paths['flight_fluid_mechanics'] = path
+        
+        # 11. Stability and control data (stability margin, frequency response)
+        path = self.plot_stability_and_control_data(flight_dir)
+        if path:
+            paths['flight_stability_control'] = path
+        
+        logger.info(f"Generated {len(paths)} flight curve plots")
+        return paths
+
+    def plot_position_data(self, output_dir: Path) -> Optional[Path]:
+        """Plot position components (x, y, z) vs time.
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "position_data.png"
+            
+            # Determine time limit (includes parachute deployment)
+            time_limit = self._get_plot_time_limit()
+            
+            fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(9, 10))
+            
+            # X position (East)
+            ax1.plot(
+                self.flight.x[:, 0],
+                self.flight.x[:, 1],
+                color='#1f77b4',
+                linewidth=2,
+                label='X - East'
+            )
+            ax1.set_xlim(0, time_limit)
+            ax1.set_xlabel('Time (s)')
+            ax1.set_ylabel('X Position (m)')
+            ax1.set_title('X - East Component')
+            ax1.grid(True, alpha=0.3)
+            ax1.axhline(y=0, color='gray', linestyle='--', linewidth=0.8, alpha=0.5)
+            
+            # Y position (North)
+            ax2.plot(
+                self.flight.y[:, 0],
+                self.flight.y[:, 1],
+                color='#ff7f0e',
+                linewidth=2,
+                label='Y - North'
+            )
+            ax2.set_xlim(0, time_limit)
+            ax2.set_xlabel('Time (s)')
+            ax2.set_ylabel('Y Position (m)')
+            ax2.set_title('Y - North Component')
+            ax2.grid(True, alpha=0.3)
+            ax2.axhline(y=0, color='gray', linestyle='--', linewidth=0.8, alpha=0.5)
+            
+            # Z position (Altitude)
+            ax3.plot(
+                self.flight.z[:, 0],
+                self.flight.z[:, 1],
+                color='#2ca02c',
+                linewidth=2,
+                label='Z - Altitude'
+            )
+            # Mark apogee
+            if hasattr(self.flight, 'apogee') and hasattr(self.flight, 'apogee_time'):
+                ax3.scatter(
+                    [self.flight.apogee_time],
+                    [self.flight.apogee],
+                    color='red',
+                    s=100,
+                    marker='^',
+                    label=f'Apogee: {self.flight.apogee:.1f} m',
+                    zorder=5
+                )
+            ax3.set_xlim(0, time_limit)
+            ax3.set_xlabel('Time (s)')
+            ax3.set_ylabel('Z Position (m)')
+            ax3.set_title('Z - Altitude')
+            ax3.grid(True, alpha=0.3)
+            ax3.legend()
+            ax3.axhline(y=0, color='gray', linestyle='--', linewidth=0.8, alpha=0.5)
+            
+            fig.suptitle('Position Data', fontsize=14, y=0.995)
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            
+            logger.debug(f"Position data plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot position data: {e}")
+            return None
+
+    def plot_trajectory_3d(self, output_dir: Path) -> Optional[Path]:
+        """Plot 3D trajectory with projections on XY, XZ, and YZ planes.
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            from mpl_toolkits.mplot3d import Axes3D
+            
+            output_path = output_dir / "trajectory_3d.png"
+            
+            # Extract trajectory data
+            x = self.flight.x[:, 1]
+            y = self.flight.y[:, 1]
+            z = self.flight.z[:, 1]
+            
+            fig = plt.figure(figsize=(12, 9))
+            ax = fig.add_subplot(111, projection='3d')
+            
+            # Main 3D trajectory
+            ax.plot(x, y, z, linewidth=2.5, color='#1f77b4', label='Flight Path')
+            
+            # Project on XY plane (ground track)
+            ax.plot(x, y, np.min(z) * np.ones_like(z), 
+                   linewidth=1, color='gray', alpha=0.5, linestyle='--')
+            
+            # Project on XZ plane
+            ax.plot(x, np.max(y) * np.ones_like(y), z,
+                   linewidth=1, color='gray', alpha=0.5, linestyle='--')
+            
+            # Project on YZ plane
+            ax.plot(np.min(x) * np.ones_like(x), y, z,
+                   linewidth=1, color='gray', alpha=0.5, linestyle='--')
+            
+            # Mark key points
+            ax.scatter([x[0]], [y[0]], [z[0]], 
+                      color='green', s=100, marker='o', label='Launch', zorder=5)
+            
+            # Mark apogee at the maximum altitude point in the trajectory
+            apogee_idx = np.argmax(z)
+            if hasattr(self.flight, 'apogee') and hasattr(self.flight, 'apogee_time'):
+                # Use max point position but show official apogee values in label
+                ax.scatter([x[apogee_idx]], [y[apogee_idx]], [z[apogee_idx]],
+                          color='red', s=200, marker='^', 
+                          label=f'Apogee: {self.flight.apogee:.1f} m @ {self.flight.apogee_time:.1f} s', 
+                          zorder=10, edgecolors='darkred', linewidths=2)
+            else:
+                # Fallback: use max altitude
+                ax.scatter([x[apogee_idx]], [y[apogee_idx]], [z[apogee_idx]],
+                          color='red', s=200, marker='^', label='Apogee', 
+                          zorder=10, edgecolors='darkred', linewidths=2)
+            
+            # Find landing
+            ax.scatter([x[-1]], [y[-1]], [z[-1]],
+                      color='orange', s=100, marker='s', label='Landing', zorder=5)
+            
+            ax.set_xlabel('X (m) - East')
+            ax.set_ylabel('Y (m) - North')
+            ax.set_zlabel('Z (m) - Altitude')
+            ax.set_title('3D Flight Trajectory')
+            ax.legend()
+            ax.grid(True, alpha=0.3)
+            
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            
+            logger.debug(f"3D trajectory plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot 3D trajectory: {e}")
+            return None
+
+    def plot_linear_kinematics_data(self, output_dir: Path) -> Optional[Path]:
+        """Plot linear velocities and accelerations (vx, vy, vz, ax, ay, az).
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "linear_kinematics_data.png"
+            
+            # Determine time limit (includes parachute deployment)
+            time_limit = self._get_plot_time_limit()
+            
+            fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+            
+            # X velocity and acceleration
+            ax1 = axes[0, 0]
+            ax1_twin = ax1.twinx()
+            ax1.plot(self.flight.vx[:, 0], self.flight.vx[:, 1], 
+                    color='#1f77b4', linewidth=2, label='Vx')
+            ax1_twin.plot(self.flight.ax[:, 0], self.flight.ax[:, 1],
+                         color='#ff7f0e', linewidth=2, label='Ax', linestyle='--')
+            ax1.set_xlim(0, time_limit)
+            ax1.set_xlabel('Time (s)')
+            ax1.set_ylabel('Vx (m/s)', color='#1f77b4')
+            ax1_twin.set_ylabel('Ax (m/s²)', color='#ff7f0e')
+            ax1.set_title('X - East Component')
+            ax1.grid(True, alpha=0.3)
+            ax1.tick_params(axis='y', labelcolor='#1f77b4')
+            ax1_twin.tick_params(axis='y', labelcolor='#ff7f0e')
+            
+            # Y velocity and acceleration
+            ax2 = axes[0, 1]
+            ax2_twin = ax2.twinx()
+            ax2.plot(self.flight.vy[:, 0], self.flight.vy[:, 1],
+                    color='#1f77b4', linewidth=2, label='Vy')
+            ax2_twin.plot(self.flight.ay[:, 0], self.flight.ay[:, 1],
+                         color='#ff7f0e', linewidth=2, label='Ay', linestyle='--')
+            ax2.set_xlim(0, time_limit)
+            ax2.set_xlabel('Time (s)')
+            ax2.set_ylabel('Vy (m/s)', color='#1f77b4')
+            ax2_twin.set_ylabel('Ay (m/s²)', color='#ff7f0e')
+            ax2.set_title('Y - North Component')
+            ax2.grid(True, alpha=0.3)
+            ax2.tick_params(axis='y', labelcolor='#1f77b4')
+            ax2_twin.tick_params(axis='y', labelcolor='#ff7f0e')
+            
+            # Z velocity and acceleration
+            ax3 = axes[1, 0]
+            ax3_twin = ax3.twinx()
+            ax3.plot(self.flight.vz[:, 0], self.flight.vz[:, 1],
+                    color='#1f77b4', linewidth=2, label='Vz')
+            ax3_twin.plot(self.flight.az[:, 0], self.flight.az[:, 1],
+                         color='#ff7f0e', linewidth=2, label='Az', linestyle='--')
+            ax3.set_xlim(0, time_limit)
+            ax3.set_xlabel('Time (s)')
+            ax3.set_ylabel('Vz (m/s)', color='#1f77b4')
+            ax3_twin.set_ylabel('Az (m/s²)', color='#ff7f0e')
+            ax3.set_title('Z - Altitude Component')
+            ax3.grid(True, alpha=0.3)
+            ax3.tick_params(axis='y', labelcolor='#1f77b4')
+            ax3_twin.tick_params(axis='y', labelcolor='#ff7f0e')
+            
+            # Total speed and acceleration magnitude
+            ax4 = axes[1, 1]
+            ax4_twin = ax4.twinx()
+            ax4.plot(self.flight.speed[:, 0], self.flight.speed[:, 1],
+                    color='#1f77b4', linewidth=2, label='Speed')
+            ax4_twin.plot(self.flight.acceleration[:, 0], self.flight.acceleration[:, 1],
+                         color='#ff7f0e', linewidth=2, label='Acceleration', linestyle='--')
+            ax4.set_xlim(0, time_limit)
+            ax4.set_xlabel('Time (s)')
+            ax4.set_ylabel('Speed (m/s)', color='#1f77b4')
+            ax4_twin.set_ylabel('Acceleration (m/s²)', color='#ff7f0e')
+            ax4.set_title('Total Magnitude')
+            ax4.grid(True, alpha=0.3)
+            ax4.tick_params(axis='y', labelcolor='#1f77b4')
+            ax4_twin.tick_params(axis='y', labelcolor='#ff7f0e')
+            
+            fig.suptitle('Linear Kinematics Data', fontsize=14, y=0.995)
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            
+            logger.debug(f"Linear kinematics plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot linear kinematics: {e}")
+            return None
+
+    def plot_flight_path_angle_data(self, output_dir: Path) -> Optional[Path]:
+        """Plot flight path angle vs attitude angle and lateral attitude angle.
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "flight_path_angle_data.png"
+            
+            # Determine time limit (includes parachute deployment)
+            time_limit = self._get_plot_time_limit()
+            
+            fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 8))
+            
+            # Flight path angle vs Attitude angle
+            ax1.plot(
+                self.flight.attitude_angle[:, 0],
+                self.flight.attitude_angle[:, 1],
+                label="Attitude Angle",
+                color='#1f77b4',
+                linewidth=2
+            )
+            ax1.plot(
+                self.flight.path_angle[:, 0],
+                self.flight.path_angle[:, 1],
+                label="Flight Path Angle",
+                color='#ff7f0e',
+                linewidth=2,
+                linestyle='--'
+            )
+            ax1.set_xlim(0, time_limit)
+            ax1.set_xlabel("Time (s)")
+            ax1.set_ylabel("Angle (°)")
+            ax1.set_title("Flight Path Angle vs Attitude Angle")
+            ax1.legend()
+            ax1.grid(True, alpha=0.3)
+            
+            # Lateral attitude angle
+            ax2.plot(
+                self.flight.lateral_attitude_angle[:, 0],
+                self.flight.lateral_attitude_angle[:, 1],
+                label="Lateral Attitude Angle",
+                color='#2ca02c',
+                linewidth=2
+            )
+            ax2.set_xlim(0, time_limit)
+            ax2.set_xlabel("Time (s)")
+            ax2.set_ylabel("Angle (°)")
+            ax2.set_title("Lateral Attitude Angle")
+            ax2.legend()
+            ax2.grid(True, alpha=0.3)
+            
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            
+            logger.debug(f"Flight path angle plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot flight path angle: {e}")
+            return None
+
+    def plot_attitude_data(self, output_dir: Path) -> Optional[Path]:
+        """Plot Euler angles (psi, theta, phi) vs time.
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "attitude_data.png"
+            
+            # Determine time limit (includes parachute deployment)
+            time_limit = self._get_plot_time_limit()
+            
+            fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(9, 12))
+            
+            # Attitude angle (combined)
+            ax1.plot(
+                self.flight.attitude_angle[:, 0],
+                self.flight.attitude_angle[:, 1],
+                label="Attitude Angle"
+            )
+            ax1.set_xlim(0, time_limit)
+            ax1.set_xlabel("Time (s)")
+            ax1.set_ylabel("Attitude Angle (°)")
+            ax1.set_title("Rocket Attitude Angle")
+            ax1.grid(True)
+            
+            # Psi - Precession
+            ax2.plot(self.flight.psi[:, 0], self.flight.psi[:, 1], label="ψ - Precession")
+            ax2.set_xlim(0, time_limit)
+            ax2.set_xlabel("Time (s)")
+            ax2.set_ylabel("ψ (°)")
+            ax2.set_title("Euler Precession Angle")
+            ax2.grid(True)
+            
+            # Theta - Nutation
+            ax3.plot(self.flight.theta[:, 0], self.flight.theta[:, 1], label="θ - Nutation")
+            ax3.set_xlim(0, time_limit)
+            ax3.set_xlabel("Time (s)")
+            ax3.set_ylabel("θ (°)")
+            ax3.set_title("Euler Nutation Angle")
+            ax3.grid(True)
+            
+            # Phi - Spin
+            ax4.plot(self.flight.phi[:, 0], self.flight.phi[:, 1], label="φ - Spin")
+            ax4.set_xlim(0, time_limit)
+            ax4.set_xlabel("Time (s)")
+            ax4.set_ylabel("φ (°)")
+            ax4.set_title("Euler Spin Angle")
+            ax4.grid(True)
+            
+            plt.subplots_adjust(hspace=0.5)
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+            
+            logger.info(f"Attitude data plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot attitude data: {e}")
+            return None
+
+    def plot_angular_kinematics_data(self, output_dir: Path) -> Optional[Path]:
+        """Plot angular velocities and accelerations.
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "angular_kinematics_data.png"
+            
+            # Determine time limit (includes parachute deployment)
+            time_limit = self._get_plot_time_limit()
+            
+            fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(9, 9))
+            
+            # Omega1 and Alpha1
+            ax1.plot(self.flight.w1[:, 0], self.flight.w1[:, 1], color="#ff7f0e")
+            ax1.set_xlim(0, time_limit)
+            ax1.set_xlabel("Time (s)")
+            ax1.set_ylabel(r"Angular Velocity - ${\omega_1}$ (rad/s)", color="#ff7f0e")
+            ax1.set_title(r"Angular Velocity ${\omega_1}$ | Angular Acceleration ${\alpha_1}$")
+            ax1.tick_params("y", colors="#ff7f0e")
+            ax1.grid(True)
+            
+            ax1up = ax1.twinx()
+            ax1up.plot(self.flight.alpha1[:, 0], self.flight.alpha1[:, 1], color="#1f77b4")
+            ax1up.set_ylabel(r"Angular Acceleration - ${\alpha_1}$ (rad/s²)", color="#1f77b4")
+            ax1up.tick_params("y", colors="#1f77b4")
+            
+            # Omega2 and Alpha2
+            ax2.plot(self.flight.w2[:, 0], self.flight.w2[:, 1], color="#ff7f0e")
+            ax2.set_xlim(0, time_limit)
+            ax2.set_xlabel("Time (s)")
+            ax2.set_ylabel(r"Angular Velocity - ${\omega_2}$ (rad/s)", color="#ff7f0e")
+            ax2.set_title(r"Angular Velocity ${\omega_2}$ | Angular Acceleration ${\alpha_2}$")
+            ax2.tick_params("y", colors="#ff7f0e")
+            ax2.grid(True)
+            
+            ax2up = ax2.twinx()
+            ax2up.plot(self.flight.alpha2[:, 0], self.flight.alpha2[:, 1], color="#1f77b4")
+            ax2up.set_ylabel(r"Angular Acceleration - ${\alpha_2}$ (rad/s²)", color="#1f77b4")
+            ax2up.tick_params("y", colors="#1f77b4")
+            
+            # Omega3 and Alpha3
+            ax3.plot(self.flight.w3[:, 0], self.flight.w3[:, 1], color="#ff7f0e")
+            ax3.set_xlim(0, time_limit)
+            ax3.set_xlabel("Time (s)")
+            ax3.set_ylabel(r"Angular Velocity - ${\omega_3}$ (rad/s)", color="#ff7f0e")
+            ax3.set_title(r"Angular Velocity ${\omega_3}$ | Angular Acceleration ${\alpha_3}$")
+            ax3.tick_params("y", colors="#ff7f0e")
+            ax3.grid(True)
+            
+            ax3up = ax3.twinx()
+            ax3up.plot(self.flight.alpha3[:, 0], self.flight.alpha3[:, 1], color="#1f77b4")
+            ax3up.set_ylabel(r"Angular Acceleration - ${\alpha_3}$ (rad/s²)", color="#1f77b4")
+            ax3up.tick_params("y", colors="#1f77b4")
+            
+            plt.subplots_adjust(hspace=0.5)
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+            
+            logger.info(f"Angular kinematics plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot angular kinematics: {e}")
+            return None
+
+    def plot_aerodynamic_forces(self, output_dir: Path) -> Optional[Path]:
+        """Plot aerodynamic forces and moments.
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "aerodynamic_forces.png"
+            
+            # Determine time limit (includes parachute deployment)
+            time_limit = self._get_plot_time_limit()
+            time_limit_index = np.searchsorted(self.flight.time[:, 0], time_limit)
+            
+            fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(9, 12))
+            
+            # Aerodynamic Lift
+            ax1.plot(
+                self.flight.aerodynamic_lift[: time_limit_index, 0],
+                self.flight.aerodynamic_lift[: time_limit_index, 1],
+                label="Resultant"
+            )
+            ax1.plot(
+                self.flight.R1[: time_limit_index, 0],
+                self.flight.R1[: time_limit_index, 1],
+                label="R1"
+            )
+            ax1.plot(
+                self.flight.R2[: time_limit_index, 0],
+                self.flight.R2[: time_limit_index, 1],
+                label="R2"
+            )
+            ax1.set_xlim(0, time_limit)
+            ax1.legend()
+            ax1.set_xlabel("Time (s)")
+            ax1.set_ylabel("Lift Force (N)")
+            ax1.set_title("Aerodynamic Lift Resultant Force")
+            ax1.grid()
+            
+            # Aerodynamic Drag
+            ax2.plot(
+                self.flight.aerodynamic_drag[: time_limit_index, 0],
+                self.flight.aerodynamic_drag[: time_limit_index, 1]
+            )
+            ax2.set_xlim(0, time_limit)
+            ax2.set_xlabel("Time (s)")
+            ax2.set_ylabel("Drag Force (N)")
+            ax2.set_title("Aerodynamic Drag Force")
+            ax2.grid()
+            
+            # Aerodynamic Bending Moment
+            ax3.plot(
+                self.flight.aerodynamic_bending_moment[: time_limit_index, 0],
+                self.flight.aerodynamic_bending_moment[: time_limit_index, 1],
+                label="Resultant"
+            )
+            ax3.plot(
+                self.flight.M1[: time_limit_index, 0],
+                self.flight.M1[: time_limit_index, 1],
+                label="M1"
+            )
+            ax3.plot(
+                self.flight.M2[: time_limit_index, 0],
+                self.flight.M2[: time_limit_index, 1],
+                label="M2"
+            )
+            ax3.set_xlim(0, time_limit)
+            ax3.legend()
+            ax3.set_xlabel("Time (s)")
+            ax3.set_ylabel("Bending Moment (N m)")
+            ax3.set_title("Aerodynamic Bending Resultant Moment")
+            ax3.grid()
+            
+            # Aerodynamic Spin Moment
+            ax4.plot(
+                self.flight.aerodynamic_spin_moment[: time_limit_index, 0],
+                self.flight.aerodynamic_spin_moment[: time_limit_index, 1]
+            )
+            ax4.set_xlim(0, time_limit)
+            ax4.set_xlabel("Time (s)")
+            ax4.set_ylabel("Spin Moment (N m)")
+            ax4.set_title("Aerodynamic Spin Moment")
+            ax4.grid()
+            
+            plt.subplots_adjust(hspace=0.5)
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+            
+            logger.info(f"Aerodynamic forces plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot aerodynamic forces: {e}")
+            return None
+
+    def plot_rail_buttons_forces(self, output_dir: Path) -> Optional[Path]:
+        """Plot rail button forces during rail phase.
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            # Check if rail buttons exist
+            if len(self.flight.rocket.rail_buttons) == 0:
+                logger.info("No rail buttons defined - skipping rail button plots")
+                return None
+            
+            # Check if there's a rail phase
+            if not hasattr(self.flight, 'out_of_rail_time_index') or self.flight.out_of_rail_time_index == 0:
+                logger.info("No rail phase found - skipping rail button plots")
+                return None
+            
+            output_path = output_dir / "rail_buttons_forces.png"
+            
+            fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 6))
+            
+            # Normal Forces
+            ax1.plot(
+                self.flight.rail_button1_normal_force[: self.flight.out_of_rail_time_index, 0],
+                self.flight.rail_button1_normal_force[: self.flight.out_of_rail_time_index, 1],
+                label="Upper Rail Button"
+            )
+            ax1.plot(
+                self.flight.rail_button2_normal_force[: self.flight.out_of_rail_time_index, 0],
+                self.flight.rail_button2_normal_force[: self.flight.out_of_rail_time_index, 1],
+                label="Lower Rail Button"
+            )
+            ax1.set_xlim(
+                0,
+                self.flight.out_of_rail_time if self.flight.out_of_rail_time > 0 else self.flight.t_final
+            )
+            ax1.legend()
+            ax1.grid(True)
+            ax1.set_xlabel("Time (s)")
+            ax1.set_ylabel("Normal Force (N)")
+            ax1.set_title("Rail Buttons Normal Force")
+            
+            # Shear Forces
+            ax2.plot(
+                self.flight.rail_button1_shear_force[: self.flight.out_of_rail_time_index, 0],
+                self.flight.rail_button1_shear_force[: self.flight.out_of_rail_time_index, 1],
+                label="Upper Rail Button"
+            )
+            ax2.plot(
+                self.flight.rail_button2_shear_force[: self.flight.out_of_rail_time_index, 0],
+                self.flight.rail_button2_shear_force[: self.flight.out_of_rail_time_index, 1],
+                label="Lower Rail Button"
+            )
+            ax2.set_xlim(
+                0,
+                self.flight.out_of_rail_time if self.flight.out_of_rail_time > 0 else self.flight.t_final
+            )
+            ax2.legend()
+            ax2.grid(True)
+            ax2.set_xlabel("Time (s)")
+            ax2.set_ylabel("Shear Force (N)")
+            ax2.set_title("Rail Buttons Shear Force")
+            
+            plt.subplots_adjust(hspace=0.5)
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+            
+            logger.info(f"Rail buttons forces plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot rail button forces: {e}")
+            return None
+
+    def plot_energy_data(self, output_dir: Path) -> Optional[Path]:
+        """Plot energy components and power.
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "energy_data.png"
+            
+            # Determine time limit for energy plots
+            apogee_time = self.flight.apogee_time if self.flight.apogee_time > 0 else self.flight.t_final
+            
+            fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(9, 13))
+            
+            # Total Mechanical Energy
+            ax1.plot(
+                self.flight.total_energy[:, 0],
+                self.flight.total_energy[:, 1]
+            )
+            ax1.set_xlim(0, apogee_time)
+            ax1.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
+            ax1.set_title("Total Mechanical Energy")
+            ax1.set_xlabel("Time (s)")
+            ax1.set_ylabel("Energy (J)")
+            ax1.grid()
+            
+            # Energy Components
+            ax2.plot(
+                self.flight.kinetic_energy[:, 0],
+                self.flight.kinetic_energy[:, 1],
+                label="Kinetic Energy"
+            )
+            ax2.plot(
+                self.flight.potential_energy[:, 0],
+                self.flight.potential_energy[:, 1],
+                label="Potential Energy"
+            )
+            ax2.set_xlim(0, apogee_time)
+            ax2.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
+            ax2.set_title("Total Mechanical Energy Components")
+            ax2.set_xlabel("Time (s)")
+            ax2.set_ylabel("Energy (J)")
+            ax2.legend()
+            ax2.grid()
+            
+            # Thrust Power
+            ax3.plot(
+                self.flight.thrust_power[:, 0],
+                self.flight.thrust_power[:, 1],
+                label="|Thrust Power|"
+            )
+            ax3.set_xlim(0, self.flight.rocket.motor.burn_out_time)
+            ax3.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
+            ax3.set_title("Thrust Absolute Power")
+            ax3.set_xlabel("Time (s)")
+            ax3.set_ylabel("Power (W)")
+            ax3.legend()
+            ax3.grid()
+            
+            # Drag Power
+            ax4.plot(
+                self.flight.drag_power[:, 0],
+                -self.flight.drag_power[:, 1],
+                label="|Drag Power|"
+            )
+            ax4.set_xlim(0, apogee_time)
+            ax4.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
+            ax4.set_title("Drag Absolute Power")
+            ax4.set_xlabel("Time (s)")
+            ax4.set_ylabel("Power (W)")
+            ax4.legend()
+            ax4.grid()
+            
+            plt.subplots_adjust(hspace=1)
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+            
+            logger.info(f"Energy data plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot energy data: {e}")
+            return None
+
+    def plot_fluid_mechanics_data(self, output_dir: Path) -> Optional[Path]:
+        """Plot fluid mechanics parameters (Mach, Reynolds, pressures, AoA).
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "fluid_mechanics_data.png"
+            
+            # Determine time limit (includes parachute deployment)
+            time_limit = self._get_plot_time_limit()
+            
+            out_of_rail_time = self.flight.out_of_rail_time if hasattr(self.flight, 'out_of_rail_time') else 0
+            
+            fig = plt.figure(figsize=(9, 16))
+            
+            # Mach Number
+            ax1 = plt.subplot(611)
+            ax1.plot(self.flight.mach_number[:, 0], self.flight.mach_number[:, 1])
+            ax1.set_xlim(0, self.flight.t_final)
+            ax1.set_title("Mach Number")
+            ax1.set_xlabel("Time (s)")
+            ax1.set_ylabel("Mach Number")
+            ax1.grid()
+            
+            # Reynolds Number
+            ax2 = plt.subplot(612)
+            ax2.plot(self.flight.reynolds_number[:, 0], self.flight.reynolds_number[:, 1])
+            ax2.set_xlim(0, self.flight.t_final)
+            ax2.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
+            ax2.set_title("Reynolds Number")
+            ax2.set_xlabel("Time (s)")
+            ax2.set_ylabel("Reynolds Number")
+            ax2.grid()
+            
+            # Pressures
+            ax3 = plt.subplot(613)
+            ax3.plot(
+                self.flight.dynamic_pressure[:, 0],
+                self.flight.dynamic_pressure[:, 1],
+                label="Dynamic Pressure"
+            )
+            ax3.plot(
+                self.flight.total_pressure[:, 0],
+                self.flight.total_pressure[:, 1],
+                label="Total Pressure"
+            )
+            ax3.plot(
+                self.flight.pressure[:, 0],
+                self.flight.pressure[:, 1],
+                label="Static Pressure"
+            )
+            ax3.set_xlim(0, self.flight.t_final)
+            ax3.legend()
+            ax3.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
+            ax3.set_title("Total and Dynamic Pressure")
+            ax3.set_xlabel("Time (s)")
+            ax3.set_ylabel("Pressure (Pa)")
+            ax3.grid()
+            
+            # Angle of Attack
+            ax4 = plt.subplot(614)
+            ax4.plot(self.flight.angle_of_attack[:, 0], self.flight.angle_of_attack[:, 1])
+            ax4.set_title("Angle of Attack")
+            ax4.set_xlabel("Time (s)")
+            ax4.set_ylabel("Angle of Attack (°)")
+            ax4.set_xlim(out_of_rail_time, time_limit)
+            ax4.grid()
+            
+            # Stream Velocity
+            ax5 = plt.subplot(615)
+            ax5.plot(
+                self.flight.stream_velocity_x[:, 0],
+                self.flight.stream_velocity_x[:, 1],
+                label="Stream Velocity X"
+            )
+            ax5.plot(
+                self.flight.stream_velocity_y[:, 0],
+                self.flight.stream_velocity_y[:, 1],
+                label="Stream Velocity Y"
+            )
+            ax5.plot(
+                self.flight.stream_velocity_z[:, 0],
+                self.flight.stream_velocity_z[:, 1],
+                label="Stream Velocity Z"
+            )
+            ax5.set_title("Stream Velocity Components")
+            ax5.set_xlabel("Time (s)")
+            ax5.set_ylabel("Stream Velocity (m/s)")
+            ax5.set_xlim(out_of_rail_time, time_limit)
+            ax5.legend()
+            ax5.grid()
+            
+            # Angle of Sideslip
+            ax6 = plt.subplot(616)
+            ax6.plot(
+                self.flight.angle_of_sideslip[:, 0],
+                self.flight.angle_of_sideslip[:, 1]
+            )
+            ax6.set_title("Angle of Sideslip")
+            ax6.set_xlabel("Time (s)")
+            ax6.set_ylabel("Angle of Sideslip (°)")
+            ax6.set_xlim(out_of_rail_time, time_limit)
+            ax6.grid()
+            
+            plt.subplots_adjust(hspace=0.5)
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+            
+            logger.info(f"Fluid mechanics plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot fluid mechanics data: {e}")
+            return None
+
+    def plot_stability_and_control_data(self, output_dir: Path) -> Optional[Path]:
+        """Plot stability margin and attitude frequency response.
+
+        Parameters
+        ----------
+        output_dir : Path
+            Output directory for the plot
+
+        Returns
+        -------
+        Optional[Path]
+            Path to created plot or None if failed
+        """
+        try:
+            output_path = output_dir / "stability_and_control_data.png"
+            
+            fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 6))
+            
+            # Stability Margin
+            ax1.plot(self.flight.stability_margin[:, 0], self.flight.stability_margin[:, 1])
+            ax1.set_xlim(0, self.flight.stability_margin[:, 0][-1])
+            ax1.set_title("Stability Margin")
+            ax1.set_xlabel("Time (s)")
+            ax1.set_ylabel("Stability Margin (c)")
+            
+            # Add critical event markers
+            ax1.axvline(
+                x=self.flight.out_of_rail_time,
+                color="r",
+                linestyle="--",
+                label="Out of Rail Time"
+            )
+            ax1.axvline(
+                x=self.flight.rocket.motor.burn_out_time,
+                color="g",
+                linestyle="--",
+                label="Burn Out Time"
+            )
+            ax1.axvline(
+                x=self.flight.apogee_time,
+                color="m",
+                linestyle="--",
+                label="Apogee Time"
+            )
+            ax1.legend()
+            ax1.grid()
+            
+            # Attitude Frequency Response
+            x_axis = np.arange(0, 5, 0.01)
+            max_attitude = self.flight.attitude_frequency_response.max
+            max_attitude = max_attitude if max_attitude != 0 else 1
+            ax2.plot(
+                x_axis,
+                self.flight.attitude_frequency_response(x_axis) / max_attitude,
+                label="Attitude Angle"
+            )
+            
+            # Omega Frequency Response
+            max_omega = self.flight.omega1_frequency_response.max
+            max_omega = max_omega if max_omega != 0 else 1
+            ax2.plot(
+                x_axis,
+                self.flight.omega1_frequency_response(x_axis) / max_omega,
+                label="Omega 1"
+            )
+            
+            max_omega = self.flight.omega2_frequency_response.max
+            max_omega = max_omega if max_omega != 0 else 1
+            ax2.plot(
+                x_axis,
+                self.flight.omega2_frequency_response(x_axis) / max_omega,
+                label="Omega 2"
+            )
+            
+            max_omega = self.flight.omega3_frequency_response.max
+            max_omega = max_omega if max_omega != 0 else 1
+            ax2.plot(
+                x_axis,
+                self.flight.omega3_frequency_response(x_axis) / max_omega,
+                label="Omega 3"
+            )
+            
+            ax2.set_title("Frequency Response")
+            ax2.set_xlabel("Frequency (Hz)")
+            ax2.set_ylabel("Amplitude Magnitude Normalized")
+            ax2.set_xlim(0, 5)
+            ax2.legend()
+            ax2.grid()
+            
+            plt.subplots_adjust(hspace=0.5)
+            plt.tight_layout()
+            plt.savefig(output_path, dpi=300, bbox_inches='tight')
+            plt.close(fig)
+            
+            logger.info(f"Stability and control plot saved to {output_path}")
+            return output_path
+            
+        except Exception as e:
+            logger.warning(f"Could not plot stability and control data: {e}")
             return None
 
     def save_all_schematics(self, output_dir: str) -> dict:

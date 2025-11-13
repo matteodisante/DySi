@@ -9,6 +9,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Complete RocketPy Flight Plot Parity + Position Data**: All flight kinematics plots
+  - `trajectory_3d.png` - 3D flight path with XY/XZ/YZ projections
+  - `position_data.png` - Position components (X, Y, Z) vs time **(NEW)**
+  - `linear_kinematics_data.png` - Velocities (Vx,Vy,Vz) and accelerations (Ax,Ay,Az)
+  - `flight_path_angle_data.png` - Flight path vs attitude angle, lateral attitude
+  - `attitude_data.png` - Euler angles (ψ, θ, φ) and attitude angle
+  - `angular_kinematics_data.png` - Angular velocities (ω) and accelerations (α) 
+  - `aerodynamic_forces.png` - Lift, drag, bending moment, spin moment
+  - `rail_buttons_forces.png` - Normal and shear forces on rail buttons (if applicable)
+  - `energy_data.png` - Total energy, kinetic/potential components, thrust/drag power
+  - `fluid_mechanics_data.png` - Mach, Reynolds, pressures, AoA, stream velocity, sideslip
+  - `stability_and_control_data.png` - Stability margin + frequency response
+- **Plot Interpretation Documentation**:
+  - Complete guide (`docs/source/user/technical/plot_interpretation.rst`) - **31 plot types** documented
+  - Quick reference card (`docs/source/user/quick_plot_reference.rst`) - at-a-glance interpretation
+  - Pre-flight approval checklist (8 items)
+  - Performance validation checklist (6 items)
+  - Color-coded stability zones (red/yellow/green/blue) with thresholds
+- **Developer Documentation**:
+  - Static margin vs stability margin technical explanation
+  - Complete flight plots implementation details (11/11 methods including position_data)
+  - Plot documentation update summary
+- Flight data plots automatically organized in `curves/flight/` subdirectory
+
+### Changed
+- `CurvePlotter.plot_all_flight_curves()` now calls 11 flight plot methods (RocketPy + position data)
+- `Visualizer` class simplified - removed duplicate methods now in `CurvePlotter`
+- `Visualizer` now only provides `plot_trajectory_2d()` (ground track) and `plot_comparison()`
+- Documentation navigation enhanced with new dropdown "I want to understand what's in the output plots"
+- Technical documentation section restructured: plot interpretation now first topic
+- User guide index updated with quick plot reference as first item
+
+### Removed
+- **Deprecated plot methods from Visualizer**:
+  - `plot_trajectory_3d()` - Use `CurvePlotter.plot_trajectory_3d()` instead (better with projections)
+  - `plot_altitude_vs_time()` - Replaced by `position_data.png` (Z component)
+  - `plot_velocity_vs_time()` - Replaced by `linear_kinematics_data.png` (more complete)
+  - `plot_acceleration_vs_time()` - Replaced by `linear_kinematics_data.png` (more complete)
+  - `create_standard_plots()` - Method no longer needed
+
+### Deprecated
+- `plots/trajectory/` directory - Use `curves/flight/` for all flight analysis plots
+  - Only `trajectory_2d.png` (ground track) remains in `plots/trajectory/`
+
+### Fixed
+- Clarified confusion between static margin (CP at Mach=0) and stability margin (CP at actual Mach)
+- Added missing explanation for why static margin can be plotted "vs time" despite using Mach=0
+- **Flight plot time range extended beyond apogee** - plots now show parachute deployment dynamics
+  - All flight plots extend to last parachute deploy + 10% (or 20s max)
+  - If no parachute: extends to apogee + 30% (or 30s max)
+  - Enables analysis of deceleration, attitude changes, and AoA spikes during deploy
+- **3D trajectory apogee marker fixed** - now uses exact `apogee_time` instead of `argmax(altitude)`
+  - Label shows: `Apogee: 3245.7 m @ 50.1 s` (precise time)
+
 ### Changed
 - Marked Monte Carlo analysis as "in development" - not yet production-ready
 - Reorganized documentation structure for clarity

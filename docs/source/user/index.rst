@@ -85,6 +85,7 @@ Quick Navigation
    2. :doc:`/getting_started/quickstart` - Run your first simulation (5 min)
    3. :doc:`tutorials/01_basic_flight` - Build from scratch
    4. :doc:`tutorials/02_understanding_outputs` - Interpret results
+   5. :doc:`technical/plot_interpretation` - Detailed plot guide
 
 .. dropdown:: I want to simulate my rocket
    :color: success
@@ -119,12 +120,23 @@ Quick Navigation
    * :doc:`configuration/environment_params` - Environment and weather
    * :doc:`configuration/simulation_params` - Launch and simulation settings
 
+.. dropdown:: I want to understand what's in the output plots
+   :color: info
+   :icon: graph
+
+   Quick references and detailed guides:
+   
+   * :doc:`quick_plot_reference` - **Quick reference card** for all plots
+   * :doc:`technical/plot_interpretation` - Complete interpretation guide
+   * :doc:`tutorials/02_understanding_outputs` - Tutorial walkthrough
+
 .. dropdown:: I need to understand the theory
    :color: secondary
    :icon: mortar-board
 
    Check the technical documentation:
    
+   * :doc:`technical/plot_interpretation` - How to read all output plots
    * :doc:`technical/stability_analysis` - Complete stability theory (CM, CP, margins)
    * More technical topics coming soon
 
@@ -135,6 +147,7 @@ Table of Contents
    :maxdepth: 2
    :caption: User Guide
 
+   quick_plot_reference
    tutorials/index
    how_to_guides/index
    configuration/index

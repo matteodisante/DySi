@@ -366,16 +366,14 @@ def main():
                 # Create visualizer
                 visualizer = Visualizer(output_dir=str(sim_output_dir / "plots" / "trajectory"))
 
-                # Create standard plots
+                # Create 2D ground track plot
                 trajectory_data = simulator.get_trajectory_data()
-                plot_paths = visualizer.create_standard_plots(
+                plot_path = visualizer.plot_trajectory_2d(
                     trajectory_data,
-                    base_filename=output_name,
+                    filename=f"{output_name}_trajectory_2d.png",
                 )
 
-                logger.info("Created plot files:")
-                for plot_type, path in plot_paths.items():
-                    logger.info(f"  {plot_type}: {path}")
+                logger.info(f"Created 2D ground track plot: {plot_path}")
 
             except ImportError as e:
                 logger.warning(f"Plotting skipped: {e}")
