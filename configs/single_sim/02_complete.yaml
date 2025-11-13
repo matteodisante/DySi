@@ -2,7 +2,7 @@
 # This file demonstrates all available configuration options
 
 rocket:
-  name: "Hermes"
+  name: "Vinix"
   dry_mass_kg: 16.426
 
   inertia:
@@ -36,12 +36,10 @@ rocket:
     length_m: 0.5
     kind: "vonKarman"  # Options: vonKarman, conical, ogive, elliptical, lvhaack, tangent, parabolic, powerseries
     position_m: 0.0  # ✅ Position at nose (0.0 m from nose)
-    
-    # Advanced nose cone parameters (optional)
+    ### Advanced nose cone parameters (optional)
     base_radius_m: null  # Base radius (m). If null, uses rocket radius
     bluffness: null  # Tip bluffness ratio (0-1). null = sharp tip. Not for powerseries
-    power: null  # Power factor for 'powerseries' kind only (0-1). Controls bluntness
-    name: "Nose Cone"  # Display name
+
 
   fins:
     count: 4  # ✅ Number of fins (typically 3 or 4 for stability)
@@ -93,6 +91,7 @@ rocket:
       kd: 0.05
 
   # Custom drag curves (optional - if not provided, uses default Cd calculation)
+  #power_off_drag: 0.56  
   power_off_drag: "data/drag_curves/polito_drag_coefficient_power_off.csv"
   power_on_drag: "data/drag_curves/polito_drag_coefficient_power_on.csv"
 
@@ -161,7 +160,7 @@ environment:
     direction_deg: 90.0  # Meteorological convention (0=North, 90=East)
 
   gravity_ms2: 9.80665
-  max_expected_height_m: 4000.0
+  max_expected_height_m: 3500.0
 
 simulation:
   max_time_s: 600.0
