@@ -17,7 +17,6 @@ rocket:
 
   # Mass properties
   cg_location_m: 1.255                   # Center of gravity position (without motor)
-  cp_location_m: null                    # Center of pressure position (auto-computed if null)
 
   # Inertia tensor (kg·m²)
   inertia:

@@ -130,42 +130,9 @@ class RocketValidator:
                 f"rocket length ({config.geometry.length_m:.3f} m)"
             )
 
-        # Stability validation (CP-CG margin)
-        if config.cp_location_m is not None:
-            cp_cg_margin = config.cp_location_m - config.cg_location_m
-
-            if cp_cg_margin < 0:
-                raise ValidationError(
-                    f"CP ({config.cp_location_m:.3f} m) must be behind CG "
-                    f"({config.cg_location_m:.3f} m) for stability"
-                )
-
-            # Static margin should be at least 1-2 calibers
-            static_margin_calibers = cp_cg_margin / config.geometry.caliber_m
-
-            if static_margin_calibers < 1.0:
-                warnings.append(
-                    ValidationWarning(
-                        "stability",
-                        f"Static margin ({static_margin_calibers:.2f} calibers) < 1. "
-                        "Rocket may be marginally stable or unstable.",
-                    )
-                )
-
-            if static_margin_calibers < 0.5:
-                raise ValidationError(
-                    f"Static margin ({static_margin_calibers:.2f} calibers) is too low. "
-                    "Rocket is likely unstable."
-                )
-
-            if static_margin_calibers > 5.0:
-                warnings.append(
-                    ValidationWarning(
-                        "stability",
-                        f"Static margin ({static_margin_calibers:.2f} calibers) > 5. "
-                        "Rocket is overstable and may weathercock excessively.",
-                    )
-                )
+        # Note: Stability validation is performed after rocket is built by RocketPy,
+        # since CP depends on aerodynamic surfaces and varies with Mach number.
+        # Pre-build validation has been removed as it was based on static CP value.
 
         # Fins validation
         if config.fins is not None:
