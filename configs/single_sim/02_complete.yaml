@@ -1,177 +1,214 @@
-# Complete Rocket Simulation Configuration Example
-# This file demonstrates all available configuration options
+# ============================================================================
+# ROCKET SIMULATION CONFIGURATION FILE
+# ============================================================================
 
+# ----------------------------------------------------------------------------
+# ROCKET CONFIGURATION
+# ----------------------------------------------------------------------------
 rocket:
-  name: "Vinix"
-  dry_mass_kg: 16.426
+  name: "Lumière"                        # Rocket name
+  dry_mass_kg: 16.426                    # Rocket mass without motor
+  coordinate_system: "nose_to_tail"      # Origin at nose, positive toward tail
 
-  inertia:
-    ixx_kg_m2: 6.321  # Lateral moment of inertia (kg·m²)
-    iyy_kg_m2: 6.321  # Lateral moment of inertia (kg·m²)
-    izz_kg_m2: 0.034  # Axial moment of inertia (kg·m²)
-    # Products of inertia (optional, default 0 for symmetric rockets)
-    ixy_kg_m2: 0.0  # Product of inertia I_12 (kg·m²)
-    ixz_kg_m2: 0.0  # Product of inertia I_13 (kg·m²)
-    iyz_kg_m2: 0.0  # Product of inertia I_23 (kg·m²)
-
+  # Geometry
   geometry:
-    caliber_m: 0.127  # Rocket diameter (m)
-    length_m: 2.0     # Total rocket length (m)
+    caliber_m: 0.127                     # Rocket diameter (reference for stability)
+    length_m: 2.0                        # Total rocket length
 
-  cg_location_m: 1.255  # Center of gravity from nose (without motor) (m)
-  cp_location_m: null   # Center of pressure from nose (will be computed if omitted) (m)
+  # Mass properties
+  cg_location_m: 1.255                   # Center of gravity position (without motor)
+  cp_location_m: null                    # Center of pressure position (auto-computed if null)
 
-  # Eccentricities: offsets from centerline (optional, default 0 for symmetric rockets)
+  # Inertia tensor (kg·m²)
+  inertia:
+    ixx_kg_m2: 6.321                     # Lateral inertia around x-axis (pitch/yaw)
+    iyy_kg_m2: 6.321                     # Lateral inertia around y-axis (pitch/yaw)
+    izz_kg_m2: 0.034                     # Axial inertia around z-axis (roll)
+    ixy_kg_m2: 0.0                       # Product of inertia (0 for symmetric rockets)
+    ixz_kg_m2: 0.0                       # Product of inertia (0 for symmetric rockets)
+    iyz_kg_m2: 0.0                       # Product of inertia (0 for symmetric rockets)
+
+  # Eccentricities (offsets from centerline)
   eccentricities:
-    cm_x_m: 0.0  # Center of mass offset in x-direction (m)
-    cm_y_m: 0.0  # Center of mass offset in y-direction (m)
-    cp_x_m: 0.0  # Center of pressure offset in x-direction (m)
-    cp_y_m: 0.0  # Center of pressure offset in y-direction (m)
-    thrust_x_m: 0.0  # Thrust eccentricity in x-direction (m)
-    thrust_y_m: 0.0  # Thrust eccentricity in y-direction (m)
+    cm_x_m: 0.0                          # Center of mass offset in x (lateral)
+    cm_y_m: 0.0                          # Center of mass offset in y (lateral)
+    cp_x_m: 0.0                          # Center of pressure offset in x (aerodynamic)
+    cp_y_m: 0.0                          # Center of pressure offset in y (aerodynamic)
+    thrust_x_m: 0.0                      # Thrust vector offset in x (nozzle misalignment)
+    thrust_y_m: 0.0                      # Thrust vector offset in y (nozzle misalignment)
 
-  coordinate_system: "nose_to_tail"  # ✅ Origine al NASO, positivo verso CODA
+  # Aerodynamics
+  power_off_drag: "data/drag_curves/polito_drag_coefficient_power_off.csv"  # Cd vs Mach (motor off)
+  power_on_drag: "data/drag_curves/polito_drag_coefficient_power_on.csv"    # Cd vs Mach (motor on)
+
+  # --- Structural Components ---
 
   nose_cone:
-    length_m: 0.5
-    kind: "vonKarman"  # Options: vonKarman, conical, ogive, elliptical, lvhaack, tangent, parabolic, powerseries
-    position_m: 0.0  # ✅ Position at nose (0.0 m from nose)
-    ### Advanced nose cone parameters (optional)
-    base_radius_m: null  # Base radius (m). If null, uses rocket radius
-    bluffness: null  # Tip bluffness ratio (0-1). null = sharp tip. Not for powerseries
-
+    kind: "vonKarman"                    # Shape optimized for minimum drag
+    length_m: 0.5                        # Nose cone length
+    position_m: 0.0                      # Position along rocket axis (0 = nose in nose_to_tail)
+    base_radius_m: null                  # Base radius (uses rocket radius if null)
+    bluffness: null                      # Tip bluntness ratio 0-1 (null = sharp)
 
   fins:
-    count: 4  # ✅ Number of fins (typically 3 or 4 for stability)
-    root_chord_m: 0.120  # Length of fin at rocket body (m)
-    tip_chord_m: 0.060   # Length of fin at tip (m)
-    span_m: 0.100        # Distance from body to fin tip (m)
-    thickness_m: 0.003   # Fin thickness (m)
-    position_m: 1.95     # ✅ Leading edge position from nose (m)
-    cant_angle_deg: 0.0  # Cant angle for spin stabilization (degrees)
-    airfoil: null        # Path to airfoil file (optional, null for flat plate)
-    # sweep_angle_deg: null  # Sweep angle (optional, computed from geometry if null)
+    count: 4                             # Number of fins (typically 3-4)
+    root_chord_m: 0.120                  # Fin length at body
+    tip_chord_m: 0.060                   # Fin length at tip
+    span_m: 0.100                        # Fin height (body to tip)
+    thickness_m: 0.003                   # Fin thickness (affects drag)
+    position_m: 1.95                     # Leading edge position along rocket axis
+    cant_angle_deg: 0.0                  # Cant angle for spin stabilization (0 = no spin)
+    airfoil: null                        # Airfoil data file (null = flat plate)
 
-  # Tail section (optional, for boat tail or tapered sections)
   tail:
-    enabled: false
-    top_radius_m: 0.0635    # Radius at top of tail (m)
-    bottom_radius_m: 0.055  # Radius at bottom of tail (m)
-    length_m: 0.060         # Length of tail section (m)
-    position_m: 1.940       # Position from nose (m)
+    enabled: false                       # Enable boat tail section
+    top_radius_m: 0.0635                 # Radius at top of tail
+    bottom_radius_m: 0.055               # Radius at bottom (tapered end)
+    length_m: 0.060                      # Tail section length
+    position_m: 1.940                    # Position along rocket axis (top of tail)
 
-  # Rail buttons configuration
   rail_buttons:
-    enabled: false
-    upper_button_position_m: 0.5   # Distance from nose to upper button (m)
-    lower_button_position_m: 1.8   # Distance from nose to lower button (m)
-    angular_position_deg: 45.0     # Angular position around rocket (degrees)
+    enabled: false                       # Enable rail button modeling
+    upper_button_position_m: 0.5         # Upper button position along rocket axis
+    lower_button_position_m: 1.8         # Lower button position along rocket axis
+    angular_position_deg: 45.0           # Angular position around body
+
+  # --- Recovery System ---
 
   parachute:
     enabled: true
     name: "Main"
-    cd_s: 10.0  # Drag coefficient × area (m²)
-    trigger: "apogee"  # "apogee" or altitude in meters (e.g., 800)
-    sampling_rate_hz: 105.0  # Sampling rate for trigger condition (Hz)
-    lag_s: 1.5  # Deployment lag time after trigger (s)
-    noise_std: [0, 8.3, 0.5]  # [x, y, z] noise standard deviations in measurements (m)
+    cd_s: 10.0                           # Drag coefficient × area (effective parachute area)
+    trigger: "apogee"                    # Deployment trigger: "apogee" or altitude in meters
+    sampling_rate_hz: 105.0              # Trigger condition check frequency
+    lag_s: 1.5                           # Deployment delay after trigger
+    noise_std: [0, 8.3, 0.5]             # Sensor noise [x, y, z] in meters
 
-  # Air brakes configuration (optional)
+  # --- Active Control ---
+
   air_brakes:
-    enabled: false
-    reference_area_m2: 0.01      # Reference area when deployed (m²)
-    drag_coefficient: 1.5        # Drag coefficient when deployed
-    position_m: 1.0              # Position from nose (m)
-    # Controller parameters (PID, bang-bang, etc.)
+    enabled: false                       # Enable active air brakes system
+    reference_area_m2: 0.01              # Deployed brake surface area
+    drag_coefficient: 1.5                # Drag coefficient when fully deployed
+    position_m: 1.0                      # Position along rocket axis
     controller:
-      type: "pid"  # Options: pid, bang_bang
-      target_apogee_m: 3000.0
-      kp: 0.1
-      ki: 0.01
-      kd: 0.05
+      type: "pid"                        # Controller type: "pid" or "bang_bang"
+      target_apogee_m: 3000.0            # Target apogee for controller
+      kp: 0.1                            # Proportional gain
+      ki: 0.01                           # Integral gain
+      kd: 0.05                           # Derivative gain
 
-  # Custom drag curves (optional - if not provided, uses default Cd calculation)
-  #power_off_drag: 0.56  
-  power_off_drag: "data/drag_curves/polito_drag_coefficient_power_off.csv"
-  power_on_drag: "data/drag_curves/polito_drag_coefficient_power_on.csv"
-
+# ----------------------------------------------------------------------------
+# MOTOR CONFIGURATION
+# ----------------------------------------------------------------------------
 motor:
-  type: "SolidMotor"  # Options: SolidMotor, HybridMotor, LiquidMotor
-  thrust_source: "data/motors/Cesaroni_7579M1520-P.eng"  # Path to thrust curve file (.eng or .csv)
+  type: "SolidMotor"                     # Motor type: SolidMotor, HybridMotor, LiquidMotor
+  thrust_source: "data/motors/Cesaroni_7579M1520-P.eng"  # Thrust curve file (.eng or .csv)
 
-  dry_mass_kg: 1.815  # Mass of motor without propellant (kg)
-  dry_inertia: [0.125, 0.125, 0.002]  # [Ixx, Iyy, Izz] dry inertia tensor (kg·m²)
+  # Motor position in rocket frame
+  position_m: 2.0                        # Nozzle exit position in rocket coordinate system
 
-  nozzle_radius_m: 0.033   # Radius of nozzle exit (m)
-  throat_radius_m: 0.011   # Radius of nozzle throat (m)
+  # Mass properties
+  dry_mass_kg: 1.815                     # Motor mass without propellant
+  dry_inertia: [0.125, 0.125, 0.002]     # Dry inertia [Ixx, Iyy, Izz] in kg·m²
 
-  # Propellant grain configuration (for SolidMotor)
-  grain_number: 5                      # Number of propellant grains
-  grain_density_kg_m3: 1815.0          # Propellant density (kg/m³)
-  grain_outer_radius_m: 0.033          # Outer radius of grain (m)
-  grain_initial_inner_radius_m: 0.015  # Initial inner radius (bore) (m)
-  grain_initial_height_m: 0.120        # Initial height of each grain (m)
-  grain_separation_m: 0.005            # Spacing between grains (m)
+  # Nozzle geometry
+  nozzle_radius_m: 0.033                 # Nozzle exit radius (affects thrust correction)
+  throat_radius_m: 0.011                 # Nozzle throat radius (minimum area)
 
-  # ✅ Posizioni nel sistema di riferimento del MOTOR
-  # Motor coordinate system: nozzle_to_combustion_chamber
-  # Nozzle è all'origine (0), camera di combustione in positivo
-  grains_center_of_mass_position_m: 0.317  # ✅ Grains CoM from nozzle (m)
-  center_of_dry_mass_position_m: 0.317     # ✅ Dry mass CoM from nozzle (m)
-  nozzle_position_m: 0.0                   # ✅ Nozzle position (always 0 in motor frame)
+  # Propellant grain configuration
+  grain_number: 5                        # Number of cylindrical grains
+  grain_density_kg_m3: 1815.0            # Propellant density
+  grain_outer_radius_m: 0.033            # Grain outer radius
+  grain_initial_inner_radius_m: 0.015    # Initial bore radius (burns outward)
+  grain_initial_height_m: 0.120          # Initial height of each grain
+  grain_separation_m: 0.005              # Gap between grains
 
-  burn_time_s: null  # Burn time (s) - computed from thrust curve if null
-
-  # Advanced parameters
-  interpolation_method: "spline"  # Thrust curve interpolation: linear, spline, akima
+  # Motor coordinate system (nozzle_to_combustion_chamber: nozzle at 0)
+  grains_center_of_mass_position_m: 0.317      # Grain CoM in motor frame
+  center_of_dry_mass_position_m: 0.317         # Dry mass CoM in motor frame
+  nozzle_position_m: 0.0                       # Nozzle position (always 0 in motor frame)
   coordinate_system_orientation: "nozzle_to_combustion_chamber"  # Motor reference frame
-  
-  # ⚠️ CRITICAL: Reference pressure for thrust curve correction
-  # If thrust curve was measured at sea level (standard atmosphere), set to 101325 Pa
-  # RocketPy will automatically adjust thrust for altitude using:
-  #   F_total = F_curve + (P_ref - P_ambient) × A_nozzle
-  reference_pressure: 101325  # Atmospheric pressure at which thrust was measured (Pa)
 
-  # ✅ Motor position in ROCKET coordinate system (nose_to_tail)
-  # Position of motor nozzle exit measured from rocket nose
-  position_m: 2.0  # Nozzle exit at 2.0 m from nose (at tail end)
+  # Performance parameters
+  burn_time_s: null                      # Burn duration (auto-computed from thrust curve)
+  reference_pressure: 101325             # Pressure at which thrust was measured (Pa, sea level)
+  interpolation_method: "spline"         # Thrust curve interpolation: linear, spline, akima
 
+# ----------------------------------------------------------------------------
+# ENVIRONMENT CONFIGURATION
+# ----------------------------------------------------------------------------
 environment:
-  latitude_deg: 39.3897
-  longitude_deg: -8.2889
-  elevation_m: 100.0
+  # Launch site location
+  latitude_deg: 39.3897                  # Launch site latitude (affects gravity, Coriolis)
+  longitude_deg: -8.2889                 # Launch site longitude
+  elevation_m: 100.0                     # Launch site elevation above sea level
 
-  atmospheric_model: "standard_atmosphere"  # Options: standard_atmosphere, custom_atmosphere
-  # atmospheric_model_file: "data/atmosphere.nc"  # Required if using custom model
+  # Date/time (optional)
+  date: null                             # Launch date [year, month, day, hour_utc] or null
 
-  date: null  # [year, month, day, hour_utc] or null for no specific date
-  # date: [2023, 6, 15, 12]
+  # Atmospheric model
+  atmospheric_model: "standard_atmosphere"  # ISA model or custom atmosphere
+  gravity_ms2: 9.80665                   # Gravitational acceleration (standard value)
+  max_expected_height_m: 3500.0          # Max altitude for atmosphere processing
 
-  # NEW: Weather data sources (replaces atmospheric_model for advanced models)
-  # weather:
-  #   source: "wyoming"  # Options: standard_atmosphere, wyoming, gfs, era5, custom
-  #   wyoming_station: "72340"  # Oakland, CA (required for wyoming)
-  #   # custom_file: "data/custom_atmosphere.txt"  # Required for custom source
-  #   fetch_real_time: false  # Use date vs. latest available
-
+  # Wind conditions
   wind:
-    model: "constant"  # Options: constant, from_weather, function, custom
-    velocity_ms: 15.0
-    direction_deg: 90.0  # Meteorological convention (0=North, 90=East)
+    model: "constant"                    # Wind model: constant, from_weather, function, custom
+    velocity_ms: 15.0                    # Wind speed (m/s)
+    direction_deg: 90.0                  # Wind direction (0=North, 90=East, meteorological)
 
-  gravity_ms2: 9.80665
-  max_expected_height_m: 3500.0
-
+# ----------------------------------------------------------------------------
+# SIMULATION CONFIGURATION
+# ----------------------------------------------------------------------------
 simulation:
-  max_time_s: 600.0
-  max_time_step_s: .inf  # Use inf for automatic
-  min_time_step_s: 0.0
-  rtol: 1e-6  # Relative tolerance
-  atol: 1e-6  # Absolute tolerance
-  terminate_on_apogee: false
-  verbose: false
-
+  # Launch rail
   rail:
-    length_m: 1.5 
-    inclination_deg: 85.0  # Degrees from vertical (0=horizontal, 90=vertical)
-    heading_deg: 0.0  # Degrees from North (0=North, 90=East)
+    length_m: 1.5                        # Rail length (affects initial guidance)
+    inclination_deg: 85.0                # Rail angle from horizontal (90=vertical)
+    heading_deg: 0.0                     # Rail azimuth (0=North, 90=East)
+
+  # Integration parameters
+  max_time_s: 600.0                      # Maximum simulation time
+  max_time_step_s: .inf                  # Max integration step (inf = automatic)
+  min_time_step_s: 0.0                   # Min integration step (0 = no limit)
+  rtol: 1e-6                             # Relative tolerance for ODE solver
+  atol: 1e-6                             # Absolute tolerance for ODE solver
+
+  # Simulation options
+  terminate_on_apogee: false             # Stop simulation at apogee (vs full descent)
+  verbose: false                         # Print detailed RocketPy output
+
+
+# ============================================================================
+# NOTES & EXAMPLES
+# ============================================================================
+#
+# Alternative drag specification (numeric coefficient):
+#   power_off_drag: 0.56
+#   power_on_drag: null  # Will use power_off_drag value
+#
+# Advanced weather data (replaces atmospheric_model):
+#   environment:
+#     weather:
+#       source: "wyoming"  # Options: wyoming, gfs, era5, custom
+#       wyoming_station: "72340"
+#       fetch_real_time: false
+#
+# Nose cone shapes:
+#   vonKarman    - Minimum wave drag (optimal for high speed)
+#   conical      - Simple cone
+#   ogive        - Tangent ogive (classic rocket shape)
+#   elliptical   - Elliptical profile
+#   parabolic    - Parabolic profile
+#   lvhaack      - Minimum drag for given length/diameter
+#
+# Stability margin:
+#   Static margin = (CP - CG) / caliber
+#   Recommended: 1.5-2.5 calibers for stable flight
+#
+# Coordinate systems:
+#   nose_to_tail              - Origin at nose, +z toward tail
+#   tail_to_nose              - Origin at tail, +z toward nose
+#   nozzle_to_combustion_chamber - Motor frame reference
+#
