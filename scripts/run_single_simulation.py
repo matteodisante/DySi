@@ -314,8 +314,17 @@ def main():
         if not args.no_plots:
             logger.info("\n--- GENERATING CURVE PLOTS ---")
             
-            # Create curve plotter
-            curve_plotter = CurvePlotter(motor, rocket, env)
+            # Extract max_mach from flight if available
+            max_mach = 2.0  # default
+            if flight:
+                try:
+                    max_mach = float(flight.max_mach_number)
+                    logger.info(f"Using max Mach from flight: {max_mach:.3f}")
+                except Exception as e:
+                    logger.warning(f"Could not get max_mach_number from flight: {e}, using default 2.0")
+            
+            # Create curve plotter with flight data
+            curve_plotter = CurvePlotter(motor, rocket, env, max_mach=max_mach, flight=flight)
             
             # Plot all curves (organized in motor/, rocket/, environment/ subdirectories)
             curves_dir = sim_output_dir / "curves"
@@ -330,7 +339,7 @@ def main():
             logger.info("\n--- EXPORTING TRAJECTORY DATA ---")
 
             # Create data handler
-            data_handler = DataHandler(output_dir=str(sim_output_dir / "trajectory"))
+            data_handler = DataHandler(output_dir=str(sim_output_dir / "data"))
 
             # Get data
             trajectory_data = simulator.get_trajectory_data()
@@ -355,7 +364,7 @@ def main():
 
             try:
                 # Create visualizer
-                visualizer = Visualizer(output_dir=str(sim_output_dir / "plots"))
+                visualizer = Visualizer(output_dir=str(sim_output_dir / "plots" / "trajectory"))
 
                 # Create standard plots
                 trajectory_data = simulator.get_trajectory_data()
@@ -383,14 +392,15 @@ def main():
             logger.warning(f"  {sim_output_dir}/")
             logger.warning("    ├── simulation_YYYYMMDD_HHMMSS.log (this log file)")
             logger.warning("    ├── initial_state.json / .txt")
-            logger.warning("    └── curves/")
-            logger.warning("        ├── motor/       (11 motor curve plots)")
-            logger.warning("        ├── rocket/      (drag curves)")
-            logger.warning("        └── environment/ (wind, atmosphere)")
+            logger.warning("    └── plots/")
+            logger.warning("        ├── motor/       (11 motor performance plots)")
+            logger.warning("        ├── rocket/      (12-15 rocket characteristic plots)")
+            logger.warning("        ├── stability/   (7+ stability analysis plots)")
+            logger.warning("        └── environment/ (2 atmospheric/wind plots)")
             logger.warning("\n⚠️  Missing outputs (simulation did not complete):")
             logger.warning("    ├── final_state.json / .txt")
-            logger.warning("    ├── trajectory/ (CSV data)")
-            logger.warning("    └── plots/ (trajectory visualizations)")
+            logger.warning("    ├── data/ (CSV trajectory data)")
+            logger.warning("    └── plots/trajectory/ (5 trajectory visualization plots)")
             logger.warning("\n💡 Suggestions:")
             logger.warning("   - Check static margin (should be positive, typically 1.5-2.5 calibers)")
             logger.warning("   - Add more fins or adjust fin position if margin is negative")
@@ -405,14 +415,14 @@ def main():
             logger.info("    ├── simulation_YYYYMMDD_HHMMSS.log (this log file)")
             logger.info("    ├── initial_state.json / .txt")
             logger.info("    ├── final_state.json / .txt")
-            logger.info("    ├── curves/")
-            logger.info("    │   ├── motor/       (11 motor curve plots)")
-            logger.info("    │   ├── rocket/      (drag curves)")
-            logger.info("    │   └── environment/ (wind, atmosphere)")
-            logger.info("    ├── trajectory/")
-            logger.info("    │   └── *.csv        (time series data)")
-            logger.info("    └── plots/")
-            logger.info("        └── *.png        (trajectory visualizations)")
+            logger.info("    ├── plots/")
+            logger.info("    │   ├── motor/       (11 motor performance plots)")
+            logger.info("    │   ├── rocket/      (12-15 rocket characteristic plots)")
+            logger.info("    │   ├── stability/   (6 essential stability plots + report)")
+            logger.info("    │   ├── trajectory/  (5 trajectory visualization plots)")
+            logger.info("    │   └── environment/ (2 atmospheric/wind plots)")
+            logger.info("    └── data/")
+            logger.info("        └── *.csv        (time series trajectory data)")
             return 0
 
     except FileNotFoundError as e:
