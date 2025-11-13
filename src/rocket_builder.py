@@ -125,15 +125,22 @@ class RocketBuilder:
         power_on_drag = self._resolve_drag_curve(self.config.power_on_drag)
 
         # RocketPy requires drag curves or will use default values
-        # If not provided, use a typical value for rockets (Cd ~ 0.5)
-        if power_off_drag is None:
+        # If both not provided, use typical default value (Cd ~ 0.5)
+        if power_off_drag is None and power_on_drag is None:
             power_off_drag = 0.5  # Typical drag coefficient
-        if power_on_drag is None:
-            power_on_drag = 0.5  # Typical drag coefficient
+            power_on_drag = 0.5
+        # If only power_off_drag provided, use it for both
+        elif power_on_drag is None:
+            power_on_drag = power_off_drag
+        # If only power_on_drag provided, use it for both
+        elif power_off_drag is None:
+            power_off_drag = power_on_drag
+        # Otherwise both are specified, use them as-is
 
         logger.debug(
             f"Creating base rocket: radius={self.config.radius_m}m, "
-            f"mass={self.config.dry_mass_kg}kg"
+            f"mass={self.config.dry_mass_kg}kg, "
+            f"power_off_drag={power_off_drag}, power_on_drag={power_on_drag}"
         )
 
         self.rocket = Rocket(
@@ -148,20 +155,24 @@ class RocketBuilder:
 
         logger.debug("Base rocket created")
 
-    def _resolve_drag_curve(self, drag_curve: Optional[str]) -> Optional[str]:
-        """Resolve drag curve file path.
+    def _resolve_drag_curve(self, drag_curve: Optional[str | float]) -> Optional[str | float]:
+        """Resolve drag curve file path or numeric coefficient.
 
         Args:
-            drag_curve: Path to drag curve file or None.
+            drag_curve: Path to drag curve file, numeric coefficient, or None.
 
         Returns:
-            Resolved absolute path or None.
+            Resolved absolute path, numeric coefficient, or None.
 
         Raises:
             FileNotFoundError: If file is specified but does not exist.
         """
         if drag_curve is None:
             return None
+
+        # If it's already a number (int or float), return it as-is
+        if isinstance(drag_curve, (int, float)):
+            return drag_curve
 
         drag_file = Path(drag_curve)
         if not drag_file.exists():
