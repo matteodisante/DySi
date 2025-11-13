@@ -495,11 +495,12 @@ class RocketBuilder:
         static_margin_t0 = self.rocket.static_margin(0)
 
         # Get center of pressure (cp_position is a Function in RocketPy)
+        # Evaluate at Mach 0.3 as representative subsonic value
+        cp_mach = 0.3
         cp_position = None
         if hasattr(self.rocket, 'cp_position'):
             try:
-                # Try to evaluate it at Mach 0.3 (typical subsonic value)
-                cp_position = float(self.rocket.cp_position(0.3))
+                cp_position = float(self.rocket.cp_position(cp_mach))
             except (TypeError, AttributeError):
                 cp_position = None
 
@@ -509,6 +510,7 @@ class RocketBuilder:
             "dry_mass_kg": float(self.rocket.dry_mass),
             "center_of_mass_m": float(self.rocket.center_of_mass(0)),
             "center_of_pressure_m": cp_position,
+            "center_of_pressure_mach": cp_mach if cp_position is not None else None,
             "coordinate_system": self.config.coordinate_system,
         }
 

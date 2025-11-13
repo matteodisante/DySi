@@ -116,7 +116,6 @@ class RocketConfig:
     inertia: InertiaConfig
     geometry: GeometryConfig
     cg_location_m: float  # From nose
-    cp_location_m: Optional[float] = None  # From nose, can be computed
     nose_cone: Optional[NoseConeConfig] = None
     fins: Optional[FinConfig] = None
     parachute: Optional[ParachuteConfig] = None
@@ -132,10 +131,13 @@ class RocketConfig:
 
     @property
     def static_margin_calibers(self) -> Optional[float]:
-        """Calculate static margin in calibers."""
-        if self.cp_location_m is None:
-            return None
-        return (self.cp_location_m - self.cg_location_m) / self.geometry.caliber_m
+        """Calculate static margin in calibers.
+        
+        Note: This property is deprecated since CP should be calculated
+        by RocketPy based on aerodynamic surfaces, not specified manually.
+        Returns None always.
+        """
+        return None
 
 
 @dataclass
@@ -403,7 +405,6 @@ class ConfigLoader:
             inertia=inertia,
             geometry=geometry,
             cg_location_m=rocket_data.get("cg_location_m", 1.0),
-            cp_location_m=rocket_data.get("cp_location_m"),
             nose_cone=nose_cone,
             fins=fins,
             parachute=parachute,
