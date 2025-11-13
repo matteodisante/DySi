@@ -218,7 +218,7 @@ Configuration Example
 Key Concepts
 ~~~~~~~~~~~~
 
-**Coordinate System**: Rocket uses **tail-to-nose** direction
+**Coordinate System**: Rocket uses **tail-to-nose** convention
 
 .. code-block:: text
 
@@ -228,20 +228,38 @@ Key Concepts
    Position 0.0 = Nose tip
    Negative values = toward tail
 
-**Static Stability**: The rocket must be aerodynamically stable
+All position parameters (center of mass, center of pressure, component locations) 
+follow this convention.
+
+**Aerodynamic Stability**
+
+For safe flight, the rocket must be statically stable. This requires the 
+**Center of Pressure (CP)** to be aft of the **Center of Gravity (CG)**.
+
+Static margin quantifies stability:
 
 .. math::
 
-   \text{Static Margin} = \frac{\text{CP} - \text{CG}}{\text{Diameter}} > 2
+   \text{Static Margin (calibers)} = \frac{CP - CG}{D_{rocket}}
 
-Where:
+**Stability criteria:**
 
-* **CP** = Center of Pressure (where aerodynamic forces act)
-* **CG** = Center of Gravity (center of mass)
+- Static Margin < 1.0: Unstable or marginally stable
+- Static Margin 1.5-2.5: Recommended range for most rockets
+- Static Margin > 3.5: Over-stable (excessive weathercocking)
 
-rocket-sim **automatically validates** this during configuration loading.
+RocketPy calculates CP automatically from rocket geometry using Barrowman equations.
+The CP position varies with Mach number during flight.
 
-**Drag Curves**: Can be custom (from wind tunnel) or calculated
+.. seealso::
+   
+   :ref:`technical-stability-analysis` provides comprehensive stability theory,
+   including Static Margin vs Stability Margin, transonic considerations, and
+   design guidelines with academic references.
+
+**Drag Coefficients**
+
+Drag can be specified as custom curves (from CFD/wind tunnel) or auto-calculated
 
 .. code-block:: yaml
 
