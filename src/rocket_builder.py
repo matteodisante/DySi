@@ -43,6 +43,7 @@ class RocketBuilder:
         config: RocketConfig,
         motor: Optional[SolidMotor] = None,
         motor_config: Optional["MotorConfig"] = None,
+        environment: Optional["Environment"] = None,
     ):
         """Initialize RocketBuilder.
 
@@ -51,6 +52,8 @@ class RocketBuilder:
             motor: Optional SolidMotor instance. If provided, will be added
                    during build().
             motor_config: Optional MotorConfig for extracting motor position.
+            environment: Optional Environment instance for calculating atmospheric
+                        parameters (used for air brakes controller).
 
         Raises:
             ImportError: If RocketPy is not installed.
@@ -63,6 +66,7 @@ class RocketBuilder:
         self.config = config
         self.motor = motor
         self.motor_config = motor_config
+        self.environment = environment
         self.rocket: Optional[Rocket] = None
 
     def build(self) -> Rocket:
@@ -347,6 +351,85 @@ class RocketBuilder:
 
         return self
 
+    def _calculate_physical_parameters(self) -> dict:
+        """Calculate physical model parameters from rocket and environment.
+        
+        Automatically extracts:
+        - rocket_mass: Dry mass (without propellant) from rocket
+        - base_drag_coefficient: Mean Cd from power-off drag curve
+        - atmosphere_scale_height: From exponential fit of environment density
+        - sea_level_density: From environment at elevation=0
+        
+        Returns:
+            Dictionary with calculated parameters.
+        """
+        import numpy as np
+        
+        params = {}
+        
+        # 1. Rocket mass (dry mass = coast phase mass after burnout)
+        if self.rocket is not None:
+            params['rocket_mass'] = float(self.rocket.dry_mass)
+            logger.debug(f"Calculated rocket_mass from dry mass: {params['rocket_mass']:.2f} kg")
+        else:
+            params['rocket_mass'] = 15.0  # Fallback
+            logger.warning("Rocket not built yet, using default mass=15kg")
+        
+        # 2. Rocket drag coefficient (mean Cd from power-off curve over typical Mach range)
+        if hasattr(self.config, 'power_off_drag') and isinstance(self.config.power_off_drag, str):
+            try:
+                # Read drag curve file
+                drag_file = Path(self.config.power_off_drag)
+                if drag_file.exists():
+                    data = np.loadtxt(drag_file, delimiter=',', skiprows=1)
+                    # data[:, 0] = Mach, data[:, 1] = Cd
+                    cd_values = data[:, 1]
+                    params['rocket_drag_coefficient'] = float(np.mean(cd_values))
+                    logger.debug(f"Calculated rocket_drag_coefficient from curve: {params['rocket_drag_coefficient']:.3f}")
+                else:
+                    params['rocket_drag_coefficient'] = 0.45  # Fallback
+                    logger.warning(f"Drag curve file not found, using default Cd=0.45")
+            except Exception as e:
+                params['rocket_drag_coefficient'] = 0.45
+                logger.warning(f"Error reading drag curve: {e}, using default Cd=0.45")
+        elif isinstance(self.config.power_off_drag, (int, float)):
+            # Constant Cd value
+            params['rocket_drag_coefficient'] = float(self.config.power_off_drag)
+            logger.debug(f"Using constant rocket_drag_coefficient: {params['rocket_drag_coefficient']:.3f}")
+        else:
+            params['rocket_drag_coefficient'] = 0.45  # Fallback
+            logger.warning("No drag data available, using default Cd=0.45")
+        
+        # 3. Atmosphere parameters (from environment model)
+        if self.environment is not None:
+            try:
+                # Sample density at multiple altitudes
+                altitudes = np.array([0, 1000, 2000, 3000, 4000, 5000])
+                densities = np.array([self.environment.density(h) for h in altitudes])
+                
+                # Fit exponential: ρ(h) = ρ₀ * exp(-h/H)
+                # ln(ρ) = ln(ρ₀) - h/H
+                ln_rho = np.log(densities)
+                coeffs = np.polyfit(altitudes, ln_rho, 1)  # Linear fit in log space
+                
+                params['atmosphere_scale_height'] = float(-1.0 / coeffs[0])
+                params['sea_level_density'] = float(np.exp(coeffs[1]))
+                
+                logger.debug(f"Calculated atmosphere_scale_height: {params['atmosphere_scale_height']:.1f} m")
+                logger.debug(f"Calculated sea_level_density: {params['sea_level_density']:.4f} kg/m³")
+            except Exception as e:
+                # Fallback to standard atmosphere values
+                params['atmosphere_scale_height'] = 8500.0
+                params['sea_level_density'] = 1.225
+                logger.warning(f"Error fitting atmosphere model: {e}, using standard values")
+        else:
+            # No environment provided, use ISA standard atmosphere
+            params['atmosphere_scale_height'] = 8500.0
+            params['sea_level_density'] = 1.225
+            logger.debug("No environment provided, using ISA standard atmosphere (H=8500m, ρ₀=1.225kg/m³)")
+        
+        return params
+
     def add_air_brakes(self) -> "RocketBuilder":
         """Add air brakes to rocket based on configuration.
 
@@ -407,19 +490,44 @@ class RocketBuilder:
         if ab.controller is not None:
             from src.air_brakes_controller import AirBrakesController, ControllerConfig
 
+            # Calculate physical parameters from rocket and environment
+            physical_params = self._calculate_physical_parameters()
+
             # Convert config dataclass to ControllerConfig
             ctrl_cfg = ControllerConfig(
                 algorithm=ab.controller.algorithm,
                 target_apogee_m=ab.controller.target_apogee_m,
+                apogee_prediction_method=ab.controller.apogee_prediction_method,
+                # Numerical integrator parameters
+                euler_dt=ab.controller.euler_dt,
+                euler_max_iterations=ab.controller.euler_max_iterations,
+                rk45_tol=ab.controller.rk45_tol,
+                rk45_dt_initial=ab.controller.rk45_dt_initial,
+                rk45_dt_min=ab.controller.rk45_dt_min,
+                rk45_dt_max=ab.controller.rk45_dt_max,
+                rk45_max_iterations=ab.controller.rk45_max_iterations,
+                # PID parameters
                 kp=ab.controller.kp,
                 ki=ab.controller.ki,
                 kd=ab.controller.kd,
+                # Hardware constraints
                 sampling_rate_hz=ab.controller.sampling_rate_hz,
                 computation_time_s=ab.controller.computation_time_s,
                 actuator_lag_s=ab.controller.actuator_lag_s,
                 max_deployment_rate=ab.controller.max_deployment_rate,
+                # Safety constraints
                 min_activation_time_s=ab.controller.min_activation_time_s,
                 min_activation_altitude_m=ab.controller.min_activation_altitude_m,
+                # Air brakes physical parameters from rocket config
+                airbrakes_cd=ab.drag_coefficient,
+                airbrakes_area=ab.reference_area_m2,
+                rocket_diameter=self.config.geometry.caliber_m,
+                # Physical model parameters (calculated automatically)
+                rocket_mass=physical_params['rocket_mass'],
+                rocket_drag_coefficient=physical_params['rocket_drag_coefficient'],
+                override_rocket_drag=ab.override_rocket_drag,
+                atmosphere_scale_height=physical_params['atmosphere_scale_height'],
+                sea_level_density=physical_params['sea_level_density'],
             )
 
             controller = AirBrakesController(ctrl_cfg)
@@ -428,7 +536,8 @@ class RocketBuilder:
 
             logger.info(
                 f"Air brakes with {ab.controller.algorithm.upper()} controller: "
-                f"target={ab.controller.target_apogee_m}m, rate={sampling_rate}Hz"
+                f"target={ab.controller.target_apogee_m}m, rate={sampling_rate}Hz, "
+                f"apogee_prediction={ab.controller.apogee_prediction_method}"
             )
         else:
             # No controller: static deployment

@@ -2626,6 +2626,82 @@ class CurvePlotter:
         
         return time_limit
 
+    def _add_event_markers(self, ax, time_limit: float, add_legend: bool = True) -> None:
+        """Add vertical lines marking critical flight events.
+        
+        Adds markers for:
+        - Burnout (motor exhaustion)
+        - Max-Q (maximum dynamic pressure)
+        - Apogee (highest altitude)
+        - Parachute deployments
+        
+        Parameters
+        ----------
+        ax : matplotlib.axes.Axes
+            Axis to add markers to
+        time_limit : float
+            Maximum time shown in plot (don't add markers beyond this)
+        add_legend : bool, optional
+            Whether to add legend after adding markers (default: True)
+        """
+        added_markers = False
+        
+        # Burnout
+        if hasattr(self.flight, 'out_of_rail_time'):
+            burnout_time = self.motor.burn_out_time if hasattr(self.motor, 'burn_out_time') else None
+            if burnout_time and burnout_time <= time_limit:
+                ax.axvline(x=burnout_time, color='#FF8C00', linestyle='--', 
+                          linewidth=2, alpha=0.8, label='Burnout', zorder=100)
+                added_markers = True
+        
+        # Max-Q (maximum dynamic pressure)
+        if hasattr(self.flight, 'max_dynamic_pressure_time'):
+            max_q_time = self.flight.max_dynamic_pressure_time
+            if max_q_time and max_q_time <= time_limit:
+                ax.axvline(x=max_q_time, color='#9370DB', linestyle='--',
+                          linewidth=2, alpha=0.8, label='Max-Q', zorder=100)
+                added_markers = True
+        
+        # Apogee
+        if hasattr(self.flight, 'apogee_time') and self.flight.apogee_time > 0:
+            if self.flight.apogee_time <= time_limit:
+                ax.axvline(x=self.flight.apogee_time, color='#DC143C', linestyle='-',
+                          linewidth=2.5, alpha=0.9, label='Apogee', zorder=100)
+                added_markers = True
+        
+        # Parachute deployments
+        if hasattr(self.flight, 'parachute_events') and self.flight.parachute_events:
+            for i, (trigger_time, parachute) in enumerate(self.flight.parachute_events):
+                # Parachute events store trigger time, not deployment time
+                # Need to add parachute lag to get actual deployment time
+                deployment_time = trigger_time
+                if hasattr(parachute, 'lag') and parachute.lag is not None:
+                    deployment_time += parachute.lag
+                
+                if deployment_time <= time_limit:
+                    # Extract parachute name (could be a Parachute object or string)
+                    chute_name = parachute.name if hasattr(parachute, 'name') else str(parachute)
+                    # Use different colors and styles for drogue vs main
+                    if 'drogue' in chute_name.lower():
+                        color = '#4169E1'  # Royal blue
+                        linestyle = '-.'
+                        label = f'Drogue ({deployment_time:.1f}s)'
+                    else:
+                        color = '#228B22'  # Forest green
+                        linestyle = ':'
+                        label = f'Main ({deployment_time:.1f}s)'
+                    
+                    ax.axvline(x=deployment_time, color=color, linestyle=linestyle,
+                              linewidth=2, alpha=0.8, label=label, zorder=100)
+                    added_markers = True
+        
+        # Add legend if markers were added and legend requested
+        if added_markers and add_legend:
+            # Get existing legend handles/labels if any
+            handles, labels = ax.get_legend_handles_labels()
+            # Add legend in a location that doesn't obscure data
+            ax.legend(loc='best', fontsize=8, framealpha=0.9)
+
     def plot_all_flight_curves(self, output_dir: Path) -> dict:
         """Generate all flight data plots.
         
@@ -2735,6 +2811,7 @@ class CurvePlotter:
             ax1.set_title('X - East Component')
             ax1.grid(True, alpha=0.3)
             ax1.axhline(y=0, color='gray', linestyle='--', linewidth=0.8, alpha=0.5)
+            self._add_event_markers(ax1, time_limit)
             
             # Y position (North)
             ax2.plot(
@@ -2750,6 +2827,7 @@ class CurvePlotter:
             ax2.set_title('Y - North Component')
             ax2.grid(True, alpha=0.3)
             ax2.axhline(y=0, color='gray', linestyle='--', linewidth=0.8, alpha=0.5)
+            self._add_event_markers(ax2, time_limit)
             
             # Z position (Altitude)
             ax3.plot(
@@ -2777,6 +2855,7 @@ class CurvePlotter:
             ax3.grid(True, alpha=0.3)
             ax3.legend()
             ax3.axhline(y=0, color='gray', linestyle='--', linewidth=0.8, alpha=0.5)
+            self._add_event_markers(ax3, time_limit)
             
             fig.suptitle('Position Data', fontsize=14, y=0.995)
             plt.tight_layout()
@@ -2907,6 +2986,7 @@ class CurvePlotter:
             ax1.grid(True, alpha=0.3)
             ax1.tick_params(axis='y', labelcolor='#1f77b4')
             ax1_twin.tick_params(axis='y', labelcolor='#ff7f0e')
+            self._add_event_markers(ax1, time_limit)
             
             # Y velocity and acceleration
             ax2 = axes[0, 1]
@@ -2923,6 +3003,7 @@ class CurvePlotter:
             ax2.grid(True, alpha=0.3)
             ax2.tick_params(axis='y', labelcolor='#1f77b4')
             ax2_twin.tick_params(axis='y', labelcolor='#ff7f0e')
+            self._add_event_markers(ax2, time_limit)
             
             # Z velocity and acceleration
             ax3 = axes[1, 0]
@@ -2939,6 +3020,7 @@ class CurvePlotter:
             ax3.grid(True, alpha=0.3)
             ax3.tick_params(axis='y', labelcolor='#1f77b4')
             ax3_twin.tick_params(axis='y', labelcolor='#ff7f0e')
+            self._add_event_markers(ax3, time_limit)
             
             # Total speed and acceleration magnitude
             ax4 = axes[1, 1]
@@ -2955,6 +3037,7 @@ class CurvePlotter:
             ax4.grid(True, alpha=0.3)
             ax4.tick_params(axis='y', labelcolor='#1f77b4')
             ax4_twin.tick_params(axis='y', labelcolor='#ff7f0e')
+            self._add_event_markers(ax4, time_limit)
             
             fig.suptitle('Linear Kinematics Data', fontsize=14, y=0.995)
             plt.tight_layout()
@@ -3009,8 +3092,9 @@ class CurvePlotter:
             ax1.set_xlabel("Time (s)")
             ax1.set_ylabel("Angle (°)")
             ax1.set_title("Flight Path Angle vs Attitude Angle")
-            ax1.legend()
             ax1.grid(True, alpha=0.3)
+            self._add_event_markers(ax1, time_limit, add_legend=False)
+            ax1.legend(loc='best', fontsize=8, framealpha=0.9)
             
             # Lateral attitude angle
             ax2.plot(
@@ -3024,8 +3108,9 @@ class CurvePlotter:
             ax2.set_xlabel("Time (s)")
             ax2.set_ylabel("Angle (°)")
             ax2.set_title("Lateral Attitude Angle")
-            ax2.legend()
             ax2.grid(True, alpha=0.3)
+            self._add_event_markers(ax2, time_limit, add_legend=False)
+            ax2.legend(loc='best', fontsize=8, framealpha=0.9)
             
             plt.tight_layout()
             plt.savefig(output_path, dpi=300, bbox_inches='tight')
@@ -3070,6 +3155,7 @@ class CurvePlotter:
             ax1.set_ylabel("Attitude Angle (°)")
             ax1.set_title("Rocket Attitude Angle")
             ax1.grid(True)
+            self._add_event_markers(ax1, time_limit)
             
             # Psi - Precession
             ax2.plot(self.flight.psi[:, 0], self.flight.psi[:, 1], label="ψ - Precession")
@@ -3078,6 +3164,7 @@ class CurvePlotter:
             ax2.set_ylabel("ψ (°)")
             ax2.set_title("Euler Precession Angle")
             ax2.grid(True)
+            self._add_event_markers(ax2, time_limit)
             
             # Theta - Nutation
             ax3.plot(self.flight.theta[:, 0], self.flight.theta[:, 1], label="θ - Nutation")
@@ -3086,6 +3173,7 @@ class CurvePlotter:
             ax3.set_ylabel("θ (°)")
             ax3.set_title("Euler Nutation Angle")
             ax3.grid(True)
+            self._add_event_markers(ax3, time_limit)
             
             # Phi - Spin
             ax4.plot(self.flight.phi[:, 0], self.flight.phi[:, 1], label="φ - Spin")
@@ -3094,6 +3182,7 @@ class CurvePlotter:
             ax4.set_ylabel("φ (°)")
             ax4.set_title("Euler Spin Angle")
             ax4.grid(True)
+            self._add_event_markers(ax4, time_limit)
             
             plt.subplots_adjust(hspace=0.5)
             plt.tight_layout()
@@ -3136,6 +3225,7 @@ class CurvePlotter:
             ax1.set_title(r"Angular Velocity ${\omega_1}$ | Angular Acceleration ${\alpha_1}$")
             ax1.tick_params("y", colors="#ff7f0e")
             ax1.grid(True)
+            self._add_event_markers(ax1, time_limit)
             
             ax1up = ax1.twinx()
             ax1up.plot(self.flight.alpha1[:, 0], self.flight.alpha1[:, 1], color="#1f77b4")
@@ -3150,6 +3240,7 @@ class CurvePlotter:
             ax2.set_title(r"Angular Velocity ${\omega_2}$ | Angular Acceleration ${\alpha_2}$")
             ax2.tick_params("y", colors="#ff7f0e")
             ax2.grid(True)
+            self._add_event_markers(ax2, time_limit)
             
             ax2up = ax2.twinx()
             ax2up.plot(self.flight.alpha2[:, 0], self.flight.alpha2[:, 1], color="#1f77b4")
@@ -3164,6 +3255,7 @@ class CurvePlotter:
             ax3.set_title(r"Angular Velocity ${\omega_3}$ | Angular Acceleration ${\alpha_3}$")
             ax3.tick_params("y", colors="#ff7f0e")
             ax3.grid(True)
+            self._add_event_markers(ax3, time_limit)
             
             ax3up = ax3.twinx()
             ax3up.plot(self.flight.alpha3[:, 0], self.flight.alpha3[:, 1], color="#1f77b4")
@@ -3200,77 +3292,100 @@ class CurvePlotter:
             
             # Determine time limit (includes parachute deployment)
             time_limit = self._get_plot_time_limit()
-            time_limit_index = np.searchsorted(self.flight.time[:, 0], time_limit)
+            
+            # Get time array - could be 1D, 2D, or Function object
+            if hasattr(self.flight, 'time'):
+                if callable(self.flight.time):
+                    # It's a Function object, extract source
+                    time_array = self.flight.time.source[:, 0]
+                elif self.flight.time.ndim == 2:
+                    time_array = self.flight.time[:, 0]
+                else:
+                    time_array = self.flight.time
+            else:
+                # Fallback: create time array based on simulation length
+                time_array = np.linspace(0, self.flight.t_final, 1000)
+            
+            time_limit_index = np.searchsorted(time_array, time_limit)
             
             fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(9, 12))
             
+            # Helper function to extract array from Function or numpy array
+            def get_array_data(attr, time_array, time_limit_index):
+                if callable(attr):
+                    # It's a Function object, extract source
+                    if hasattr(attr, 'source') and attr.source.ndim == 2:
+                        return attr.source[: time_limit_index, 0], attr.source[: time_limit_index, 1]
+                    else:
+                        # Evaluate the function
+                        values = np.array([attr(t) for t in time_array[: time_limit_index]])
+                        return time_array[: time_limit_index], values
+                elif attr.ndim == 1:
+                    return time_array[: time_limit_index], attr[: time_limit_index]
+                else:
+                    return attr[: time_limit_index, 0], attr[: time_limit_index, 1]
+            
             # Aerodynamic Lift
-            ax1.plot(
-                self.flight.aerodynamic_lift[: time_limit_index, 0],
-                self.flight.aerodynamic_lift[: time_limit_index, 1],
-                label="Resultant"
-            )
-            ax1.plot(
-                self.flight.R1[: time_limit_index, 0],
-                self.flight.R1[: time_limit_index, 1],
-                label="R1"
-            )
-            ax1.plot(
-                self.flight.R2[: time_limit_index, 0],
-                self.flight.R2[: time_limit_index, 1],
-                label="R2"
-            )
+            try:
+                t, lift = get_array_data(self.flight.aerodynamic_lift, time_array, time_limit_index)
+                ax1.plot(t, lift, label="Resultant")
+                
+                t, r1 = get_array_data(self.flight.R1, time_array, time_limit_index)
+                ax1.plot(t, r1, label="R1")
+                
+                t, r2 = get_array_data(self.flight.R2, time_array, time_limit_index)
+                ax1.plot(t, r2, label="R2")
+            except Exception as e:
+                logger.debug(f"Error plotting lift forces: {e}")
+                
             ax1.set_xlim(0, time_limit)
-            ax1.legend()
             ax1.set_xlabel("Time (s)")
             ax1.set_ylabel("Lift Force (N)")
             ax1.set_title("Aerodynamic Lift Resultant Force")
             ax1.grid()
+            self._add_event_markers(ax1, time_limit, add_legend=False)
+            ax1.legend(loc='best', fontsize=8, framealpha=0.9)
             
             # Aerodynamic Drag
-            ax2.plot(
-                self.flight.aerodynamic_drag[: time_limit_index, 0],
-                self.flight.aerodynamic_drag[: time_limit_index, 1]
-            )
+            t, drag = get_array_data(self.flight.aerodynamic_drag, time_array, time_limit_index)
+            ax2.plot(t, drag)
             ax2.set_xlim(0, time_limit)
             ax2.set_xlabel("Time (s)")
             ax2.set_ylabel("Drag Force (N)")
             ax2.set_title("Aerodynamic Drag Force")
             ax2.grid()
+            self._add_event_markers(ax2, time_limit)
             
             # Aerodynamic Bending Moment
-            ax3.plot(
-                self.flight.aerodynamic_bending_moment[: time_limit_index, 0],
-                self.flight.aerodynamic_bending_moment[: time_limit_index, 1],
-                label="Resultant"
-            )
-            ax3.plot(
-                self.flight.M1[: time_limit_index, 0],
-                self.flight.M1[: time_limit_index, 1],
-                label="M1"
-            )
-            ax3.plot(
-                self.flight.M2[: time_limit_index, 0],
-                self.flight.M2[: time_limit_index, 1],
-                label="M2"
-            )
+            try:
+                t, bending = get_array_data(self.flight.aerodynamic_bending_moment, time_array, time_limit_index)
+                ax3.plot(t, bending, label="Resultant")
+                
+                t, m1 = get_array_data(self.flight.M1, time_array, time_limit_index)
+                ax3.plot(t, m1, label="M1")
+                
+                t, m2 = get_array_data(self.flight.M2, time_array, time_limit_index)
+                ax3.plot(t, m2, label="M2")
+            except Exception as e:
+                logger.debug(f"Error plotting bending moments: {e}")
+                
             ax3.set_xlim(0, time_limit)
-            ax3.legend()
             ax3.set_xlabel("Time (s)")
             ax3.set_ylabel("Bending Moment (N m)")
             ax3.set_title("Aerodynamic Bending Resultant Moment")
             ax3.grid()
+            self._add_event_markers(ax3, time_limit, add_legend=False)
+            ax3.legend(loc='best', fontsize=8, framealpha=0.9)
             
             # Aerodynamic Spin Moment
-            ax4.plot(
-                self.flight.aerodynamic_spin_moment[: time_limit_index, 0],
-                self.flight.aerodynamic_spin_moment[: time_limit_index, 1]
-            )
+            t, spin = get_array_data(self.flight.aerodynamic_spin_moment, time_array, time_limit_index)
+            ax4.plot(t, spin)
             ax4.set_xlim(0, time_limit)
             ax4.set_xlabel("Time (s)")
             ax4.set_ylabel("Spin Moment (N m)")
             ax4.set_title("Aerodynamic Spin Moment")
             ax4.grid()
+            self._add_event_markers(ax4, time_limit)
             
             plt.subplots_adjust(hspace=0.5)
             plt.tight_layout()
@@ -3382,69 +3497,95 @@ class CurvePlotter:
         try:
             output_path = output_dir / "energy_data.png"
             
-            # Determine time limit for energy plots
-            apogee_time = self.flight.apogee_time if self.flight.apogee_time > 0 else self.flight.t_final
+            # Determine time limit (includes parachute deployment)
+            time_limit = self._get_plot_time_limit()
+            
+            # Helper function to extract array from Function or numpy array
+            def get_array_data(attr):
+                if callable(attr):
+                    # It's a Function object or callable
+                    if hasattr(attr, 'source') and hasattr(attr.source, 'ndim') and attr.source.ndim == 2:
+                        return attr.source[:, 0], attr.source[:, 1]
+                    else:
+                        # Evaluate the function over time range
+                        t_array = np.linspace(0, time_limit, 500)
+                        values = np.array([attr(t) for t in t_array])
+                        return t_array, values
+                elif hasattr(attr, 'ndim'):
+                    if attr.ndim == 1:
+                        # Need to get corresponding time - use flight.time
+                        if hasattr(self.flight, 'time'):
+                            if callable(self.flight.time):
+                                t_array = self.flight.time.source[:, 0]
+                            elif self.flight.time.ndim == 2:
+                                t_array = self.flight.time[:, 0]
+                            else:
+                                t_array = self.flight.time
+                        else:
+                            t_array = np.arange(len(attr))
+                        return t_array, attr
+                    else:
+                        return attr[:, 0], attr[:, 1]
+                else:
+                    # Unknown type - try to convert to array
+                    arr = np.array(attr)
+                    if arr.ndim == 2:
+                        return arr[:, 0], arr[:, 1]
+                    else:
+                        return np.arange(len(arr)), arr
             
             fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(9, 13))
             
             # Total Mechanical Energy
-            ax1.plot(
-                self.flight.total_energy[:, 0],
-                self.flight.total_energy[:, 1]
-            )
-            ax1.set_xlim(0, apogee_time)
+            t, energy = get_array_data(self.flight.total_energy)
+            ax1.plot(t, energy)
+            ax1.set_xlim(0, time_limit)
             ax1.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
             ax1.set_title("Total Mechanical Energy")
             ax1.set_xlabel("Time (s)")
             ax1.set_ylabel("Energy (J)")
             ax1.grid()
+            self._add_event_markers(ax1, time_limit)
             
             # Energy Components
-            ax2.plot(
-                self.flight.kinetic_energy[:, 0],
-                self.flight.kinetic_energy[:, 1],
-                label="Kinetic Energy"
-            )
-            ax2.plot(
-                self.flight.potential_energy[:, 0],
-                self.flight.potential_energy[:, 1],
-                label="Potential Energy"
-            )
-            ax2.set_xlim(0, apogee_time)
+            t, ke = get_array_data(self.flight.kinetic_energy)
+            ax2.plot(t, ke, label="Kinetic Energy")
+            
+            t, pe = get_array_data(self.flight.potential_energy)
+            ax2.plot(t, pe, label="Potential Energy")
+            
+            ax2.set_xlim(0, time_limit)
             ax2.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
             ax2.set_title("Total Mechanical Energy Components")
             ax2.set_xlabel("Time (s)")
             ax2.set_ylabel("Energy (J)")
-            ax2.legend()
             ax2.grid()
+            self._add_event_markers(ax2, time_limit, add_legend=False)
+            ax2.legend(loc='best', fontsize=8, framealpha=0.9)
             
             # Thrust Power
-            ax3.plot(
-                self.flight.thrust_power[:, 0],
-                self.flight.thrust_power[:, 1],
-                label="|Thrust Power|"
-            )
+            t, thrust_p = get_array_data(self.flight.thrust_power)
+            ax3.plot(t, thrust_p, label="|Thrust Power|")
             ax3.set_xlim(0, self.flight.rocket.motor.burn_out_time)
             ax3.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
             ax3.set_title("Thrust Absolute Power")
             ax3.set_xlabel("Time (s)")
             ax3.set_ylabel("Power (W)")
-            ax3.legend()
             ax3.grid()
+            # No event markers for thrust power (only during burn)
             
             # Drag Power
-            ax4.plot(
-                self.flight.drag_power[:, 0],
-                -self.flight.drag_power[:, 1],
-                label="|Drag Power|"
-            )
-            ax4.set_xlim(0, apogee_time)
+            t, drag_p = get_array_data(self.flight.drag_power)
+            ax4.plot(t, -drag_p, label="|Drag Power|")  # Negative for absolute value
+            
+            ax4.set_xlim(0, time_limit)
             ax4.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
             ax4.set_title("Drag Absolute Power")
             ax4.set_xlabel("Time (s)")
             ax4.set_ylabel("Power (W)")
-            ax4.legend()
             ax4.grid()
+            self._add_event_markers(ax4, time_limit, add_legend=False)
+            ax4.legend(loc='best', fontsize=8, framealpha=0.9)
             
             plt.subplots_adjust(hspace=1)
             plt.tight_layout()
@@ -3484,21 +3625,23 @@ class CurvePlotter:
             # Mach Number
             ax1 = plt.subplot(611)
             ax1.plot(self.flight.mach_number[:, 0], self.flight.mach_number[:, 1])
-            ax1.set_xlim(0, self.flight.t_final)
+            ax1.set_xlim(0, time_limit)
             ax1.set_title("Mach Number")
             ax1.set_xlabel("Time (s)")
             ax1.set_ylabel("Mach Number")
             ax1.grid()
+            self._add_event_markers(ax1, time_limit)
             
             # Reynolds Number
             ax2 = plt.subplot(612)
             ax2.plot(self.flight.reynolds_number[:, 0], self.flight.reynolds_number[:, 1])
-            ax2.set_xlim(0, self.flight.t_final)
+            ax2.set_xlim(0, time_limit)
             ax2.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
             ax2.set_title("Reynolds Number")
             ax2.set_xlabel("Time (s)")
             ax2.set_ylabel("Reynolds Number")
             ax2.grid()
+            self._add_event_markers(ax2, time_limit)
             
             # Pressures
             ax3 = plt.subplot(613)
@@ -3517,13 +3660,14 @@ class CurvePlotter:
                 self.flight.pressure[:, 1],
                 label="Static Pressure"
             )
-            ax3.set_xlim(0, self.flight.t_final)
-            ax3.legend()
+            ax3.set_xlim(0, time_limit)
             ax3.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
             ax3.set_title("Total and Dynamic Pressure")
             ax3.set_xlabel("Time (s)")
             ax3.set_ylabel("Pressure (Pa)")
             ax3.grid()
+            self._add_event_markers(ax3, time_limit, add_legend=False)
+            ax3.legend(loc='best', fontsize=8, framealpha=0.9)
             
             # Angle of Attack
             ax4 = plt.subplot(614)
@@ -3533,6 +3677,7 @@ class CurvePlotter:
             ax4.set_ylabel("Angle of Attack (°)")
             ax4.set_xlim(out_of_rail_time, time_limit)
             ax4.grid()
+            self._add_event_markers(ax4, time_limit)
             
             # Stream Velocity
             ax5 = plt.subplot(615)
@@ -3555,8 +3700,9 @@ class CurvePlotter:
             ax5.set_xlabel("Time (s)")
             ax5.set_ylabel("Stream Velocity (m/s)")
             ax5.set_xlim(out_of_rail_time, time_limit)
-            ax5.legend()
             ax5.grid()
+            self._add_event_markers(ax5, time_limit, add_legend=False)
+            ax5.legend(loc='best', fontsize=8, framealpha=0.9)
             
             # Angle of Sideslip
             ax6 = plt.subplot(616)
@@ -3569,6 +3715,7 @@ class CurvePlotter:
             ax6.set_ylabel("Angle of Sideslip (°)")
             ax6.set_xlim(out_of_rail_time, time_limit)
             ax6.grid()
+            self._add_event_markers(ax6, time_limit)
             
             plt.subplots_adjust(hspace=0.5)
             plt.tight_layout()
@@ -3598,36 +3745,19 @@ class CurvePlotter:
         try:
             output_path = output_dir / "stability_and_control_data.png"
             
+            # Determine time limit (includes parachute deployment)
+            time_limit = self._get_plot_time_limit()
+            
             fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 6))
             
             # Stability Margin
             ax1.plot(self.flight.stability_margin[:, 0], self.flight.stability_margin[:, 1])
-            ax1.set_xlim(0, self.flight.stability_margin[:, 0][-1])
+            ax1.set_xlim(0, time_limit)
             ax1.set_title("Stability Margin")
             ax1.set_xlabel("Time (s)")
             ax1.set_ylabel("Stability Margin (c)")
-            
-            # Add critical event markers
-            ax1.axvline(
-                x=self.flight.out_of_rail_time,
-                color="r",
-                linestyle="--",
-                label="Out of Rail Time"
-            )
-            ax1.axvline(
-                x=self.flight.rocket.motor.burn_out_time,
-                color="g",
-                linestyle="--",
-                label="Burn Out Time"
-            )
-            ax1.axvline(
-                x=self.flight.apogee_time,
-                color="m",
-                linestyle="--",
-                label="Apogee Time"
-            )
-            ax1.legend()
             ax1.grid()
+            self._add_event_markers(ax1, time_limit)
             
             # Attitude Frequency Response
             x_axis = np.arange(0, 5, 0.01)

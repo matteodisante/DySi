@@ -16,7 +16,7 @@ rocket:
     length_m: 2.0                        # Total rocket length
 
   # Mass properties
-  cg_location_m: 1.255                   # Center of gravity position (without motor)
+  cg_location_m: 0.5                  # Center of gravity position (without motor)
 
   # Inertia tensor (kg·m²)
   inertia:
@@ -86,16 +86,52 @@ rocket:
   # --- Active Control ---
 
   air_brakes:
-    enabled: false                       # Enable active air brakes system
-    reference_area_m2: 0.01              # Deployed brake surface area
-    drag_coefficient: 1.5                # Drag coefficient when fully deployed
-    position_m: 1.0                      # Position along rocket axis
+    enabled: true                       # Enable active air brakes system
+    reference_area_m2: 0.05              # Deployed brake surface area
+    drag_coefficient: 0.9               # Drag coefficient when fully deployed
+    position_m: 1.5                      # Position along rocket axis
+    override_rocket_drag: false          # false=ADD airbrake drag to rocket drag (default), true=use ONLY airbrake drag
     controller:
-      type: "pid"                        # Controller type: "pid" or "bang_bang"
+      # --- Control Algorithm ---
+      type: "pid"                        # Controller type: "pid", "bang_bang", or "model_predictive"
       target_apogee_m: 3000.0            # Target apogee for controller
+      
+      # --- Apogee Prediction Method ---
+      apogee_prediction_method: "ballistic"  # Options: "ballistic", "euler", or "rk45"
+      # ballistic: h + v²/(2g) - FAST but INACCURATE (ignores drag)
+      # euler:     Forward Euler - GOOD balance (accounts for drag variation)
+      # rk45:      Runge-Kutta 4/5 - MOST ACCURATE but slower
+      
+      # --- Numerical Integrator Parameters ---
+      # Euler method
+      euler_dt: 0.05                     # Time step (s). Smaller = more accurate but slower
+      euler_max_iterations: 500          # Max integration steps (safety limit)
+      
+      # RK45 method (adaptive step size)
+      rk45_tol: 1e-6                     # Error tolerance. Smaller = more accurate
+      rk45_dt_initial: 0.1               # Initial time step (s)
+      rk45_dt_min: 1e-4                  # Minimum time step (s)
+      rk45_dt_max: 0.5                   # Maximum time step (s)
+      rk45_max_iterations: 1000           # Max integration steps
+      
+      # --- PID Controller Gains ---
       kp: 0.1                            # Proportional gain
       ki: 0.01                           # Integral gain
-      kd: 0.05                           # Derivative gain
+      kd: 0.001                          # Derivative gain
+      
+      # --- Hardware Constraints ---
+      sampling_rate_hz: 20.0             # Controller update frequency (Hz)
+      computation_time_s: 0.005          # Microcontroller delay (5ms)
+      actuator_lag_s: 0.050              # Servo motor lag (50ms)
+      max_deployment_rate: 2.0           # Max deployment speed (1/s)
+      
+      # --- Safety Constraints ---
+      min_activation_time_s: 3.5         # Don't deploy before motor burnout (s)
+      min_activation_altitude_m: 500.0   # Don't deploy below this altitude (m)
+      
+      # Note: Physical model parameters (rocket_mass, base_drag_coefficient, 
+      # atmosphere_scale_height, sea_level_density) are calculated automatically
+      # from the rocket configuration and environment model. No need to specify them here.
 
 # ----------------------------------------------------------------------------
 # MOTOR CONFIGURATION
@@ -210,4 +246,22 @@ simulation:
 #   nose_to_tail              - Origin at nose, +z toward tail
 #   tail_to_nose              - Origin at tail, +z toward nose
 #   nozzle_to_combustion_chamber - Motor frame reference
+#
+# Apogee prediction methods:
+#   ballistic - Fast but inaccurate: h_apogee = h + v²/(2g)
+#               Assumes constant deceleration, ignores drag variations
+#               Best for: Quick estimates, low-drag phases
+#               
+#   euler     - Forward Euler integration with fixed time step
+#               Accounts for variable drag forces during ascent
+#               Integrates: dv/dt = -g - D(v,h)/m with dt=0.05s
+#               Best for: Balance between speed and accuracy
+#               Typical error: ~1-5% vs ground truth
+#               
+#   rk45      - Runge-Kutta 4/5 adaptive integration (Dormand-Prince)
+#               Most accurate, adaptive step size control
+#               Accounts for: drag variation, air density changes
+#               Best for: High-accuracy apogee targeting
+#               Typical error: <0.5% vs ground truth
+#               Trade-off: ~3-5x slower than Euler, ~10x slower than ballistic
 #

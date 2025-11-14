@@ -76,6 +76,16 @@ class AirBrakesControllerConfig:
 
     algorithm: str = "pid"  # Control algorithm: pid, bang_bang, model_predictive
     target_apogee_m: float = 3000.0  # Target apogee altitude (m)
+    apogee_prediction_method: str = "ballistic"  # Apogee prediction: ballistic, euler, rk45
+    
+    # Numerical integrator parameters
+    euler_dt: float = 0.05  # Euler time step (s)
+    euler_max_iterations: int = 500  # Max Euler steps
+    rk45_tol: float = 1e-3  # RK45 error tolerance
+    rk45_dt_initial: float = 0.1  # RK45 initial time step (s)
+    rk45_dt_min: float = 1e-4  # RK45 minimum time step (s)
+    rk45_dt_max: float = 0.5  # RK45 maximum time step (s)
+    rk45_max_iterations: int = 500  # Max RK45 steps
 
     # PID parameters
     kp: float = 0.001  # Proportional gain
@@ -104,6 +114,7 @@ class AirBrakesConfig:
     position_m: float = -0.5  # Position from nose (m)
     deployment_level: float = 1.0  # Initial deployment level (0.0-1.0)
     override_cd_s: Optional[float] = None  # Override for cd_s calculation
+    override_rocket_drag: bool = False  # If True, use ONLY airbrake drag; if False, ADD to rocket drag
     controller: Optional[AirBrakesControllerConfig] = None  # Control law configuration
 
 
@@ -377,13 +388,25 @@ class ConfigLoader:
                 controller = AirBrakesControllerConfig(
                     algorithm=ctrl_data.get("algorithm", "pid"),
                     target_apogee_m=ctrl_data.get("target_apogee_m", 3000.0),
+                    apogee_prediction_method=ctrl_data.get("apogee_prediction_method", "ballistic"),
+                    # Numerical integrator parameters (force float conversion for scientific notation)
+                    euler_dt=float(ctrl_data.get("euler_dt", 0.05)),
+                    euler_max_iterations=int(ctrl_data.get("euler_max_iterations", 500)),
+                    rk45_tol=float(ctrl_data.get("rk45_tol", 1e-3)),
+                    rk45_dt_initial=float(ctrl_data.get("rk45_dt_initial", 0.1)),
+                    rk45_dt_min=float(ctrl_data.get("rk45_dt_min", 1e-4)),
+                    rk45_dt_max=float(ctrl_data.get("rk45_dt_max", 0.5)),
+                    rk45_max_iterations=int(ctrl_data.get("rk45_max_iterations", 500)),
+                    # PID parameters
                     kp=ctrl_data.get("kp", 0.001),
                     ki=ctrl_data.get("ki", 0.0001),
                     kd=ctrl_data.get("kd", 0.01),
+                    # Hardware constraints
                     sampling_rate_hz=ctrl_data.get("sampling_rate_hz", 20.0),
                     computation_time_s=ctrl_data.get("computation_time_s", 0.005),
                     actuator_lag_s=ctrl_data.get("actuator_lag_s", 0.050),
                     max_deployment_rate=ctrl_data.get("max_deployment_rate", 2.0),
+                    # Safety constraints
                     min_activation_time_s=ctrl_data.get("min_activation_time_s", 3.5),
                     min_activation_altitude_m=ctrl_data.get("min_activation_altitude_m", 500.0),
                 )
@@ -396,6 +419,7 @@ class ConfigLoader:
                 position_m=ab_data.get("position_m", -0.5),
                 deployment_level=ab_data.get("deployment_level", 1.0),
                 override_cd_s=ab_data.get("override_cd_s"),
+                override_rocket_drag=ab_data.get("override_rocket_drag", False),
                 controller=controller,
             )
 

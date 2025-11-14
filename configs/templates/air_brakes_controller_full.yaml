@@ -1,0 +1,114 @@
+# ============================================================================
+# AIR BRAKES CONTROLLER - FULL CONFIGURATION TEMPLATE
+# ============================================================================
+#
+# This template shows ALL configurable parameters for the air brakes controller.
+# Most parameters have sensible defaults and don't need to be specified.
+# Only override what you need to change for your specific rocket.
+
+controller:
+  # --- CONTROL ALGORITHM ---
+  type: "pid"  # Options: "pid", "bang_bang", "model_predictive"
+  
+  # --- TARGET ---
+  target_apogee_m: 3000.0  # Desired apogee altitude (m)
+  apogee_tolerance_m: 50.0  # Acceptable error band (m)
+  
+  # --- APOGEE PREDICTION METHOD ---
+  # This is the numerical method used to predict apogee DURING flight.
+  # The controller uses this prediction to decide how much to deploy air brakes.
+  apogee_prediction_method: "euler"  # Options: "ballistic", "euler", "rk45"
+  
+  # Comparison:
+  #   ballistic: h + v²/(2g) - FAST but INACCURATE (ignores drag)
+  #   euler:     Forward Euler integration - GOOD balance (accounts for drag)
+  #   rk45:      Runge-Kutta 4/5 adaptive - MOST ACCURATE but slower
+  
+  # --- NUMERICAL INTEGRATOR PARAMETERS ---
+  # These control the accuracy and speed of apogee prediction.
+  # Only relevant for euler and rk45 methods.
+  
+  # Euler method parameters:
+  euler_dt: 0.05  # Time step size (s). Smaller = more accurate but slower
+  euler_max_iterations: 500  # Max integration steps (safety limit)
+  
+  # RK45 method parameters (adaptive step size):
+  rk45_tol: 1e-3  # Error tolerance. Smaller = more accurate
+  rk45_dt_initial: 0.1  # Initial time step (s). Will adapt automatically
+  rk45_dt_min: 1e-4  # Minimum time step (s). Prevents excessive refinement
+  rk45_dt_max: 0.5  # Maximum time step (s). Prevents instability
+  rk45_max_iterations: 500  # Max integration steps (safety limit)
+  
+  # --- PID CONTROLLER GAINS ---
+  # Tune these to control aggressiveness of air brakes deployment.
+  # Start with conservative values and increase gradually.
+  kp: 0.1  # Proportional gain: immediate response to error
+  ki: 0.01  # Integral gain: corrects accumulated error over time
+  kd: 0.001  # Derivative gain: dampens oscillations
+  
+  # --- HARDWARE CONSTRAINTS ---
+  # These model real-world limitations of the physical system.
+  sampling_rate_hz: 20.0  # Controller update frequency (Hz)
+  computation_time_s: 0.005  # Microcontroller computational delay (5ms typical)
+  actuator_lag_s: 0.050  # Servo motor response time constant (50ms typical)
+  max_deployment_rate: 2.0  # Max deployment speed (1/s, i.e., full deployment in 0.5s)
+  
+  # --- SAFETY CONSTRAINTS ---
+  # Prevent deployment in dangerous conditions.
+  min_activation_time_s: 3.5  # Don't deploy before motor burnout (s)
+  min_activation_altitude_m: 500.0  # Don't deploy below this altitude (m)
+  retraction_altitude_m: 200.0  # Fully retract below this for safe landing (m)
+  
+  # --- PHYSICAL MODEL PARAMETERS ---
+  # These define the rocket's physical properties for apogee prediction.
+  # CRITICAL: These must match your actual rocket configuration!
+  
+  # --- STATE ESTIMATION ---
+  use_kalman_filter: false  # Use Kalman filter (not implemented yet)
+  altitude_filter_alpha: 0.7  # Low-pass filter coefficient (0=max filtering, 1=no filtering)
+  
+  # --- LOGGING ---
+  log_controller_data: true  # Save controller telemetry for post-flight analysis
+
+
+# ============================================================================
+# NOTE: PHYSICAL MODEL PARAMETERS (CALCULATED AUTOMATICALLY)
+# ============================================================================
+# The following parameters are calculated AUTOMATICALLY from your rocket 
+# configuration and environment model. You do NOT need to specify them:
+#
+# - rocket_mass:              From rocket.dry_mass (coast phase mass after burnout)
+# - base_drag_coefficient:    From power_off_drag curve (mean Cd over Mach range)
+# - atmosphere_scale_height:  From environment density profile (exponential fit)
+# - sea_level_density:        From environment model at launch elevation
+#
+# This ensures perfect consistency between simulation physics and controller
+# predictions, eliminating a major source of targeting errors!
+
+
+# ============================================================================
+# NOTES ON PARAMETER TUNING
+# ============================================================================
+#
+# 1. APOGEE PREDICTION METHOD:
+#    - Start with "ballistic" for initial testing (fast, simple)
+#    - Switch to "euler" for production flights (good accuracy, reasonable speed)
+#    - Use "rk45" only if you need maximum accuracy and have computational headroom
+#
+# 2. PID GAINS:
+#    - Too high kp: Oscillations, overshooting
+#    - Too low kp: Sluggish response, undershooting
+#    - Too high ki: Wind-up, instability
+#    - Too low ki: Steady-state error
+#    - kd helps dampen oscillations but adds noise sensitivity
+#
+# 3. INTEGRATOR PARAMETERS:
+#    - Smaller euler_dt = more accurate but slower (try 0.01-0.1s)
+#    - Smaller rk45_tol = more accurate but slower (try 1e-4 to 1e-2)
+#    - If prediction takes >10ms, consider relaxing accuracy parameters
+#
+# 4. HARDWARE CONSTRAINTS:
+#    - Measure actual servo lag with step response test
+#    - Measure computation_time with profiler on target hardware
+#    - max_deployment_rate from servo specs (typically 60°/0.15s = ~2.0/s)
+#

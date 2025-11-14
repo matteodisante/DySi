@@ -213,7 +213,7 @@ def main():
 
         # Build rocket
         logger.info("Building rocket...")
-        rocket_builder = RocketBuilder(rocket_cfg, motor=motor, motor_config=motor_cfg)
+        rocket_builder = RocketBuilder(rocket_cfg, motor=motor, motor_config=motor_cfg, environment=env)
         rocket = rocket_builder.build()
         rocket_summary = rocket_builder.get_summary()
         logger.info(
@@ -301,6 +301,59 @@ def main():
             initial_json = state_exporter.export_initial_state(sim_output_dir / "initial_state")
             logger.info(f"Initial state: {initial_json}")
             logger.info(f"Initial state (readable): {initial_json.with_name('initial_state_READABLE.txt')}")
+            
+            # Export air brakes controller parameters documentation (if controller is configured)
+            if (rocket_cfg.air_brakes and rocket_cfg.air_brakes.enabled and 
+                rocket_cfg.air_brakes.controller is not None):
+                try:
+                    # Get controller instance from rocket (if it has air brakes)
+                    if hasattr(rocket, 'air_brakes') and len(rocket.air_brakes) > 0:
+                        # Access the controller through the rocket_builder (it was created there)
+                        # For now, create a temporary controller to generate docs
+                        from src.air_brakes_controller import AirBrakesController, ControllerConfig
+                        
+                        # Recreate physical params calculation to get the controller
+                        # Use the existing rocket_builder instance instead of creating a new one
+                        physical_params = rocket_builder._calculate_physical_parameters()
+                        
+                        # Create controller config matching the one used in simulation
+                        ab = rocket_cfg.air_brakes
+                        ctrl_cfg = ControllerConfig(
+                            algorithm=ab.controller.algorithm,
+                            target_apogee_m=ab.controller.target_apogee_m,
+                            apogee_prediction_method=ab.controller.apogee_prediction_method,
+                            euler_dt=ab.controller.euler_dt,
+                            euler_max_iterations=ab.controller.euler_max_iterations,
+                            rk45_tol=ab.controller.rk45_tol,
+                            rk45_dt_initial=ab.controller.rk45_dt_initial,
+                            rk45_dt_min=ab.controller.rk45_dt_min,
+                            rk45_dt_max=ab.controller.rk45_dt_max,
+                            rk45_max_iterations=ab.controller.rk45_max_iterations,
+                            kp=ab.controller.kp,
+                            ki=ab.controller.ki,
+                            kd=ab.controller.kd,
+                            sampling_rate_hz=ab.controller.sampling_rate_hz,
+                            computation_time_s=ab.controller.computation_time_s,
+                            actuator_lag_s=ab.controller.actuator_lag_s,
+                            max_deployment_rate=ab.controller.max_deployment_rate,
+                            min_activation_time_s=ab.controller.min_activation_time_s,
+                            min_activation_altitude_m=ab.controller.min_activation_altitude_m,
+                            airbrakes_cd=ab.drag_coefficient,
+                            airbrakes_area=ab.reference_area_m2,
+                            rocket_diameter=rocket_cfg.geometry.caliber_m,
+                            rocket_mass=physical_params['rocket_mass'],
+                            rocket_drag_coefficient=physical_params['rocket_drag_coefficient'],
+                            override_rocket_drag=ab.override_rocket_drag,
+                            atmosphere_scale_height=physical_params['atmosphere_scale_height'],
+                            sea_level_density=physical_params['sea_level_density'],
+                        )
+                        
+                        temp_controller = AirBrakesController(ctrl_cfg)
+                        params_file = sim_output_dir / "airbrake_controller_parameters.txt"
+                        temp_controller.generate_parameters_documentation(str(params_file))
+                        logger.info(f"Air brakes parameters: {params_file}")
+                except Exception as e:
+                    logger.warning(f"Could not export air brakes parameters documentation: {e}")
             
             # Export final state only if simulation completed
             if not simulation_timed_out and flight:
