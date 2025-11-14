@@ -1,0 +1,1734 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.air_brakes_controller &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/air_brakes_controller';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.air_brakes_controller</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.air_brakes_controller</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Air brakes controller implementation with realistic hardware constraints.</span>
+
+<span class="sd">This module provides control laws for air brakes systems, accounting for:</span>
+<span class="sd">- Servo motor lag (actuation delay)</span>
+<span class="sd">- Microcontroller computation time</span>
+<span class="sd">- Rate limiting (maximum deployment speed)</span>
+<span class="sd">- Sensor noise and filtering</span>
+<span class="sd">- Different control algorithms (PID, bang-bang, model-predictive)</span>
+<span class="sd">- Advanced apogee prediction using numerical integration (Euler, RK45)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># NUMERICAL INTEGRATORS FOR APOGEE PREDICTION</span>
+<span class="c1"># ============================================================================</span>
+
+<div class="viewcode-block" id="ApogeePredictor">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.ApogeePredictor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ApogeePredictor</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract base class for apogee prediction methods.</span>
+<span class="sd">    </span>
+<span class="sd">    Different predictors use various numerical integration techniques to</span>
+<span class="sd">    simulate the rocket&#39;s trajectory from current state to apogee, accounting</span>
+<span class="sd">    for drag, gravity, and air brakes configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ApogeePredictor.predict_apogee">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.ApogeePredictor.predict_apogee">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict_apogee</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">altitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">velocity_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">drag_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">reference_area</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">air_density</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">deployment_level</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict apogee altitude from current state.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        altitude : float</span>
+<span class="sd">            Current altitude (m)</span>
+<span class="sd">        velocity_z : float</span>
+<span class="sd">            Current vertical velocity (m/s)</span>
+<span class="sd">        mass : float</span>
+<span class="sd">            Current rocket mass (kg)</span>
+<span class="sd">        drag_coefficient : float</span>
+<span class="sd">            Current drag coefficient (dimensionless)</span>
+<span class="sd">        reference_area : float</span>
+<span class="sd">            Reference area for drag calculation (m²)</span>
+<span class="sd">        air_density : float</span>
+<span class="sd">            Current air density (kg/m³)</span>
+<span class="sd">        deployment_level : float</span>
+<span class="sd">            Current air brakes deployment [0, 1]</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Predicted apogee altitude (m)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ConstantDecelerationPredictor">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.ConstantDecelerationPredictor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConstantDecelerationPredictor</span><span class="p">(</span><span class="n">ApogeePredictor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple predictor assuming constant deceleration.</span>
+<span class="sd">    </span>
+<span class="sd">    This is the baseline method - fast but inaccurate as it ignores</span>
+<span class="sd">    changing drag forces and air density with altitude.</span>
+<span class="sd">    </span>
+<span class="sd">    Uses: h_apogee = h + v²/(2g)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ConstantDecelerationPredictor.predict_apogee">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.ConstantDecelerationPredictor.predict_apogee">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict_apogee</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">altitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">velocity_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">drag_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">reference_area</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">air_density</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">deployment_level</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict apogee using kinematic equation with constant g.&quot;&quot;&quot;</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>  <span class="c1"># m/s²</span>
+        
+        <span class="k">if</span> <span class="n">velocity_z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Ascending: simple ballistic prediction</span>
+            <span class="k">return</span> <span class="n">altitude</span> <span class="o">+</span> <span class="p">(</span><span class="n">velocity_z</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Descending: already past apogee</span>
+            <span class="k">return</span> <span class="n">altitude</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="EulerPredictor">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.EulerPredictor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EulerPredictor</span><span class="p">(</span><span class="n">ApogeePredictor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apogee predictor using forward Euler integration.</span>
+<span class="sd">    </span>
+<span class="sd">    Integrates the equations of motion forward in time with fixed time step:</span>
+<span class="sd">        dv/dt = -g - (0.5 * ρ * v² * Cd * A) / m</span>
+<span class="sd">        dh/dt = v</span>
+<span class="sd">        </span>
+<span class="sd">    More accurate than constant deceleration as it accounts for changing</span>
+<span class="sd">    drag forces. Still has numerical errors due to fixed time step.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dt : float</span>
+<span class="sd">        Integration time step (s). Smaller = more accurate but slower.</span>
+<span class="sd">        Default: 0.1s</span>
+<span class="sd">    max_iterations : int</span>
+<span class="sd">        Maximum integration steps before stopping. Default: 1000</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="EulerPredictor.__init__">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.EulerPredictor.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">max_iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize Euler predictor.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dt : float</span>
+<span class="sd">            Time step for integration (s)</span>
+<span class="sd">        max_iterations : int</span>
+<span class="sd">            Maximum number of steps to prevent infinite loops</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="n">dt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iterations</span> <span class="o">=</span> <span class="n">max_iterations</span></div>
+
+    
+<div class="viewcode-block" id="EulerPredictor.predict_apogee">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.EulerPredictor.predict_apogee">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict_apogee</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">altitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">velocity_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">drag_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">reference_area</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">air_density</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">deployment_level</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict apogee using Euler forward integration.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">velocity_z</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">altitude</span>  <span class="c1"># Already descending</span>
+        
+        <span class="n">h</span> <span class="o">=</span> <span class="n">altitude</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">velocity_z</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>  <span class="c1"># m/s²</span>
+        
+        <span class="c1"># Integrate until velocity becomes negative (apogee reached)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iterations</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+            
+            <span class="c1"># Drag force: F_drag = 0.5 * ρ * v² * Cd * A</span>
+            <span class="c1"># Acceleration: a = -g - F_drag/m</span>
+            <span class="n">drag_accel</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">air_density</span> <span class="o">*</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">drag_coefficient</span> <span class="o">*</span> <span class="n">reference_area</span><span class="p">)</span> <span class="o">/</span> <span class="n">mass</span>
+            <span class="n">acceleration</span> <span class="o">=</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span> <span class="n">drag_accel</span>
+            
+            <span class="c1"># Euler forward step</span>
+            <span class="n">v_new</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">acceleration</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span>
+            <span class="n">h_new</span> <span class="o">=</span> <span class="n">h</span> <span class="o">+</span> <span class="n">v</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span>
+            
+            <span class="c1"># Update for next iteration</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">v_new</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">h_new</span>
+            
+            <span class="c1"># Simple air density model (exponential atmosphere)</span>
+            <span class="c1"># ρ(h) = ρ₀ * exp(-h/H) where H ≈ 8500m (scale height)</span>
+            <span class="n">air_density</span> <span class="o">=</span> <span class="n">air_density</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">*</span> <span class="n">v</span> <span class="o">/</span> <span class="mi">8500</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">h</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RK45Predictor">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.RK45Predictor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RK45Predictor</span><span class="p">(</span><span class="n">ApogeePredictor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apogee predictor using Runge-Kutta 4th/5th order adaptive integration.</span>
+<span class="sd">    </span>
+<span class="sd">    Uses the Dormand-Prince RK45 method with adaptive step size control for</span>
+<span class="sd">    accurate and efficient trajectory integration. This is the most accurate</span>
+<span class="sd">    predictor but also the most computationally expensive.</span>
+<span class="sd">    </span>
+<span class="sd">    The RK45 method:</span>
+<span class="sd">    - Uses 6 function evaluations per step</span>
+<span class="sd">    - Estimates both 4th and 5th order solutions</span>
+<span class="sd">    - Adapts step size based on local error estimate</span>
+<span class="sd">    - Optimal balance between accuracy and computational cost</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tol : float</span>
+<span class="sd">        Error tolerance for adaptive step size. Smaller = more accurate.</span>
+<span class="sd">        Default: 1e-3</span>
+<span class="sd">    dt_initial : float</span>
+<span class="sd">        Initial time step (s). Will be adapted. Default: 0.1s</span>
+<span class="sd">    dt_min : float</span>
+<span class="sd">        Minimum allowed time step (s). Default: 1e-4s</span>
+<span class="sd">    dt_max : float</span>
+<span class="sd">        Maximum allowed time step (s). Default: 1.0s</span>
+<span class="sd">    max_iterations : int</span>
+<span class="sd">        Maximum integration steps. Default: 1000</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="RK45Predictor.__init__">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.RK45Predictor.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span>
+        <span class="n">dt_initial</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">dt_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
+        <span class="n">dt_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">max_iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize RK45 predictor with adaptive step size control.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="n">dt_initial</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dt_min</span> <span class="o">=</span> <span class="n">dt_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dt_max</span> <span class="o">=</span> <span class="n">dt_max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iterations</span> <span class="o">=</span> <span class="n">max_iterations</span></div>
+
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_derivatives</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">drag_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">reference_area</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">air_density_0</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute derivatives dh/dt and dv/dt.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[float, float]</span>
+<span class="sd">            (dh/dt, dv/dt) - velocity and acceleration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>  <span class="c1"># m/s²</span>
+        
+        <span class="c1"># Only compute air density if drag is non-zero</span>
+        <span class="k">if</span> <span class="n">drag_coefficient</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">reference_area</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Exponential atmosphere model</span>
+            <span class="n">H_scale</span> <span class="o">=</span> <span class="mi">8500</span>  <span class="c1"># m (scale height)</span>
+            <span class="n">air_density</span> <span class="o">=</span> <span class="n">air_density_0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">h</span> <span class="o">/</span> <span class="n">H_scale</span><span class="p">)</span>
+            
+            <span class="c1"># Drag acceleration</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">drag_accel</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">air_density</span> <span class="o">*</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">drag_coefficient</span> <span class="o">*</span> <span class="n">reference_area</span><span class="p">)</span> <span class="o">/</span> <span class="n">mass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">drag_accel</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># No drag case</span>
+            <span class="n">drag_accel</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="n">dh_dt</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">dv_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span> <span class="n">drag_accel</span>
+        
+        <span class="k">return</span> <span class="n">dh_dt</span><span class="p">,</span> <span class="n">dv_dt</span>
+    
+<div class="viewcode-block" id="RK45Predictor.predict_apogee">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.RK45Predictor.predict_apogee">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict_apogee</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">altitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">velocity_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">drag_coefficient</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">reference_area</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">air_density</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">deployment_level</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict apogee using RK45 adaptive integration.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">velocity_z</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">altitude</span>  <span class="c1"># Already descending</span>
+        
+        <span class="n">h</span> <span class="o">=</span> <span class="n">altitude</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">velocity_z</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span>
+        
+        <span class="c1"># RK45 Dormand-Prince coefficients</span>
+        <span class="c1"># Butcher tableau coefficients</span>
+        <span class="n">a21</span><span class="p">,</span> <span class="n">a31</span><span class="p">,</span> <span class="n">a32</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="o">/</span><span class="mi">40</span><span class="p">,</span> <span class="mi">9</span><span class="o">/</span><span class="mi">40</span>
+        <span class="n">a41</span><span class="p">,</span> <span class="n">a42</span><span class="p">,</span> <span class="n">a43</span> <span class="o">=</span> <span class="mi">44</span><span class="o">/</span><span class="mi">45</span><span class="p">,</span> <span class="o">-</span><span class="mi">56</span><span class="o">/</span><span class="mi">15</span><span class="p">,</span> <span class="mi">32</span><span class="o">/</span><span class="mi">9</span>
+        <span class="n">a51</span><span class="p">,</span> <span class="n">a52</span><span class="p">,</span> <span class="n">a53</span><span class="p">,</span> <span class="n">a54</span> <span class="o">=</span> <span class="mi">19372</span><span class="o">/</span><span class="mi">6561</span><span class="p">,</span> <span class="o">-</span><span class="mi">25360</span><span class="o">/</span><span class="mi">2187</span><span class="p">,</span> <span class="mi">64448</span><span class="o">/</span><span class="mi">6561</span><span class="p">,</span> <span class="o">-</span><span class="mi">212</span><span class="o">/</span><span class="mi">729</span>
+        <span class="n">a61</span><span class="p">,</span> <span class="n">a62</span><span class="p">,</span> <span class="n">a63</span><span class="p">,</span> <span class="n">a64</span><span class="p">,</span> <span class="n">a65</span> <span class="o">=</span> <span class="mi">9017</span><span class="o">/</span><span class="mi">3168</span><span class="p">,</span> <span class="o">-</span><span class="mi">355</span><span class="o">/</span><span class="mi">33</span><span class="p">,</span> <span class="mi">46732</span><span class="o">/</span><span class="mi">5247</span><span class="p">,</span> <span class="mi">49</span><span class="o">/</span><span class="mi">176</span><span class="p">,</span> <span class="o">-</span><span class="mi">5103</span><span class="o">/</span><span class="mi">18656</span>
+        
+        <span class="c1"># 5th order solution weights</span>
+        <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b3</span><span class="p">,</span> <span class="n">b4</span><span class="p">,</span> <span class="n">b5</span><span class="p">,</span> <span class="n">b6</span> <span class="o">=</span> <span class="mi">35</span><span class="o">/</span><span class="mi">384</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="o">/</span><span class="mi">1113</span><span class="p">,</span> <span class="mi">125</span><span class="o">/</span><span class="mi">192</span><span class="p">,</span> <span class="o">-</span><span class="mi">2187</span><span class="o">/</span><span class="mi">6784</span><span class="p">,</span> <span class="mi">11</span><span class="o">/</span><span class="mi">84</span>
+        
+        <span class="c1"># 4th order solution weights (for error estimate)</span>
+        <span class="n">b1s</span><span class="p">,</span> <span class="n">b2s</span><span class="p">,</span> <span class="n">b3s</span><span class="p">,</span> <span class="n">b4s</span><span class="p">,</span> <span class="n">b5s</span><span class="p">,</span> <span class="n">b6s</span> <span class="o">=</span> <span class="mi">5179</span><span class="o">/</span><span class="mi">57600</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7571</span><span class="o">/</span><span class="mi">16695</span><span class="p">,</span> <span class="mi">393</span><span class="o">/</span><span class="mi">640</span><span class="p">,</span> <span class="o">-</span><span class="mi">92097</span><span class="o">/</span><span class="mi">339200</span><span class="p">,</span> <span class="mi">187</span><span class="o">/</span><span class="mi">2100</span>
+        
+        <span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">iteration</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iterations</span> <span class="ow">and</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+            <span class="c1"># K1</span>
+            <span class="n">k1_h</span><span class="p">,</span> <span class="n">k1_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_derivatives</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">drag_coefficient</span><span class="p">,</span> <span class="n">reference_area</span><span class="p">,</span> <span class="n">air_density</span><span class="p">)</span>
+            
+            <span class="c1"># K2</span>
+            <span class="n">k2_h</span><span class="p">,</span> <span class="n">k2_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_derivatives</span><span class="p">(</span>
+                <span class="n">h</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">a21</span> <span class="o">*</span> <span class="n">k1_h</span><span class="p">,</span>
+                <span class="n">v</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">a21</span> <span class="o">*</span> <span class="n">k1_v</span><span class="p">,</span>
+                <span class="n">mass</span><span class="p">,</span> <span class="n">drag_coefficient</span><span class="p">,</span> <span class="n">reference_area</span><span class="p">,</span> <span class="n">air_density</span>
+            <span class="p">)</span>
+            
+            <span class="c1"># K3</span>
+            <span class="n">k3_h</span><span class="p">,</span> <span class="n">k3_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_derivatives</span><span class="p">(</span>
+                <span class="n">h</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">a31</span> <span class="o">*</span> <span class="n">k1_h</span> <span class="o">+</span> <span class="n">a32</span> <span class="o">*</span> <span class="n">k2_h</span><span class="p">),</span>
+                <span class="n">v</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">a31</span> <span class="o">*</span> <span class="n">k1_v</span> <span class="o">+</span> <span class="n">a32</span> <span class="o">*</span> <span class="n">k2_v</span><span class="p">),</span>
+                <span class="n">mass</span><span class="p">,</span> <span class="n">drag_coefficient</span><span class="p">,</span> <span class="n">reference_area</span><span class="p">,</span> <span class="n">air_density</span>
+            <span class="p">)</span>
+            
+            <span class="c1"># K4</span>
+            <span class="n">k4_h</span><span class="p">,</span> <span class="n">k4_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_derivatives</span><span class="p">(</span>
+                <span class="n">h</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">a41</span> <span class="o">*</span> <span class="n">k1_h</span> <span class="o">+</span> <span class="n">a42</span> <span class="o">*</span> <span class="n">k2_h</span> <span class="o">+</span> <span class="n">a43</span> <span class="o">*</span> <span class="n">k3_h</span><span class="p">),</span>
+                <span class="n">v</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">a41</span> <span class="o">*</span> <span class="n">k1_v</span> <span class="o">+</span> <span class="n">a42</span> <span class="o">*</span> <span class="n">k2_v</span> <span class="o">+</span> <span class="n">a43</span> <span class="o">*</span> <span class="n">k3_v</span><span class="p">),</span>
+                <span class="n">mass</span><span class="p">,</span> <span class="n">drag_coefficient</span><span class="p">,</span> <span class="n">reference_area</span><span class="p">,</span> <span class="n">air_density</span>
+            <span class="p">)</span>
+            
+            <span class="c1"># K5</span>
+            <span class="n">k5_h</span><span class="p">,</span> <span class="n">k5_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_derivatives</span><span class="p">(</span>
+                <span class="n">h</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">a51</span> <span class="o">*</span> <span class="n">k1_h</span> <span class="o">+</span> <span class="n">a52</span> <span class="o">*</span> <span class="n">k2_h</span> <span class="o">+</span> <span class="n">a53</span> <span class="o">*</span> <span class="n">k3_h</span> <span class="o">+</span> <span class="n">a54</span> <span class="o">*</span> <span class="n">k4_h</span><span class="p">),</span>
+                <span class="n">v</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">a51</span> <span class="o">*</span> <span class="n">k1_v</span> <span class="o">+</span> <span class="n">a52</span> <span class="o">*</span> <span class="n">k2_v</span> <span class="o">+</span> <span class="n">a53</span> <span class="o">*</span> <span class="n">k3_v</span> <span class="o">+</span> <span class="n">a54</span> <span class="o">*</span> <span class="n">k4_v</span><span class="p">),</span>
+                <span class="n">mass</span><span class="p">,</span> <span class="n">drag_coefficient</span><span class="p">,</span> <span class="n">reference_area</span><span class="p">,</span> <span class="n">air_density</span>
+            <span class="p">)</span>
+            
+            <span class="c1"># K6</span>
+            <span class="n">k6_h</span><span class="p">,</span> <span class="n">k6_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_derivatives</span><span class="p">(</span>
+                <span class="n">h</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">a61</span> <span class="o">*</span> <span class="n">k1_h</span> <span class="o">+</span> <span class="n">a62</span> <span class="o">*</span> <span class="n">k2_h</span> <span class="o">+</span> <span class="n">a63</span> <span class="o">*</span> <span class="n">k3_h</span> <span class="o">+</span> <span class="n">a64</span> <span class="o">*</span> <span class="n">k4_h</span> <span class="o">+</span> <span class="n">a65</span> <span class="o">*</span> <span class="n">k5_h</span><span class="p">),</span>
+                <span class="n">v</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">a61</span> <span class="o">*</span> <span class="n">k1_v</span> <span class="o">+</span> <span class="n">a62</span> <span class="o">*</span> <span class="n">k2_v</span> <span class="o">+</span> <span class="n">a63</span> <span class="o">*</span> <span class="n">k3_v</span> <span class="o">+</span> <span class="n">a64</span> <span class="o">*</span> <span class="n">k4_v</span> <span class="o">+</span> <span class="n">a65</span> <span class="o">*</span> <span class="n">k5_v</span><span class="p">),</span>
+                <span class="n">mass</span><span class="p">,</span> <span class="n">drag_coefficient</span><span class="p">,</span> <span class="n">reference_area</span><span class="p">,</span> <span class="n">air_density</span>
+            <span class="p">)</span>
+            
+            <span class="c1"># 5th order solution</span>
+            <span class="n">h_new</span> <span class="o">=</span> <span class="n">h</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">k1_h</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">k2_h</span> <span class="o">+</span> <span class="n">b3</span><span class="o">*</span><span class="n">k3_h</span> <span class="o">+</span> <span class="n">b4</span><span class="o">*</span><span class="n">k4_h</span> <span class="o">+</span> <span class="n">b5</span><span class="o">*</span><span class="n">k5_h</span> <span class="o">+</span> <span class="n">b6</span><span class="o">*</span><span class="n">k6_h</span><span class="p">)</span>
+            <span class="n">v_new</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">b1</span><span class="o">*</span><span class="n">k1_v</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">k2_v</span> <span class="o">+</span> <span class="n">b3</span><span class="o">*</span><span class="n">k3_v</span> <span class="o">+</span> <span class="n">b4</span><span class="o">*</span><span class="n">k4_v</span> <span class="o">+</span> <span class="n">b5</span><span class="o">*</span><span class="n">k5_v</span> <span class="o">+</span> <span class="n">b6</span><span class="o">*</span><span class="n">k6_v</span><span class="p">)</span>
+            
+            <span class="c1"># 4th order solution (for error estimate)</span>
+            <span class="n">h_err</span> <span class="o">=</span> <span class="n">h</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">b1s</span><span class="o">*</span><span class="n">k1_h</span> <span class="o">+</span> <span class="n">b2s</span><span class="o">*</span><span class="n">k2_h</span> <span class="o">+</span> <span class="n">b3s</span><span class="o">*</span><span class="n">k3_h</span> <span class="o">+</span> <span class="n">b4s</span><span class="o">*</span><span class="n">k4_h</span> <span class="o">+</span> <span class="n">b5s</span><span class="o">*</span><span class="n">k5_h</span> <span class="o">+</span> <span class="n">b6s</span><span class="o">*</span><span class="n">k6_h</span><span class="p">)</span>
+            <span class="n">v_err</span> <span class="o">=</span> <span class="n">v</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">b1s</span><span class="o">*</span><span class="n">k1_v</span> <span class="o">+</span> <span class="n">b2s</span><span class="o">*</span><span class="n">k2_v</span> <span class="o">+</span> <span class="n">b3s</span><span class="o">*</span><span class="n">k3_v</span> <span class="o">+</span> <span class="n">b4s</span><span class="o">*</span><span class="n">k4_v</span> <span class="o">+</span> <span class="n">b5s</span><span class="o">*</span><span class="n">k5_v</span> <span class="o">+</span> <span class="n">b6s</span><span class="o">*</span><span class="n">k6_v</span><span class="p">)</span>
+            
+            <span class="c1"># Error estimate (max of relative and absolute error)</span>
+            <span class="n">error_h</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">h_new</span> <span class="o">-</span> <span class="n">h_err</span><span class="p">)</span>
+            <span class="n">error_v</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v_new</span> <span class="o">-</span> <span class="n">v_err</span><span class="p">)</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">error_h</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">h_new</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">error_v</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">v_new</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)))</span>
+            
+            <span class="c1"># Adaptive step size control</span>
+            <span class="k">if</span> <span class="n">error</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="ow">or</span> <span class="n">error</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># Accept step</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="n">h_new</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">v_new</span>
+                
+                <span class="c1"># Increase step size for next iteration (but not too much)</span>
+                <span class="k">if</span> <span class="n">error</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">dt_new</span> <span class="o">=</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">/</span> <span class="n">error</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.2</span>
+                    <span class="n">dt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dt_new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt_max</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Error is zero (or negligible), increase step size moderately</span>
+                    <span class="n">dt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dt</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt_max</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Reject step and retry with smaller dt</span>
+                <span class="n">dt_new</span> <span class="o">=</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">/</span> <span class="n">error</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.2</span>
+                <span class="n">dt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dt_new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt_min</span><span class="p">)</span>
+                <span class="c1"># Don&#39;t update h, v - retry this step with smaller dt</span>
+        
+        <span class="k">return</span> <span class="n">h</span></div>
+</div>
+
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># AIR BRAKES CONTROLLER</span>
+<span class="c1"># ============================================================================</span>
+
+<div class="viewcode-block" id="ControllerConfig">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.ControllerConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ControllerConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration for air brakes controller.</span>
+
+<span class="sd">    This dataclass defines the control algorithm and hardware constraints</span>
+<span class="sd">    for realistic air brakes actuation during flight.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Control algorithm selection</span>
+    <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pid&quot;</span>  <span class="c1"># Options: pid, bang_bang, model_predictive, custom</span>
+
+    <span class="c1"># Target parameters</span>
+    <span class="n">target_apogee_m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3000.0</span>  <span class="c1"># Target apogee altitude (m)</span>
+    <span class="n">apogee_tolerance_m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">50.0</span>  <span class="c1"># Acceptable apogee error (m)</span>
+    
+    <span class="c1"># Apogee prediction method</span>
+    <span class="n">apogee_prediction_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ballistic&quot;</span>  <span class="c1"># Options: ballistic, euler, rk45</span>
+    
+    <span class="c1"># Numerical integrator parameters</span>
+    <span class="n">euler_dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># Euler time step (s)</span>
+    <span class="n">euler_max_iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># Max Euler steps</span>
+    <span class="n">rk45_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># RK45 error tolerance</span>
+    <span class="n">rk45_dt_initial</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># RK45 initial time step (s)</span>
+    <span class="n">rk45_dt_min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span>  <span class="c1"># RK45 minimum time step (s)</span>
+    <span class="n">rk45_dt_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># RK45 maximum time step (s)</span>
+    <span class="n">rk45_max_iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># Max RK45 steps</span>
+
+    <span class="c1"># PID parameters (for algorithm=&quot;pid&quot;)</span>
+    <span class="n">kp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span>  <span class="c1"># Proportional gain</span>
+    <span class="n">ki</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0001</span>  <span class="c1"># Integral gain</span>
+    <span class="n">kd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span>  <span class="c1"># Derivative gain</span>
+
+    <span class="c1"># Bang-bang parameters (for algorithm=&quot;bang_bang&quot;)</span>
+    <span class="n">deploy_threshold_m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">100.0</span>  <span class="c1"># Deploy if predicted overshoot &gt; threshold</span>
+
+    <span class="c1"># Hardware constraints</span>
+    <span class="n">sampling_rate_hz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">20.0</span>  <span class="c1"># Controller update frequency (Hz)</span>
+    <span class="n">computation_time_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.005</span>  <span class="c1"># Microcontroller computation delay (5ms)</span>
+    <span class="n">actuator_lag_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.050</span>  <span class="c1"># Servo motor lag time constant (50ms)</span>
+    <span class="n">max_deployment_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span>  <span class="c1"># Maximum deployment speed (1/s, 0 to 1)</span>
+
+    <span class="c1"># Safety constraints</span>
+    <span class="n">min_activation_time_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.5</span>  <span class="c1"># Don&#39;t deploy before motor burnout</span>
+    <span class="n">min_activation_altitude_m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">500.0</span>  <span class="c1"># Don&#39;t deploy below this altitude</span>
+    <span class="n">retraction_altitude_m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">200.0</span>  <span class="c1"># Retract below this for landing</span>
+    
+    <span class="c1"># Air brakes physical parameters (for apogee prediction)</span>
+    <span class="n">airbrakes_cd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span>  <span class="c1"># Air brakes drag coefficient when deployed</span>
+    <span class="n">airbrakes_area</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.005</span>  <span class="c1"># Air brakes reference area (m²)</span>
+    <span class="n">rocket_diameter</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.127</span>  <span class="c1"># Rocket diameter (m) for drag calculation</span>
+    
+    <span class="c1"># Physical model parameters (calculated automatically from rocket and environment)</span>
+    <span class="c1"># These are NOT read from config file - they are computed by RocketBuilder</span>
+    <span class="n">rocket_mass</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">15.0</span>  <span class="c1"># Rocket mass during coast (kg) - from rocket.dry_mass</span>
+    <span class="n">rocket_drag_coefficient</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.45</span>  <span class="c1"># Rocket Cd (power-off, mean over Mach range) - from drag curve</span>
+    <span class="n">override_rocket_drag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># If True, use ONLY airbrake drag; if False, ADD to rocket drag</span>
+    <span class="n">atmosphere_scale_height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">8500.0</span>  <span class="c1"># Atmospheric scale height H (m) - from environment</span>
+    <span class="n">sea_level_density</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.225</span>  <span class="c1"># Sea level air density (kg/m³) - from environment</span>
+
+    <span class="c1"># State estimation</span>
+    <span class="n">use_kalman_filter</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Use Kalman filter for state estimation</span>
+    <span class="n">altitude_filter_alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.7</span>  <span class="c1"># EMA filter coefficient (if not Kalman)</span>
+
+    <span class="c1"># Logging</span>
+    <span class="n">log_controller_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Store controller data for analysis</span></div>
+
+
+
+<div class="viewcode-block" id="AirBrakesController">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.AirBrakesController">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AirBrakesController</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Air brakes controller with realistic hardware modeling.</span>
+
+<span class="sd">    This class implements control algorithms for air brakes deployment,</span>
+<span class="sd">    accounting for real-world hardware constraints like servo lag,</span>
+<span class="sd">    computation delays, and rate limiting.</span>
+
+<span class="sd">    The controller is designed to be used with RocketPy&#39;s Flight simulation</span>
+<span class="sd">    via the controller_function interface.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        config: ControllerConfig with algorithm parameters and constraints</span>
+<span class="sd">        _integral: Integral term for PID controller</span>
+<span class="sd">        _prev_error: Previous error for derivative calculation</span>
+<span class="sd">        _commanded_deployment: Commanded deployment level [0, 1]</span>
+<span class="sd">        _actual_deployment: Actual deployment level after lag [0, 1]</span>
+<span class="sd">        _computation_buffer: Buffer for computation delay simulation</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; config = ControllerConfig(</span>
+<span class="sd">        ...     algorithm=&quot;pid&quot;,</span>
+<span class="sd">        ...     target_apogee_m=3000,</span>
+<span class="sd">        ...     kp=0.001, ki=0.0001, kd=0.01,</span>
+<span class="sd">        ...     sampling_rate_hz=20,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; controller = AirBrakesController(config)</span>
+<span class="sd">        &gt;&gt;&gt; controller_func = controller.get_controller_function()</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Add to RocketPy rocket</span>
+<span class="sd">        &gt;&gt;&gt; air_brakes = rocket.add_air_brakes(</span>
+<span class="sd">        ...     drag_coefficient_curve=&quot;path/to/cd.csv&quot;,</span>
+<span class="sd">        ...     controller_function=controller_func,</span>
+<span class="sd">        ...     sampling_rate=config.sampling_rate_hz,</span>
+<span class="sd">        ... )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AirBrakesController.__init__">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.AirBrakesController.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">ControllerConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize air brakes controller.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: ControllerConfig with algorithm and hardware parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="c1"># Controller state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_integral</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prev_error</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_commanded_deployment</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="c1"># Computation delay buffer (stores commanded deployment)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_computation_buffer</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># [(time, command)]</span>
+
+        <span class="c1"># Filtered state (for noise reduction)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_altitude</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_velocity</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Data storage for plotting and analysis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commanded_deployment_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actual_deployment_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predicted_apogee_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_term_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i_term_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d_term_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">control_signal_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AirBrakesController initialized: algorithm=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">algorithm</span><span class="si">}</span><span class="s2">, &quot;</span>
+                   <span class="sa">f</span><span class="s2">&quot;target=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span><span class="si">}</span><span class="s2">m, rate=</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">sampling_rate_hz</span><span class="si">}</span><span class="s2">Hz&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AirBrakesController.reset_state">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.AirBrakesController.reset_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset controller state for new simulation.</span>
+
+<span class="sd">        This method should be called between Monte Carlo runs to prevent</span>
+<span class="sd">        state contamination. It&#39;s automatically called on first controller</span>
+<span class="sd">        invocation (when observed_variables is empty).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_integral</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prev_error</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_commanded_deployment</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_computation_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_altitude</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_velocity</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># Clear history data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">commanded_deployment_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actual_deployment_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predicted_apogee_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_term_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i_term_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d_term_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">control_signal_history</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Controller state reset for new simulation&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AirBrakesController.generate_parameters_documentation">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.AirBrakesController.generate_parameters_documentation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_parameters_documentation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a comprehensive .txt file documenting all controller parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        This creates a human-readable documentation of all parameters used by the</span>
+<span class="sd">        air brakes controller, including both user-configured and automatically</span>
+<span class="sd">        calculated values.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath: Path where to save the documentation file (.txt)</span>
+<span class="sd">        </span>
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; controller.generate_parameters_documentation(&#39;outputs/airbrake_params.txt&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+        
+        <span class="n">doc</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;AIR BRAKES CONTROLLER - PARAMETERS DOCUMENTATION&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated: </span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Control Algorithm</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;CONTROL ALGORITHM&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Algorithm:                     </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">algorithm</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Target apogee:                 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Apogee prediction method:      </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">apogee_prediction_method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># PID Gains (if applicable)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pid&quot;</span><span class="p">:</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;PID CONTROLLER GAINS&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Proportional gain (Kp):        </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">kp</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Integral gain (Ki):            </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ki</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Derivative gain (Kd):          </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">kd</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Numerical Integration Parameters</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;APOGEE PREDICTION - NUMERICAL INTEGRATION&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">apogee_prediction_method</span> <span class="o">==</span> <span class="s2">&quot;euler&quot;</span><span class="p">:</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Method:                        Forward Euler&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time step (dt):                </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">euler_dt</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max iterations:                </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">euler_max_iterations</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">apogee_prediction_method</span> <span class="o">==</span> <span class="s2">&quot;rk45&quot;</span><span class="p">:</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Method:                        Runge-Kutta 4/5 (Dormand-Prince)&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error tolerance:               </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_tol</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial time step:             </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_dt_initial</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Min time step:                 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_dt_min</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max time step:                 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_dt_max</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max iterations:                </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_max_iterations</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Method:                        Ballistic (constant deceleration)&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Formula:                       h_apo = h + v²/(2g)&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Hardware Constraints</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;HARDWARE CONSTRAINTS&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sampling rate:                 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sampling_rate_hz</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computation delay:             </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">computation_time_s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Actuator lag (servo):          </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">actuator_lag_s</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max deployment rate:           </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_deployment_rate</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> /s&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Safety Constraints</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;SAFETY CONSTRAINTS&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Min activation time:           </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">min_activation_time_s</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Min activation altitude:       </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">min_activation_altitude_m</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Physical Model - Rocket</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;PHYSICAL MODEL - ROCKET PARAMETERS&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rocket mass (coast):           </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rocket_mass</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> kg&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Source:                      rocket.dry_mass (automatic)&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rocket diameter:               </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rocket_diameter</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Source:                      rocket.geometry.caliber_m&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rocket drag coefficient:       </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rocket_drag_coefficient</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Source:                      Mean Cd from power_off_drag curve (automatic)&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rocket reference area:         </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rocket_diameter</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> m²&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Formula:                     π * (diameter/2)²&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Physical Model - Air Brakes</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;PHYSICAL MODEL - AIR BRAKES PARAMETERS&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Air brakes drag coefficient:   </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">airbrakes_cd</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Source:                      User configuration&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Air brakes reference area:     </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">airbrakes_area</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> m²&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Source:                      User configuration&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Override rocket drag:          </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">override_rocket_drag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Description:                 false=ADD airbrake to rocket drag (default)&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;                               true=use ONLY airbrake drag&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Drag Model</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;DRAG MODEL&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">override_rocket_drag</span><span class="p">:</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mode:                          AIRBRAKE ONLY&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total drag area:               Cd_ab * A_ab * deployment&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">airbrakes_cd</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> * </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">airbrakes_area</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> * deployment&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mode:                          ROCKET + AIRBRAKE (default)&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total drag area:               Cd_rocket * A_rocket + Cd_ab * A_ab * deployment&quot;</span><span class="p">)</span>
+            <span class="n">rocket_area</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rocket_diameter</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rocket_drag_coefficient</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> * </span><span class="si">{</span><span class="n">rocket_area</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">airbrakes_cd</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> * </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">airbrakes_area</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> * deployment&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Effective Cd:                  total_drag_area / rocket_reference_area&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Atmospheric Model</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;ATMOSPHERIC MODEL&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model:                         Exponential atmosphere&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Density formula:               ρ(h) = ρ₀ * exp(-h/H)&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scale height (H):              </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atmosphere_scale_height</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Source:                      Fitted from environment model (automatic)&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sea level density (ρ₀):        </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sea_level_density</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> kg/m³&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Source:                      From environment model (automatic)&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># State Estimation</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;STATE ESTIMATION&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kalman filter:                 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">use_kalman_filter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">use_kalman_filter</span><span class="p">:</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Altitude filter (EMA alpha):   </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">altitude_filter_alpha</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  (0=max filtering, 1=no filtering)&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Summary</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;NOTES&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Parameters marked &#39;automatic&#39; are calculated from rocket configuration&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;and environment model to ensure consistency between simulation and prediction.&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;For questions or issues, refer to the DySi documentation:&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;  docs/user/air_brakes_controller.md&quot;</span><span class="p">)</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+        
+        <span class="c1"># Write to file</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Air brakes parameters documentation saved to: </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AirBrakesController.get_controller_function">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.AirBrakesController.get_controller_function">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_controller_function</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get controller function for RocketPy integration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Callable controller function with signature:</span>
+<span class="sd">            (time, sampling_rate, state, state_history, observed_variables,</span>
+<span class="sd">             air_brakes, sensors) -&gt; tuple</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; controller_func = controller.get_controller_function()</span>
+<span class="sd">            &gt;&gt;&gt; air_brakes = rocket.add_air_brakes(</span>
+<span class="sd">            ...     drag_coefficient_curve=&quot;cd.csv&quot;,</span>
+<span class="sd">            ...     controller_function=controller_func,</span>
+<span class="sd">            ...     sampling_rate=20,</span>
+<span class="sd">            ... )</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">controller_function</span><span class="p">(</span>
+            <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">sampling_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+            <span class="n">state_history</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+            <span class="n">observed_variables</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span>
+            <span class="n">air_brakes</span><span class="p">,</span>
+            <span class="n">sensors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;RocketPy controller function with realistic hardware modeling.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                time: Current simulation time (s)</span>
+<span class="sd">                sampling_rate: Controller sampling rate (Hz)</span>
+<span class="sd">                state: Current state [x,y,z,vx,vy,vz,e0,e1,e2,e3,wx,wy,wz]</span>
+<span class="sd">                state_history: List of all previous states</span>
+<span class="sd">                observed_variables: List of previous controller outputs</span>
+<span class="sd">                air_brakes: AirBrakes instance to control</span>
+<span class="sd">                sensors: Optional list of sensor instances</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                Tuple with (time, commanded_deployment, actual_deployment,</span>
+<span class="sd">                           target_apogee, predicted_apogee, control_signal)</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="c1"># Extract state</span>
+            <span class="n">altitude</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># z position (m)</span>
+            <span class="n">vz</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># vertical velocity (m/s)</span>
+
+            <span class="c1"># Initialize/reset on first call (new simulation)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">observed_variables</span><span class="p">:</span>
+                <span class="c1"># Auto-reset state for new simulation (prevents Monte Carlo contamination)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reset_state</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_altitude</span> <span class="o">=</span> <span class="n">altitude</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_velocity</span> <span class="o">=</span> <span class="n">vz</span>
+                <span class="n">air_brakes</span><span class="o">.</span><span class="n">deployment_level</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+            <span class="c1"># --- Safety checks ---</span>
+
+            <span class="c1"># Don&#39;t deploy during motor burn</span>
+            <span class="k">if</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">min_activation_time_s</span><span class="p">:</span>
+                <span class="n">air_brakes</span><span class="o">.</span><span class="n">deployment_level</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span><span class="p">,</span> <span class="n">altitude</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+            <span class="c1"># Don&#39;t deploy below minimum altitude</span>
+            <span class="k">if</span> <span class="n">altitude</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">min_activation_altitude_m</span><span class="p">:</span>
+                <span class="n">air_brakes</span><span class="o">.</span><span class="n">deployment_level</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span><span class="p">,</span> <span class="n">altitude</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+            <span class="c1"># Retract for landing</span>
+            <span class="k">if</span> <span class="n">altitude</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">retraction_altitude_m</span> <span class="ow">and</span> <span class="n">vz</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">air_brakes</span><span class="o">.</span><span class="n">deployment_level</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span><span class="p">,</span> <span class="n">altitude</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+            <span class="c1"># --- State filtering ---</span>
+
+            <span class="n">dt</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">sampling_rate</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">use_kalman_filter</span><span class="p">:</span>
+                <span class="c1"># TODO: Implement Kalman filter for robust state estimation</span>
+                <span class="n">filtered_altitude</span> <span class="o">=</span> <span class="n">altitude</span>
+                <span class="n">filtered_vz</span> <span class="o">=</span> <span class="n">vz</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Simple exponential moving average (EMA) filter</span>
+                <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">altitude_filter_alpha</span>
+                <span class="n">filtered_altitude</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">altitude</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_altitude</span>
+                <span class="n">filtered_vz</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">vz</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_velocity</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_altitude</span> <span class="o">=</span> <span class="n">filtered_altitude</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_velocity</span> <span class="o">=</span> <span class="n">filtered_vz</span>
+
+            <span class="c1"># --- Apogee prediction ---</span>
+
+            <span class="c1"># Initialize predictor on first use</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_apogee_predictor&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">apogee_prediction_method</span> <span class="o">==</span> <span class="s2">&quot;euler&quot;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_apogee_predictor</span> <span class="o">=</span> <span class="n">EulerPredictor</span><span class="p">(</span>
+                        <span class="n">dt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">euler_dt</span><span class="p">,</span>
+                        <span class="n">max_iterations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">euler_max_iterations</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">apogee_prediction_method</span> <span class="o">==</span> <span class="s2">&quot;rk45&quot;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_apogee_predictor</span> <span class="o">=</span> <span class="n">RK45Predictor</span><span class="p">(</span>
+                        <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_tol</span><span class="p">,</span>
+                        <span class="n">dt_initial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_dt_initial</span><span class="p">,</span>
+                        <span class="n">dt_min</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_dt_min</span><span class="p">,</span>
+                        <span class="n">dt_max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_dt_max</span><span class="p">,</span>
+                        <span class="n">max_iterations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rk45_max_iterations</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># ballistic</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_apogee_predictor</span> <span class="o">=</span> <span class="n">ConstantDecelerationPredictor</span><span class="p">()</span>
+            
+            <span class="c1"># Get rocket parameters for physics-based prediction</span>
+            <span class="n">rocket_mass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rocket_mass</span>  <span class="c1"># kg</span>
+            
+            <span class="c1"># Base rocket drag (power-off configuration)</span>
+            <span class="n">rocket_drag_coefficient</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rocket_drag_coefficient</span>
+            <span class="n">rocket_diameter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rocket_diameter</span>  <span class="c1"># m</span>
+            <span class="n">rocket_reference_area</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">rocket_diameter</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>  <span class="c1"># m²</span>
+            
+            <span class="c1"># Air brakes contribution (when deployed)</span>
+            <span class="n">airbrakes_cd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">airbrakes_cd</span>
+            <span class="n">airbrakes_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">airbrakes_area</span>  <span class="c1"># m²</span>
+            
+            <span class="c1"># CRITICAL: Calculate TOTAL drag accounting for current air brakes deployment</span>
+            <span class="c1"># Two modes based on override_rocket_drag setting:</span>
+            <span class="c1"># </span>
+            <span class="c1"># Mode 1 (override_rocket_drag=False, DEFAULT): ADD air brakes drag to rocket drag</span>
+            <span class="c1">#   Total drag = rocket_drag + air_brakes_drag</span>
+            <span class="c1">#   Cd_eff * A_ref = Cd_rocket * A_rocket + Cd_brakes * A_brakes * deployment</span>
+            <span class="c1">#   This is the standard RocketPy behavior (override_rocket_drag=False)</span>
+            <span class="c1">#</span>
+            <span class="c1"># Mode 2 (override_rocket_drag=True): Use ONLY air brakes drag</span>
+            <span class="c1">#   Total drag = air_brakes_drag</span>
+            <span class="c1">#   Cd_eff * A_ref = Cd_brakes * A_brakes * deployment</span>
+            <span class="c1">#   Use when airbrake has its own Mach-dependent curve and replaces rocket drag</span>
+            
+            <span class="n">current_deployment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">override_rocket_drag</span><span class="p">:</span>
+                <span class="c1"># Mode 2: Only airbrake drag</span>
+                <span class="n">total_drag_area</span> <span class="o">=</span> <span class="n">airbrakes_cd</span> <span class="o">*</span> <span class="n">airbrakes_area</span> <span class="o">*</span> <span class="n">current_deployment</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Mode 1: Rocket drag + airbrake drag (DEFAULT)</span>
+                <span class="n">total_drag_area</span> <span class="o">=</span> <span class="p">(</span><span class="n">rocket_drag_coefficient</span> <span class="o">*</span> <span class="n">rocket_reference_area</span> <span class="o">+</span> 
+                                  <span class="n">airbrakes_cd</span> <span class="o">*</span> <span class="n">airbrakes_area</span> <span class="o">*</span> <span class="n">current_deployment</span><span class="p">)</span>
+            
+            <span class="c1"># Use rocket area as reference and calculate effective Cd</span>
+            <span class="n">effective_drag_coefficient</span> <span class="o">=</span> <span class="n">total_drag_area</span> <span class="o">/</span> <span class="n">rocket_reference_area</span>
+            
+            <span class="c1"># Air density at current altitude (exponential atmosphere model)</span>
+            <span class="n">air_density</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">sea_level_density</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+                <span class="o">-</span><span class="n">filtered_altitude</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atmosphere_scale_height</span>
+            <span class="p">)</span>
+            
+            <span class="c1"># Predict apogee using selected method with CURRENT air brakes configuration</span>
+            <span class="n">predicted_apogee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apogee_predictor</span><span class="o">.</span><span class="n">predict_apogee</span><span class="p">(</span>
+                <span class="n">altitude</span><span class="o">=</span><span class="n">filtered_altitude</span><span class="p">,</span>
+                <span class="n">velocity_z</span><span class="o">=</span><span class="n">filtered_vz</span><span class="p">,</span>
+                <span class="n">mass</span><span class="o">=</span><span class="n">rocket_mass</span><span class="p">,</span>
+                <span class="n">drag_coefficient</span><span class="o">=</span><span class="n">effective_drag_coefficient</span><span class="p">,</span>
+                <span class="n">reference_area</span><span class="o">=</span><span class="n">rocket_reference_area</span><span class="p">,</span>
+                <span class="n">air_density</span><span class="o">=</span><span class="n">air_density</span><span class="p">,</span>
+                <span class="n">deployment_level</span><span class="o">=</span><span class="n">current_deployment</span>  <span class="c1"># passed for info, already in Cd_effective</span>
+            <span class="p">)</span>
+
+            <span class="c1"># --- Control algorithm selection ---</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pid&quot;</span><span class="p">:</span>
+                <span class="n">control_signal</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">p_term</span><span class="p">,</span> <span class="n">i_term</span><span class="p">,</span> <span class="n">d_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pid_control</span><span class="p">(</span>
+                    <span class="n">predicted_apogee</span><span class="p">,</span>
+                    <span class="n">filtered_vz</span><span class="p">,</span>
+                    <span class="n">dt</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bang_bang&quot;</span><span class="p">:</span>
+                <span class="n">control_signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bang_bang_control</span><span class="p">(</span>
+                    <span class="n">predicted_apogee</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span>
+                <span class="p">)</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">predicted_apogee</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span>
+                <span class="n">p_term</span> <span class="o">=</span> <span class="n">i_term</span> <span class="o">=</span> <span class="n">d_term</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;model_predictive&quot;</span><span class="p">:</span>
+                <span class="n">control_signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_predictive_control</span><span class="p">(</span>
+                    <span class="n">filtered_altitude</span><span class="p">,</span>
+                    <span class="n">filtered_vz</span><span class="p">,</span>
+                    <span class="n">predicted_apogee</span>
+                <span class="p">)</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">predicted_apogee</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span>
+                <span class="n">p_term</span> <span class="o">=</span> <span class="n">i_term</span> <span class="o">=</span> <span class="n">d_term</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown algorithm &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">algorithm</span><span class="si">}</span><span class="s2">&#39;, using PID&quot;</span><span class="p">)</span>
+                <span class="n">control_signal</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">p_term</span><span class="p">,</span> <span class="n">i_term</span><span class="p">,</span> <span class="n">d_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pid_control</span><span class="p">(</span>
+                    <span class="n">predicted_apogee</span><span class="p">,</span> <span class="n">filtered_vz</span><span class="p">,</span> <span class="n">dt</span>
+                <span class="p">)</span>
+
+            <span class="c1"># --- Hardware constraints ---</span>
+
+            <span class="c1"># 1. Computation delay: Store command, retrieve delayed command</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_computation_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="p">,</span> <span class="n">control_signal</span><span class="p">))</span>
+
+            <span class="n">delayed_command</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">buf_time</span><span class="p">,</span> <span class="n">buf_command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_computation_buffer</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">time</span> <span class="o">-</span> <span class="n">buf_time</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">computation_time_s</span><span class="p">:</span>
+                    <span class="n">delayed_command</span> <span class="o">=</span> <span class="n">buf_command</span>
+                    <span class="k">break</span>
+
+            <span class="c1"># Clean old buffer entries (keep last 10)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_computation_buffer</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_computation_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_computation_buffer</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">:]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_commanded_deployment</span> <span class="o">=</span> <span class="n">delayed_command</span>
+
+            <span class="c1"># 2. Rate limiting (maximum deployment speed)</span>
+            <span class="n">max_change</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_deployment_rate</span> <span class="o">*</span> <span class="n">dt</span>
+            <span class="n">rate_limited</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
+                <span class="n">delayed_command</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span> <span class="o">-</span> <span class="n">max_change</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span> <span class="o">+</span> <span class="n">max_change</span>
+            <span class="p">)</span>
+
+            <span class="c1"># 3. Actuator lag (first-order lag, servo motor dynamics)</span>
+            <span class="c1"># τ * dy/dt + y = u  →  y(t+dt) ≈ y(t) + (u - y(t)) * dt / τ</span>
+            <span class="n">tau</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">actuator_lag_s</span>
+            <span class="n">lag_factor</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">/</span> <span class="p">(</span><span class="n">tau</span> <span class="o">+</span> <span class="n">dt</span><span class="p">)</span>  <span class="c1"># Discrete first-order lag</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span> <span class="o">+=</span> <span class="p">(</span><span class="n">rate_limited</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span><span class="p">)</span> <span class="o">*</span> <span class="n">lag_factor</span>
+
+            <span class="c1"># 4. Clamp to [0, 1]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+            <span class="c1"># --- Apply to air brakes ---</span>
+            <span class="n">air_brakes</span><span class="o">.</span><span class="n">deployment_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span>
+
+            <span class="c1"># --- Save data for plotting ---</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">commanded_deployment_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_commanded_deployment</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actual_deployment_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predicted_apogee_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predicted_apogee</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p_term_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_term</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">i_term_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_term</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">d_term_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_term</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">control_signal_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">control_signal</span><span class="p">)</span>
+
+            <span class="c1"># --- Return data for logging ---</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">time</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_commanded_deployment</span><span class="p">,</span>  <span class="c1"># What controller commanded</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_actual_deployment</span><span class="p">,</span>     <span class="c1"># What actually happened</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span><span class="p">,</span>
+                <span class="n">predicted_apogee</span><span class="p">,</span>
+                <span class="n">control_signal</span>  <span class="c1"># Raw control output before delays</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">controller_function</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_pid_control</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">predicted_apogee</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">velocity_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PID control algorithm for air brakes deployment.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            predicted_apogee: Predicted apogee altitude (m)</span>
+<span class="sd">            velocity_z: Vertical velocity (m/s)</span>
+<span class="sd">            dt: Time step (s)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (deployment, error, p_term, i_term, d_term)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Error: positive if overshooting target</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">predicted_apogee</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span>
+
+        <span class="c1"># PID terms</span>
+        <span class="n">proportional</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">kp</span> <span class="o">*</span> <span class="n">error</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_integral</span> <span class="o">+=</span> <span class="n">error</span> <span class="o">*</span> <span class="n">dt</span>
+        <span class="c1"># Anti-windup: clamp integral</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_integral</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_integral</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ki</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_integral</span>
+
+        <span class="n">derivative</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">kd</span> <span class="o">*</span> <span class="p">(</span><span class="n">error</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prev_error</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span> <span class="k">if</span> <span class="n">dt</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prev_error</span> <span class="o">=</span> <span class="n">error</span>
+
+        <span class="c1"># PID output</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">proportional</span> <span class="o">+</span> <span class="n">integral</span> <span class="o">+</span> <span class="n">derivative</span>
+
+        <span class="c1"># Map to [0, 1] deployment</span>
+        <span class="c1"># Deploy more if overshooting (positive error)</span>
+        <span class="n">deployment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">deployment</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">proportional</span><span class="p">,</span> <span class="n">integral</span><span class="p">,</span> <span class="n">derivative</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_bang_bang_control</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">predicted_apogee</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">target_apogee</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Bang-bang (on-off) control for air brakes.</span>
+
+<span class="sd">        Simple two-state controller: fully deployed if overshooting,</span>
+<span class="sd">        fully retracted otherwise.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            predicted_apogee: Predicted apogee altitude (m)</span>
+<span class="sd">            target_apogee: Target apogee altitude (m)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Deployment level: 0.0 or 1.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">predicted_apogee</span> <span class="o">-</span> <span class="n">target_apogee</span>
+
+        <span class="k">if</span> <span class="n">error</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">deploy_threshold_m</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">1.0</span>  <span class="c1"># Fully deploy</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span>  <span class="c1"># Fully retract</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_model_predictive_control</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">altitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">velocity_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">predicted_apogee</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Model predictive control (simplified version).</span>
+
+<span class="sd">        This is a placeholder for advanced MPC algorithms that optimize</span>
+<span class="sd">        trajectory over a prediction horizon. Current implementation is</span>
+<span class="sd">        a simple proportional controller with velocity feedforward.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            altitude: Current altitude (m)</span>
+<span class="sd">            velocity_z: Vertical velocity (m/s)</span>
+<span class="sd">            predicted_apogee: Predicted apogee (m)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Deployment level [0, 1]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Simple model-based approach:</span>
+        <span class="c1"># Deploy proportionally to overshoot, scaled by velocity</span>
+
+        <span class="n">error</span> <span class="o">=</span> <span class="n">predicted_apogee</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_apogee_m</span>
+
+        <span class="c1"># Proportional term</span>
+        <span class="n">proportional</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="o">*</span> <span class="n">error</span>
+
+        <span class="c1"># Velocity feedforward (more aggressive if ascending fast)</span>
+        <span class="k">if</span> <span class="n">velocity_z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">feedforward</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">velocity_z</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">feedforward</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="n">deployment</span> <span class="o">=</span> <span class="n">proportional</span> <span class="o">+</span> <span class="n">feedforward</span>
+        <span class="n">deployment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">deployment</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">deployment</span></div>
+
+
+
+<div class="viewcode-block" id="create_pid_controller">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.create_pid_controller">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_pid_controller</span><span class="p">(</span>
+    <span class="n">target_apogee_m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">kp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">ki</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span>
+    <span class="n">kd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">sampling_rate_hz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span>
+    <span class="n">actuator_lag_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.050</span><span class="p">,</span>
+    <span class="n">max_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AirBrakesController</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a PID air brakes controller with common defaults.</span>
+
+<span class="sd">    Convenience function for quickly creating a PID controller with</span>
+<span class="sd">    typical parameters for competition rockets.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target_apogee_m: Target apogee altitude (m)</span>
+<span class="sd">        kp: Proportional gain (default: 0.001)</span>
+<span class="sd">        ki: Integral gain (default: 0.0001)</span>
+<span class="sd">        kd: Derivative gain (default: 0.01)</span>
+<span class="sd">        sampling_rate_hz: Controller update rate (default: 20 Hz)</span>
+<span class="sd">        actuator_lag_s: Servo lag time constant (default: 50ms)</span>
+<span class="sd">        max_rate: Maximum deployment speed (default: 2.0 per second)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Configured AirBrakesController instance</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; controller = create_pid_controller(</span>
+<span class="sd">        ...     target_apogee_m=3000,</span>
+<span class="sd">        ...     kp=0.002, ki=0.0002, kd=0.015</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; controller_func = controller.get_controller_function()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ControllerConfig</span><span class="p">(</span>
+        <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;pid&quot;</span><span class="p">,</span>
+        <span class="n">target_apogee_m</span><span class="o">=</span><span class="n">target_apogee_m</span><span class="p">,</span>
+        <span class="n">kp</span><span class="o">=</span><span class="n">kp</span><span class="p">,</span>
+        <span class="n">ki</span><span class="o">=</span><span class="n">ki</span><span class="p">,</span>
+        <span class="n">kd</span><span class="o">=</span><span class="n">kd</span><span class="p">,</span>
+        <span class="n">sampling_rate_hz</span><span class="o">=</span><span class="n">sampling_rate_hz</span><span class="p">,</span>
+        <span class="n">actuator_lag_s</span><span class="o">=</span><span class="n">actuator_lag_s</span><span class="p">,</span>
+        <span class="n">max_deployment_rate</span><span class="o">=</span><span class="n">max_rate</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">AirBrakesController</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_bang_bang_controller">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.create_bang_bang_controller">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_bang_bang_controller</span><span class="p">(</span>
+    <span class="n">target_apogee_m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">deploy_threshold_m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">100.0</span><span class="p">,</span>
+    <span class="n">sampling_rate_hz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">actuator_lag_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.050</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AirBrakesController</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a bang-bang (on-off) air brakes controller.</span>
+
+<span class="sd">    Bang-bang controllers are simple and robust but result in oscillatory</span>
+<span class="sd">    behavior. Suitable for initial testing or systems with fast actuators.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target_apogee_m: Target apogee altitude (m)</span>
+<span class="sd">        deploy_threshold_m: Deploy if overshoot exceeds this (default: 100m)</span>
+<span class="sd">        sampling_rate_hz: Controller update rate (default: 10 Hz)</span>
+<span class="sd">        actuator_lag_s: Servo lag time constant (default: 50ms)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Configured AirBrakesController instance</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; controller = create_bang_bang_controller(</span>
+<span class="sd">        ...     target_apogee_m=3000,</span>
+<span class="sd">        ...     deploy_threshold_m=50</span>
+<span class="sd">        ... )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ControllerConfig</span><span class="p">(</span>
+        <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;bang_bang&quot;</span><span class="p">,</span>
+        <span class="n">target_apogee_m</span><span class="o">=</span><span class="n">target_apogee_m</span><span class="p">,</span>
+        <span class="n">deploy_threshold_m</span><span class="o">=</span><span class="n">deploy_threshold_m</span><span class="p">,</span>
+        <span class="n">sampling_rate_hz</span><span class="o">=</span><span class="n">sampling_rate_hz</span><span class="p">,</span>
+        <span class="n">actuator_lag_s</span><span class="o">=</span><span class="n">actuator_lag_s</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">AirBrakesController</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Example controller functions for direct use (without class wrapper)</span>
+
+<div class="viewcode-block" id="simple_apogee_controller">
+<a class="viewcode-back" href="../../api/index.html#src.air_brakes_controller.simple_apogee_controller">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">simple_apogee_controller</span><span class="p">(</span>
+    <span class="n">target_apogee</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3000.0</span><span class="p">,</span>
+    <span class="n">kp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a simple proportional controller function.</span>
+
+<span class="sd">    This is a lightweight alternative to AirBrakesController for simple</span>
+<span class="sd">    use cases where full hardware modeling is not needed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        target_apogee: Target apogee altitude (m)</span>
+<span class="sd">        kp: Proportional gain</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Controller function compatible with RocketPy</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; controller_func = simple_apogee_controller(target_apogee=3000)</span>
+<span class="sd">        &gt;&gt;&gt; air_brakes = rocket.add_air_brakes(</span>
+<span class="sd">        ...     drag_coefficient_curve=&quot;cd.csv&quot;,</span>
+<span class="sd">        ...     controller_function=controller_func,</span>
+<span class="sd">        ...     sampling_rate=10</span>
+<span class="sd">        ... )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">controller</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">sampling_rate</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">state_history</span><span class="p">,</span>
+                  <span class="n">observed_variables</span><span class="p">,</span> <span class="n">air_brakes</span><span class="p">,</span> <span class="n">sensors</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">altitude</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">vz</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+
+        <span class="c1"># Don&#39;t deploy during motor burn (first 4 seconds)</span>
+        <span class="k">if</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="mf">4.0</span><span class="p">:</span>
+            <span class="n">air_brakes</span><span class="o">.</span><span class="n">deployment_level</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Predict apogee (simple ballistic)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>
+        <span class="n">predicted_apogee</span> <span class="o">=</span> <span class="n">altitude</span> <span class="o">+</span> <span class="p">(</span><span class="n">vz</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span> <span class="k">if</span> <span class="n">vz</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">altitude</span>
+
+        <span class="c1"># Proportional control</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">predicted_apogee</span> <span class="o">-</span> <span class="n">target_apogee</span>
+        <span class="n">deployment</span> <span class="o">=</span> <span class="n">kp</span> <span class="o">*</span> <span class="n">error</span>
+        <span class="n">deployment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">deployment</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="n">air_brakes</span><span class="o">.</span><span class="n">deployment_level</span> <span class="o">=</span> <span class="n">deployment</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">deployment</span><span class="p">,</span> <span class="n">predicted_apogee</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">controller</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,985 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Configuration Reference &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/configuration/index';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Rocket Parameters Reference" href="rocket_params.html" />
+    <link rel="prev" title="Export Simulation Data" href="../how_to_guides/export_data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../quick_plot_reference.html">Quick Plot Reference Card</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/plot_interpretation.html">Output Plot Interpretation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Configuration Reference</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="configuration-reference">
+<h1>Configuration Reference<a class="headerlink" href="#configuration-reference" title="Link to this heading">#</a></h1>
+<p>Complete documentation of all configuration parameters for rocket-sim.</p>
+<p>This section provides detailed reference material for every parameter you can use
+in YAML configuration files. Each parameter includes:</p>
+<ul class="simple">
+<li><p><strong>Description</strong>: What it controls</p></li>
+<li><p><strong>Type</strong>: Data type (float, int, string, etc.)</p></li>
+<li><p><strong>Units</strong>: SI units used</p></li>
+<li><p><strong>Required</strong>: Whether parameter is mandatory</p></li>
+<li><p><strong>Default</strong>: Default value if not specified</p></li>
+<li><p><strong>Valid Range</strong>: Physically acceptable values</p></li>
+<li><p><strong>Example</strong>: Practical usage example</p></li>
+</ul>
+<section id="organization">
+<h2>Organization<a class="headerlink" href="#organization" title="Link to this heading">#</a></h2>
+<p>Configuration is divided into four main sections:</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🚀 Rocket Parameters</div>
+<p class="sd-card-text">Physical properties, geometry, aerodynamics</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="rocket_params.html"><span class="doc">Rocket Parameters Reference</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🔥 Motor Parameters</div>
+<p class="sd-card-text">Thrust curve, propellant, nozzle</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="motor_params.html"><span class="doc">Motor Parameters Reference</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🌍 Environment Parameters</div>
+<p class="sd-card-text">Atmosphere, weather, location</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="environment_params.html"><span class="doc">Environment Parameters Reference</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+⚙️ Simulation Parameters</div>
+<p class="sd-card-text">Launch conditions, integration settings</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="simulation_params.html"><span class="doc">Simulation Parameters Reference</span></a></div>
+</div>
+</div>
+</div>
+</section>
+<section id="quick-reference">
+<h2>Quick Reference<a class="headerlink" href="#quick-reference" title="Link to this heading">#</a></h2>
+<p><strong>Most Used Parameters:</strong></p>
+<dl class="simple">
+<dt>Rocket:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">mass</span></code>, <code class="docutils literal notranslate"><span class="pre">radius</span></code>, <code class="docutils literal notranslate"><span class="pre">inertia</span></code>, <code class="docutils literal notranslate"><span class="pre">center_of_mass_without_motor</span></code>,
+<code class="docutils literal notranslate"><span class="pre">motor_position</span></code>, <code class="docutils literal notranslate"><span class="pre">nose_cone</span></code>, <code class="docutils literal notranslate"><span class="pre">fins</span></code>, <code class="docutils literal notranslate"><span class="pre">parachutes</span></code></p>
+</dd>
+<dt>Motor:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">thrust_source</span></code>, <code class="docutils literal notranslate"><span class="pre">dry_mass</span></code>, <code class="docutils literal notranslate"><span class="pre">nozzle_radius</span></code>, <code class="docutils literal notranslate"><span class="pre">grain_*</span></code></p>
+</dd>
+<dt>Environment:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">latitude</span></code>, <code class="docutils literal notranslate"><span class="pre">longitude</span></code>, <code class="docutils literal notranslate"><span class="pre">elevation</span></code>, <code class="docutils literal notranslate"><span class="pre">atmospheric_model_type</span></code></p>
+</dd>
+<dt>Simulation:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">inclination</span></code>, <code class="docutils literal notranslate"><span class="pre">heading</span></code>, <code class="docutils literal notranslate"><span class="pre">rail_length</span></code></p>
+</dd>
+</dl>
+</section>
+<section id="configuration-structure">
+<h2>Configuration Structure<a class="headerlink" href="#configuration-structure" title="Link to this heading">#</a></h2>
+<p>Every configuration file follows this structure:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Four required top-level sections</span>
+
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Rocket physical properties</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;...&quot;</span>
+<span class="w">  </span><span class="nt">mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="c1"># ... more rocket parameters</span>
+
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Motor and propulsion</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;...&quot;</span>
+<span class="w">  </span><span class="nt">dry_mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="c1"># ... more motor parameters</span>
+
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Atmospheric conditions</span>
+<span class="w">  </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="c1"># ... more environment parameters</span>
+
+<span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Launch and simulation settings</span>
+<span class="w">  </span><span class="nt">inclination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="nt">heading</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="c1"># ... more simulation parameters</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../tutorials/01_basic_flight.html"><span class="doc">Tutorial 1: Basic Flight Simulation</span></a> for a complete annotated example.</p>
+</div>
+</section>
+<section id="parameter-categories">
+<h2>Parameter Categories<a class="headerlink" href="#parameter-categories" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Configuration Sections</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rocket_params.html">Rocket Parameters Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#basic-properties">Basic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#geometry">Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#inertia">Inertia</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#nose-cone">Nose Cone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#fins">Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#parachute">Parachute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#air-brakes">Air Brakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#drag-curves">Drag Curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#complete-example">Complete Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="motor_params.html">Motor Parameters Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#basic-properties">Basic Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#coordinate-system">Coordinate System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#mass-properties">Mass Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#nozzle-geometry">Nozzle Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#propellant-grain-geometry">Propellant Grain Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#burn-characteristics">Burn Characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#advanced-parameters">Advanced Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#complete-example">Complete Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#motor-thrust-curve-files">Motor Thrust Curve Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#common-motor-examples">Common Motor Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_params.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="environment_params.html">Environment Parameters Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#launch-site-location">Launch Site Location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#atmospheric-model">Atmospheric Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#weather-data-sources">Weather Data Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#date-and-time">Date and Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#wind-configuration">Wind Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#gravity">Gravity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#simulation-limits">Simulation Limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#complete-examples">Complete Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulation_params.html">Simulation Parameters Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html#launch-rail-configuration">Launch Rail Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html#integration-parameters">Integration Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html#termination-conditions">Termination Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html#output-control">Output Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html#complete-examples">Complete Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html#rail-length-calculator">Rail Length Calculator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html#common-issues">Common Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html#see-also">See Also</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="units-convention">
+<h2>Units Convention<a class="headerlink" href="#units-convention" title="Link to this heading">#</a></h2>
+<p>All parameters use <strong>SI units</strong> unless explicitly stated:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Quantity</p></th>
+<th class="head"><p>Unit</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Length</p></td>
+<td><p>meters</p></td>
+<td><p>m</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">radius:</span> <span class="pre">0.052</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Mass</p></td>
+<td><p>kilograms</p></td>
+<td><p>kg</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mass:</span> <span class="pre">5.0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Time</p></td>
+<td><p>seconds</p></td>
+<td><p>s</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">burn_time:</span> <span class="pre">3.9</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Velocity</p></td>
+<td><p>meters/second</p></td>
+<td><p>m/s</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">max_velocity:</span> <span class="pre">287.3</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Acceleration</p></td>
+<td><p>meters/second²</p></td>
+<td><p>m/s²</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">max_accel:</span> <span class="pre">89.2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Force</p></td>
+<td><p>newtons</p></td>
+<td><p>N</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">thrust:</span> <span class="pre">1670</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Angle (config)</p></td>
+<td><p>degrees</p></td>
+<td><p>°</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">inclination:</span> <span class="pre">85</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Angle (internal)</p></td>
+<td><p>radians</p></td>
+<td><p>rad</p></td>
+<td><p>(auto-converted)</p></td>
+</tr>
+<tr class="row-even"><td><p>Pressure</p></td>
+<td><p>pascals</p></td>
+<td><p>Pa</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pressure:</span> <span class="pre">101325</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Temperature</p></td>
+<td><p>kelvin</p></td>
+<td><p>K</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">temperature:</span> <span class="pre">288.15</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Density</p></td>
+<td><p>kg/m³</p></td>
+<td><p>kg/m³</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">grain_density:</span> <span class="pre">1815</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Inertia</p></td>
+<td><p>kg⋅m²</p></td>
+<td><p>kg⋅m²</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">inertia:</span> <span class="pre">[0.8,</span> <span class="pre">0.8,</span> <span class="pre">0.003]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Angles in configuration files are in DEGREES</strong>, but RocketPy internally
+uses radians. rocket-sim handles conversion automatically.</p>
+</div>
+</section>
+<section id="coordinate-systems">
+<h2>Coordinate Systems<a class="headerlink" href="#coordinate-systems" title="Link to this heading">#</a></h2>
+<p>Different components use different coordinate systems:</p>
+<p><strong>Rocket Coordinate System</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Tail (-) ──────────&gt; Nose (+)
+
+Origin: Nose tip (position 0.0)
+Positive direction: Toward tail
+</pre></div>
+</div>
+<p>Example positions:</p>
+<ul class="simple">
+<li><p>Nose cone base: 0.95 m (from nose tip, toward tail)</p></li>
+<li><p>Motor nozzle: -0.60 m (negative = toward tail from nose)</p></li>
+</ul>
+<p><strong>Motor Coordinate System</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Nozzle (0) ──────────&gt; Combustion Chamber (+)
+
+Origin: Nozzle exit (position 0.0)
+Positive direction: Toward combustion chamber
+</pre></div>
+</div>
+<p>Example positions:</p>
+<ul class="simple">
+<li><p>Nozzle: 0.0 m</p></li>
+<li><p>Grains center: 0.12 m</p></li>
+<li><p>Motor dry mass center: 0.14 m</p></li>
+</ul>
+<p><strong>World Coordinate System</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>X: East
+Y: North
+Z: Up (vertical)
+
+Origin: Launch point
+</pre></div>
+</div>
+<p>Used for trajectory output.</p>
+</section>
+<section id="parameter-validation">
+<h2>Parameter Validation<a class="headerlink" href="#parameter-validation" title="Link to this heading">#</a></h2>
+<p>rocket-sim automatically validates all parameters for:</p>
+<dl class="simple">
+<dt><strong>Physical Plausibility</strong></dt><dd><ul class="simple">
+<li><p>Positive masses, lengths, densities</p></li>
+<li><p>Reasonable ranges (e.g., fin span &lt; rocket radius × 10)</p></li>
+<li><p>Consistent dimensions</p></li>
+</ul>
+</dd>
+<dt><strong>Aerodynamic Stability</strong></dt><dd><ul class="simple">
+<li><p>Static margin ≥ 2.0 calibers</p></li>
+<li><p>Center of pressure behind center of gravity</p></li>
+<li><p>Fin area sufficient for stability</p></li>
+</ul>
+</dd>
+<dt><strong>Completeness</strong></dt><dd><ul class="simple">
+<li><p>All required parameters present</p></li>
+<li><p>Valid file paths</p></li>
+<li><p>Correct parameter types</p></li>
+</ul>
+</dd>
+</dl>
+<p>To validate without running simulation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>your_config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--validate-only
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../how_to_guides/validate_design.html"><span class="doc">Validate Your Rocket Design</span></a> for details.</p>
+</section>
+<section id="common-mistakes">
+<h2>Common Mistakes<a class="headerlink" href="#common-mistakes" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-danger sd-bg-text-danger">
+<span class="sd-summary-text">Using wrong units</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>Wrong</strong>: <code class="docutils literal notranslate"><span class="pre">radius:</span> <span class="pre">52</span></code> (assumes millimeters)</p>
+<p class="sd-card-text"><strong>Correct</strong>: <code class="docutils literal notranslate"><span class="pre">radius:</span> <span class="pre">0.052</span></code> (meters)</p>
+<p class="sd-card-text">All lengths MUST be in meters.</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-danger sd-bg-text-danger">
+<span class="sd-summary-text">Including motor in rocket mass</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>Wrong</strong>: <code class="docutils literal notranslate"><span class="pre">mass:</span> <span class="pre">6.5</span></code> (includes motor)</p>
+<p class="sd-card-text"><strong>Correct</strong>: <code class="docutils literal notranslate"><span class="pre">mass:</span> <span class="pre">5.0</span></code> (without motor)</p>
+<p class="sd-card-text">Motor mass is added automatically by RocketPy.</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-danger sd-bg-text-danger">
+<span class="sd-summary-text">Confusing coordinate systems</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>Wrong</strong>: <code class="docutils literal notranslate"><span class="pre">motor_position:</span> <span class="pre">0.60</span></code> (positive)</p>
+<p class="sd-card-text"><strong>Correct</strong>: <code class="docutils literal notranslate"><span class="pre">motor_position:</span> <span class="pre">-0.60</span></code> (negative, toward tail)</p>
+<p class="sd-card-text">In rocket coordinates, motor is typically negative (toward tail from nose).</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-warning sd-bg-text-warning">
+<span class="sd-summary-text">Forgetting required parameters</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Each section has mandatory parameters. If missing, validation will fail
+with clear error message indicating what’s required.</p>
+</div>
+</details></section>
+<section id="templates">
+<h2>Templates<a class="headerlink" href="#templates" title="Link to this heading">#</a></h2>
+<p>Use these templates as starting points:</p>
+<dl class="simple">
+<dt><strong>Minimal Configuration</strong></dt><dd><p>See <code class="docutils literal notranslate"><span class="pre">configs/single_sim/01_minimal.yaml</span></code></p>
+</dd>
+<dt><strong>Complete Configuration</strong></dt><dd><p>See <code class="docutils literal notranslate"><span class="pre">configs/single_sim/02_complete.yaml</span></code></p>
+</dd>
+<dt><strong>Documented Template</strong></dt><dd><p>See <code class="docutils literal notranslate"><span class="pre">configs/templates/template_complete_documented.yaml</span></code></p>
+</dd>
+</dl>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
+<p>Real-world rocket configurations:</p>
+<ul class="simple">
+<li><p><span class="xref std std-doc">/user/examples/calisto</span> - Research rocket</p></li>
+<li><p><span class="xref std std-doc">/user/examples/prometheus</span> - Competition vehicle</p></li>
+<li><p><span class="xref std std-doc">/user/examples/student_rocket</span> - University team rocket</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../how_to_guides/create_config.html"><span class="doc">Create Configuration Files</span></a> - Create configuration file</p></li>
+<li><p><a class="reference internal" href="../how_to_guides/measure_rocket.html"><span class="doc">How to Measure Your Rocket’s Parameters</span></a> - Measure parameters</p></li>
+<li><p><a class="reference internal" href="../tutorials/01_basic_flight.html"><span class="doc">Tutorial 1: Basic Flight Simulation</span></a> - Annotated example</p></li>
+<li><p><a class="reference external" href="https://docs.rocketpy.org/">RocketPy API</a> - Underlying library documentation</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../how_to_guides/export_data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Export Simulation Data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="rocket_params.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Rocket Parameters Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#organization">Organization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference">Quick Reference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-structure">Configuration Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-categories">Parameter Categories</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#units-convention">Units Convention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-systems">Coordinate Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-validation">Parameter Validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-mistakes">Common Mistakes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#templates">Templates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/configuration/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

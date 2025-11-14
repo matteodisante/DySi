@@ -1,0 +1,946 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.environment_setup &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/environment_setup';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.environment_setup</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.environment_setup</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Environment builder for creating RocketPy environment instances.</span>
+
+<span class="sd">This module provides the EnvironmentBuilder class for constructing RocketPy</span>
+<span class="sd">Environment objects from configuration dataclasses.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">rocketpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">Environment</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnvironmentConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.weather_fetcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeatherFetcher</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="EnvironmentBuilder">
+<a class="viewcode-back" href="../../api/index.html#src.environment_setup.EnvironmentBuilder">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EnvironmentBuilder</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Builder for RocketPy Environment instances.</span>
+
+<span class="sd">    This class constructs RocketPy Environment objects from EnvironmentConfig</span>
+<span class="sd">    dataclasses, handling atmospheric models, wind setup, and date/time</span>
+<span class="sd">    configuration.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        config: EnvironmentConfig object with environment parameters.</span>
+<span class="sd">        environment: Constructed Environment instance (after build()).</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; env_config = EnvironmentConfig(</span>
+<span class="sd">        ...     latitude_deg=39.3897,</span>
+<span class="sd">        ...     longitude_deg=-8.2889,</span>
+<span class="sd">        ...     elevation_m=100.0,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; builder = EnvironmentBuilder(env_config)</span>
+<span class="sd">        &gt;&gt;&gt; env = builder.build()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="EnvironmentBuilder.__init__">
+<a class="viewcode-back" href="../../api/index.html#src.environment_setup.EnvironmentBuilder.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">EnvironmentConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize EnvironmentBuilder.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: EnvironmentConfig object with environment parameters.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ImportError: If RocketPy is not installed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">Environment</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s2">&quot;RocketPy is not installed. Install with: pip install rocketpy&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Environment</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="EnvironmentBuilder.build">
+<a class="viewcode-back" href="../../api/index.html#src.environment_setup.EnvironmentBuilder.build">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Environment</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build and return Environment instance.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Configured RocketPy Environment object.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            FileNotFoundError: If atmospheric model file does not exist.</span>
+<span class="sd">            ValueError: If configuration is invalid.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; builder = EnvironmentBuilder(env_config)</span>
+<span class="sd">            &gt;&gt;&gt; env = builder.build()</span>
+<span class="sd">            &gt;&gt;&gt; print(f&quot;Elevation: {env.elevation} m&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Building Environment at (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">latitude_deg</span><span class="si">}</span><span class="s2">°, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">longitude_deg</span><span class="si">}</span><span class="s2">°), elevation=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">elevation_m</span><span class="si">}</span><span class="s2">m&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Create base Environment instance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span>
+            <span class="n">latitude</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">latitude_deg</span><span class="p">,</span>
+            <span class="n">longitude</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">longitude_deg</span><span class="p">,</span>
+            <span class="n">elevation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">elevation_m</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Note: Gravity is typically handled by RocketPy internally</span>
+        <span class="c1"># Custom gravity can be set via environment attributes if needed</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using gravity: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">gravity_ms2</span><span class="si">}</span><span class="s2"> m/s²&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set date if provided</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">set_date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Date set to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">date</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set atmospheric model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_atmospheric_model</span><span class="p">()</span>
+
+        <span class="c1"># Set wind model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_wind_model</span><span class="p">()</span>
+
+        <span class="c1"># Set max expected height for atmospheric data range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">max_expected_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_expected_height_m</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Max expected height set to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">max_expected_height_m</span><span class="si">}</span><span class="s2"> m&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Environment built successfully&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_atmospheric_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup atmospheric model based on configuration.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            FileNotFoundError: If custom atmosphere file does not exist.</span>
+<span class="sd">            ValueError: If atmospheric model type is not supported.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if new weather configuration is used</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;weather&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">weather</span><span class="o">.</span><span class="n">source</span> <span class="o">!=</span> <span class="s2">&quot;standard_atmosphere&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setup_weather_model</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Fall back to old atmospheric_model field for backward compatibility</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atmospheric_model</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;standard_atmosphere&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">set_atmospheric_model</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;standard_atmosphere&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Using standard atmosphere model (ISA)&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;custom_atmosphere&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atmospheric_model_file</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Custom atmosphere model requires atmospheric_model_file&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">atm_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atmospheric_model_file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">atm_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="c1"># Try relative to project root</span>
+                <span class="n">project_root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+                <span class="n">atm_file</span> <span class="o">=</span> <span class="n">project_root</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atmospheric_model_file</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">atm_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Atmospheric model file not found: &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atmospheric_model_file</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">set_atmospheric_model</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;custom_atmosphere&quot;</span><span class="p">,</span>
+                <span class="n">file</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">atm_file</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using custom atmosphere from </span><span class="si">{</span><span class="n">atm_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unsupported atmospheric model: &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atmospheric_model</span><span class="si">}</span><span class="s2">&#39;. &quot;</span>
+                <span class="s2">&quot;Use weather.source for advanced models (wyoming, gfs, era5)&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_weather_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup weather model using WeatherFetcher integration.</span>
+
+<span class="sd">        Supports Wyoming soundings, GFS forecasts, ERA5 reanalysis, and custom profiles.</span>
+<span class="sd">        Wind is included automatically in weather data sources.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">weather_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">weather</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">weather_config</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting up weather from source: </span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">source</span> <span class="o">==</span> <span class="s2">&quot;wyoming&quot;</span><span class="p">:</span>
+            <span class="c1"># Wyoming sounding</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">weather_config</span><span class="o">.</span><span class="n">wyoming_station</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wyoming source requires wyoming_station ID&quot;</span><span class="p">)</span>
+
+            <span class="n">date</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">date</span><span class="p">:</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+                <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+            <span class="n">url</span> <span class="o">=</span> <span class="n">WeatherFetcher</span><span class="o">.</span><span class="n">fetch_wyoming_sounding</span><span class="p">(</span>
+                <span class="n">station</span><span class="o">=</span><span class="n">weather_config</span><span class="o">.</span><span class="n">wyoming_station</span><span class="p">,</span>
+                <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">set_atmospheric_model</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;wyoming_sounding&#39;</span><span class="p">,</span>
+                <span class="n">file</span><span class="o">=</span><span class="n">url</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using Wyoming sounding from station </span><span class="si">{</span><span class="n">weather_config</span><span class="o">.</span><span class="n">wyoming_station</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">source</span> <span class="o">==</span> <span class="s2">&quot;gfs&quot;</span><span class="p">:</span>
+            <span class="c1"># GFS forecast</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">date</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;GFS forecast requires date to be set&quot;</span><span class="p">)</span>
+
+            <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+            <span class="n">forecast_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">set_atmospheric_model</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Forecast&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;GFS&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using GFS forecast for </span><span class="si">{</span><span class="n">forecast_date</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">source</span> <span class="o">==</span> <span class="s2">&quot;era5&quot;</span><span class="p">:</span>
+            <span class="c1"># ERA5 reanalysis</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">date</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ERA5 reanalysis requires date to be set&quot;</span><span class="p">)</span>
+
+            <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+            <span class="n">reanalysis_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">set_atmospheric_model</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Reanalysis&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;ERA5&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using ERA5 reanalysis for </span><span class="si">{</span><span class="n">reanalysis_date</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">source</span> <span class="o">==</span> <span class="s2">&quot;custom&quot;</span><span class="p">:</span>
+            <span class="c1"># Custom atmospheric profile</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">weather_config</span><span class="o">.</span><span class="n">custom_file</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Custom weather source requires custom_file path&quot;</span><span class="p">)</span>
+
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">WeatherFetcher</span><span class="o">.</span><span class="n">load_custom_atmospheric_profile</span><span class="p">(</span>
+                <span class="n">weather_config</span><span class="o">.</span><span class="n">custom_file</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">set_atmospheric_model</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;custom_atmosphere&#39;</span><span class="p">,</span>
+                <span class="n">file</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using custom atmospheric profile: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unsupported weather source: &#39;</span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s2">&#39;. &quot;</span>
+                <span class="s2">&quot;Supported: wyoming, gfs, era5, custom, standard_atmosphere&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_wind_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup wind model based on configuration.</span>
+
+<span class="sd">        The wind model can be:</span>
+<span class="sd">        - constant: Constant wind velocity and direction</span>
+<span class="sd">        - from_weather: Wind profile from weather data (Wyoming, GFS, ERA5)</span>
+<span class="sd">        - function: Custom wind function (not yet implemented)</span>
+<span class="sd">        - custom: Custom wind data (not yet implemented)</span>
+
+<span class="sd">        NOTE: Wind must be set when calling set_atmospheric_model() with wind_u and wind_v.</span>
+<span class="sd">        This method should be called AFTER _setup_atmospheric_model() and will update</span>
+<span class="sd">        the atmospheric model with wind if needed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wind_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">wind_model</span> <span class="o">==</span> <span class="s2">&quot;constant&quot;</span><span class="p">:</span>
+            <span class="c1"># Constant wind throughout altitude</span>
+            <span class="n">wind_velocity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">velocity_ms</span>
+            <span class="n">wind_direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">direction_deg</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Setting constant wind: </span><span class="si">{</span><span class="n">wind_velocity</span><span class="si">}</span><span class="s2"> m/s from </span><span class="si">{</span><span class="n">wind_direction</span><span class="si">}</span><span class="s2">°&quot;</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">wind_velocity</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># No wind - already set by atmospheric model</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;No wind (velocity = 0)&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Convert meteorological direction to wind components</span>
+                <span class="c1">#</span>
+                <span class="c1"># METEOROLOGICAL CONVENTION (used by RocketPy):</span>
+                <span class="c1"># Wind direction = where wind comes FROM (0° = North, 90° = East, ...)</span>
+                <span class="c1">#</span>
+                <span class="c1"># Examples:</span>
+                <span class="c1">#   - Wind from North (0°):   blows South  → u=0,  v=-V</span>
+                <span class="c1">#   - Wind from East (90°):   blows West   → u=-V, v=0</span>
+                <span class="c1">#   - Wind from South (180°): blows North  → u=0,  v=+V</span>
+                <span class="c1">#   - Wind from West (270°):  blows East   → u=+V, v=0</span>
+                <span class="c1">#</span>
+                <span class="c1"># Formula: u = -V*sin(θ), v = -V*cos(θ)</span>
+                <span class="c1"># Negative sign because wind COMES FROM direction (not GOES TO)</span>
+
+                <span class="n">direction_rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">wind_direction</span><span class="p">)</span>
+
+                <span class="c1"># Calculate wind components (RocketPy convention)</span>
+                <span class="n">wind_u</span> <span class="o">=</span> <span class="o">-</span><span class="n">wind_velocity</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">direction_rad</span><span class="p">)</span>  <span class="c1"># East component (m/s)</span>
+                <span class="n">wind_v</span> <span class="o">=</span> <span class="o">-</span><span class="n">wind_velocity</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">direction_rad</span><span class="p">)</span>  <span class="c1"># North component (m/s)</span>
+
+                <span class="c1"># Get current atmospheric model settings</span>
+                <span class="n">atm_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">atmospheric_model_type</span>
+                <span class="n">atm_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">atmospheric_model_file</span>
+
+                <span class="c1"># Re-apply atmospheric model with wind</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">set_atmospheric_model</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="n">atm_type</span><span class="p">,</span>
+                    <span class="n">file</span><span class="o">=</span><span class="n">atm_file</span> <span class="k">if</span> <span class="n">atm_file</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">wind_u</span><span class="o">=</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">wind_u</span><span class="p">,</span>  <span class="c1"># Constant with altitude</span>
+                    <span class="n">wind_v</span><span class="o">=</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">wind_v</span><span class="p">,</span>  <span class="c1"># Constant with altitude</span>
+                <span class="p">)</span>
+
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Constant wind set: </span><span class="si">{</span><span class="n">wind_velocity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s from </span><span class="si">{</span><span class="n">wind_direction</span><span class="si">}</span><span class="s2">° &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;(u=</span><span class="si">{</span><span class="n">wind_u</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">, v=</span><span class="si">{</span><span class="n">wind_v</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s)&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">wind_model</span> <span class="o">==</span> <span class="s2">&quot;from_weather&quot;</span><span class="p">:</span>
+            <span class="c1"># Wind profile comes from weather data source</span>
+            <span class="c1"># Wyoming, GFS, and ERA5 include wind profiles automatically</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using wind profile from weather data source&quot;</span><span class="p">)</span>
+            <span class="c1"># Wind is already set by _setup_weather_model() for these sources</span>
+
+        <span class="k">elif</span> <span class="n">wind_model</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;custom&quot;</span><span class="p">]:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Wind model &#39;</span><span class="si">{</span><span class="n">wind_model</span><span class="si">}</span><span class="s2">&#39; not fully implemented. &quot;</span>
+                <span class="s2">&quot;Using no wind for now.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unsupported wind model: &#39;</span><span class="si">{</span><span class="n">wind_model</span><span class="si">}</span><span class="s2">&#39;. &quot;</span>
+                <span class="s2">&quot;Supported: constant, from_weather, function, custom&quot;</span>
+            <span class="p">)</span>
+
+<div class="viewcode-block" id="EnvironmentBuilder.get_atmospheric_conditions">
+<a class="viewcode-back" href="../../api/index.html#src.environment_setup.EnvironmentBuilder.get_atmospheric_conditions">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_atmospheric_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">altitude_m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get atmospheric conditions at specified altitude.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            altitude_m: Altitude in meters ASL.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with atmospheric properties.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If environment has not been built yet.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; builder.build()</span>
+<span class="sd">            &gt;&gt;&gt; conditions = builder.get_atmospheric_conditions(1000.0)</span>
+<span class="sd">            &gt;&gt;&gt; print(f&quot;Temperature: {conditions[&#39;temperature_k&#39;]:.1f} K&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Environment not built yet. Call build() first.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;altitude_m&quot;</span><span class="p">:</span> <span class="n">altitude_m</span><span class="p">,</span>
+            <span class="s2">&quot;pressure_pa&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">pressure</span><span class="p">(</span><span class="n">altitude_m</span><span class="p">)),</span>
+            <span class="s2">&quot;temperature_k&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">temperature</span><span class="p">(</span><span class="n">altitude_m</span><span class="p">)),</span>
+            <span class="s2">&quot;density_kg_m3&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">altitude_m</span><span class="p">)),</span>
+            <span class="s2">&quot;speed_of_sound_ms&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">speed_of_sound</span><span class="p">(</span><span class="n">altitude_m</span><span class="p">)),</span>
+            <span class="s2">&quot;gravity_ms2&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">gravity</span><span class="p">(</span><span class="n">altitude_m</span><span class="p">)),</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="EnvironmentBuilder.get_summary">
+<a class="viewcode-back" href="../../api/index.html#src.environment_setup.EnvironmentBuilder.get_summary">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get summary of environment configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with environment properties.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If environment has not been built yet.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; summary = builder.get_summary()</span>
+<span class="sd">            &gt;&gt;&gt; print(f&quot;Location: {summary[&#39;location&#39;]}&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Environment not built yet. Call build() first.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get sea level conditions</span>
+        <span class="n">sea_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_atmospheric_conditions</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="c1"># Get conditions at elevation</span>
+        <span class="n">at_elevation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_atmospheric_conditions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">elevation_m</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">latitude_deg</span><span class="si">}</span><span class="s2">°, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">longitude_deg</span><span class="si">}</span><span class="s2">°)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;elevation_m&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">elevation_m</span><span class="p">,</span>
+            <span class="s2">&quot;atmospheric_model&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">atmospheric_model</span><span class="p">,</span>
+            <span class="s2">&quot;wind_velocity_ms&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">velocity_ms</span><span class="p">,</span>
+            <span class="s2">&quot;wind_direction_deg&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">wind</span><span class="o">.</span><span class="n">direction_deg</span><span class="p">,</span>
+            <span class="s2">&quot;gravity_ms2&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">gravity_ms2</span><span class="p">,</span>
+            <span class="s2">&quot;sea_level_pressure_pa&quot;</span><span class="p">:</span> <span class="n">sea_level</span><span class="p">[</span><span class="s2">&quot;pressure_pa&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;sea_level_temperature_k&quot;</span><span class="p">:</span> <span class="n">sea_level</span><span class="p">[</span><span class="s2">&quot;temperature_k&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;sea_level_density_kg_m3&quot;</span><span class="p">:</span> <span class="n">sea_level</span><span class="p">[</span><span class="s2">&quot;density_kg_m3&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;elevation_pressure_pa&quot;</span><span class="p">:</span> <span class="n">at_elevation</span><span class="p">[</span><span class="s2">&quot;pressure_pa&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;elevation_temperature_k&quot;</span><span class="p">:</span> <span class="n">at_elevation</span><span class="p">[</span><span class="s2">&quot;temperature_k&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;elevation_density_kg_m3&quot;</span><span class="p">:</span> <span class="n">at_elevation</span><span class="p">[</span><span class="s2">&quot;density_kg_m3&quot;</span><span class="p">],</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="EnvironmentBuilder.from_location">
+<a class="viewcode-back" href="../../api/index.html#src.environment_setup.EnvironmentBuilder.from_location">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_location</span><span class="p">(</span>
+        <span class="n">latitude_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">longitude_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">elevation_m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Environment</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create Environment from minimal location parameters.</span>
+
+<span class="sd">        This is a simplified factory method for quickly creating environments</span>
+<span class="sd">        with default atmospheric model and no wind.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            latitude_deg: Latitude in degrees.</span>
+<span class="sd">            longitude_deg: Longitude in degrees.</span>
+<span class="sd">            elevation_m: Elevation above sea level in meters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Configured Environment instance.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; env = EnvironmentBuilder.from_location(</span>
+<span class="sd">            ...     latitude_deg=39.3897,</span>
+<span class="sd">            ...     longitude_deg=-8.2889,</span>
+<span class="sd">            ...     elevation_m=100.0,</span>
+<span class="sd">            ... )</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">Environment</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s2">&quot;RocketPy is not installed. Install with: pip install rocketpy&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Creating Environment at (</span><span class="si">{</span><span class="n">latitude_deg</span><span class="si">}</span><span class="s2">°, </span><span class="si">{</span><span class="n">longitude_deg</span><span class="si">}</span><span class="s2">°), &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;elevation=</span><span class="si">{</span><span class="n">elevation_m</span><span class="si">}</span><span class="s2">m&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span>
+            <span class="n">latitude</span><span class="o">=</span><span class="n">latitude_deg</span><span class="p">,</span>
+            <span class="n">longitude</span><span class="o">=</span><span class="n">longitude_deg</span><span class="p">,</span>
+            <span class="n">elevation</span><span class="o">=</span><span class="n">elevation_m</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Set standard atmosphere</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">set_atmospheric_model</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;standard_atmosphere&quot;</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Environment created with standard atmosphere, no wind&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">env</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

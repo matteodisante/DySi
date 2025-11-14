@@ -1,0 +1,1183 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Troubleshoot Simulation Issues &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/how_to_guides/troubleshoot';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Troubleshoot Simulation Issues</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="troubleshoot-simulation-issues">
+<span id="howto-troubleshoot"></span><h1>Troubleshoot Simulation Issues<a class="headerlink" href="#troubleshoot-simulation-issues" title="Link to this heading">#</a></h1>
+<p>This guide helps you diagnose and fix common simulation problems.</p>
+<section id="quick-diagnostics">
+<h2>Quick Diagnostics<a class="headerlink" href="#quick-diagnostics" title="Link to this heading">#</a></h2>
+<section id="run-basic-health-check">
+<h3>Run Basic Health Check<a class="headerlink" href="#run-basic-health-check" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check configuration validity</span>
+python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>configs/single_sim/my_rocket.yaml<span class="w"> </span>--validate
+
+<span class="c1"># Enable verbose output</span>
+python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>configs/single_sim/my_rocket.yaml<span class="w"> </span>--verbose
+
+<span class="c1"># Enable debug logging</span>
+python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>configs/single_sim/my_rocket.yaml<span class="w"> </span>--log-level<span class="w"> </span>DEBUG
+</pre></div>
+</div>
+</section>
+</section>
+<section id="common-error-categories">
+<h2>Common Error Categories<a class="headerlink" href="#common-error-categories" title="Link to this heading">#</a></h2>
+<section id="category-1-configuration-errors">
+<h3>Category 1: Configuration Errors<a class="headerlink" href="#category-1-configuration-errors" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Symptom</p></th>
+<th class="head"><p>Solution</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FileNotFoundError:</span> <span class="pre">motor</span> <span class="pre">file</span> <span class="pre">not</span> <span class="pre">found</span></code></p></td>
+<td><p>Check <code class="docutils literal notranslate"><span class="pre">motor_path</span></code> in config - use absolute or relative path from config directory</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">KeyError:</span> <span class="pre">missing</span> <span class="pre">required</span> <span class="pre">field</span></code></p></td>
+<td><p>Add missing field to YAML (check against template in <code class="docutils literal notranslate"><span class="pre">configs/templates/</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">invalid</span> <span class="pre">parameter</span> <span class="pre">value</span></code></p></td>
+<td><p>Verify units and range (e.g., masses must be positive, angles in degrees)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">YAML</span> <span class="pre">parsing</span> <span class="pre">error</span></code></p></td>
+<td><p>Check YAML syntax - indentation must be consistent, use spaces not tabs</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="category-2-physics-errors">
+<h3>Category 2: Physics Errors<a class="headerlink" href="#category-2-physics-errors" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Symptom</p></th>
+<th class="head"><p>Solution</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Negative stability margin</p></td>
+<td><p>Move CoM forward or add/enlarge fins (see <a class="reference internal" href="validate_design.html#howto-validate-design"><span class="std std-ref">Validate Your Rocket Design</span></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rail exit velocity too low</p></td>
+<td><p>Use more powerful motor or longer rail</p></td>
+</tr>
+<tr class="row-even"><td><p>Flight hangs at simulation start</p></td>
+<td><p>Check motor thrust curve - must have non-zero values</p></td>
+</tr>
+<tr class="row-odd"><td><p>Unrealistic apogee</p></td>
+<td><p>Verify rocket mass and motor total impulse</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="category-3-integration-errors">
+<h3>Category 3: Integration Errors<a class="headerlink" href="#category-3-integration-errors" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Symptom</p></th>
+<th class="head"><p>Solution</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RuntimeError:</span> <span class="pre">integration</span> <span class="pre">failed</span></code></p></td>
+<td><p>Reduce <code class="docutils literal notranslate"><span class="pre">max_time_step</span></code> or increase <code class="docutils literal notranslate"><span class="pre">max_iterations</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Oscillating trajectory</p></td>
+<td><p>Use stricter tolerances (<code class="docutils literal notranslate"><span class="pre">rtol:</span> <span class="pre">1e-6</span></code>, <code class="docutils literal notranslate"><span class="pre">atol:</span> <span class="pre">1e-9</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Simulation very slow</p></td>
+<td><p>Increase <code class="docutils literal notranslate"><span class="pre">max_time_step</span></code> or reduce <code class="docutils literal notranslate"><span class="pre">max_time</span></code> if flight is complete</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="detailed-troubleshooting">
+<h2>Detailed Troubleshooting<a class="headerlink" href="#detailed-troubleshooting" title="Link to this heading">#</a></h2>
+<section id="problem-simulation-doesn-t-start">
+<h3>Problem: Simulation Doesn’t Start<a class="headerlink" href="#problem-simulation-doesn-t-start" title="Link to this heading">#</a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Script exits immediately</p></li>
+<li><p>No output files created</p></li>
+<li><p>Error message before flight initialization</p></li>
+</ul>
+<p><strong>Diagnostic steps:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check if configuration loads</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">import yaml</span>
+<span class="s2">with open(&#39;configs/single_sim/my_rocket.yaml&#39;) as f:</span>
+<span class="s2">    config = yaml.safe_load(f)</span>
+<span class="s2">print(&#39;Config loaded:&#39;, config[&#39;name&#39;])</span>
+<span class="s2">&quot;</span>
+
+<span class="c1"># Check motor file</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">from rocketpy import SolidMotor</span>
+<span class="s2">motor = SolidMotor(</span>
+<span class="s2">    thrust_source=&#39;data/motors/my_motor.eng&#39;,</span>
+<span class="s2">    burn_time=3.0,</span>
+<span class="s2">    dry_mass=0.5,</span>
+<span class="s2">    dry_inertia=(0.1, 0.1, 0.01),</span>
+<span class="s2">    center_of_dry_mass_position=0.0,</span>
+<span class="s2">    grains_center_of_mass_position=0.0,</span>
+<span class="s2">    nozzle_radius=0.033,</span>
+<span class="s2">    grain_number=5,</span>
+<span class="s2">    grain_separation=0.005,</span>
+<span class="s2">    grain_density=1815,</span>
+<span class="s2">    grain_outer_radius=0.033,</span>
+<span class="s2">    grain_initial_inner_radius=0.015,</span>
+<span class="s2">    grain_initial_height=0.12,</span>
+<span class="s2">    nozzle_position=0.0,</span>
+<span class="s2">    throat_radius=0.011</span>
+<span class="s2">)</span>
+<span class="s2">print(&#39;Motor loaded OK&#39;)</span>
+<span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p><strong>Common fixes:</strong></p>
+<ol class="arabic">
+<li><p><strong>Missing motor file:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong (relative to script location)</span>
+<span class="nt">motor_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_motor.eng</span>
+
+<span class="c1"># Correct (relative to config file)</span>
+<span class="nt">motor_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../../data/motors/my_motor.eng</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Invalid YAML syntax:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong (missing colon)</span>
+<span class="l l-Scalar l-Scalar-Plain">name my_rocket</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Wrong (tabs instead of spaces)</span>
+<span class="l l-Scalar l-Scalar-Plain">fins</span><span class="p p-Indicator">:</span>
+<span class="w">  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+
+<span class="c1"># Correct</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_rocket</span>
+<span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Missing required fields:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compare with template</span>
+diff<span class="w"> </span>configs/single_sim/my_rocket.yaml<span class="w"> </span>configs/templates/single_sim_template.yaml
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="problem-unstable-flight">
+<h3>Problem: Unstable Flight<a class="headerlink" href="#problem-unstable-flight" title="Link to this heading">#</a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Rocket tumbles immediately after launch</p></li>
+<li><p>Negative stability margin in output</p></li>
+<li><p>Wild trajectory in plots</p></li>
+</ul>
+<p><strong>Diagnostic steps:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+
+<span class="c1"># Check stability margin</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;configs/single_sim/my_rocket.yaml&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Extract key parameters</span>
+<span class="n">rocket_length</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;rocket&#39;</span><span class="p">][</span><span class="s1">&#39;length_m&#39;</span><span class="p">]</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;rocket&#39;</span><span class="p">][</span><span class="s1">&#39;radius_m&#39;</span><span class="p">]</span>
+
+<span class="c1"># Print CoM/CP (from output)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/final_state_READABLE.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;Center of Mass&#39;</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">or</span> <span class="s1">&#39;Center of Pressure&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>Solution workflow:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># quick_stability.py - Check stability before full simulation</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rocketpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rocket</span><span class="p">,</span> <span class="n">SolidMotor</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+
+<span class="c1"># Load config</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;configs/single_sim/my_rocket.yaml&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Create minimal rocket (fast setup)</span>
+<span class="n">motor</span> <span class="o">=</span> <span class="n">SolidMotor</span><span class="p">(</span>
+    <span class="n">thrust_source</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;motor&#39;</span><span class="p">][</span><span class="s1">&#39;motor_path&#39;</span><span class="p">],</span>
+    <span class="n">burn_time</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;motor&#39;</span><span class="p">][</span><span class="s1">&#39;burn_time_s&#39;</span><span class="p">],</span>
+    <span class="n">dry_mass</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;motor&#39;</span><span class="p">][</span><span class="s1">&#39;dry_mass_kg&#39;</span><span class="p">],</span>
+    <span class="c1"># ... other motor params</span>
+<span class="p">)</span>
+
+<span class="n">rocket</span> <span class="o">=</span> <span class="n">Rocket</span><span class="p">(</span>
+    <span class="n">radius</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;rocket&#39;</span><span class="p">][</span><span class="s1">&#39;radius_m&#39;</span><span class="p">],</span>
+    <span class="n">mass</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;rocket&#39;</span><span class="p">][</span><span class="s1">&#39;mass_without_motor_kg&#39;</span><span class="p">],</span>
+    <span class="n">inertia</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>  <span class="c1"># Rough estimate</span>
+    <span class="n">power_off_drag</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">power_on_drag</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">center_of_mass_without_motor</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">coordinate_system_orientation</span><span class="o">=</span><span class="s2">&quot;tail_to_nose&quot;</span>
+<span class="p">)</span>
+
+<span class="n">rocket</span><span class="o">.</span><span class="n">add_motor</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;motor&#39;</span><span class="p">][</span><span class="s1">&#39;position_m&#39;</span><span class="p">])</span>
+
+<span class="c1"># Add fins</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">add_trapezoidal_fins</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;fins&#39;</span><span class="p">][</span><span class="s1">&#39;number&#39;</span><span class="p">],</span>
+    <span class="n">root_chord</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;fins&#39;</span><span class="p">][</span><span class="s1">&#39;root_chord_m&#39;</span><span class="p">],</span>
+    <span class="n">tip_chord</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;fins&#39;</span><span class="p">][</span><span class="s1">&#39;tip_chord_m&#39;</span><span class="p">],</span>
+    <span class="n">span</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;fins&#39;</span><span class="p">][</span><span class="s1">&#39;span_m&#39;</span><span class="p">],</span>
+    <span class="n">position</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;fins&#39;</span><span class="p">][</span><span class="s1">&#39;position_m&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Check stability</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">static_margin</span><span class="p">()</span>  <span class="c1"># Generates plot</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Stability margin: </span><span class="si">{</span><span class="n">rocket</span><span class="o">.</span><span class="n">static_margin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> calibers&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">rocket</span><span class="o">.</span><span class="n">static_margin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️  WARNING: Unstable! Stability margin &lt; 1.0&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solutions:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;- Increase fin span&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;- Move fins further back&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;- Move motor forward (if possible)&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">rocket</span><span class="o">.</span><span class="n">static_margin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">3.0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️  WARNING: Overstable! May weathercock excessively&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solutions:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;- Reduce fin span&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;- Move fins forward&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ Stability margin OK (1.0 - 3.0)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="problem-parachute-doesn-t-deploy">
+<h3>Problem: Parachute Doesn’t Deploy<a class="headerlink" href="#problem-parachute-doesn-t-deploy" title="Link to this heading">#</a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>High impact velocity (&gt;20 m/s)</p></li>
+<li><p>No parachute event in output</p></li>
+<li><p>Rocket falls ballistically</p></li>
+</ul>
+<p><strong>Diagnostic steps:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check parachute events in output</span>
+grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;parachute&quot;</span><span class="w"> </span>outputs/my_rocket/final_state_READABLE.txt
+
+<span class="c1"># Check for deployment trigger</span>
+grep<span class="w"> </span>-A<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">&quot;parachute&quot;</span><span class="w"> </span>outputs/my_rocket/my_rocket_log
+</pre></div>
+</div>
+<p><strong>Common causes:</strong></p>
+<ol class="arabic">
+<li><p><strong>Trigger never satisfied:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong - apogee detection might fail if tolerance too strict</span>
+<span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">drogue</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apogee</span>
+<span class="w">    </span><span class="c1"># No trigger_value needed for apogee</span>
+
+<span class="c1"># Wrong - altitude trigger set too low</span>
+<span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">main</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">altitude</span>
+<span class="w">    </span><span class="nt">trigger_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">  </span><span class="c1"># Rocket might land before reaching 100m descent</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Invalid trigger function:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong - lambda syntax</span>
+<span class="nt">trigger_function</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lambda</span><span class="nv"> </span><span class="s">p,</span><span class="nv"> </span><span class="s">y:</span><span class="nv"> </span><span class="s">y[2]</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">500&quot;</span>
+
+<span class="c1"># Correct</span>
+<span class="nt">trigger_function</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lambda</span><span class="nv"> </span><span class="s">p,</span><span class="nv"> </span><span class="s">y:</span><span class="nv"> </span><span class="s">y[2]</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">500</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">y[5]</span><span class="nv"> </span><span class="s">&lt;</span><span class="nv"> </span><span class="s">0&quot;</span>
+<span class="c1"># y[2] = altitude, y[5] = vertical velocity</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Quick test:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># test_parachute_trigger.py</span>
+
+<span class="c1"># Simulate apogee condition</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">apogee_trigger</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># y[5] is vertical velocity</span>
+    <span class="k">return</span> <span class="n">y</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span>  <span class="c1"># Triggers when descending</span>
+
+<span class="c1"># Test condition</span>
+<span class="n">test_state</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">]</span>  <span class="c1"># At apogee, velocity just turned negative</span>
+
+<span class="k">if</span> <span class="n">apogee_trigger</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_state</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ Trigger would activate at apogee&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✗ Trigger would NOT activate&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="problem-simulation-runs-forever">
+<h3>Problem: Simulation Runs Forever<a class="headerlink" href="#problem-simulation-runs-forever" title="Link to this heading">#</a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Script doesn’t terminate</p></li>
+<li><p>Output files never finalize</p></li>
+<li><p>CPU usage stays high</p></li>
+</ul>
+<p><strong>Diagnostic steps:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check simulation time in config</span>
+grep<span class="w"> </span><span class="s2">&quot;max_time&quot;</span><span class="w"> </span>configs/single_sim/my_rocket.yaml
+
+<span class="c1"># Monitor log in real-time</span>
+tail<span class="w"> </span>-f<span class="w"> </span>outputs/my_rocket/my_rocket_log
+</pre></div>
+</div>
+<p><strong>Common causes:</strong></p>
+<ol class="arabic">
+<li><p><strong>max_time too large:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong - flight ends in ~60s but simulating 1000s</span>
+<span class="nt">integration</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+
+<span class="c1"># Correct - reasonable upper bound</span>
+<span class="nt">integration</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Parachute failure causing long descent:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check if parachute is deployed</span>
+<span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">drogue</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">  </span><span class="c1"># Too small? Rocket descends very slowly</span>
+
+<span class="c1"># Increase Cd*S for faster descent</span>
+<span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">drogue</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Force termination:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find process</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>run_single_simulation
+
+<span class="c1"># Kill process (use PID from above)</span>
+<span class="nb">kill</span><span class="w"> </span>-9<span class="w"> </span>&lt;PID&gt;
+</pre></div>
+</div>
+</section>
+<section id="problem-unrealistic-results">
+<h3>Problem: Unrealistic Results<a class="headerlink" href="#problem-unrealistic-results" title="Link to this heading">#</a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Apogee much higher/lower than expected</p></li>
+<li><p>Impossible velocities or accelerations</p></li>
+<li><p>Trajectory goes underground</p></li>
+</ul>
+<p><strong>Validation checklist:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># validate_results.py</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_summary.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">]</span>
+
+<span class="c1"># Check physically plausible ranges</span>
+<span class="n">checks</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Apogee &lt; 10 km&#39;</span><span class="p">:</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="s1">&#39;Max velocity &lt; 500 m/s&#39;</span><span class="p">:</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="s1">&#39;Max acceleration &lt; 300 m/s²&#39;</span><span class="p">:</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;max_acceleration_ms2&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="s1">&#39;Flight time &lt; 600 s&#39;</span><span class="p">:</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="s1">&#39;Landing distance &lt; 5 km&#39;</span><span class="p">:</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;lateral_distance_m&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">5000</span><span class="p">,</span>
+    <span class="s1">&#39;Impact velocity &lt; 30 m/s&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;impact_velocity_ms&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Plausibility checks:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">check</span><span class="p">,</span> <span class="n">passed</span> <span class="ow">in</span> <span class="n">checks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;✓&quot;</span> <span class="k">if</span> <span class="n">passed</span> <span class="k">else</span> <span class="s2">&quot;✗&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">check</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">checks</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⚠️ Some checks failed - review configuration!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Common parameter errors:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong - mass too low (kg vs g confusion)</span>
+<span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">  </span><span class="c1"># This is 500g - very light!</span>
+
+<span class="c1"># Correct</span>
+<span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span><span class="w">  </span><span class="c1"># 5 kg</span>
+
+<span class="c1"># Wrong - radius in meters, should be diameter?</span>
+<span class="nt">radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># This is 200mm diameter - very large</span>
+
+<span class="c1"># Correct</span>
+<span class="nt">radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.04</span><span class="w">  </span><span class="c1"># 80mm diameter (typical HPR)</span>
+</pre></div>
+</div>
+</section>
+<section id="problem-monte-carlo-failures">
+<h3>Problem: Monte Carlo Failures<a class="headerlink" href="#problem-monte-carlo-failures" title="Link to this heading">#</a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Some simulations fail in ensemble</p></li>
+<li><p>Missing output files</p></li>
+<li><p>Error in logs: “Simulation X failed”</p></li>
+</ul>
+<p><strong>Diagnostic steps:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check how many failed</span>
+grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;failed&quot;</span><span class="w"> </span>outputs/monte_carlo_*/ensemble_log.txt
+
+<span class="c1"># Find which simulations failed</span>
+grep<span class="w"> </span><span class="s2">&quot;failed&quot;</span><span class="w"> </span>outputs/monte_carlo_*/ensemble_log.txt
+
+<span class="c1"># Check first failed simulation</span>
+ls<span class="w"> </span>outputs/monte_carlo_*/sim_0001/
+</pre></div>
+</div>
+<p><strong>Common causes:</strong></p>
+<ol class="arabic">
+<li><p><strong>Random parameter out of valid range:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wrong - mass can be negative with this variation!</span>
+<span class="nt">mass_without_motor_kg</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">distribution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">normal</span>
+<span class="w">  </span><span class="nt">mean</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">  </span><span class="nt">std_dev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span><span class="w">  </span><span class="c1"># Too large!</span>
+
+<span class="c1"># Correct</span>
+<span class="nt">mass_without_motor_kg</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">distribution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">normal</span>
+<span class="w">  </span><span class="nt">mean</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">  </span><span class="nt">std_dev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">  </span><span class="c1"># ±10% variation</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Instability in some samples:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fin variation might cause instability</span>
+<span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">distribution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">normal</span>
+<span class="w">    </span><span class="nt">mean</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span>
+<span class="w">    </span><span class="nt">std_dev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">  </span><span class="c1"># Some samples might have very small fins</span>
+
+<span class="c1"># Add lower bound or reduce variation</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="advanced-debugging">
+<h2>Advanced Debugging<a class="headerlink" href="#advanced-debugging" title="Link to this heading">#</a></h2>
+<section id="enable-full-debug-output">
+<h3>Enable Full Debug Output<a class="headerlink" href="#enable-full-debug-output" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># In config file, add:</span>
+<span class="nt">simulation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">log_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span>
+<span class="w">  </span><span class="nt">verbose</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</section>
+<section id="create-debug-script">
+<h3>Create Debug Script<a class="headerlink" href="#create-debug-script" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># debug_sim.py - Interactive debugging</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.simulation.single_flight</span><span class="w"> </span><span class="kn">import</span> <span class="n">SingleFlightSimulation</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pdb</span>
+
+<span class="c1"># Load config</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;configs/single_sim/my_rocket.yaml&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Create simulation</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">SingleFlightSimulation</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="c1"># Set breakpoint before flight</span>
+<span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+
+<span class="c1"># Run simulation (will stop at breakpoint)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="check-rocketpy-objects">
+<h3>Check RocketPy Objects<a class="headerlink" href="#check-rocketpy-objects" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># inspect_objects.py - Examine RocketPy internals</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rocketpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rocket</span><span class="p">,</span> <span class="n">SolidMotor</span><span class="p">,</span> <span class="n">Environment</span>
+
+<span class="c1"># Create objects</span>
+<span class="n">motor</span> <span class="o">=</span> <span class="n">SolidMotor</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">rocket</span> <span class="o">=</span> <span class="n">Rocket</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># Inspect motor</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Motor info:&quot;</span><span class="p">)</span>
+<span class="n">motor</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">motor</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">thrust</span><span class="p">()</span>
+
+<span class="c1"># Inspect rocket</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Rocket info:&quot;</span><span class="p">)</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">static_margin</span><span class="p">()</span>
+
+<span class="c1"># Inspect environment</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Environment info:&quot;</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="validate-against-openrocket">
+<h3>Validate Against OpenRocket<a class="headerlink" href="#validate-against-openrocket" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Export trajectory for comparison</span>
+python<span class="w"> </span>scripts/export_for_openrocket.py<span class="w"> </span>outputs/my_rocket/
+
+<span class="c1"># Compare apogees</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">import json</span>
+<span class="s2">with open(&#39;outputs/my_rocket/trajectory/my_rocket_summary.json&#39;) as f:</span>
+<span class="s2">    data = json.load(f)</span>
+<span class="s2">print(&#39;RocketPy apogee:&#39;, data[&#39;flight_results&#39;][&#39;apogee_m&#39;])</span>
+<span class="s2">print(&#39;Compare with OpenRocket simulation&#39;)</span>
+<span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading">#</a></h2>
+<section id="collect-diagnostic-information">
+<h3>Collect Diagnostic Information<a class="headerlink" href="#collect-diagnostic-information" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create support bundle</span>
+tar<span class="w"> </span>-czf<span class="w"> </span>debug_bundle.tar.gz<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>configs/single_sim/my_rocket.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>outputs/my_rocket/my_rocket_log<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>outputs/my_rocket/final_state_READABLE.txt<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>outputs/my_rocket/trajectory/my_rocket_summary.json
+</pre></div>
+</div>
+</section>
+<section id="when-reporting-issues">
+<h3>When Reporting Issues<a class="headerlink" href="#when-reporting-issues" title="Link to this heading">#</a></h3>
+<p>Include:</p>
+<ol class="arabic simple">
+<li><p><strong>Configuration file</strong> (YAML)</p></li>
+<li><p><strong>Full error message</strong> or log excerpt</p></li>
+<li><p><strong>Expected vs. actual behavior</strong></p></li>
+<li><p><strong>Python version</strong> and dependency versions</p></li>
+<li><p><strong>Rocket-sim version</strong> (from <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">describe</span> <span class="pre">--tags</span></code>)</p></li>
+</ol>
+<p>Report bugs at: <a class="github reference external" href="https://github.com/your-org/rocket-sim/issues">your-org/rocket-sim#issues</a></p>
+</section>
+</section>
+<section id="quick-reference-error-messages">
+<h2>Quick Reference: Error Messages<a class="headerlink" href="#quick-reference-error-messages" title="Link to this heading">#</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Error: &quot;Rocket is unstable&quot;
+→ Fix: Check stability margin with validate_design.py
+
+Error: &quot;Motor file not found&quot;
+→ Fix: Use absolute path or check relative path from config directory
+
+Error: &quot;Integration did not converge&quot;
+→ Fix: Reduce max_time_step or increase max_iterations
+
+Error: &quot;Apogee detection failed&quot;
+→ Fix: Ensure sufficient max_time for complete flight
+
+Error: &quot;Parachute trigger never activated&quot;
+→ Fix: Check trigger function and conditions
+
+Error: &quot;Invalid parameter value: X must be positive&quot;
+→ Fix: Check units and sign of parameter X in config
+
+Warning: &quot;Rail exit velocity low (&lt;20 m/s)&quot;
+→ Fix: Use more powerful motor or longer rail
+
+Warning: &quot;Impact velocity high (&gt;15 m/s)&quot;
+→ Fix: Check parachute deployment and Cd*S values
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="validate_design.html#howto-validate-design"><span class="std std-ref">Validate Your Rocket Design</span></a> - Pre-flight validation</p></li>
+<li><p><span class="xref std std-ref">tutorial_first_simulation</span> - Basic simulation guide</p></li>
+<li><p><span class="xref std std-ref">api_reference</span> - Configuration parameter reference</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-diagnostics">Quick Diagnostics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-basic-health-check">Run Basic Health Check</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-error-categories">Common Error Categories</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#category-1-configuration-errors">Category 1: Configuration Errors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#category-2-physics-errors">Category 2: Physics Errors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#category-3-integration-errors">Category 3: Integration Errors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-troubleshooting">Detailed Troubleshooting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-simulation-doesn-t-start">Problem: Simulation Doesn’t Start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-unstable-flight">Problem: Unstable Flight</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-parachute-doesn-t-deploy">Problem: Parachute Doesn’t Deploy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-simulation-runs-forever">Problem: Simulation Runs Forever</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-unrealistic-results">Problem: Unrealistic Results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-monte-carlo-failures">Problem: Monte Carlo Failures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-debugging">Advanced Debugging</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enable-full-debug-output">Enable Full Debug Output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-debug-script">Create Debug Script</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-rocketpy-objects">Check RocketPy Objects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validate-against-openrocket">Validate Against OpenRocket</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-help">Getting Help</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collect-diagnostic-information">Collect Diagnostic Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-reporting-issues">When Reporting Issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference-error-messages">Quick Reference: Error Messages</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/how_to_guides/troubleshoot.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

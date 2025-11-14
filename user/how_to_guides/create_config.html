@@ -1,0 +1,1340 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Create Configuration Files &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/how_to_guides/create_config';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="How to Measure Your Rocket’s Parameters" href="measure_rocket.html" />
+    <link rel="prev" title="How-To Guides" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../quick_plot_reference.html">Quick Plot Reference Card</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/plot_interpretation.html">Output Plot Interpretation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">How-To Guides</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Create Configuration Files</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="create-configuration-files">
+<span id="howto-create-config"></span><h1>Create Configuration Files<a class="headerlink" href="#create-configuration-files" title="Link to this heading">#</a></h1>
+<p>This guide shows you how to create simulation configuration files from scratch or templates.</p>
+<div class="tip admonition">
+<p class="admonition-title">Quick Start</p>
+<p>Copy a template and customize it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>configs/templates/single_sim_template.yaml<span class="w"> </span>configs/single_sim/my_rocket.yaml
+<span class="c1"># Edit my_rocket.yaml with your parameters</span>
+</pre></div>
+</div>
+</div>
+<section id="configuration-structure">
+<h2>Configuration Structure<a class="headerlink" href="#configuration-structure" title="Link to this heading">#</a></h2>
+<p>All configuration files are YAML format with these main sections:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simulation metadata</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_rocket</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Short</span><span class="nv"> </span><span class="s">description&quot;</span>
+
+<span class="c1"># Launch site and conditions</span>
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Location, weather, etc.</span>
+
+<span class="c1"># Rocket physical properties</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Mass, dimensions, etc.</span>
+
+<span class="c1"># Motor specification</span>
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Thrust curve, mass, etc.</span>
+
+<span class="c1"># Aerodynamic surfaces</span>
+<span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Geometry</span>
+
+<span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Shape, length</span>
+
+<span class="c1"># Recovery system</span>
+<span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Deployment, Cd*S</span>
+
+<span class="c1"># Launch hardware</span>
+<span class="nt">rail</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Length, inclination</span>
+
+<span class="c1"># Numerical parameters</span>
+<span class="nt">integration</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Time step, tolerances</span>
+</pre></div>
+</div>
+</section>
+<section id="method-1-use-templates">
+<h2>Method 1: Use Templates<a class="headerlink" href="#method-1-use-templates" title="Link to this heading">#</a></h2>
+<section id="available-templates">
+<h3>Available Templates<a class="headerlink" href="#available-templates" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configs/templates/
+├──<span class="w"> </span>single_sim_template.yaml<span class="w">      </span><span class="c1"># Single flight simulation</span>
+├──<span class="w"> </span>monte_carlo_template.yaml<span class="w">     </span><span class="c1"># Uncertainty analysis</span>
+└──<span class="w"> </span>optimization_template.yaml<span class="w">    </span><span class="c1"># Design optimization</span>
+</pre></div>
+</div>
+</section>
+<section id="create-from-single-sim-template">
+<h3>Create from Single Sim Template<a class="headerlink" href="#create-from-single-sim-template" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy template</span>
+cp<span class="w"> </span>configs/templates/single_sim_template.yaml<span class="w"> </span>configs/single_sim/artemis.yaml
+
+<span class="c1"># Edit in your preferred editor</span>
+code<span class="w"> </span>configs/single_sim/artemis.yaml<span class="w">  </span><span class="c1"># VS Code</span>
+<span class="c1"># or</span>
+nano<span class="w"> </span>configs/single_sim/artemis.yaml<span class="w">  </span><span class="c1"># Terminal</span>
+</pre></div>
+</div>
+<p><strong>Required customizations:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Set rocket name (used for outputs)</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">artemis</span>
+
+<span class="c1"># 2. Update launch location</span>
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">44.5</span><span class="w">  </span><span class="c1"># Your launch site</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">11.3</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+
+<span class="c1"># 3. Specify motor file</span>
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">motor_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">../../data/motors/cesaroni_l1395.eng</span><span class="w">  </span><span class="c1"># Path from config file</span>
+
+<span class="c1"># 4. Set rocket mass and dimensions</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.2</span>
+<span class="w">  </span><span class="nt">radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.04</span><span class="w">  </span><span class="c1"># 80mm diameter</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+</pre></div>
+</div>
+</section>
+<section id="create-from-monte-carlo-template">
+<h3>Create from Monte Carlo Template<a class="headerlink" href="#create-from-monte-carlo-template" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>configs/templates/monte_carlo_template.yaml<span class="w"> </span>configs/monte_carlo/artemis_mc.yaml
+</pre></div>
+</div>
+<p><strong>Key differences:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Monte Carlo adds uncertainty to parameters</span>
+
+<span class="c1"># Single value (deterministic)</span>
+<span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.2</span>
+
+<span class="c1"># Distribution (stochastic)</span>
+<span class="nt">mass_without_motor_kg</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">distribution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">normal</span>
+<span class="w">  </span><span class="nt">mean</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.2</span>
+<span class="w">  </span><span class="nt">std_dev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># ±1.9% uncertainty</span>
+
+<span class="c1"># Ensemble parameters</span>
+<span class="nt">ensemble</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">num_simulations</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">  </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">42</span><span class="w">  </span><span class="c1"># For reproducibility</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="method-2-build-from-scratch">
+<h2>Method 2: Build from Scratch<a class="headerlink" href="#method-2-build-from-scratch" title="Link to this heading">#</a></h2>
+<section id="minimal-configuration">
+<h3>Minimal Configuration<a class="headerlink" href="#minimal-configuration" title="Link to this heading">#</a></h3>
+<p>Start with absolute minimum required fields:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># minimal_rocket.yaml</span>
+
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minimal</span>
+
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0635</span>
+<span class="w">  </span><span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.4</span>
+
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">motor_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data/motors/cesaroni_l1395.eng</span>
+<span class="w">  </span><span class="nt">burn_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-0.6</span>
+
+<span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1.2</span>
+
+<span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vonkarman</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.1</span>
+
+<span class="nt">rail</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This minimal config uses many defaults. For real flights, specify all relevant parameters explicitly.</p>
+</div>
+</section>
+<section id="add-recommended-fields">
+<h3>Add Recommended Fields<a class="headerlink" href="#add-recommended-fields" title="Link to this heading">#</a></h3>
+<p>Expand minimal config with important parameters:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recommended</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Rocket</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">key</span><span class="nv"> </span><span class="s">parameters</span><span class="nv"> </span><span class="s">specified&quot;</span>
+
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">44.5</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">11.3</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">  </span><span class="nt">datum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SRTM</span><span class="w">  </span><span class="c1"># Elevation model</span>
+
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0635</span>
+<span class="w">  </span><span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.4</span>
+
+<span class="w">  </span><span class="c1"># Inertia (Ixx, Iyy, Izz) in kg·m²</span>
+<span class="w">  </span><span class="nt">inertia</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ixx</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.0</span>
+<span class="w">    </span><span class="nt">iyy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.0</span>
+<span class="w">    </span><span class="nt">izz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.03</span>
+
+<span class="w">  </span><span class="c1"># Center of mass position</span>
+<span class="w">  </span><span class="nt">center_of_mass_without_motor_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+
+<span class="w">  </span><span class="c1"># Drag coefficients</span>
+<span class="w">  </span><span class="nt">power_off_drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">power_on_drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">motor_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data/motors/cesaroni_l1395.eng</span>
+<span class="w">  </span><span class="nt">burn_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-0.6</span>
+
+<span class="w">  </span><span class="c1"># Motor grain geometry (for Solid motors)</span>
+<span class="w">  </span><span class="nt">nozzle_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">grain_separation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span>
+<span class="w">  </span><span class="nt">grain_density_kgm3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1815</span>
+<span class="w">  </span><span class="nt">grain_outer_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span>
+<span class="w">  </span><span class="nt">grain_initial_inner_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.015</span>
+<span class="w">  </span><span class="nt">grain_initial_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span>
+
+<span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1.2</span>
+<span class="w">  </span><span class="nt">cant_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># For spin stabilization if needed</span>
+<span class="w">  </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Use flat plate, or specify airfoil file</span>
+
+<span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vonkarman</span><span class="w">  </span><span class="c1"># Options: vonkarman, conical, elliptical, ogive, lvhaack, tangent, parabolic, powerseries</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.1</span>
+<span class="w">  </span><span class="nt">base_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Optional: nose cone base radius (m). If null, uses rocket radius</span>
+<span class="w">  </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Optional: tip bluffness ratio (0-1). null = sharp tip</span>
+
+<span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">drogue</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">drogue</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apogee</span>
+<span class="w">    </span><span class="nt">sampling_rate_hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">    </span><span class="nt">lag_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+<span class="w">    </span><span class="nt">noise_std_dev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+
+<span class="w">  </span><span class="nt">main</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">altitude</span>
+<span class="w">    </span><span class="nt">trigger_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
+<span class="w">    </span><span class="nt">sampling_rate_hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">    </span><span class="nt">lag_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+<span class="w">    </span><span class="nt">noise_std_dev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+
+<span class="nt">rail</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+<span class="w">  </span><span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85</span><span class="w">  </span><span class="c1"># Slightly off-vertical</span>
+<span class="w">  </span><span class="nt">heading_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90</span><span class="w">  </span><span class="c1"># East</span>
+
+<span class="nt">integration</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
+<span class="w">  </span><span class="nt">max_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="w">  </span><span class="nt">min_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.001</span>
+<span class="w">  </span><span class="nt">rtol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+<span class="w">  </span><span class="nt">atol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-9</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="method-3-interactive-builder">
+<h2>Method 3: Interactive Builder<a class="headerlink" href="#method-3-interactive-builder" title="Link to this heading">#</a></h2>
+<section id="use-interactive-script">
+<h3>Use Interactive Script<a class="headerlink" href="#use-interactive-script" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># scripts/create_config_interactive.py</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_config_interactive</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interactive configuration builder.&quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Rocket Configuration Builder ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Basic info</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Rocket name: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Description (optional): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># Environment</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Launch Site ---&quot;</span><span class="p">)</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Latitude (deg): &quot;</span><span class="p">))</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Longitude (deg): &quot;</span><span class="p">))</span>
+    <span class="n">elev</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Elevation (m ASL): &quot;</span><span class="p">))</span>
+
+    <span class="c1"># Rocket</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Rocket Dimensions ---&quot;</span><span class="p">)</span>
+    <span class="n">diameter_mm</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Diameter (mm): &quot;</span><span class="p">))</span>
+    <span class="n">length_m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Length (m): &quot;</span><span class="p">))</span>
+    <span class="n">mass_kg</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Mass without motor (kg): &quot;</span><span class="p">))</span>
+
+    <span class="c1"># Motor</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Motor ---&quot;</span><span class="p">)</span>
+    <span class="n">motor_file</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Motor file path (from data/motors/): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">burn_time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Burn time (s): &quot;</span><span class="p">))</span>
+    <span class="n">dry_mass</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Motor dry mass (kg): &quot;</span><span class="p">))</span>
+    <span class="n">motor_pos</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Motor position from nose (m, negative): &quot;</span><span class="p">))</span>
+
+    <span class="c1"># Fins</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Fins ---&quot;</span><span class="p">)</span>
+    <span class="n">n_fins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Number of fins: &quot;</span><span class="p">))</span>
+    <span class="n">root_chord</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Root chord (m): &quot;</span><span class="p">))</span>
+    <span class="n">tip_chord</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Tip chord (m): &quot;</span><span class="p">))</span>
+    <span class="n">span</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Span (m): &quot;</span><span class="p">))</span>
+    <span class="n">fin_pos</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Fin position from nose (m, negative): &quot;</span><span class="p">))</span>
+
+    <span class="c1"># Nose cone</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Nose Cone ---&quot;</span><span class="p">)</span>
+    <span class="n">nc_length</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Nose cone length (m): &quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shapes: vonkarman, conical, ogive, elliptical&quot;</span><span class="p">)</span>
+    <span class="n">nc_kind</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Shape [vonkarman]: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;vonkarman&quot;</span>
+
+    <span class="c1"># Parachutes</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Parachutes ---&quot;</span><span class="p">)</span>
+    <span class="n">has_drogue</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Include drogue parachute? [y/n]: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span>
+    <span class="n">has_main</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Include main parachute? [y/n]: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span>
+
+    <span class="n">parachutes</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">has_drogue</span><span class="p">:</span>
+        <span class="n">drogue_cds</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Drogue Cd*S (m²): &quot;</span><span class="p">))</span>
+        <span class="n">parachutes</span><span class="p">[</span><span class="s1">&#39;drogue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;drogue&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;cd_s&#39;</span><span class="p">:</span> <span class="n">drogue_cds</span><span class="p">,</span>
+            <span class="s1">&#39;trigger&#39;</span><span class="p">:</span> <span class="s1">&#39;apogee&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sampling_rate_hz&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="s1">&#39;lag_s&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+            <span class="s1">&#39;noise_std_dev&#39;</span><span class="p">:</span> <span class="mf">0.0</span>
+        <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">has_main</span><span class="p">:</span>
+        <span class="n">main_cds</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Main Cd*S (m²): &quot;</span><span class="p">))</span>
+        <span class="n">main_alt</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Main deployment altitude (m AGL): &quot;</span><span class="p">))</span>
+        <span class="n">parachutes</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;main&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;cd_s&#39;</span><span class="p">:</span> <span class="n">main_cds</span><span class="p">,</span>
+            <span class="s1">&#39;trigger&#39;</span><span class="p">:</span> <span class="s1">&#39;altitude&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;trigger_value&#39;</span><span class="p">:</span> <span class="n">main_alt</span><span class="p">,</span>
+            <span class="s1">&#39;sampling_rate_hz&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="s1">&#39;lag_s&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+            <span class="s1">&#39;noise_std_dev&#39;</span><span class="p">:</span> <span class="mf">0.0</span>
+        <span class="p">}</span>
+
+    <span class="c1"># Rail</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Launch Rail ---&quot;</span><span class="p">)</span>
+    <span class="n">rail_length</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Rail length (m) [3.0]: &quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;3.0&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Build config dictionary</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+        <span class="s1">&#39;environment&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;latitude_deg&#39;</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span>
+            <span class="s1">&#39;longitude_deg&#39;</span><span class="p">:</span> <span class="n">lon</span><span class="p">,</span>
+            <span class="s1">&#39;elevation_m&#39;</span><span class="p">:</span> <span class="n">elev</span><span class="p">,</span>
+            <span class="s1">&#39;datum&#39;</span><span class="p">:</span> <span class="s1">&#39;SRTM&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;rocket&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;radius_m&#39;</span><span class="p">:</span> <span class="n">diameter_mm</span> <span class="o">/</span> <span class="mi">2000</span><span class="p">,</span>  <span class="c1"># Convert mm to m</span>
+            <span class="s1">&#39;mass_without_motor_kg&#39;</span><span class="p">:</span> <span class="n">mass_kg</span><span class="p">,</span>
+            <span class="s1">&#39;length_m&#39;</span><span class="p">:</span> <span class="n">length_m</span><span class="p">,</span>
+            <span class="s1">&#39;inertia&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;ixx&#39;</span><span class="p">:</span> <span class="n">mass_kg</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">diameter_mm</span><span class="o">/</span><span class="mi">2000</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">length_m</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
+                <span class="s1">&#39;iyy&#39;</span><span class="p">:</span> <span class="n">mass_kg</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">diameter_mm</span><span class="o">/</span><span class="mi">2000</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">length_m</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span>
+                <span class="s1">&#39;izz&#39;</span><span class="p">:</span> <span class="n">mass_kg</span> <span class="o">*</span> <span class="p">(</span><span class="n">diameter_mm</span><span class="o">/</span><span class="mi">2000</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;center_of_mass_without_motor_m&#39;</span><span class="p">:</span> <span class="n">length_m</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="s1">&#39;power_off_drag_coefficient&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="s1">&#39;power_on_drag_coefficient&#39;</span><span class="p">:</span> <span class="mf">0.5</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;motor&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;motor_path&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;../../data/motors/</span><span class="si">{</span><span class="n">motor_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;burn_time_s&#39;</span><span class="p">:</span> <span class="n">burn_time</span><span class="p">,</span>
+            <span class="s1">&#39;dry_mass_kg&#39;</span><span class="p">:</span> <span class="n">dry_mass</span><span class="p">,</span>
+            <span class="s1">&#39;position_m&#39;</span><span class="p">:</span> <span class="n">motor_pos</span><span class="p">,</span>
+            <span class="s1">&#39;nozzle_radius_m&#39;</span><span class="p">:</span> <span class="mf">0.033</span><span class="p">,</span>
+            <span class="s1">&#39;grain_number&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s1">&#39;grain_separation_m&#39;</span><span class="p">:</span> <span class="mf">0.005</span><span class="p">,</span>
+            <span class="s1">&#39;grain_density_kgm3&#39;</span><span class="p">:</span> <span class="mi">1815</span><span class="p">,</span>
+            <span class="s1">&#39;grain_outer_radius_m&#39;</span><span class="p">:</span> <span class="mf">0.033</span><span class="p">,</span>
+            <span class="s1">&#39;grain_initial_inner_radius_m&#39;</span><span class="p">:</span> <span class="mf">0.015</span><span class="p">,</span>
+            <span class="s1">&#39;grain_initial_height_m&#39;</span><span class="p">:</span> <span class="mf">0.12</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;fins&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="n">n_fins</span><span class="p">,</span>
+            <span class="s1">&#39;root_chord_m&#39;</span><span class="p">:</span> <span class="n">root_chord</span><span class="p">,</span>
+            <span class="s1">&#39;tip_chord_m&#39;</span><span class="p">:</span> <span class="n">tip_chord</span><span class="p">,</span>
+            <span class="s1">&#39;span_m&#39;</span><span class="p">:</span> <span class="n">span</span><span class="p">,</span>
+            <span class="s1">&#39;position_m&#39;</span><span class="p">:</span> <span class="n">fin_pos</span><span class="p">,</span>
+            <span class="s1">&#39;cant_angle_deg&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s1">&#39;airfoil&#39;</span><span class="p">:</span> <span class="kc">None</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;nose_cone&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;length_m&#39;</span><span class="p">:</span> <span class="n">nc_length</span><span class="p">,</span>
+            <span class="s1">&#39;kind&#39;</span><span class="p">:</span> <span class="n">nc_kind</span><span class="p">,</span>
+            <span class="s1">&#39;position_m&#39;</span><span class="p">:</span> <span class="n">length_m</span> <span class="o">-</span> <span class="n">nc_length</span><span class="p">,</span>
+            <span class="s1">&#39;base_radius_m&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;bluffness&#39;</span><span class="p">:</span> <span class="kc">None</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;parachutes&#39;</span><span class="p">:</span> <span class="n">parachutes</span><span class="p">,</span>
+        <span class="s1">&#39;rail&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;length_m&#39;</span><span class="p">:</span> <span class="n">rail_length</span><span class="p">,</span>
+            <span class="s1">&#39;inclination_deg&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span>
+            <span class="s1">&#39;heading_deg&#39;</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;integration&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;max_time_s&#39;</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+            <span class="s1">&#39;max_time_step_s&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+            <span class="s1">&#39;min_time_step_s&#39;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+            <span class="s1">&#39;rtol&#39;</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span>
+            <span class="s1">&#39;atol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Save config</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;configs/single_sim&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.yaml&#39;</span>
+    <span class="n">output_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✓ Configuration saved to </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Run simulation with:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  python scripts/run_single_simulation.py </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">create_config_interactive</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Run interactive builder:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/create_config_interactive.py
+</pre></div>
+</div>
+</section>
+</section>
+<section id="method-4-from-existing-rocket">
+<h2>Method 4: From Existing Rocket<a class="headerlink" href="#method-4-from-existing-rocket" title="Link to this heading">#</a></h2>
+<section id="convert-openrocket-design">
+<h3>Convert OpenRocket Design<a class="headerlink" href="#convert-openrocket-design" title="Link to this heading">#</a></h3>
+<p>If you have an OpenRocket (.ork) file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># scripts/convert_openrocket.py</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">zipfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xml.etree.ElementTree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ET</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_openrocket</span><span class="p">(</span><span class="n">ork_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract parameters from OpenRocket file.&quot;&quot;&quot;</span>
+
+    <span class="c1"># ORK files are ZIP archives containing XML</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">ork_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">z</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;rocket.ork&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+    <span class="n">rocket</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//rocket&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Extract basic dimensions</span>
+    <span class="n">nosecone</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//nosecone&#39;</span><span class="p">)</span>
+    <span class="n">bodytube</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//bodytube&#39;</span><span class="p">)</span>
+    <span class="n">finset</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//finset&#39;</span><span class="p">)</span>
+    <span class="n">motor</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//motor&#39;</span><span class="p">)</span>
+
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">rocket</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;converted&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;rocket&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;length_m&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">bodytube</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">),</span>
+            <span class="s1">&#39;radius_m&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">bodytube</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;radius&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">),</span>
+            <span class="c1"># Add more conversions...</span>
+        <span class="p">},</span>
+        <span class="c1"># Continue extracting...</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">config</span>
+
+<span class="c1"># Usage</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">parse_openrocket</span><span class="p">(</span><span class="s1">&#39;my_rocket.ork&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;configs/single_sim/converted.yaml&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="copy-from-previous-simulation">
+<h3>Copy from Previous Simulation<a class="headerlink" href="#copy-from-previous-simulation" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy and rename</span>
+cp<span class="w"> </span>configs/single_sim/artemis.yaml<span class="w"> </span>configs/single_sim/artemis_v2.yaml
+
+<span class="c1"># Update name</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="s1">&#39;s/name: artemis/name: artemis_v2/&#39;</span><span class="w"> </span>configs/single_sim/artemis_v2.yaml
+</pre></div>
+</div>
+</section>
+</section>
+<section id="configuration-best-practices">
+<h2>Configuration Best Practices<a class="headerlink" href="#configuration-best-practices" title="Link to this heading">#</a></h2>
+<section id="naming-conventions">
+<h3>Naming Conventions<a class="headerlink" href="#naming-conventions" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Good - descriptive, version-aware</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">artemis_l1395_3fin</span>
+
+<span class="c1"># Good - includes date for testing</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">artemis_test_2024_01_15</span>
+
+<span class="c1"># Bad - generic</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rocket1</span>
+
+<span class="c1"># Bad - spaces (breaks file paths)</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my</span><span class="nv"> </span><span class="s">rocket&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="parameter-organization">
+<h3>Parameter Organization<a class="headerlink" href="#parameter-organization" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Good - grouped logically with comments</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Mass properties</span>
+<span class="w">  </span><span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.2</span>
+<span class="w">  </span><span class="nt">center_of_mass_without_motor_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+
+<span class="w">  </span><span class="c1"># Dimensions</span>
+<span class="w">  </span><span class="nt">radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0635</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.4</span>
+
+<span class="w">  </span><span class="c1"># Aerodynamics</span>
+<span class="w">  </span><span class="nt">power_off_drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">power_on_drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+
+<span class="c1"># Bad - random order, no comments</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">power_on_drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0635</span>
+<span class="w">  </span><span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.2</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.4</span>
+</pre></div>
+</div>
+</section>
+<section id="units-documentation">
+<h3>Units Documentation<a class="headerlink" href="#units-documentation" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Good - units in parameter names</span>
+<span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.2</span>
+<span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.4</span>
+<span class="nt">inclination_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85</span>
+
+<span class="c1"># Bad - ambiguous</span>
+<span class="nt">mass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.2</span><span class="w">  </span><span class="c1"># kg? g? lbs?</span>
+<span class="nt">length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.4</span><span class="w">  </span><span class="c1"># m? cm? inches?</span>
+<span class="nt">inclination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85</span><span class="w">  </span><span class="c1"># deg? rad?</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-nose-cone-configuration">
+<h3>Advanced Nose Cone Configuration<a class="headerlink" href="#advanced-nose-cone-configuration" title="Link to this heading">#</a></h3>
+<p>The nose cone section supports advanced optional parameters:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Required parameters</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vonKarman&quot;</span><span class="w">  </span><span class="c1"># vonkarman, conical, ogive, elliptical, lvhaack, tangent, parabolic, powerseries</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+
+<span class="w">  </span><span class="c1"># Optional parameters</span>
+<span class="w">  </span><span class="nt">base_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># If null, uses rocket radius. Set to specific value for transitions</span>
+<span class="w">  </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Tip bluffness ratio (0-1). null = sharp tip, 0.2 = slightly rounded</span>
+</pre></div>
+</div>
+<p><strong>When to use optional parameters:</strong></p>
+<ol class="arabic">
+<li><p><strong>base_radius_m</strong>: When nose cone base diameter differs from body tube diameter (e.g., nose cone transitions)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Smaller nose cone on larger body tube</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.075</span><span class="w">  </span><span class="c1"># Body tube: 150mm diameter</span>
+
+<span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">base_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.065</span><span class="w">  </span><span class="c1"># Nose cone base: 130mm diameter</span>
+<span class="w">  </span><span class="c1"># Creates a shoulder/transition</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>bluffness</strong>: For realistic nose cones with rounded tips (reduces stress concentration)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sharp tip (default)</span>
+<span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ogive&quot;</span>
+<span class="w">  </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># or 0</span>
+
+<span class="c1"># Rounded tip (more realistic)</span>
+<span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ogive&quot;</span>
+<span class="w">  </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span><span class="w">  </span><span class="c1"># 15% of base radius</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><strong>bluffness</strong> is NOT compatible with <code class="docutils literal notranslate"><span class="pre">kind:</span> <span class="pre">&quot;powerseries&quot;</span></code></p></li>
+<li><p>Setting bluffness may slightly reduce effective nose cone length</p></li>
+<li><p>Typical bluffness values: 0.1-0.3 for realistic designs</p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="validation-after-creation">
+<h2>Validation After Creation<a class="headerlink" href="#validation-after-creation" title="Link to this heading">#</a></h2>
+<section id="validate-syntax">
+<h3>Validate Syntax<a class="headerlink" href="#validate-syntax" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check YAML is valid</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">import yaml</span>
+<span class="s2">with open(&#39;configs/single_sim/my_rocket.yaml&#39;) as f:</span>
+<span class="s2">    config = yaml.safe_load(f)</span>
+<span class="s2">print(&#39;✓ Valid YAML&#39;)</span>
+<span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="validate-parameters">
+<h3>Validate Parameters<a class="headerlink" href="#validate-parameters" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use built-in validator</span>
+python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>configs/single_sim/my_rocket.yaml<span class="w"> </span>--validate
+</pre></div>
+</div>
+</section>
+<section id="check-against-template">
+<h3>Check Against Template<a class="headerlink" href="#check-against-template" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># List parameters in config</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">import yaml</span>
+<span class="s2">def get_keys(d, prefix=&#39;&#39;):</span>
+<span class="s2">    for k, v in d.items():</span>
+<span class="s2">        if isinstance(v, dict):</span>
+<span class="s2">            yield from get_keys(v, prefix + k + &#39;.&#39;)</span>
+<span class="s2">        else:</span>
+<span class="s2">            yield prefix + k</span>
+
+<span class="s2">with open(&#39;configs/single_sim/my_rocket.yaml&#39;) as f:</span>
+<span class="s2">    config = yaml.safe_load(f)</span>
+
+<span class="s2">for key in sorted(get_keys(config)):</span>
+<span class="s2">    print(key)</span>
+<span class="s2">&quot;</span>
+
+<span class="c1"># Compare with template</span>
+<span class="c1"># (manually check for missing required fields)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="quick-reference-required-fields">
+<h2>Quick Reference: Required Fields<a class="headerlink" href="#quick-reference-required-fields" title="Link to this heading">#</a></h2>
+<section id="absolute-minimum">
+<h3>Absolute Minimum<a class="headerlink" href="#absolute-minimum" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;string&gt;</span>
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">latitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">longitude_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">mass_without_motor_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">motor_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;string&gt;</span>
+<span class="w">  </span><span class="nt">burn_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;int&gt;</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="nt">nose_cone</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;string&gt;</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">base_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span><span class="w">  </span><span class="c1"># Optional</span>
+<span class="w">  </span><span class="nt">bluffness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span><span class="w">  </span><span class="c1"># Optional (0-1)</span>
+<span class="nt">rail</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="recommended-additional-fields">
+<h3>Recommended Additional Fields<a class="headerlink" href="#recommended-additional-fields" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nv">ixx</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">iyy</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">izz</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="nt">center_of_mass_without_motor_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">power_off_drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">power_on_drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+
+<span class="nt">parachutes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;name&gt;</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;apogee|altitude&gt;</span>
+<span class="w">    </span><span class="nt">trigger_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span><span class="w">  </span><span class="c1"># if altitude trigger</span>
+
+<span class="nt">integration</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+<span class="w">  </span><span class="nt">max_time_step_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;float&gt;</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">config_reference</span> - Complete parameter reference</p></li>
+<li><p><span class="xref std std-ref">tutorial_first_simulation</span> - Using configurations</p></li>
+<li><p><a class="reference internal" href="validate_design.html#howto-validate-design"><span class="std std-ref">Validate Your Rocket Design</span></a> - Validate parameters before simulation</p></li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">How-To Guides</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="measure_rocket.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">How to Measure Your Rocket’s Parameters</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-structure">Configuration Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-1-use-templates">Method 1: Use Templates</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#available-templates">Available Templates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-from-single-sim-template">Create from Single Sim Template</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-from-monte-carlo-template">Create from Monte Carlo Template</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2-build-from-scratch">Method 2: Build from Scratch</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-configuration">Minimal Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-recommended-fields">Add Recommended Fields</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-3-interactive-builder">Method 3: Interactive Builder</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-interactive-script">Use Interactive Script</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-4-from-existing-rocket">Method 4: From Existing Rocket</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-openrocket-design">Convert OpenRocket Design</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-from-previous-simulation">Copy from Previous Simulation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-best-practices">Configuration Best Practices</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naming-conventions">Naming Conventions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-organization">Parameter Organization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#units-documentation">Units Documentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-nose-cone-configuration">Advanced Nose Cone Configuration</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-after-creation">Validation After Creation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validate-syntax">Validate Syntax</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validate-parameters">Validate Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-against-template">Check Against Template</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference-required-fields">Quick Reference: Required Fields</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-minimum">Absolute Minimum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-additional-fields">Recommended Additional Fields</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/how_to_guides/create_config.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

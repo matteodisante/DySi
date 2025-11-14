@@ -1,0 +1,994 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quick Plot Reference Card &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/quick_plot_reference';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorials" href="tutorials/index.html" />
+    <link rel="prev" title="User Guide" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Quick Plot Reference Card</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="technical/plot_interpretation.html">Output Plot Interpretation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Quick Plot Reference Card</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="quick-plot-reference-card">
+<span id="quick-plot-guide"></span><h1>Quick Plot Reference Card<a class="headerlink" href="#quick-plot-reference-card" title="Link to this heading">#</a></h1>
+<p>A compact reference for interpreting DySi output plots. For detailed explanations,
+see <a class="reference internal" href="technical/plot_interpretation.html"><span class="doc">Output Plot Interpretation Guide</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All plots are in <code class="docutils literal notranslate"><span class="pre">outputs/&lt;simulation_name&gt;/curves/</span></code> organized by category.</p>
+</div>
+<hr class="docutils" />
+<section id="critical-plots-to-check-first">
+<h2>🚀 Critical Plots to Check First<a class="headerlink" href="#critical-plots-to-check-first" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p><strong>stability_envelope.png</strong> (stability/)</p>
+<p>✅ Entire curve in <strong>green zones</strong> (&gt; 1.5 cal)</p>
+<p>⚠️ Yellow zones = marginal (1.0-1.5 cal)</p>
+<p>❌ Red zones = unstable (&lt; 1.0 cal) - <strong>DO NOT FLY</strong></p>
+</li>
+<li><p><strong>thrust_curve.png</strong> (motor/)</p>
+<p>✅ Matches motor specifications</p>
+<p>✅ Smooth curve without irregularities</p>
+<p>📊 Total impulse = area under curve</p>
+</li>
+<li><p><strong>aerodynamic_forces.png</strong> (flight/)</p>
+<p>✅ Peak forces at Max-Q</p>
+<p>⚠️ Check bending moments for structural safety</p>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="plot-categories">
+<h2>📊 Plot Categories<a class="headerlink" href="#plot-categories" title="Link to this heading">#</a></h2>
+<section id="motor-plots-motor">
+<h3>Motor Plots (motor/)<a class="headerlink" href="#motor-plots-motor" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">thrust_curve.png</span></code></p></td>
+<td><p>Thrust vs time with performance metrics</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mass_evolution.png</span></code></p></td>
+<td><p>Total/propellant mass decrease</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kn_curve.png</span></code></p></td>
+<td><p>Burn area to throat area ratio</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">center_of_mass.png</span></code></p></td>
+<td><p>Motor COM position evolution</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="rocket-plots-rocket">
+<h3>Rocket Plots (rocket/)<a class="headerlink" href="#rocket-plots-rocket" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">drag_coefficient.png</span></code></p></td>
+<td><p>Cd vs Mach (peaks at M≈1.0)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cp_position_vs_mach.png</span></code></p></td>
+<td><p>CP movement in transonic region</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="stability-plots-stability">
+<h3>Stability Plots (stability/)<a class="headerlink" href="#stability-plots-stability" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stability_envelope.png</span></code></p></td>
+<td><p><strong>MOST IMPORTANT</strong> - Safety zones + critical events</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stability_margin_surface.png</span></code></p></td>
+<td><p>3D: Margin vs Mach vs Time</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stability_cp_travel.png</span></code></p></td>
+<td><p>CP position vs Mach with regime zones</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="flight-plots-flight">
+<h3>Flight Plots (flight/)<a class="headerlink" href="#flight-plots-flight" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">trajectory_3d.png</span></code></p></td>
+<td><p>3D flight path with XY/XZ/YZ projections</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">position_data.png</span></code></p></td>
+<td><p>Position components (X, Y, Z) vs time</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">linear_kinematics_data.png</span></code></p></td>
+<td><p>Velocities (Vx,Vy,Vz) and accelerations (Ax,Ay,Az)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">flight_path_angle_data.png</span></code></p></td>
+<td><p>Flight path vs attitude angle, lateral angle</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">attitude_data.png</span></code></p></td>
+<td><p>Euler angles (ψ, θ, φ)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">angular_kinematics_data.png</span></code></p></td>
+<td><p>Angular velocities (ω) and accelerations (α)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">aerodynamic_forces.png</span></code></p></td>
+<td><p>Lift, drag, bending moment, spin moment</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rail_buttons_forces.png</span></code></p></td>
+<td><p>Rail button normal/shear forces (if applicable)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">energy_data.png</span></code></p></td>
+<td><p>Kinetic, potential, thrust/drag power</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fluid_mechanics_data.png</span></code></p></td>
+<td><p>Mach, Reynolds, pressures, AoA</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stability_and_control_data.png</span></code></p></td>
+<td><p>Stability margin + frequency response</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="environment-plots-environment">
+<h3>Environment Plots (environment/)<a class="headerlink" href="#environment-plots-environment" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wind_profile.png</span></code></p></td>
+<td><p>Wind speed and direction vs altitude</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atmospheric_profile.png</span></code></p></td>
+<td><p>Temperature, pressure, density vs altitude</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="quick-interpretation-guide">
+<h2>⚡ Quick Interpretation Guide<a class="headerlink" href="#quick-interpretation-guide" title="Link to this heading">#</a></h2>
+<section id="stability-margin-values">
+<h3>Stability Margin Values<a class="headerlink" href="#stability-margin-values" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Range</p></th>
+<th class="head"><p>Status</p></th>
+<th class="head"><p>Action</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt; 1.0 cal</p></td>
+<td><p>❌ Unstable</p></td>
+<td><p>DO NOT FLY - Redesign required</p></td>
+</tr>
+<tr class="row-odd"><td><p>1.0-1.5 cal</p></td>
+<td><p>⚠️ Marginal</p></td>
+<td><p>Risky - subsonic only, consider improving</p></td>
+</tr>
+<tr class="row-even"><td><p>1.5-2.0 cal</p></td>
+<td><p>✅ Safe</p></td>
+<td><p>Acceptable for flight</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.0-2.5 cal</p></td>
+<td><p>✅✅ Optimal</p></td>
+<td><p>Excellent design target</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt; 2.5 cal</p></td>
+<td><p>🔹 Overstable</p></td>
+<td><p>Very stable (may reduce maneuverability)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="flight-regime-indicators">
+<h3>Flight Regime Indicators<a class="headerlink" href="#flight-regime-indicators" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Mach Range</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>M &lt; 0.8</p></td>
+<td><p><strong>Subsonic</strong> - Normal aerodynamics</p></td>
+</tr>
+<tr class="row-odd"><td><p>M = 0.8-1.2</p></td>
+<td><p><strong>Transonic</strong> - Critical region, peak drag, CP shifts</p></td>
+</tr>
+<tr class="row-even"><td><p>M &gt; 1.2</p></td>
+<td><p><strong>Supersonic</strong> - Stabilized aerodynamics</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="typical-values">
+<h3>Typical Values<a class="headerlink" href="#typical-values" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Normal Range</p></th>
+<th class="head"><p>Warning Signs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Attitude Angle</p></td>
+<td><p>&lt; 5°</p></td>
+<td><p>&gt; 10° may indicate instability</p></td>
+</tr>
+<tr class="row-odd"><td><p>Angle of Attack</p></td>
+<td><p>&lt; 3° (after rail)</p></td>
+<td><p>&gt; 10° excessive weathercocking</p></td>
+</tr>
+<tr class="row-even"><td><p>Drag Coefficient</p></td>
+<td><p>0.3-0.5 (subsonic)</p></td>
+<td><p>Spikes &gt; 1.0 unusual</p></td>
+</tr>
+<tr class="row-odd"><td><p>Angular Velocity</p></td>
+<td><p>Small (&lt; 1 rad/s)</p></td>
+<td><p>Growing oscillations</p></td>
+</tr>
+<tr class="row-even"><td><p>Stability Margin</p></td>
+<td><p>1.5-2.5 cal</p></td>
+<td><p>&lt; 1.5 marginal, &lt; 1.0 unsafe</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="common-patterns">
+<h2>🔍 Common Patterns<a class="headerlink" href="#common-patterns" title="Link to this heading">#</a></h2>
+<section id="normal-flight-indicators">
+<h3>Normal Flight Indicators<a class="headerlink" href="#normal-flight-indicators" title="Link to this heading">#</a></h3>
+<p>✅ Stability margin minimum at burnout, increases in transonic</p>
+<p>✅ Drag coefficient peaks around M = 1.0</p>
+<p>✅ CP shifts aft (negative) in transonic → improves stability</p>
+<p>✅ Attitude angle stays small (&lt; 5°)</p>
+<p>✅ Energy transfers smoothly from kinetic to potential</p>
+<p>✅ Thrust curve matches motor specs</p>
+</section>
+<section id="warning-signs">
+<h3>Warning Signs<a class="headerlink" href="#warning-signs" title="Link to this heading">#</a></h3>
+<p>⚠️ Stability dips into yellow zone (&lt; 1.5 cal)</p>
+<p>⚠️ Large attitude oscillations (&gt; 10°)</p>
+<p>⚠️ High angle of attack (&gt; 10°)</p>
+<p>⚠️ Irregular thrust profile</p>
+<p>⚠️ Growing angular velocity oscillations</p>
+</section>
+<section id="critical-issues">
+<h3>Critical Issues<a class="headerlink" href="#critical-issues" title="Link to this heading">#</a></h3>
+<p>❌ Stability margin in red zone (&lt; 1.0 cal) - <strong>STOP</strong></p>
+<p>❌ Extreme bending moments - structural failure risk</p>
+<p>❌ AoA &gt; 20° - complete instability</p>
+<p>❌ Negative stability margin anywhere</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="analysis-checklist">
+<h2>📋 Analysis Checklist<a class="headerlink" href="#analysis-checklist" title="Link to this heading">#</a></h2>
+<section id="before-flight-approval">
+<h3>Before Flight Approval<a class="headerlink" href="#before-flight-approval" title="Link to this heading">#</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>☐ Stability envelope shows margin &gt; 1.5 cal throughout flight
+☐ Thrust curve matches motor specifications
+☐ Max-Q and bending moments within structural limits
+☐ Attitude angle stays small (&lt; 5°)
+☐ No critical warnings in any plot
+☐ Drag coefficient reasonable (&lt; 0.8 peak)
+☐ CP travel understood and accounted for
+☐ Energy conservation holds (smooth decrease)
+</pre></div>
+</div>
+</section>
+<section id="performance-validation">
+<h3>Performance Validation<a class="headerlink" href="#performance-validation" title="Link to this heading">#</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>☐ Max Mach number as expected
+☐ Apogee altitude matches predictions
+☐ Burnout time matches motor specs
+☐ Max-Q occurs at reasonable altitude
+☐ Flight attitude stable throughout
+☐ Angular kinematics show damped oscillations
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="related-documentation">
+<h2>🔗 Related Documentation<a class="headerlink" href="#related-documentation" title="Link to this heading">#</a></h2>
+<p><strong>Detailed Guides:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="technical/plot_interpretation.html"><span class="doc">Output Plot Interpretation Guide</span></a> - Full interpretation guide</p></li>
+<li><p><a class="reference internal" href="technical/stability_analysis.html"><span class="doc">Rocket Stability: Theory and Best Practices</span></a> - Stability theory</p></li>
+<li><p><a class="reference internal" href="how_to_guides/validate_design.html"><span class="doc">Validate Your Rocket Design</span></a> - Design validation workflow</p></li>
+</ul>
+<p><strong>Tutorials:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="tutorials/02_understanding_outputs.html"><span class="doc">Understanding Simulation Outputs</span></a> - Output tutorial</p></li>
+<li><p><a class="reference internal" href="tutorials/01_basic_flight.html"><span class="doc">Tutorial 1: Basic Flight Simulation</span></a> - First simulation walkthrough</p></li>
+</ul>
+<p><strong>Configuration:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="configuration/index.html"><span class="doc">Configuration Reference</span></a> - All configuration parameters</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="quick-tips">
+<h2>💡 Quick Tips<a class="headerlink" href="#quick-tips" title="Link to this heading">#</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>New to plot interpretation?</strong></p>
+<p>Start with these three plots in order:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stability/stability_envelope.png</span></code> - Is it safe?</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">motor/thrust_curve.png</span></code> - Does motor work correctly?</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flight/fluid_mechanics_data.png</span></code> - How did flight perform?</p></li>
+</ol>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Seeing unexpected results?</strong></p>
+<p>Check these common issues:</p>
+<ul class="simple">
+<li><p>Wrong coordinate system in rocket definition</p></li>
+<li><p>CP position reference point confusion</p></li>
+<li><p>Motor thrust curve interpolation errors</p></li>
+<li><p>Atmospheric model not loaded correctly</p></li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Preparing for competition?</strong></p>
+<p>Generate a complete analysis package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--config<span class="w"> </span>my_rocket.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>competition_analysis<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--plots<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--export-all
+</pre></div>
+</div>
+<p>All plots will be in <code class="docutils literal notranslate"><span class="pre">outputs/competition_analysis/curves/</span></code></p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">User Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tutorials/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorials</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-plots-to-check-first">🚀 Critical Plots to Check First</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-categories">📊 Plot Categories</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-plots-motor">Motor Plots (motor/)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rocket-plots-rocket">Rocket Plots (rocket/)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-plots-stability">Stability Plots (stability/)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flight-plots-flight">Flight Plots (flight/)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-plots-environment">Environment Plots (environment/)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-interpretation-guide">⚡ Quick Interpretation Guide</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-margin-values">Stability Margin Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flight-regime-indicators">Flight Regime Indicators</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#typical-values">Typical Values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-patterns">🔍 Common Patterns</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-flight-indicators">Normal Flight Indicators</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#warning-signs">Warning Signs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-issues">Critical Issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-checklist">📋 Analysis Checklist</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#before-flight-approval">Before Flight Approval</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-validation">Performance Validation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-documentation">🔗 Related Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-tips">💡 Quick Tips</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user/quick_plot_reference.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

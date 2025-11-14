@@ -1,0 +1,1402 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Adding and Optimizing Fins &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/tutorials/04_adding_fins';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Configuring Recovery Systems" href="05_recovery_system.html" />
+    <link rel="prev" title="Using Custom Motor Data" href="03_custom_motor.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../quick_plot_reference.html">Quick Plot Reference Card</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/plot_interpretation.html">Output Plot Interpretation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Adding and Optimizing Fins</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="adding-and-optimizing-fins">
+<span id="tutorial-adding-fins"></span><h1>Adding and Optimizing Fins<a class="headerlink" href="#adding-and-optimizing-fins" title="Link to this heading">#</a></h1>
+<p>Fins are critical for rocket stability. Properly designed fins ensure your rocket flies straight and predictably. This tutorial teaches you how to add fins to your rocket configuration, understand stability margins, and optimize fin design for your specific flight requirements.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial assumes you’ve completed <span class="xref std std-ref">tutorial_basic_flight</span> and understand basic rocket configuration. We’ll focus specifically on fin design and stability analysis.</p>
+</div>
+<section id="why-fins-matter">
+<h2>Why Fins Matter<a class="headerlink" href="#why-fins-matter" title="Link to this heading">#</a></h2>
+<p>Fins serve two primary purposes:</p>
+<ol class="arabic simple">
+<li><p><strong>Stability</strong> - Create aerodynamic restoring forces that keep the rocket pointed into the airflow</p></li>
+<li><p><strong>Control</strong> - Provide leverage for the rocket to naturally correct deviations</p></li>
+</ol>
+<p><strong>Physics principle:</strong> Fins move the Center of Pressure (CP) aft of the Center of Mass (CoM), creating a stabilizing moment when the rocket tilts.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Rule of thumb:</strong> The Center of Pressure should be at least <strong>one caliber</strong> (one rocket diameter) behind the Center of Mass for stable flight.</p>
+</div>
+</section>
+<section id="fin-anatomy">
+<h2>Fin Anatomy<a class="headerlink" href="#fin-anatomy" title="Link to this heading">#</a></h2>
+<p>Understanding fin terminology is essential for design:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>                Tip Chord
+               ┌─────────┐
+               │         │
+          Span │         │ Leading Edge
+               │         │
+               │         │ Trailing Edge
+               └─────────┘
+              Root Chord
+════════════════════════════  ← Body Tube
+              ↑
+          Position
+       (from tail/nose)
+</pre></div>
+</div>
+<p><strong>Key dimensions:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Root Chord</strong></p></td>
+<td><p>Length of fin at body tube attachment (typically longest)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Tip Chord</strong></p></td>
+<td><p>Length of fin at outer edge (often shorter for tapered fins)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Span</strong></p></td>
+<td><p>Height of fin perpendicular to body tube</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Position</strong></p></td>
+<td><p>Location along rocket body (measured to fin root leading edge)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Cant Angle</strong></p></td>
+<td><p>Angle fins are tilted to induce spin (typically 0° for sport rockets)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Thickness</strong></p></td>
+<td><p>Fin material thickness (affects drag and structural strength)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="common-fin-shapes">
+<h2>Common Fin Shapes<a class="headerlink" href="#common-fin-shapes" title="Link to this heading">#</a></h2>
+<section id="trapezoidal-fins-most-common">
+<h3>Trapezoidal Fins (Most Common)<a class="headerlink" href="#trapezoidal-fins-most-common" title="Link to this heading">#</a></h3>
+<p>Tapered fins provide excellent stability with minimal drag:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span><span class="w">      </span><span class="c1"># 150 mm at body</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">       </span><span class="c1"># 50 mm at tip (tapered)</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.10</span><span class="w">            </span><span class="c1"># 100 mm height</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">         </span><span class="c1"># 300 mm from tail</span>
+</pre></div>
+</div>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>✅ Good stability with less drag than rectangular</p></li>
+<li><p>✅ Easier to manufacture than complex curves</p></li>
+<li><p>✅ Lighter weight at tip reduces flutter</p></li>
+<li><p>✅ Proven design used in most amateur rockets</p></li>
+</ul>
+<p><strong>Use when:</strong> General purpose rocketry, high-power flights, competitions</p>
+</section>
+<section id="rectangular-fins">
+<h3>Rectangular Fins<a class="headerlink" href="#rectangular-fins" title="Link to this heading">#</a></h3>
+<p>Simple rectangular fins (tip chord = root chord):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span><span class="w">       </span><span class="c1"># Same as root = rectangular</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.08</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span>
+</pre></div>
+</div>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>✅ Easiest to manufacture (straight cuts)</p></li>
+<li><p>✅ Maximum stability for given area</p></li>
+<li><p>✅ Simple aerodynamic analysis</p></li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul class="simple">
+<li><p>❌ Higher drag than tapered</p></li>
+<li><p>❌ More weight at tip</p></li>
+<li><p>❌ Susceptible to flutter at high speeds</p></li>
+</ul>
+<p><strong>Use when:</strong> Low-speed rockets, beginner builds, model rockets</p>
+</section>
+<section id="clipped-delta">
+<h3>Clipped Delta<a class="headerlink" href="#clipped-delta" title="Link to this heading">#</a></h3>
+<p>Highly swept fins with small tip chord:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.20</span><span class="w">      </span><span class="c1"># Long root</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.02</span><span class="w">       </span><span class="c1"># Very short tip (clipped)</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span><span class="w">            </span><span class="c1"># Taller span</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span>
+</pre></div>
+</div>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>✅ Excellent high-speed performance</p></li>
+<li><p>✅ Reduced flutter risk</p></li>
+<li><p>✅ Sleek appearance</p></li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul class="simple">
+<li><p>❌ Requires more rocket length</p></li>
+<li><p>❌ More complex manufacturing</p></li>
+</ul>
+<p><strong>Use when:</strong> High-speed flights (Mach 1+), minimum diameter rockets</p>
+</section>
+</section>
+<section id="tutorial-adding-fins-to-your-rocket">
+<h2>Tutorial: Adding Fins to Your Rocket<a class="headerlink" href="#tutorial-adding-fins-to-your-rocket" title="Link to this heading">#</a></h2>
+<p>Let’s add fins to a basic rocket step-by-step.</p>
+<section id="step-1-start-with-base-configuration">
+<h3>Step 1: Start with Base Configuration<a class="headerlink" href="#step-1-start-with-base-configuration" title="Link to this heading">#</a></h3>
+<p>Begin with your rocket without fins (from Tutorial 01):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Finless</span><span class="nv"> </span><span class="s">Rocket&quot;</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.5</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span><span class="nt">cg_location_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">caliber_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.127</span><span class="w">      </span><span class="c1"># 127 mm diameter</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.8</span>
+
+<span class="w">  </span><span class="c1"># ... other rocket parameters ...</span>
+
+<span class="w">  </span><span class="c1"># NO FINS YET</span>
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-calculate-initial-stability">
+<h3>Step 2: Calculate Initial Stability<a class="headerlink" href="#step-2-calculate-initial-stability" title="Link to this heading">#</a></h3>
+<p>Before adding fins, check if your rocket is stable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span>configs/my_rocket.yaml<span class="w"> </span>--name<span class="w"> </span>test_no_fins
+</pre></div>
+</div>
+<p>Check the output for stability margin:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>WARNING: Rocket is UNSTABLE
+Stability Margin: -0.5 calibers
+(Center of Pressure is AHEAD of Center of Mass)
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Negative stability margin means <strong>unstable</strong> - the rocket will tumble!</p>
+</div>
+</section>
+<section id="step-3-design-your-fins">
+<h3>Step 3: Design Your Fins<a class="headerlink" href="#step-3-design-your-fins" title="Link to this heading">#</a></h3>
+<p>Add a fin configuration to your YAML:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># ... existing parameters ...</span>
+
+<span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w">                </span><span class="c1"># Standard: 3 or 4 fins</span>
+<span class="w">    </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span><span class="w">      </span><span class="c1"># 150 mm root</span>
+<span class="w">    </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">       </span><span class="c1"># 50 mm tip (tapered)</span>
+<span class="w">    </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.10</span><span class="w">            </span><span class="c1"># 100 mm height</span>
+<span class="w">    </span><span class="nt">thickness_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.003</span><span class="w">      </span><span class="c1"># 3 mm plywood/fiberglass</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">         </span><span class="c1"># 300 mm from tail</span>
+<span class="w">    </span><span class="nt">cant_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">     </span><span class="c1"># No spin</span>
+<span class="w">    </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">           </span><span class="c1"># Flat plate</span>
+</pre></div>
+</div>
+<p><strong>Key design decisions:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Count:</strong> 3 fins (120° apart) or 4 fins (90° apart)
+- 3 fins: Lighter, simpler, common in competition
+- 4 fins: More stable, easier to align, more drag</p></li>
+<li><p><strong>Root chord:</strong> Typically 10-20% of rocket length</p></li>
+<li><p><strong>Tip chord:</strong> 30-50% of root chord for good taper</p></li>
+<li><p><strong>Span:</strong> Start with 70-100% of rocket diameter</p></li>
+<li><p><strong>Position:</strong> Place near tail, but leave clearance for motor</p></li>
+</ol>
+</section>
+<section id="step-4-validate-stability">
+<h3>Step 4: Validate Stability<a class="headerlink" href="#step-4-validate-stability" title="Link to this heading">#</a></h3>
+<p>Run simulation with fins:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span>configs/my_rocket.yaml<span class="w"> </span>--name<span class="w"> </span>test_with_fins
+</pre></div>
+</div>
+<p>Check the results:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>✓ Rocket is STABLE
+Initial Stability Margin: 1.8 calibers
+Out-of-rail Stability Margin: 1.9 calibers
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Target stability margins:</strong></p>
+<ul class="simple">
+<li><p><strong>&lt; 1.0 calibers:</strong> Marginally stable (risky)</p></li>
+<li><p><strong>1.0 - 2.0 calibers:</strong> Stable (recommended)</p></li>
+<li><p><strong>2.0 - 3.0 calibers:</strong> Very stable (safe)</p></li>
+<li><p><strong>&gt; 3.0 calibers:</strong> Over-stable (may weathercock in wind)</p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="understanding-stability-margins">
+<h2>Understanding Stability Margins<a class="headerlink" href="#understanding-stability-margins" title="Link to this heading">#</a></h2>
+<section id="the-static-margin">
+<h3>The Static Margin<a class="headerlink" href="#the-static-margin" title="Link to this heading">#</a></h3>
+<p><strong>Definition:</strong> Distance between Center of Pressure (CP) and Center of Mass (CoM), measured in calibers (rocket diameters).</p>
+<div class="math notranslate nohighlight">
+\[\text{Static Margin} = \frac{CP_{\text{position}} - CoM_{\text{position}}}{\text{caliber}}\]</div>
+<p><strong>Physical meaning:</strong></p>
+<ul class="simple">
+<li><p><strong>Positive:</strong> CP behind CoM → Stable (restoring moment)</p></li>
+<li><p><strong>Zero:</strong> CP at CoM → Neutrally stable (no restoring force)</p></li>
+<li><p><strong>Negative:</strong> CP ahead of CoM → Unstable (amplifies deviation)</p></li>
+</ul>
+</section>
+<section id="how-fins-affect-stability">
+<h3>How Fins Affect Stability<a class="headerlink" href="#how-fins-affect-stability" title="Link to this heading">#</a></h3>
+<p>Fins move the CP aft (toward tail) by creating lift surfaces:</p>
+<ol class="arabic simple">
+<li><p><strong>Larger span</strong> → CP moves more aft → More stable</p></li>
+<li><p><strong>Larger root chord</strong> → CP moves more aft → More stable</p></li>
+<li><p><strong>Position closer to tail</strong> → CP moves more aft → More stable</p></li>
+</ol>
+<p><strong>But be careful:</strong> Excessive stability can cause problems!</p>
+</section>
+<section id="over-stability-issues">
+<h3>Over-Stability Issues<a class="headerlink" href="#over-stability-issues" title="Link to this heading">#</a></h3>
+<p>When stability margin is too high (&gt; 3.0):</p>
+<ul class="simple">
+<li><p><strong>Weathercocking:</strong> Rocket turns excessively into wind</p></li>
+<li><p><strong>Launch sensitivity:</strong> Small rail misalignment causes large trajectory changes</p></li>
+<li><p><strong>Reduced apogee:</strong> Drag increases as rocket fights wind</p></li>
+</ul>
+<p><strong>Solution:</strong> Reduce fin size or move CoM aft (add nose weight)</p>
+</section>
+</section>
+<section id="optimizing-fin-design">
+<h2>Optimizing Fin Design<a class="headerlink" href="#optimizing-fin-design" title="Link to this heading">#</a></h2>
+<section id="goal-based-optimization">
+<h3>Goal-Based Optimization<a class="headerlink" href="#goal-based-optimization" title="Link to this heading">#</a></h3>
+<p><strong>Goal 1: Maximum Altitude</strong></p>
+<p>Minimize drag while maintaining stability:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">                </span><span class="c1"># Fewer fins = less drag</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span><span class="w">      </span><span class="c1"># Shorter chord = less wetted area</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.04</span><span class="w">       </span><span class="c1"># Aggressive taper</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.08</span><span class="w">            </span><span class="c1"># Just enough for stability</span>
+<span class="w">  </span><span class="nt">thickness_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.002</span><span class="w">      </span><span class="c1"># Thin material</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span>
+</pre></div>
+</div>
+<p><strong>Target:</strong> Stability margin 1.2-1.5 calibers</p>
+<p><strong>Goal 2: Maximum Stability (Beginner Rocket)</strong></p>
+<p>Prioritize forgiving flight characteristics:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w">                </span><span class="c1"># More fins = more stability</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.18</span><span class="w">      </span><span class="c1"># Longer chord</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.08</span><span class="w">       </span><span class="c1"># Moderate taper</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span><span class="w">            </span><span class="c1"># Taller span</span>
+<span class="w">  </span><span class="nt">thickness_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.004</span><span class="w">      </span><span class="c1"># Thicker (stronger)</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.20</span><span class="w">        </span><span class="c1"># Far aft</span>
+</pre></div>
+</div>
+<p><strong>Target:</strong> Stability margin 2.0-2.5 calibers</p>
+<p><strong>Goal 3: High-Speed Flight (Mach 1+)</strong></p>
+<p>Reduce flutter and drag:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.20</span><span class="w">      </span><span class="c1"># Long root (swept)</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.02</span><span class="w">       </span><span class="c1"># Very short tip</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.10</span><span class="w">            </span><span class="c1"># Moderate span</span>
+<span class="w">  </span><span class="nt">thickness_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.006</span><span class="w">      </span><span class="c1"># Very thick (flutter resistance)</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span>
+<span class="w">  </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/airfoils/naca0012.txt&quot;</span><span class="w">  </span><span class="c1"># Streamlined</span>
+</pre></div>
+</div>
+<p><strong>Target:</strong> Stability margin 1.5-2.0 calibers, thick fins to prevent flutter</p>
+</section>
+<section id="iterative-optimization-process">
+<h3>Iterative Optimization Process<a class="headerlink" href="#iterative-optimization-process" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Start conservative:</strong> Large fins, high stability margin</p></li>
+<li><p><strong>Run simulation:</strong> Check apogee and stability</p></li>
+<li><p><strong>Reduce fin size:</strong> Decrease span or chord by 10%</p></li>
+<li><p><strong>Re-simulate:</strong> Verify still stable (margin &gt; 1.2)</p></li>
+<li><p><strong>Repeat:</strong> Until apogee maximized while maintaining safe stability</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example optimization script</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.14</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>  <span class="c1"># Test 7 different spans</span>
+    <span class="c1"># Update config with new span</span>
+    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;rocket&#39;</span><span class="p">][</span><span class="s1">&#39;fins&#39;</span><span class="p">][</span><span class="s1">&#39;span_m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">span</span>
+
+    <span class="c1"># Run simulation</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">run_simulation</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="c1"># Check if stable and record apogee</span>
+    <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;stability_margin&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1.2</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Span </span><span class="si">{</span><span class="n">span</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">m: Apogee </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">m, &quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;Stability </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;stability_margin&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="practical-fin-sizing">
+<h2>Practical Fin Sizing<a class="headerlink" href="#practical-fin-sizing" title="Link to this heading">#</a></h2>
+<section id="quick-sizing-method">
+<h3>Quick Sizing Method<a class="headerlink" href="#quick-sizing-method" title="Link to this heading">#</a></h3>
+<p>For preliminary design, use these ratios:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Conservative (Beginner)</p></th>
+<th class="head"><p>Optimized (Advanced)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Root Chord</strong></p></td>
+<td><p>15-20% of rocket length</p></td>
+<td><p>10-15% of rocket length</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Tip Chord</strong></p></td>
+<td><p>60-80% of root chord</p></td>
+<td><p>30-50% of root chord</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Span</strong></p></td>
+<td><p>80-120% of caliber</p></td>
+<td><p>60-90% of caliber</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Position</strong></p></td>
+<td><p>0-15% from tail</p></td>
+<td><p>15-25% from tail</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Example:</strong> For 1.8m rocket, 127mm diameter:</p>
+<p>Conservative design:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.27</span><span class="w">      </span><span class="c1"># 15% of 1.8m</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.19</span><span class="w">       </span><span class="c1"># 70% of root</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span><span class="w">            </span><span class="c1"># 95% of caliber (0.127m)</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.10</span><span class="w">        </span><span class="c1"># 10cm from tail</span>
+</pre></div>
+</div>
+<p>Optimized design:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.18</span><span class="w">      </span><span class="c1"># 10% of 1.8m</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.07</span><span class="w">       </span><span class="c1"># 40% of root</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.09</span><span class="w">            </span><span class="c1"># 70% of caliber</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.30</span><span class="w">        </span><span class="c1"># 30cm from tail</span>
+</pre></div>
+</div>
+</section>
+<section id="fin-material-considerations">
+<h3>Fin Material Considerations<a class="headerlink" href="#fin-material-considerations" title="Link to this heading">#</a></h3>
+<p>Material affects thickness parameter:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Material</p></th>
+<th class="head"><p>Thickness (mm)</p></th>
+<th class="head"><p>Weight</p></th>
+<th class="head"><p>Cost</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Balsa wood</p></td>
+<td><p>3-6</p></td>
+<td><p>Very light</p></td>
+<td><p>Low</p></td>
+</tr>
+<tr class="row-odd"><td><p>Plywood</p></td>
+<td><p>3-5</p></td>
+<td><p>Light</p></td>
+<td><p>Low</p></td>
+</tr>
+<tr class="row-even"><td><p>Fiberglass</p></td>
+<td><p>2-4</p></td>
+<td><p>Medium</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-odd"><td><p>G10/FR4</p></td>
+<td><p>1.5-3</p></td>
+<td><p>Medium</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-even"><td><p>Carbon fiber</p></td>
+<td><p>1-2</p></td>
+<td><p>Light</p></td>
+<td><p>High</p></td>
+</tr>
+<tr class="row-odd"><td><p>Aluminum</p></td>
+<td><p>1-3</p></td>
+<td><p>Heavy</p></td>
+<td><p>Medium</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Flutter warning:</strong> Thin fins can flutter (vibrate) at high speeds!</p>
+<p><strong>Flutter speed estimate:</strong></p>
+<div class="math notranslate nohighlight">
+\[V_{\text{flutter}} \approx 100 \sqrt{\frac{t}{c}}\]</div>
+<p>Where:
+- <span class="math notranslate nohighlight">\(V_{\text{flutter}}\)</span> = flutter speed (m/s)
+- <span class="math notranslate nohighlight">\(t\)</span> = thickness (m)
+- <span class="math notranslate nohighlight">\(c\)</span> = average chord (m)</p>
+<p>For 3mm thick fin with 0.1m chord: <span class="math notranslate nohighlight">\(V_{\text{flutter}} \approx 173\)</span> m/s</p>
+</div>
+</section>
+</section>
+<section id="advanced-features">
+<h2>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading">#</a></h2>
+<section id="canted-fins-spin-stabilization">
+<h3>Canted Fins (Spin Stabilization)<a class="headerlink" href="#canted-fins-spin-stabilization" title="Link to this heading">#</a></h3>
+<p>Cant angle induces rocket spin for gyroscopic stabilization:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># ... other parameters ...</span>
+<span class="w">  </span><span class="nt">cant_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">     </span><span class="c1"># 2° cant (positive = clockwise from nose view)</span>
+</pre></div>
+</div>
+<p><strong>Effects of cant:</strong></p>
+<ul class="simple">
+<li><p><strong>Spin rate:</strong> ~1-2 Hz per degree of cant (depends on thrust)</p></li>
+<li><p><strong>Drag increase:</strong> ~5-10% additional drag</p></li>
+<li><p><strong>Trajectory:</strong> Slight corkscrew path</p></li>
+</ul>
+<p><strong>When to use:</strong></p>
+<ul class="simple">
+<li><p>✅ Low stability margin rockets (&lt; 1.0 caliber)</p></li>
+<li><p>✅ Long, slender rockets prone to weathercocking</p></li>
+<li><p>✅ Rockets with flexible airframes</p></li>
+</ul>
+<p><strong>When NOT to use:</strong></p>
+<ul class="simple">
+<li><p>❌ High-speed flights (spin increases drag)</p></li>
+<li><p>❌ Precision altitude attempts</p></li>
+<li><p>❌ Payload flights (spinning affects sensors)</p></li>
+</ul>
+</section>
+<section id="custom-airfoils">
+<h3>Custom Airfoils<a class="headerlink" href="#custom-airfoils" title="Link to this heading">#</a></h3>
+<p>For high-performance rockets, use streamlined airfoils:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># ... other parameters ...</span>
+<span class="w">  </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/airfoils/naca0012.txt&quot;</span><span class="w">  </span><span class="c1"># Symmetric airfoil</span>
+</pre></div>
+</div>
+<p><strong>Airfoil file format</strong> (plain text, two columns):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># NACA 0012 Airfoil Coordinates
+# X/C  Y/C (normalized, 0-1)
+0.0000  0.0000
+0.0050  0.0103
+0.0100  0.0144
+...
+1.0000  0.0000
+</pre></div>
+</div>
+<p><strong>When airfoils help:</strong></p>
+<ul class="simple">
+<li><p>High-speed flights (&gt; Mach 0.5)</p></li>
+<li><p>Drag-critical altitude attempts</p></li>
+<li><p>Competition rockets</p></li>
+</ul>
+<p><strong>When to skip:</strong></p>
+<ul class="simple">
+<li><p>Low-speed flights (&lt; 100 m/s)</p></li>
+<li><p>Beginner builds (flat plate is simpler)</p></li>
+<li><p>Thick fins (airfoil benefit minimal)</p></li>
+</ul>
+</section>
+</section>
+<section id="validation-and-testing">
+<h2>Validation and Testing<a class="headerlink" href="#validation-and-testing" title="Link to this heading">#</a></h2>
+<section id="pre-flight-checklist">
+<h3>Pre-Flight Checklist<a class="headerlink" href="#pre-flight-checklist" title="Link to this heading">#</a></h3>
+<p>Before flying with new fins:</p>
+<ol class="arabic simple">
+<li><p>✅ <strong>Stability margin check:</strong> 1.0 - 3.0 calibers</p></li>
+<li><p>✅ <strong>Rail exit velocity:</strong> &gt; 20 m/s (ensures fins are effective)</p></li>
+<li><p>✅ <strong>Fin strength:</strong> No flex when pressed firmly</p></li>
+<li><p>✅ <strong>Alignment:</strong> Fins parallel to rocket axis (&lt; 1° error)</p></li>
+<li><p>✅ <strong>Attachment:</strong> Secure epoxy fillets, no gaps</p></li>
+<li><p>✅ <strong>Balance point:</strong> CoM ahead of CP when suspended</p></li>
+</ol>
+</section>
+<section id="simulation-validation">
+<h3>Simulation Validation<a class="headerlink" href="#simulation-validation" title="Link to this heading">#</a></h3>
+<p>Run simulation and check:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span>configs/my_rocket.yaml<span class="w"> </span>--name<span class="w"> </span>fin_test
+</pre></div>
+</div>
+<p><strong>Review outputs:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Initial Stability Margin: 1.8 calibers  ✓
+Out-of-rail Velocity: 24.5 m/s         ✓
+Out-of-rail Stability: 1.9 calibers    ✓
+Max Velocity: 245 m/s                  ✓
+Apogee: 2850 m                         ✓
+</pre></div>
+</div>
+</section>
+<section id="visual-inspection">
+<h3>Visual Inspection<a class="headerlink" href="#visual-inspection" title="Link to this heading">#</a></h3>
+<p>Check the <code class="docutils literal notranslate"><span class="pre">final_state_READABLE.txt</span></code> file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="s2">&quot;Stability:&quot;</span><span class="w"> </span>outputs/fin_test/final_state_READABLE.txt
+</pre></div>
+</div>
+<p>Look for:</p>
+<ul class="simple">
+<li><p>Static margin value</p></li>
+<li><p>CP and CoM positions</p></li>
+<li><p>Stability margin throughout flight</p></li>
+</ul>
+</section>
+</section>
+<section id="common-fin-problems">
+<h2>Common Fin Problems<a class="headerlink" href="#common-fin-problems" title="Link to this heading">#</a></h2>
+<section id="problem-1-unstable-rocket">
+<h3>Problem 1: Unstable Rocket<a class="headerlink" href="#problem-1-unstable-rocket" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Negative or very low stability margin</p>
+<p><strong>Causes:</strong></p>
+<ul class="simple">
+<li><p>Fins too small</p></li>
+<li><p>Fins too far forward</p></li>
+<li><p>CoM too far aft</p></li>
+<li><p>Heavy nose cone</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Increase fin span</strong> by 20%</p></li>
+<li><p><strong>Move fins closer to tail</strong></p></li>
+<li><p><strong>Add nose weight</strong> to move CoM forward</p></li>
+<li><p><strong>Increase root chord</strong> for more fin area</p></li>
+</ol>
+</section>
+<section id="problem-2-over-stable-rocket">
+<h3>Problem 2: Over-Stable Rocket<a class="headerlink" href="#problem-2-over-stable-rocket" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Stability margin &gt; 3.0 calibers</p>
+<p><strong>Causes:</strong></p>
+<ul class="simple">
+<li><p>Fins too large</p></li>
+<li><p>CoM too far forward</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Reduce fin span</strong> by 15%</p></li>
+<li><p><strong>Shorten root chord</strong></p></li>
+<li><p><strong>Move fins forward</strong> slightly</p></li>
+<li><p><strong>Remove nose weight</strong> if present</p></li>
+</ol>
+</section>
+<section id="problem-3-excessive-drag">
+<h3>Problem 3: Excessive Drag<a class="headerlink" href="#problem-3-excessive-drag" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Low apogee compared to expected</p>
+<p><strong>Causes:</strong></p>
+<ul class="simple">
+<li><p>Fins too large</p></li>
+<li><p>Rectangular fins (not tapered)</p></li>
+<li><p>Too many fins</p></li>
+<li><p>Thick fins</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Taper fins</strong> (reduce tip chord to 40% of root)</p></li>
+<li><p><strong>Reduce fin count</strong> (4 → 3 if stability allows)</p></li>
+<li><p><strong>Thin fin material</strong> while maintaining strength</p></li>
+<li><p><strong>Optimize span</strong> for minimum drag</p></li>
+</ol>
+</section>
+<section id="problem-4-flutter">
+<h3>Problem 4: Flutter<a class="headerlink" href="#problem-4-flutter" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Fins vibrate or fail at high speed</p>
+<p><strong>Causes:</strong></p>
+<ul class="simple">
+<li><p>Fins too thin for chord length</p></li>
+<li><p>Flexible material</p></li>
+<li><p>Poor attachment</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Increase thickness</strong> (e.g., 3mm → 6mm)</p></li>
+<li><p><strong>Stiffen material</strong> (plywood → G10)</p></li>
+<li><p><strong>Add tip weight</strong> (not recommended for amateur rockets)</p></li>
+<li><p><strong>Reduce chord length</strong> if possible</p></li>
+</ol>
+</section>
+</section>
+<section id="comparison-example">
+<h2>Comparison Example<a class="headerlink" href="#comparison-example" title="Link to this heading">#</a></h2>
+<p>Let’s compare three fin designs for the same rocket:</p>
+<p><strong>Rocket:</strong> 1.8m length, 127mm diameter, 8.5kg dry mass, CoM at 1.0m</p>
+<section id="design-a-conservative-beginner">
+<h3>Design A: Conservative (Beginner)<a class="headerlink" href="#design-a-conservative-beginner" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.18</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.20</span>
+</pre></div>
+</div>
+<p><strong>Results:</strong></p>
+<ul class="simple">
+<li><p>Stability margin: 2.4 calibers ✓</p></li>
+<li><p>Apogee: 2650 m</p></li>
+<li><p>Max velocity: 235 m/s</p></li>
+<li><p>Assessment: Very stable, forgiving, good for first flight</p></li>
+</ul>
+</section>
+<section id="design-b-optimized-experienced">
+<h3>Design B: Optimized (Experienced)<a class="headerlink" href="#design-b-optimized-experienced" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.10</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.30</span>
+</pre></div>
+</div>
+<p><strong>Results:</strong></p>
+<ul class="simple">
+<li><p>Stability margin: 1.6 calibers ✓</p></li>
+<li><p>Apogee: 2890 m (+9%)</p></li>
+<li><p>Max velocity: 248 m/s</p></li>
+<li><p>Assessment: Stable, optimized drag, better performance</p></li>
+</ul>
+</section>
+<section id="design-c-aggressive-expert">
+<h3>Design C: Aggressive (Expert)<a class="headerlink" href="#design-c-aggressive-expert" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.12</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.03</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.08</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.35</span>
+</pre></div>
+</div>
+<p><strong>Results:</strong></p>
+<ul class="simple">
+<li><p>Stability margin: 1.2 calibers ⚠️</p></li>
+<li><p>Apogee: 3020 m (+14%)</p></li>
+<li><p>Max velocity: 256 m/s</p></li>
+<li><p>Assessment: Marginally stable, maximum performance, risky</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Recommendation:</strong> Start with Design A for your first flight, then progressively optimize toward Design B as you gain experience. Design C is only for expert flyers with validated simulations.</p>
+</div>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>Now that you understand fin design:</p>
+<ol class="arabic simple">
+<li><p><strong>Add recovery</strong> - See <a class="reference internal" href="05_recovery_system.html#tutorial-recovery-system"><span class="std std-ref">Configuring Recovery Systems</span></a> to ensure safe landing</p></li>
+<li><p><strong>Optimize for wind</strong> - Learn <span class="xref std std-ref">tutorial_weather_integration</span> for realistic conditions</p></li>
+<li><p><strong>Parameter study</strong> - Vary fin sizes and compare apogee vs. stability</p></li>
+<li><p><strong>Build and test</strong> - Validate your simulation with real flights!</p></li>
+</ol>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">configuration_rocket_params</span> - Complete fin parameter reference</p></li>
+<li><p><span class="xref std std-ref">howto_measure_rocket</span> - Measuring CoM and fin positions</p></li>
+<li><p><a class="reference external" href="http://openrocket.info/">OpenRocket</a> - Free fin design tool with 3D visualization</p></li>
+<li><p><a class="reference external" href="https://docs.rocketpy.org/en/latest/user/aerodynamics.html">RocketPy Aerodynamics Docs</a> - Deep dive into stability</p></li>
+</ul>
+</div>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Link to this heading">#</a></h2>
+<section id="fin-design-tools">
+<h3>Fin Design Tools<a class="headerlink" href="#fin-design-tools" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>OpenRocket</strong> - Free rocket design software with automatic CP calculation</p></li>
+<li><p><strong>RASAero II</strong> - Free aerodynamic analysis tool</p></li>
+<li><p><strong>MATLAB/Python</strong> - Custom optimization scripts</p></li>
+<li><p><strong>CFD (Advanced)</strong> - Computational Fluid Dynamics for complex geometries</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h3>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Stine &amp; Stine</strong> - “Handbook of Model Rocketry” (Chapter on Stability)</p></li>
+<li><p><strong>Barrowman Equations</strong> - Classic method for CP calculation</p></li>
+<li><p><strong>Niskanen</strong> - “OpenRocket Technical Documentation”</p></li>
+<li><p><strong>NASA SP-8007</strong> - “Transonic Aerodynamic Characteristics of Blunt Bodies”</p></li>
+</ul>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p><strong>Key takeaways:</strong></p>
+<p>✅ Stability margin should be 1.0-3.0 calibers</p>
+<p>✅ Larger fins increase stability but also drag</p>
+<p>✅ Tapered fins are more efficient than rectangular</p>
+<p>✅ Position fins near tail for maximum effect</p>
+<p>✅ Validate stability before flying</p>
+<p>✅ Start conservative, optimize gradually</p>
+<p><strong>Fin design is iterative</strong> - simulate, analyze, adjust, repeat until you find the optimal balance between stability and performance for your mission!</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_custom_motor.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Using Custom Motor Data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_recovery_system.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Configuring Recovery Systems</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-fins-matter">Why Fins Matter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fin-anatomy">Fin Anatomy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-fin-shapes">Common Fin Shapes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trapezoidal-fins-most-common">Trapezoidal Fins (Most Common)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rectangular-fins">Rectangular Fins</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clipped-delta">Clipped Delta</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-adding-fins-to-your-rocket">Tutorial: Adding Fins to Your Rocket</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-start-with-base-configuration">Step 1: Start with Base Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-calculate-initial-stability">Step 2: Calculate Initial Stability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-design-your-fins">Step 3: Design Your Fins</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-validate-stability">Step 4: Validate Stability</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-stability-margins">Understanding Stability Margins</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-static-margin">The Static Margin</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-fins-affect-stability">How Fins Affect Stability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#over-stability-issues">Over-Stability Issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimizing-fin-design">Optimizing Fin Design</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goal-based-optimization">Goal-Based Optimization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterative-optimization-process">Iterative Optimization Process</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-fin-sizing">Practical Fin Sizing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-sizing-method">Quick Sizing Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fin-material-considerations">Fin Material Considerations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-features">Advanced Features</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#canted-fins-spin-stabilization">Canted Fins (Spin Stabilization)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-airfoils">Custom Airfoils</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-and-testing">Validation and Testing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-flight-checklist">Pre-Flight Checklist</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-validation">Simulation Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-inspection">Visual Inspection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-fin-problems">Common Fin Problems</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-unstable-rocket">Problem 1: Unstable Rocket</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-over-stable-rocket">Problem 2: Over-Stable Rocket</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-excessive-drag">Problem 3: Excessive Drag</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4-flutter">Problem 4: Flutter</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-example">Comparison Example</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#design-a-conservative-beginner">Design A: Conservative (Beginner)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#design-b-optimized-experienced">Design B: Optimized (Experienced)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#design-c-aggressive-expert">Design C: Aggressive (Expert)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fin-design-tools">Fin Design Tools</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/tutorials/04_adding_fins.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

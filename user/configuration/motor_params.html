@@ -1,0 +1,2012 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Motor Parameters Reference &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/configuration/motor_params';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Environment Parameters Reference" href="environment_params.html" />
+    <link rel="prev" title="Rocket Parameters Reference" href="rocket_params.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../quick_plot_reference.html">Quick Plot Reference Card</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/plot_interpretation.html">Output Plot Interpretation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Configuration Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Motor Parameters Reference</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="motor-parameters-reference">
+<span id="config-motor-params"></span><h1>Motor Parameters Reference<a class="headerlink" href="#motor-parameters-reference" title="Link to this heading">#</a></h1>
+<p>This reference documents all parameters in the <code class="docutils literal notranslate"><span class="pre">motor</span></code> configuration section.
+The motor section defines propulsion system properties including thrust curves, grain geometry, and nozzle characteristics.</p>
+<nav class="contents local" id="on-this-page">
+<p class="topic-title">On this page</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id6">Overview</a></p></li>
+<li><p><a class="reference internal" href="#basic-properties" id="id7">Basic Properties</a></p>
+<ul>
+<li><p><a class="reference internal" href="#type" id="id8">type</a></p></li>
+<li><p><a class="reference internal" href="#thrust-source" id="id9">thrust_source</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#coordinate-system" id="id10">Coordinate System</a></p>
+<ul>
+<li><p><a class="reference internal" href="#coordinate-system-orientation" id="id11">coordinate_system_orientation</a></p></li>
+<li><p><a class="reference internal" href="#position-m" id="id12">position_m</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#mass-properties" id="id13">Mass Properties</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dry-mass-kg" id="id14">dry_mass_kg</a></p></li>
+<li><p><a class="reference internal" href="#center-of-dry-mass-position-m" id="id15">center_of_dry_mass_position_m</a></p></li>
+<li><p><a class="reference internal" href="#dry-inertia" id="id16">dry_inertia</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#nozzle-geometry" id="id17">Nozzle Geometry</a></p>
+<ul>
+<li><p><a class="reference internal" href="#nozzle-radius-m" id="id18">nozzle_radius_m</a></p></li>
+<li><p><a class="reference internal" href="#throat-radius-m" id="id19">throat_radius_m</a></p></li>
+<li><p><a class="reference internal" href="#nozzle-position-m" id="id20">nozzle_position_m</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#propellant-grain-geometry" id="id21">Propellant Grain Geometry</a></p>
+<ul>
+<li><p><a class="reference internal" href="#grain-number" id="id22">grain_number</a></p></li>
+<li><p><a class="reference internal" href="#grain-density-kg-m3" id="id23">grain_density_kg_m3</a></p></li>
+<li><p><a class="reference internal" href="#grain-outer-radius-m" id="id24">grain_outer_radius_m</a></p></li>
+<li><p><a class="reference internal" href="#grain-initial-inner-radius-m" id="id25">grain_initial_inner_radius_m</a></p></li>
+<li><p><a class="reference internal" href="#grain-initial-height-m" id="id26">grain_initial_height_m</a></p></li>
+<li><p><a class="reference internal" href="#grain-separation-m" id="id27">grain_separation_m</a></p></li>
+<li><p><a class="reference internal" href="#grains-center-of-mass-position-m" id="id28">grains_center_of_mass_position_m</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#burn-characteristics" id="id29">Burn Characteristics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#burn-time-s" id="id30">burn_time_s</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#advanced-parameters" id="id31">Advanced Parameters</a></p>
+<ul>
+<li><p><a class="reference internal" href="#interpolation-method" id="id32">interpolation_method</a></p></li>
+<li><p><a class="reference internal" href="#reference-pressure" id="id33">reference_pressure</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#complete-example" id="id34">Complete Example</a></p></li>
+<li><p><a class="reference internal" href="#motor-thrust-curve-files" id="id35">Motor Thrust Curve Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rasp-eng-format" id="id36">RASP .eng Format</a></p></li>
+<li><p><a class="reference internal" href="#csv-format" id="id37">CSV Format</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#common-motor-examples" id="id38">Common Motor Examples</a></p>
+<ul>
+<li><p><a class="reference internal" href="#small-high-power-h-j-class" id="id39">Small High-Power (H-J Class)</a></p></li>
+<li><p><a class="reference internal" href="#medium-high-power-k-l-class" id="id40">Medium High-Power (K-L Class)</a></p></li>
+<li><p><a class="reference internal" href="#competition-motor-m-n-class" id="id41">Competition Motor (M-N Class)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#see-also" id="id42">See Also</a></p></li>
+</ul>
+</nav>
+<hr class="docutils" />
+<section id="overview">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The motor configuration supports three motor types:</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-3 sd-row-cols-xs-3 sd-row-cols-sm-3 sd-row-cols-md-3 sd-row-cols-lg-3 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>SolidMotor</strong></div>
+<p class="sd-card-text">Solid propellant grains</p>
+<ul class="simple">
+<li><p class="sd-card-text">Thrust curve required</p></li>
+<li><p class="sd-card-text">Grain geometry</p></li>
+<li><p class="sd-card-text">Burn time</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>HybridMotor</strong></div>
+<p class="sd-card-text">Solid fuel + liquid oxidizer</p>
+<ul class="simple">
+<li><p class="sd-card-text">Advanced modeling</p></li>
+<li><p class="sd-card-text">Fuel regression</p></li>
+<li><p class="sd-card-text">Oxidizer flow</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<strong>LiquidMotor</strong></div>
+<p class="sd-card-text">Liquid propellants</p>
+<ul class="simple">
+<li><p class="sd-card-text">Tank pressurization</p></li>
+<li><p class="sd-card-text">Feed system</p></li>
+<li><p class="sd-card-text">Complex dynamics</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Current support:</strong> rocket-sim primarily supports <strong>SolidMotor</strong>.</p>
+<p>HybridMotor and LiquidMotor require RocketPy API for advanced configuration.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="basic-properties">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Basic Properties</a><a class="headerlink" href="#basic-properties" title="Link to this heading">#</a></h2>
+<section id="type">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">type</a><a class="headerlink" href="#type" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;SolidMotor&quot;</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;SolidMotor&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;HybridMotor&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;LiquidMotor&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Motor type</strong> determines which propulsion model RocketPy uses.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SolidMotor&quot;</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+SolidMotor (Default)</label><div class="sd-tab-content docutils">
+<p><strong>Solid propellant motor</strong></p>
+<ul class="simple">
+<li><p>Pre-cast propellant grains</p></li>
+<li><p>Thrust curve from test data or simulation</p></li>
+<li><p>Simple, reliable, most common</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SolidMotor&quot;</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/Cesaroni_M1670.eng&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+HybridMotor</label><div class="sd-tab-content docutils">
+<p><strong>Hybrid propulsion</strong></p>
+<ul class="simple">
+<li><p>Solid fuel grain + liquid oxidizer</p></li>
+<li><p>More complex modeling</p></li>
+<li><p>Requires additional parameters</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;HybridMotor&quot;</span>
+<span class="w">  </span><span class="c1"># Additional hybrid-specific params required</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+LiquidMotor</label><div class="sd-tab-content docutils">
+<p><strong>Liquid bipropellant</strong></p>
+<ul class="simple">
+<li><p>Liquid fuel + liquid oxidizer</p></li>
+<li><p>Most complex modeling</p></li>
+<li><p>Requires tank, feed system params</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;LiquidMotor&quot;</span>
+<span class="w">  </span><span class="c1"># Additional liquid-specific params required</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="thrust-source">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">thrust_source</a><a class="headerlink" href="#thrust-source" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Yes</strong> for SolidMotor</p>
+</dd>
+<dt class="field-odd">File formats<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">.eng</span></code>, <code class="docutils literal notranslate"><span class="pre">.rse</span></code>, <code class="docutils literal notranslate"><span class="pre">.csv</span></code></p>
+</dd>
+</dl>
+<p><strong>Path to thrust curve data file</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/Cesaroni_M1670.eng&quot;</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Thrust Curve File Formats</p>
+<p><strong>RASP Engine Format (.eng) - Recommended</strong></p>
+<p>Standard format for commercial motors:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">data/motors/Cesaroni_M1670.eng</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> ; Cesaroni M1670-P
+ M1670-P 75 757 0 1.815 3.101 Pro75
+ 0.0 0
+ 0.1 1800
+ 0.5 1850
+ 1.5 1750
+ 2.8 1600
+ 3.5 800
+ 3.8 0
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li><p>First line: Comment (semicolon)</p></li>
+<li><p>Second line: Motor name, diameter (mm), length (mm), delays, propellant mass (kg), total mass (kg), manufacturer</p></li>
+<li><p>Data: Time (s), Thrust (N)</p></li>
+</ul>
+<p><strong>CSV Format</strong></p>
+<p>Simple comma-separated values:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">data/motors/custom_motor.csv</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> # Time (s), Thrust (N)
+ 0.0, 0
+ 0.1, 1800
+ 0.5, 1850
+ 1.5, 1750
+ 2.8, 1600
+ 3.5, 800
+ 3.8, 0
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Lines starting with <code class="docutils literal notranslate"><span class="pre">#</span></code> are comments</p></li>
+<li><p>First column: Time (seconds)</p></li>
+<li><p>Second column: Thrust (Newtons)</p></li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Where to find thrust curves:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.thrustcurve.org/">ThrustCurve.org</a> - Database of commercial motors</p></li>
+<li><p>Motor manufacturer websites (Cesaroni, AeroTech, etc.)</p></li>
+<li><p>RASP download: includes thousands of motor files</p></li>
+<li><p>Motor test stand data (custom motors)</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>File path rules:</strong></p>
+<ul class="simple">
+<li><p>Relative paths are from project root (where you run scripts)</p></li>
+<li><p>Use forward slashes <code class="docutils literal notranslate"><span class="pre">/</span></code> even on Windows</p></li>
+<li><p>Check file exists before running simulation</p></li>
+</ul>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="coordinate-system">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Coordinate System</a><a class="headerlink" href="#coordinate-system" title="Link to this heading">#</a></h2>
+<section id="coordinate-system-orientation">
+<span id="config-motor-params-coordinate-system"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">coordinate_system_orientation</a><a class="headerlink" href="#coordinate-system-orientation" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;nozzle_to_combustion_chamber&quot;</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;nozzle_to_combustion_chamber&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;combustion_chamber_to_nozzle&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Motor internal coordinate system</strong> for position measurements <strong>within the motor</strong>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This is <strong>separate</strong> from the rocket coordinate system (<code class="docutils literal notranslate"><span class="pre">tail_to_nose</span></code> or <code class="docutils literal notranslate"><span class="pre">nose_to_tail</span></code>).</p>
+<p>Motor positions are defined <strong>relative to motor</strong>, then the complete motor is positioned in rocket frame using <code class="docutils literal notranslate"><span class="pre">position_m</span></code>.</p>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+nozzle_to_combustion_chamber (Default)</label><div class="sd-tab-content docutils">
+<p><strong>Origin at nozzle exit, positive toward combustion chamber</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Combustion ←──────────→ Nozzle
+Chamber              Exit
++0.7 m               0.0 m (origin)
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nozzle_to_combustion_chamber&quot;</span>
+<span class="w">  </span><span class="nt">nozzle_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                      </span><span class="c1"># Always 0.0 in this system</span>
+<span class="w">  </span><span class="nt">grains_center_of_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span><span class="w">     </span><span class="c1"># 0.317 m from nozzle</span>
+<span class="w">  </span><span class="nt">center_of_dry_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span><span class="w">        </span><span class="c1"># 0.317 m from nozzle</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+combustion_chamber_to_nozzle</label><div class="sd-tab-content docutils">
+<p><strong>Origin at combustion chamber forward end, positive toward nozzle</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Combustion ──────────→ Nozzle
+Chamber              Exit
+0.0 m (origin)       +0.7 m
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;combustion_chamber_to_nozzle&quot;</span>
+<span class="w">  </span><span class="nt">nozzle_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.7</span><span class="w">                      </span><span class="c1"># 0.7 m from chamber</span>
+<span class="w">  </span><span class="nt">grains_center_of_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.383</span><span class="w">     </span><span class="c1"># 0.383 m from chamber</span>
+<span class="w">  </span><span class="nt">center_of_dry_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.383</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#config-motor-params-position"><span class="std std-ref">position_m</span></a> for positioning motor in rocket frame</p></li>
+<li><p><span class="xref std std-ref">tutorial-coordinate-systems</span> for complete coordinate system guide</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+</section>
+<section id="position-m">
+<span id="config-motor-params-position"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">position_m</a><a class="headerlink" href="#position-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Position of motor nozzle exit</strong> in <strong>rocket coordinate system</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.065</span>
+
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># Nozzle at tail (0.0 m from tail)</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><code class="docutils literal notranslate"><span class="pre">position_m</span></code> is measured in the <strong>rocket coordinate system</strong>, not the motor coordinate system.</p>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-5">
+tail_to_nose rocket</label><div class="sd-tab-content docutils">
+<p><strong>Rocket origin at tail, positive toward nose</strong></p>
+<p>Motor nozzle typically at or near tail:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tail_to_nose&quot;</span>
+
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># Nozzle flush with tail</span>
+<span class="w">  </span><span class="c1"># OR</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># Nozzle 0.1 m from tail (recessed)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-6" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-6">
+nose_to_tail rocket</label><div class="sd-tab-content docutils">
+<p><strong>Rocket origin at nose, positive toward tail</strong></p>
+<p>Motor nozzle position = rocket length:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nose_to_tail&quot;</span>
+<span class="w">  </span><span class="nt">geometry</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.065</span>
+
+<span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.065</span><span class="w">  </span><span class="c1"># Nozzle at tail (2.065 m from nose)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Measuring Motor Position</p>
+<p><strong>Method 1: Nozzle flush with tail</strong></p>
+<p>Most common configuration - nozzle exit aligns with rocket tail:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tail_to_nose</span></code>: <code class="docutils literal notranslate"><span class="pre">position_m</span> <span class="pre">=</span> <span class="pre">0.0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nose_to_tail</span></code>: <code class="docutils literal notranslate"><span class="pre">position_m</span> <span class="pre">=</span> <span class="pre">rocket.geometry.length_m</span></code></p></li>
+</ul>
+<p><strong>Method 2: Nozzle recessed (inside body tube)</strong></p>
+<p>Measure distance from tail/nose to nozzle exit:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>tail_to_nose system:
+    Tail ──── 0.15 m ──── Nozzle Exit ──── rest of motor
+
+    position_m = 0.15
+</pre></div>
+</div>
+<p><strong>Method 3: Nozzle extends beyond tail</strong></p>
+<p>If nozzle protrudes past rocket tail:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>tail_to_nose system:
+    Nozzle Exit ──── 0.05 m ──── Tail ──── body tube
+
+    position_m = -0.05  # Negative! (extends beyond tail)
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="mass-properties">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Mass Properties</a><a class="headerlink" href="#mass-properties" title="Link to this heading">#</a></h2>
+<section id="dry-mass-kg">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">dry_mass_kg</a><a class="headerlink" href="#dry-mass-kg" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>kilograms (kg)</p>
+</dd>
+</dl>
+<p><strong>Mass of motor casing and hardware</strong> without propellant.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.815</span>
+</pre></div>
+</div>
+<p>Includes:</p>
+<ul class="simple">
+<li><p>Motor casing (aluminum, fiberglass, etc.)</p></li>
+<li><p>Nozzle hardware</p></li>
+<li><p>Bulkheads and closures</p></li>
+<li><p>O-rings, snap rings</p></li>
+<li><p>Igniter (negligible mass)</p></li>
+</ul>
+<p>Excludes:</p>
+<ul class="simple">
+<li><p>Propellant (grains)</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Determine</p>
+<p><strong>Method 1: Manufacturer specification (recommended)</strong></p>
+<p>Check motor data sheet:</p>
+<ul class="simple">
+<li><p>ThrustCurve.org: “Empty Weight”</p></li>
+<li><p>Motor manual: “Case Weight”</p></li>
+</ul>
+<p><strong>Method 2: Weigh empty motor</strong></p>
+<ol class="arabic simple">
+<li><p>Use motor after firing (propellant burned)</p></li>
+<li><p>Clean out residue</p></li>
+<li><p>Weigh on digital scale</p></li>
+</ol>
+<p><strong>Method 3: From .eng file</strong></p>
+<p>Parse RASP .eng file header:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>M1670-P 75 757 0 1.815 3.101 Pro75
+                   ─────  ─────
+                   Prop   Total
+</pre></div>
+</div>
+<p>dry_mass_kg = total_mass - propellant_mass = 3.101 - 1.815 = 1.286 kg</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="center-of-dry-mass-position-m">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">center_of_dry_mass_position_m</a><a class="headerlink" href="#center-of-dry-mass-position-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Computed from geometry</p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Center of mass of empty motor casing</strong> in motor coordinate system.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nozzle_to_combustion_chamber&quot;</span>
+<span class="w">  </span><span class="nt">center_of_dry_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span><span class="w">  </span><span class="c1"># 0.317 m from nozzle</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Determine</p>
+<p><strong>Method 1: Assume uniform casing (simplest)</strong></p>
+<p>For cylindrical motor casing with uniform thickness:</p>
+<div class="math notranslate nohighlight">
+\[x_{dry} = \frac{L_{motor}}{2}\]</div>
+<p><strong>Method 2: Balance empty motor</strong></p>
+<ol class="arabic simple">
+<li><p>Use motor after burn (empty)</p></li>
+<li><p>Balance on knife edge</p></li>
+<li><p>Measure distance from nozzle exit to balance point</p></li>
+</ol>
+<p><strong>Method 3: CAD model</strong></p>
+<p>Model motor casing in CAD → read CoM</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If omitted, RocketPy estimates from motor geometry.</p>
+<p>For accurate simulations, measure or calculate explicitly.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="dry-inertia">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">dry_inertia</a><a class="headerlink" href="#dry-inertia" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">tuple</span> <span class="pre">of</span> <span class="pre">float</span></code> (3 elements: Ixx, Iyy, Izz)</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">(0.125,</span> <span class="pre">0.125,</span> <span class="pre">0.002)</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>kg·m²</p>
+</dd>
+</dl>
+<p><strong>Moments of inertia of empty motor</strong> about its center of mass.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">dry_inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.125</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.125</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.002</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># [Ixx, Iyy, Izz]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Ixx,</span> <span class="pre">Iyy</span></code>: Transverse inertia (perpendicular to motor axis)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Izz</span></code>: Axial inertia (spin axis)</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Calculate</p>
+<p><strong>Method 1: Hollow cylinder approximation</strong></p>
+<p>For thin-walled cylindrical casing:</p>
+<div class="math notranslate nohighlight">
+\[I_{xx} = I_{yy} = m \left[ \frac{r^2}{2} + \frac{L^2}{12} \right]\]</div>
+<div class="math notranslate nohighlight">
+\[I_{zz} = m r^2\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(m\)</span> = dry_mass_kg</p></li>
+<li><p><span class="math notranslate nohighlight">\(r\)</span> = casing outer radius (m)</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> = motor length (m)</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(m = 1.5\)</span> kg</p></li>
+<li><p><span class="math notranslate nohighlight">\(r = 0.0375\)</span> m (75 mm diameter)</p></li>
+<li><p><span class="math notranslate nohighlight">\(L = 0.7\)</span> m</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[I_{xx} = 1.5 \times \left[ \frac{0.0375^2}{2} + \frac{0.7^2}{12} \right] = 0.063 \text{ kg·m}^2\]</div>
+<div class="math notranslate nohighlight">
+\[I_{zz} = 1.5 \times 0.0375^2 = 0.002 \text{ kg·m}^2\]</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Default values are reasonable estimates for 75 mm diameter motors.</p>
+<p>For high-fidelity simulations, calculate from motor geometry or use CAD.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="nozzle-geometry">
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">Nozzle Geometry</a><a class="headerlink" href="#nozzle-geometry" title="Link to this heading">#</a></h2>
+<section id="nozzle-radius-m">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">nozzle_radius_m</a><a class="headerlink" href="#nozzle-radius-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Outer radius of motor nozzle exit</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nozzle_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span><span class="w">  </span><span class="c1"># 33 mm radius, 66 mm diameter</span>
+</pre></div>
+</div>
+<p>Used for:</p>
+<ul class="simple">
+<li><p>Base drag calculations</p></li>
+<li><p>Exit pressure thrust correction</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Measure</p>
+<ol class="arabic simple">
+<li><p>Measure <strong>nozzle exit diameter</strong> with calipers</p></li>
+<li><p>Divide by 2 to get radius</p></li>
+<li><p>Convert to meters:</p>
+<ul class="simple">
+<li><p>Millimeters → meters: divide by 1000</p></li>
+<li><p>Inches → meters: multiply by 0.0254</p></li>
+</ul>
+</li>
+</ol>
+<p>Example:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Nozzle exit diameter: 66 mm
+Radius: 66 / 2 = 33 mm = 0.033 m
+</pre></div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="throat-radius-m">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">throat_radius_m</a><a class="headerlink" href="#throat-radius-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">0.011</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Radius of nozzle throat</strong> (smallest cross-section).</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">throat_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.011</span><span class="w">  </span><span class="c1"># 11 mm radius</span>
+</pre></div>
+</div>
+<p>Used for:</p>
+<ul class="simple">
+<li><p>Chamber pressure estimation</p></li>
+<li><p>Thrust coefficient calculations</p></li>
+<li><p>Advanced propulsion modeling</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Not required for basic simulations.</strong></p>
+<p>RocketPy can estimate from nozzle exit radius if omitted.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="nozzle-position-m">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">nozzle_position_m</a><a class="headerlink" href="#nozzle-position-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Depends on motor coordinate system</p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Position of nozzle exit</strong> in <strong>motor coordinate system</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nozzle_to_combustion_chamber&quot;</span>
+<span class="w">  </span><span class="nt">nozzle_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># Always 0.0 for this orientation</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-7">
+nozzle_to_combustion_chamber</label><div class="sd-tab-content docutils">
+<p><strong>Nozzle at origin</strong> (always 0.0)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nozzle_to_combustion_chamber&quot;</span>
+<span class="w">  </span><span class="nt">nozzle_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># Fixed</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-8" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-8">
+combustion_chamber_to_nozzle</label><div class="sd-tab-content docutils">
+<p><strong>Nozzle at +L (motor length)</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;combustion_chamber_to_nozzle&quot;</span>
+<span class="w">  </span><span class="nt">nozzle_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.7</span><span class="w">  </span><span class="c1"># Motor length = 0.7 m</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use default (0.0) for <code class="docutils literal notranslate"><span class="pre">nozzle_to_combustion_chamber</span></code> orientation.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="propellant-grain-geometry">
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">Propellant Grain Geometry</a><a class="headerlink" href="#propellant-grain-geometry" title="Link to this heading">#</a></h2>
+<p>For <strong>SolidMotor</strong> only. These parameters define the propellant grain configuration.</p>
+<a class="reference internal image-reference" href="_static/images/motor_grain_geometry.png"><img alt="Solid motor grain geometry" class="align-center" src="_static/images/motor_grain_geometry.png" style="width: 500px;" />
+</a>
+<section id="grain-number">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">grain_number</a><a class="headerlink" href="#grain-number" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">integer</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes (for SolidMotor)</p>
+</dd>
+</dl>
+<p><strong>Number of propellant grains</strong> stacked in motor.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Typical configurations:</strong></p>
+<ul class="simple">
+<li><p><strong>1 grain</strong>: Short impulse, simple BATES grain</p></li>
+<li><p><strong>3-5 grains</strong>: Medium impulse (most common)</p></li>
+<li><p><strong>6-8 grains</strong>: Long burn, high total impulse</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="grain-density-kg-m3">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">grain_density_kg_m3</a><a class="headerlink" href="#grain-density-kg-m3" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>kg/m³</p>
+</dd>
+</dl>
+<p><strong>Density of propellant</strong> material.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">grain_density_kg_m3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1815.0</span><span class="w">  </span><span class="c1"># APCP propellant</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Common Propellant Densities</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Propellant Type</p></th>
+<th class="head"><p>Density (kg/m³)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>APCP (Ammonium Perchlorate)</p></td>
+<td><p>1700 - 1850</p></td>
+</tr>
+<tr class="row-odd"><td><p>Black Powder</p></td>
+<td><p>1700 - 1800</p></td>
+</tr>
+<tr class="row-even"><td><p>KNDX (Potassium Nitrate / Dextrose)</p></td>
+<td><p>1700 - 1900</p></td>
+</tr>
+<tr class="row-odd"><td><p>KNSB (Potassium Nitrate / Sorbitol)</p></td>
+<td><p>1800 - 1900</p></td>
+</tr>
+<tr class="row-even"><td><p>HTPB (Hydroxyl-Terminated Polybutadiene)</p></td>
+<td><p>1750 - 1800</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Check manufacturer data sheets for exact density.</p>
+<p>For commercial motors: ThrustCurve.org often lists propellant type.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="grain-outer-radius-m">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">grain_outer_radius_m</a><a class="headerlink" href="#grain-outer-radius-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Outer radius of cylindrical propellant grain</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">grain_outer_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span><span class="w">  </span><span class="c1"># 33 mm radius</span>
+</pre></div>
+</div>
+<p>Should match motor casing inner radius (minus inhibitor thickness if present).</p>
+</section>
+<hr class="docutils" />
+<section id="grain-initial-inner-radius-m">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">grain_initial_inner_radius_m</a><a class="headerlink" href="#grain-initial-inner-radius-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Inner radius of grain bore</strong> (hollow core) at ignition.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">grain_initial_inner_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.015</span><span class="w">  </span><span class="c1"># 15 mm bore radius</span>
+</pre></div>
+</div>
+<p>For <strong>BATES (cylindrical core-burning)</strong> grains.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Grain Burn Geometry</p>
+<p>As motor burns, inner radius increases:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>t=0 (ignition):
+╔═══════════════╗
+║  ░░░░░░░░░░░  ║  grain_outer_radius_m = 33 mm
+║  ░░░╔═╗░░░░  ║
+║  ░░░║ ║░░░░  ║  grain_initial_inner_radius_m = 15 mm
+║  ░░░╚═╝░░░░  ║
+║  ░░░░░░░░░░░  ║
+╚═══════════════╝
+
+t=burnout:
+╔═══════════════╗
+║  ╔═════════╗  ║  Inner radius → grain_outer_radius_m
+║  ║         ║  ║  (all propellant consumed)
+║  ║         ║  ║
+║  ╚═════════╝  ║
+╚═══════════════╝
+</pre></div>
+</div>
+<p>RocketPy models regression of burning surface.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="grain-initial-height-m">
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">grain_initial_height_m</a><a class="headerlink" href="#grain-initial-height-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>Yes</p>
+</dd>
+<dt class="field-odd">Unit<span class="colon">:</span></dt>
+<dd class="field-odd"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Axial length of each individual grain</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">grain_initial_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span><span class="w">  </span><span class="c1"># Each grain is 120 mm tall</span>
+<span class="w">  </span><span class="c1"># Total propellant length = 5 × 0.120 = 0.600 m</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="grain-separation-m">
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">grain_separation_m</a><a class="headerlink" href="#grain-separation-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">0.005</span></code></p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Spacing between stacked grains</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">grain_separation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span><span class="w">  </span><span class="c1"># 5 mm gap</span>
+</pre></div>
+</div>
+<p>Small gaps between grains affect:</p>
+<ul class="simple">
+<li><p>Total motor length</p></li>
+<li><p>Burn surface area</p></li>
+<li><p>Pressure distribution</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For commercial motors, grain_separation is often negligible (0.001 - 0.005 m).</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="grains-center-of-mass-position-m">
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">grains_center_of_mass_position_m</a><a class="headerlink" href="#grains-center-of-mass-position-m" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Computed from grain geometry</p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>meters (m)</p>
+</dd>
+</dl>
+<p><strong>Center of mass of all propellant grains</strong> (combined) in motor coordinate system.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nozzle_to_combustion_chamber&quot;</span>
+<span class="w">  </span><span class="nt">grains_center_of_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span><span class="w">  </span><span class="c1"># 0.317 m from nozzle</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">How to Calculate</p>
+<p>For symmetrically stacked grains centered in motor:</p>
+<div class="math notranslate nohighlight">
+\[x_{grains} = x_{nozzle} + \frac{L_{motor}}{2}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(L_{motor}\)</span> is the total grain stack length.</p>
+<p><strong>Example:</strong> 5 grains, each 0.120 m tall, 0.005 m separation</p>
+<div class="math notranslate nohighlight">
+\[L_{grain\_stack} = 5 \times 0.120 + 4 \times 0.005 = 0.620 \text{ m}\]</div>
+<p>If motor coordinate system is <code class="docutils literal notranslate"><span class="pre">nozzle_to_combustion_chamber</span></code>:</p>
+<div class="math notranslate nohighlight">
+\[x_{grains} = 0.0 + \frac{0.620}{2} = 0.310 \text{ m}\]</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>RocketPy computes this automatically from grain geometry if omitted.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="burn-characteristics">
+<h2><a class="toc-backref" href="#id29" role="doc-backlink">Burn Characteristics</a><a class="headerlink" href="#burn-characteristics" title="Link to this heading">#</a></h2>
+<section id="burn-time-s">
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">burn_time_s</a><a class="headerlink" href="#burn-time-s" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (computed from thrust curve)</p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>seconds (s)</p>
+</dd>
+</dl>
+<p><strong>Total burn time</strong> of motor.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">burn_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">  </span><span class="c1"># Auto-detect from thrust curve</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-9" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-9">
+Auto-detection (Recommended)</label><div class="sd-tab-content docutils">
+<p><strong>Let RocketPy determine burn time</strong> from thrust curve:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">burn_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+</pre></div>
+</div>
+<p>RocketPy finds when thrust drops to near-zero.</p>
+</div>
+<input id="sd-tab-item-10" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-10">
+Manual override</label><div class="sd-tab-content docutils">
+<p><strong>Specify burn time explicitly</strong>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">burn_time_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.8</span>
+</pre></div>
+</div>
+<p>Useful for:</p>
+<ul class="simple">
+<li><p>Truncating thrust curve</p></li>
+<li><p>Matching manufacturer specification</p></li>
+<li><p>Custom burn profiles</p></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="advanced-parameters">
+<h2><a class="toc-backref" href="#id31" role="doc-backlink">Advanced Parameters</a><a class="headerlink" href="#advanced-parameters" title="Link to this heading">#</a></h2>
+<section id="interpolation-method">
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">interpolation_method</a><a class="headerlink" href="#interpolation-method" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code></p>
+</dd>
+<dt class="field-even">Options<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;spline&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;akima&quot;</span></code></p>
+</dd>
+</dl>
+<p><strong>Interpolation method</strong> for thrust curve between data points.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">interpolation_method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spline&quot;</span>
+</pre></div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-11" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-11">
+linear (Default)</label><div class="sd-tab-content docutils">
+<p><strong>Linear interpolation</strong></p>
+<ul class="simple">
+<li><p>Straight lines between points</p></li>
+<li><p>Fast, simple</p></li>
+<li><p>May introduce discontinuities in derivatives</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">interpolation_method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;linear&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-12" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-12">
+spline</label><div class="sd-tab-content docutils">
+<p><strong>Cubic spline interpolation</strong></p>
+<ul class="simple">
+<li><p>Smooth curves between points</p></li>
+<li><p>Continuous first and second derivatives</p></li>
+<li><p>Better for integration</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">interpolation_method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spline&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-13" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-13">
+akima</label><div class="sd-tab-content docutils">
+<p><strong>Akima spline</strong></p>
+<ul class="simple">
+<li><p>Avoids overshooting between points</p></li>
+<li><p>Good for non-smooth data</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">interpolation_method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;akima&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">&quot;spline&quot;</span></code> for smoother simulations, especially with sparse thrust data.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="reference-pressure">
+<h3><a class="toc-backref" href="#id33" role="doc-backlink">reference_pressure</a><a class="headerlink" href="#reference-pressure" title="Link to this heading">#</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>No</p>
+</dd>
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (no correction)</p>
+</dd>
+<dt class="field-even">Unit<span class="colon">:</span></dt>
+<dd class="field-even"><p>pascals (Pa)</p>
+</dd>
+</dl>
+<p><strong>Atmospheric pressure at which thrust curve was measured</strong>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">reference_pressure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">101325</span><span class="w">  </span><span class="c1"># Sea level standard atmosphere</span>
+</pre></div>
+</div>
+<p>RocketPy corrects thrust for altitude:</p>
+<div class="math notranslate nohighlight">
+\[F_{total}(h) = F_{curve} + (P_{ref} - P_{ambient}(h)) \times A_{nozzle}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(F_{curve}\)</span> = thrust from thrust curve</p></li>
+<li><p><span class="math notranslate nohighlight">\(P_{ref}\)</span> = reference pressure (from config)</p></li>
+<li><p><span class="math notranslate nohighlight">\(P_{ambient}(h)\)</span> = ambient pressure at altitude h</p></li>
+<li><p><span class="math notranslate nohighlight">\(A_{nozzle}\)</span> = nozzle exit area</p></li>
+</ul>
+<div class="dropdown admonition">
+<p class="admonition-title">When to Use</p>
+<p><strong>Set reference_pressure if:</strong></p>
+<ul class="simple">
+<li><p>Thrust curve from motor test stand (usually sea level = 101325 Pa)</p></li>
+<li><p>Flying at significantly different altitude (mountain launch sites)</p></li>
+<li><p>High-altitude flights (&gt;3000 m)</p></li>
+</ul>
+<p><strong>Omit (null) if:</strong></p>
+<ul class="simple">
+<li><p>Using manufacturer thrust curves (already altitude-corrected)</p></li>
+<li><p>Launch site near sea level</p></li>
+<li><p>Uncertainty in test conditions</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Incorrect reference_pressure</strong> can introduce 5-10% thrust error at high altitude!</p>
+<p>Check motor test report for atmospheric conditions during testing.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="complete-example">
+<h2><a class="toc-backref" href="#id34" role="doc-backlink">Complete Example</a><a class="headerlink" href="#complete-example" title="Link to this heading">#</a></h2>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Complete motor configuration example</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">fins</span><span class="p">:</span>
+<span class="hll"><span class="w">    </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w">                             </span><span class="c1"># Number of fins (typically 3-4)</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span><span class="w">                  </span><span class="c1"># Fin length at body</span>
+</span><span class="w">    </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.060</span><span class="w">                   </span><span class="c1"># Fin length at tip</span>
+<span class="w">    </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.100</span><span class="w">                        </span><span class="c1"># Fin height (body to tip)</span>
+<span class="w">    </span><span class="nt">thickness_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.003</span><span class="w">                   </span><span class="c1"># Fin thickness (affects drag)</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.95</span><span class="w">                     </span><span class="c1"># Leading edge position along rocket axis</span>
+<span class="hll"><span class="w">    </span><span class="nt">cant_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">                  </span><span class="c1"># Cant angle for spin stabilization (0 = no spin)</span>
+</span><span class="w">    </span><span class="nt">airfoil</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">                        </span><span class="c1"># Airfoil data file (null = flat plate)</span>
+
+<span class="w">  </span><span class="nt">tail</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">                       </span><span class="c1"># Enable boat tail section</span>
+<span class="w">    </span><span class="nt">top_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0635</span><span class="w">                 </span><span class="c1"># Radius at top of tail</span>
+<span class="w">    </span><span class="nt">bottom_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.055</span><span class="w">               </span><span class="c1"># Radius at bottom (tapered end)</span>
+<span class="w">    </span><span class="nt">length_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.060</span><span class="w">                      </span><span class="c1"># Tail section length</span>
+<span class="hll"><span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.940</span><span class="w">                    </span><span class="c1"># Position along rocket axis (top of tail)</span>
+</span><span class="hll">
+</span><span class="hll"><span class="w">  </span><span class="nt">rail_buttons</span><span class="p">:</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">                       </span><span class="c1"># Enable rail button modeling</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">upper_button_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">         </span><span class="c1"># Upper button position along rocket axis</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">lower_button_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.8</span><span class="w">         </span><span class="c1"># Lower button position along rocket axis</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">angular_position_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">45.0</span><span class="w">           </span><span class="c1"># Angular position around body</span>
+</span>
+<span class="w">  </span><span class="c1"># --- Recovery System ---</span>
+
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Main&quot;</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span><span class="w">                           </span><span class="c1"># Drag coefficient × area (effective parachute area)</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span><span class="w">                    </span><span class="c1"># Deployment trigger: &quot;apogee&quot; or altitude in meters</span>
+<span class="w">    </span><span class="nt">sampling_rate_hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">105.0</span><span class="w">              </span><span class="c1"># Trigger condition check frequency</span>
+<span class="w">    </span><span class="nt">lag_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">                           </span><span class="c1"># Deployment delay after trigger</span>
+<span class="w">    </span><span class="nt">noise_std</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">8.3</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.5</span><span class="p p-Indicator">]</span><span class="w">             </span><span class="c1"># Sensor noise [x, y, z] in meters</span>
+
+<span class="w">  </span><span class="c1"># --- Active Control ---</span>
+
+<span class="w">  </span><span class="nt">air_brakes</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">                       </span><span class="c1"># Enable active air brakes system</span>
+<span class="w">    </span><span class="nt">reference_area_m2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">              </span><span class="c1"># Deployed brake surface area</span>
+<span class="w">    </span><span class="nt">drag_coefficient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.9</span><span class="w">               </span><span class="c1"># Drag coefficient when fully deployed</span>
+<span class="w">    </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">                      </span><span class="c1"># Position along rocket axis</span>
+<span class="w">    </span><span class="nt">override_rocket_drag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">          </span><span class="c1"># false=ADD airbrake drag to rocket drag (default), true=use ONLY airbrake drag</span>
+<span class="w">    </span><span class="nt">controller</span><span class="p">:</span>
+<span class="w">      </span><span class="c1"># --- Control Algorithm ---</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pid&quot;</span><span class="w">                        </span><span class="c1"># Controller type: &quot;pid&quot;, &quot;bang_bang&quot;, or &quot;model_predictive&quot;</span>
+<span class="w">      </span><span class="nt">target_apogee_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000.0</span><span class="w">            </span><span class="c1"># Target apogee for controller</span>
+<span class="w">      </span>
+<span class="w">      </span><span class="c1"># --- Apogee Prediction Method ---</span>
+</pre></div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="motor-thrust-curve-files">
+<h2><a class="toc-backref" href="#id35" role="doc-backlink">Motor Thrust Curve Files</a><a class="headerlink" href="#motor-thrust-curve-files" title="Link to this heading">#</a></h2>
+<p>Thrust curve files define motor thrust vs. time.</p>
+<section id="rasp-eng-format">
+<h3><a class="toc-backref" href="#id36" role="doc-backlink">RASP .eng Format</a><a class="headerlink" href="#rasp-eng-format" title="Link to this heading">#</a></h3>
+<p>Standard format for commercial motors:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">data/motors/Cesaroni_M1670.eng</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> ; Cesaroni M1670-P
+ ; 75mm diameter, 757mm length
+ M1670-P 75 757 0 1.815 3.101 Pro75
+ 0.0 0
+ 0.05 1200
+ 0.1 1800
+ 0.5 1850
+ 1.0 1820
+ 1.5 1750
+ 2.0 1680
+ 2.5 1620
+ 2.8 1600
+ 3.2 1200
+ 3.5 800
+ 3.7 200
+ 3.8 0
+</pre></div>
+</div>
+</div>
+<p><strong>Header line format:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>MotorName Dia(mm) Len(mm) Delays Prop(kg) Total(kg) Manufacturer
+</pre></div>
+</div>
+<p><strong>Data format:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Time(s) Thrust(N)
+</pre></div>
+</div>
+</section>
+<section id="csv-format">
+<h3><a class="toc-backref" href="#id37" role="doc-backlink">CSV Format</a><a class="headerlink" href="#csv-format" title="Link to this heading">#</a></h3>
+<p>Simple comma/space-separated values:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">data/motors/custom_motor.csv</span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> # Custom Motor Thrust Curve
+ # Time (s), Thrust (N)
+ 0.0, 0
+ 0.1, 1800
+ 0.5, 1850
+ 1.5, 1750
+ 2.8, 1600
+ 3.5, 800
+ 3.8, 0
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="common-motor-examples">
+<h2><a class="toc-backref" href="#id38" role="doc-backlink">Common Motor Examples</a><a class="headerlink" href="#common-motor-examples" title="Link to this heading">#</a></h2>
+<section id="small-high-power-h-j-class">
+<h3><a class="toc-backref" href="#id39" role="doc-backlink">Small High-Power (H-J Class)</a><a class="headerlink" href="#small-high-power-h-j-class" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SolidMotor&quot;</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/AeroTech_J450.eng&quot;</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.285</span>
+<span class="w">  </span><span class="nt">dry_inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.01</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.01</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0002</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">nozzle_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.017</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">grain_density_kg_m3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1750.0</span>
+<span class="w">  </span><span class="nt">grain_outer_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.027</span>
+<span class="w">  </span><span class="nt">grain_initial_inner_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.012</span>
+<span class="w">  </span><span class="nt">grain_initial_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.140</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">  </span><span class="c1"># tail_to_nose rocket</span>
+</pre></div>
+</div>
+</section>
+<section id="medium-high-power-k-l-class">
+<h3><a class="toc-backref" href="#id40" role="doc-backlink">Medium High-Power (K-L Class)</a><a class="headerlink" href="#medium-high-power-k-l-class" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SolidMotor&quot;</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/Cesaroni_L935.eng&quot;</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.658</span>
+<span class="w">  </span><span class="nt">dry_inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.045</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.045</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0008</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">nozzle_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.021</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">  </span><span class="nt">grain_density_kg_m3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1815.0</span>
+<span class="w">  </span><span class="nt">grain_outer_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.027</span>
+<span class="w">  </span><span class="nt">grain_initial_inner_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.015</span>
+<span class="w">  </span><span class="nt">grain_initial_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span>
+<span class="w">  </span><span class="nt">grain_separation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+</pre></div>
+</div>
+</section>
+<section id="competition-motor-m-n-class">
+<h3><a class="toc-backref" href="#id41" role="doc-backlink">Competition Motor (M-N Class)</a><a class="headerlink" href="#competition-motor-m-n-class" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">motor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SolidMotor&quot;</span>
+<span class="w">  </span><span class="nt">thrust_source</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data/motors/Cesaroni_M1670.eng&quot;</span>
+<span class="w">  </span><span class="nt">dry_mass_kg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.286</span>
+<span class="w">  </span><span class="nt">dry_inertia</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.125</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.125</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.002</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">nozzle_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span>
+<span class="w">  </span><span class="nt">throat_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.011</span>
+<span class="w">  </span><span class="nt">grain_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">grain_density_kg_m3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1815.0</span>
+<span class="w">  </span><span class="nt">grain_outer_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.033</span>
+<span class="w">  </span><span class="nt">grain_initial_inner_radius_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.015</span>
+<span class="w">  </span><span class="nt">grain_initial_height_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.120</span>
+<span class="w">  </span><span class="nt">grain_separation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span>
+<span class="w">  </span><span class="nt">grains_center_of_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span>
+<span class="w">  </span><span class="nt">center_of_dry_mass_position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.317</span>
+<span class="w">  </span><span class="nt">coordinate_system_orientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nozzle_to_combustion_chamber&quot;</span>
+<span class="w">  </span><span class="nt">reference_pressure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">101325</span>
+<span class="w">  </span><span class="nt">interpolation_method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spline&quot;</span>
+<span class="w">  </span><span class="nt">position_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="see-also">
+<h2><a class="toc-backref" href="#id42" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><strong>Configuration References:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="rocket_params.html#config-rocket-params"><span class="std std-ref">Rocket Parameters Reference</span></a> - Rocket geometry and components</p></li>
+<li><p><a class="reference internal" href="environment_params.html#config-environment-params"><span class="std std-ref">Environment Parameters Reference</span></a> - Launch site conditions</p></li>
+<li><p><a class="reference internal" href="simulation_params.html#config-simulation-params"><span class="std std-ref">Simulation Parameters Reference</span></a> - Simulation settings</p></li>
+</ul>
+<p><strong>Tutorials:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">tutorial-basic-flight</span> - Complete first simulation</p></li>
+<li><p><span class="xref std std-ref">tutorial-motor-selection</span> - Choosing the right motor</p></li>
+</ul>
+<p><strong>How-To Guides:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">how-to-import-thrustcurve</span> - Downloading from ThrustCurve.org</p></li>
+<li><p><span class="xref std std-ref">how-to-custom-thrust-curve</span> - Creating custom motor data</p></li>
+<li><p><span class="xref std std-ref">how-to-motor-coordinates</span> - Understanding motor positioning</p></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">example-motor-comparison</span> - Comparing different motors</p></li>
+<li><p><span class="xref std std-ref">example-custom-motor</span> - Amateur motor design simulation</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<p><strong>Next:</strong> <a class="reference internal" href="environment_params.html#config-environment-params"><span class="std std-ref">Environment Parameters Reference</span></a></p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="rocket_params.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Rocket Parameters Reference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="environment_params.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Environment Parameters Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-properties">Basic Properties</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#type">type</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thrust-source">thrust_source</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-system">Coordinate System</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-system-orientation">coordinate_system_orientation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#position-m">position_m</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-properties">Mass Properties</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dry-mass-kg">dry_mass_kg</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#center-of-dry-mass-position-m">center_of_dry_mass_position_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dry-inertia">dry_inertia</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nozzle-geometry">Nozzle Geometry</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nozzle-radius-m">nozzle_radius_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#throat-radius-m">throat_radius_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nozzle-position-m">nozzle_position_m</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propellant-grain-geometry">Propellant Grain Geometry</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grain-number">grain_number</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grain-density-kg-m3">grain_density_kg_m3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grain-outer-radius-m">grain_outer_radius_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grain-initial-inner-radius-m">grain_initial_inner_radius_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grain-initial-height-m">grain_initial_height_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grain-separation-m">grain_separation_m</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grains-center-of-mass-position-m">grains_center_of_mass_position_m</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#burn-characteristics">Burn Characteristics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#burn-time-s">burn_time_s</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-parameters">Advanced Parameters</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolation-method">interpolation_method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-pressure">reference_pressure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-example">Complete Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-thrust-curve-files">Motor Thrust Curve Files</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rasp-eng-format">RASP .eng Format</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-format">CSV Format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-motor-examples">Common Motor Examples</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#small-high-power-h-j-class">Small High-Power (H-J Class)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#medium-high-power-k-l-class">Medium High-Power (K-L Class)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#competition-motor-m-n-class">Competition Motor (M-N Class)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See Also</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/configuration/motor_params.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

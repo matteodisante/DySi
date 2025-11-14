@@ -1,0 +1,1324 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Output Plot Interpretation Guide &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/technical/plot_interpretation';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Rocket Stability: Theory and Best Practices" href="stability_analysis.html" />
+    <link rel="prev" title="Technical Documentation" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../quick_plot_reference.html">Quick Plot Reference Card</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Output Plot Interpretation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Technical Documentation</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Output Plot Interpretation Guide</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="output-plot-interpretation-guide">
+<span id="plot-interpretation"></span><h1>Output Plot Interpretation Guide<a class="headerlink" href="#output-plot-interpretation-guide" title="Link to this heading">#</a></h1>
+<p>This guide explains how to interpret all plots generated by DySi simulations.
+Understanding these plots is essential for analyzing flight performance, validating
+designs, and identifying potential issues.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>DySi generates plots automatically in the <code class="docutils literal notranslate"><span class="pre">outputs/&lt;simulation_name&gt;/curves/</span></code>
+directory, organized into subdirectories by category.</p>
+</div>
+<section id="plot-organization">
+<h2>Plot Organization<a class="headerlink" href="#plot-organization" title="Link to this heading">#</a></h2>
+<p>Plots are organized into the following categories:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">motor/</span></code></p></td>
+<td><p>Motor performance characteristics (thrust, mass, Kn)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rocket/</span></code></p></td>
+<td><p>Rocket aerodynamics (drag coefficient, CP position)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stability/</span></code></p></td>
+<td><p>Stability analysis (margins, CP/CoM evolution)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">environment/</span></code></p></td>
+<td><p>Atmospheric conditions (wind, pressure, temperature)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">flight/</span></code></p></td>
+<td><p>Flight data (trajectory, kinematics, forces, energy, attitude)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="motor-plots">
+<h2>Motor Plots<a class="headerlink" href="#motor-plots" title="Link to this heading">#</a></h2>
+<section id="thrust-curve-png">
+<h3>thrust_curve.png<a class="headerlink" href="#thrust-curve-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows motor thrust vs time with performance metrics.</p>
+<p><strong>Key Features</strong>:</p>
+<ul class="simple">
+<li><p><strong>Blue line</strong>: Thrust curve</p></li>
+<li><p><strong>Shaded area</strong>: Total impulse (area under curve)</p></li>
+<li><p><strong>Green dashed line</strong>: Average thrust</p></li>
+<li><p><strong>Red point</strong>: Maximum thrust</p></li>
+<li><p><strong>Orange/red vertical lines</strong>: Burn start/burnout times</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Smooth thrust curve</strong>: Indicates stable burn
+✅ <strong>Peak thrust occurs early</strong>: Typical for most motors
+✅ <strong>Total impulse</strong>: Should match motor specifications
+⚠️ <strong>Irregular spikes</strong>: May indicate measurement errors or actual motor irregularities</p>
+<p><strong>Example Interpretation</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Max Thrust: 1520 N @ 0.15 s
+Average Thrust: 950 N
+Total Impulse: 7579 N·s
+Burn Duration: 7.98 s
+
+✓ Motor performance matches manufacturer specs
+✓ Peak thrust early → good initial acceleration
+✓ Long burn → high altitude potential
+</pre></div>
+</div>
+</section>
+<section id="mass-evolution-png">
+<h3>mass_evolution.png<a class="headerlink" href="#mass-evolution-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows how motor total mass and propellant mass change during burn.</p>
+<p><strong>Key Lines</strong>:</p>
+<ul class="simple">
+<li><p><strong>Blue line</strong>: Total motor mass (structure + propellant)</p></li>
+<li><p><strong>Red line</strong>: Propellant mass only</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Propellant reaches zero at burnout</strong>: Complete burn
+✅ <strong>Total mass &gt; 0 at burnout</strong>: Motor case remains
+✅ <strong>Smooth decrease</strong>: Steady propellant consumption</p>
+</section>
+<section id="kn-curve-png">
+<h3>kn_curve.png<a class="headerlink" href="#kn-curve-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows burn area to throat area ratio (Kn) vs time.</p>
+<p><strong>Interpretation</strong>:</p>
+<ul class="simple">
+<li><p><strong>Kn &gt; 200</strong>: Very aggressive burn (high chamber pressure)</p></li>
+<li><p><strong>Kn = 100-200</strong>: Typical range for most motors</p></li>
+<li><p><strong>Kn &lt; 100</strong>: Conservative burn (lower chamber pressure)</p></li>
+<li><p><strong>Increasing Kn</strong>: Progressive burn (grain burning inward)</p></li>
+<li><p><strong>Decreasing Kn</strong>: Regressive burn (grain burning outward)</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="rocket-plots">
+<h2>Rocket Plots<a class="headerlink" href="#rocket-plots" title="Link to this heading">#</a></h2>
+<section id="drag-coefficient-png">
+<h3>drag_coefficient.png<a class="headerlink" href="#drag-coefficient-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows how drag coefficient (Cd) varies with Mach number.</p>
+<p><strong>Critical Regions</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Subsonic (M &lt; 0.8)</strong>: Relatively constant Cd</p></li>
+<li><p><strong>Transonic (M = 0.8-1.2)</strong>: <strong>Rapid Cd increase</strong> - peak drag</p></li>
+<li><p><strong>Supersonic (M &gt; 1.2)</strong>: Cd decreases and stabilizes</p></li>
+</ol>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Smooth curve</strong>: Good aerodynamic design
+⚠️ <strong>Sharp spikes</strong>: May indicate design issues or airflow separation
+📊 <strong>Peak around M=1.0</strong>: Normal transonic drag rise</p>
+<p><strong>Typical Values</strong>:</p>
+<ul class="simple">
+<li><p>Subsonic: Cd ≈ 0.3-0.5</p></li>
+<li><p>Transonic peak: Cd ≈ 0.5-0.8</p></li>
+<li><p>Supersonic: Cd ≈ 0.3-0.4</p></li>
+</ul>
+</section>
+<section id="cp-position-vs-mach-png">
+<h3>cp_position_vs_mach.png<a class="headerlink" href="#cp-position-vs-mach-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows how Center of Pressure (CP) moves with Mach number.</p>
+<p><strong>Why CP Moves</strong>:</p>
+<ul class="simple">
+<li><p>Shock wave formation changes pressure distribution</p></li>
+<li><p>Fin effectiveness varies with Mach number</p></li>
+<li><p>Nose cone pressure patterns change</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>CP shifts aft (more negative)</strong> at transonic: Improves stability
+⚠️ <strong>CP shifts forward</strong> at transonic: Reduces stability margin
+📏 <strong>Shift magnitude</strong>: Typical shifts are 5-15 cm for high-power rockets</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="stability-plots">
+<h2>Stability Plots<a class="headerlink" href="#stability-plots" title="Link to this heading">#</a></h2>
+<section id="stability-envelope-png">
+<h3>stability_envelope.png<a class="headerlink" href="#stability-envelope-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows actual stability margin throughout flight with safety zones.</p>
+<p><strong>Color Zones</strong>:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Zone</p></th>
+<th class="head"><p>Color</p></th>
+<th class="head"><p>Margin Range</p></th>
+<th class="head"><p>Interpretation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Dangerous</p></td>
+<td><p>Red</p></td>
+<td><p>&lt; 1.0 cal</p></td>
+<td><p>❌ Unstable - DO NOT FLY</p></td>
+</tr>
+<tr class="row-odd"><td><p>Marginal</p></td>
+<td><p>Yellow</p></td>
+<td><p>1.0-1.5 cal</p></td>
+<td><p>⚠️ Risky - subsonic only</p></td>
+</tr>
+<tr class="row-even"><td><p>Safe</p></td>
+<td><p>Light green</p></td>
+<td><p>1.5-2.0 cal</p></td>
+<td><p>✅ Acceptable</p></td>
+</tr>
+<tr class="row-odd"><td><p>Optimal</p></td>
+<td><p>Dark green</p></td>
+<td><p>2.0-2.5 cal</p></td>
+<td><p>✅✅ Excellent</p></td>
+</tr>
+<tr class="row-even"><td><p>Overstable</p></td>
+<td><p>Blue</p></td>
+<td><p>&gt; 2.5 cal</p></td>
+<td><p>🔹 Very stable</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Critical Events Marked</strong>:</p>
+<ul class="simple">
+<li><p><strong>Burnout</strong>: Often minimum stability point</p></li>
+<li><p><strong>Max-Q</strong>: Maximum dynamic pressure</p></li>
+<li><p><strong>Apogee</strong>: End of powered/coast flight</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Entire curve in green zones</strong>: Safe flight
+✅ <strong>Minimum margin &gt; 1.5 cal</strong>: Good design
+⚠️ <strong>Dips into yellow</strong>: Only acceptable if brief and subsonic
+❌ <strong>Any red zone</strong>: Rocket is unstable - redesign needed</p>
+</section>
+<section id="stability-margin-surface-png">
+<h3>stability_margin_surface.png<a class="headerlink" href="#stability-margin-surface-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: 3D surface showing how stability margin varies with both Mach and time.</p>
+<p><strong>Axes</strong>:</p>
+<ul class="simple">
+<li><p><strong>X-axis</strong>: Time (s)</p></li>
+<li><p><strong>Y-axis</strong>: Mach number</p></li>
+<li><p><strong>Z-axis (color)</strong>: Stability margin (calibers)</p></li>
+</ul>
+<p><strong>Interpretation</strong>:</p>
+<ul class="simple">
+<li><p><strong>Ridge at high Mach</strong>: CP moves aft → stability improves</p></li>
+<li><p><strong>Valley at low time, high Mach</strong>: Transonic crossing with low propellant</p></li>
+<li><p><strong>Minimum point</strong>: Critical design point</p></li>
+</ul>
+</section>
+<section id="stability-cp-travel-png">
+<h3>stability_cp_travel.png<a class="headerlink" href="#stability-cp-travel-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows CP position vs Mach with flight regime annotations.</p>
+<p><strong>Regime Regions</strong>:</p>
+<ul class="simple">
+<li><p><strong>Subsonic</strong>: M &lt; 0.8 (light blue)</p></li>
+<li><p><strong>Transonic</strong>: M = 0.8-1.2 (light red) - <strong>CRITICAL</strong></p></li>
+<li><p><strong>Supersonic</strong>: M &gt; 1.2 (light green)</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<ul class="simple">
+<li><p><strong>Actual flight max Mach</strong>: Red vertical line</p></li>
+<li><p><strong>CP travel magnitude</strong>: How much CP moves</p></li>
+<li><p><strong>Direction</strong>: Aft movement (negative) improves stability</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+<section id="flight-data-plots">
+<span id="flight-plots-interpretation"></span><h2>Flight Data Plots<a class="headerlink" href="#flight-data-plots" title="Link to this heading">#</a></h2>
+<section id="trajectory-3d-png">
+<h3>trajectory_3d.png<a class="headerlink" href="#trajectory-3d-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Visualizes the complete 3D flight path with projections on XY, XZ, and YZ planes.</p>
+<p><strong>Components</strong>:</p>
+<ul class="simple">
+<li><p><strong>Main trajectory</strong>: 3D flight path (blue line)</p></li>
+<li><p><strong>XY projection</strong>: Ground track (gray dashed) - shows horizontal drift</p></li>
+<li><p><strong>XZ projection</strong>: Side view (gray dashed) - shows altitude profile</p></li>
+<li><p><strong>YZ projection</strong>: Front view (gray dashed) - shows lateral motion</p></li>
+</ul>
+<p><strong>Key Points</strong>:</p>
+<ul class="simple">
+<li><p><strong>Green circle</strong>: Launch point</p></li>
+<li><p><strong>Red triangle</strong>: Apogee (highest altitude)</p></li>
+<li><p><strong>Orange square</strong>: Landing point</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Smooth trajectory</strong>: No erratic path changes
+✅ <strong>Vertical ascent</strong>: Minimal horizontal drift in early flight
+✅ <strong>Downwind drift</strong>: Ground track shows wind effect
+⚠️ <strong>Large lateral deviations</strong>: Strong crosswinds or instability
+⚠️ <strong>Zigzag pattern</strong>: Possible control issues or instability</p>
+</section>
+<section id="position-data-png">
+<h3>position_data.png<a class="headerlink" href="#position-data-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows the position components (x, y, z) as they evolve over time.</p>
+<p><strong>Subplot Layout</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>X Position</strong> (East): Horizontal displacement eastward (m)</p></li>
+<li><p><strong>Y Position</strong> (North): Horizontal displacement northward (m)</p></li>
+<li><p><strong>Z Position</strong> (Altitude): Vertical position above ground (m)</p></li>
+</ol>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>X and Y near zero early</strong>: Vertical ascent with minimal drift
+✅ <strong>Z reaches apogee smoothly</strong>: Parabolic altitude profile
+✅ <strong>Apogee marked</strong>: Red triangle shows maximum altitude
+⚠️ <strong>Large X or Y displacement early</strong>: Excessive tilt or wind drift
+⚠️ <strong>Irregular Z curve</strong>: Possible thrust irregularities</p>
+<p><strong>Relationship to other plots</strong>:</p>
+<ul class="simple">
+<li><p><strong>Derivatives</strong>: Velocities (Vx, Vy, Vz) are derivatives of positions</p></li>
+<li><p><strong>Wind effect</strong>: X and Y show cumulative drift due to wind</p></li>
+<li><p><strong>Ground track</strong>: X-Y projection visible in trajectory_3d.png</p></li>
+</ul>
+</section>
+<section id="linear-kinematics-data-png">
+<h3>linear_kinematics_data.png<a class="headerlink" href="#linear-kinematics-data-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows velocity and acceleration components in all three axes plus total magnitudes.</p>
+<p><strong>Subplot Layout</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>X Component</strong> (East): Vx (m/s) and Ax (m/s²)</p></li>
+<li><p><strong>Y Component</strong> (North): Vy (m/s) and Ay (m/s²)</p></li>
+<li><p><strong>Z Component</strong> (Altitude): Vz (m/s) and Az (m/s²)</p></li>
+<li><p><strong>Total Magnitude</strong>: Speed and Acceleration</p></li>
+</ol>
+<p><strong>Color Convention</strong>:</p>
+<ul class="simple">
+<li><p><strong>Blue line</strong> (left axis): Velocity (m/s)</p></li>
+<li><p><strong>Orange dashed</strong> (right axis): Acceleration (m/s²)</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Vz peaks then decreases</strong>: Normal parabolic trajectory
+✅ <strong>Large Az spike at ignition</strong>: Thrust acceleration
+✅ <strong>Az drops to -9.8 m/s² after burnout</strong>: Free fall (gravity only)
+✅ <strong>Small Vx, Vy compared to Vz</strong>: Vertical flight with minimal drift
+⚠️ <strong>Large horizontal velocities early</strong>: Excessive tilt or instability
+⚠️ <strong>Irregular acceleration</strong>: Motor thrust irregularities</p>
+</section>
+<section id="flight-path-angle-data-png">
+<h3>flight_path_angle_data.png<a class="headerlink" href="#flight-path-angle-data-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Compares the rocket’s attitude (where it’s pointing) with its actual flight path direction.</p>
+<p><strong>Subplots</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Flight Path vs Attitude Angle</strong>:</p>
+<ul class="simple">
+<li><p><strong>Blue line</strong>: Attitude angle (where rocket points)</p></li>
+<li><p><strong>Orange dashed</strong>: Flight path angle (actual trajectory direction)</p></li>
+<li><p>Small difference indicates low drag (rocket points where it’s going)</p></li>
+</ul>
+</li>
+<li><p><strong>Lateral Attitude Angle</strong> (green line):</p>
+<ul class="simple">
+<li><p>Deviation from vertical plane containing velocity vector</p></li>
+<li><p>Shows yaw motion or corkscrew pattern</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Both angles similar</strong>: Rocket flying in direction it’s pointing (low AoA)
+✅ <strong>Both angles near 90° early</strong>: Vertical ascent
+✅ <strong>Both decrease after apogee</strong>: Ballistic descent
+⚠️ <strong>Large difference</strong>: High angle of attack (significant drag)
+⚠️ <strong>Large lateral angle</strong>: Rocket yawing or precessing significantly</p>
+</section>
+<section id="attitude-data-png">
+<h3>attitude_data.png<a class="headerlink" href="#attitude-data-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows rocket orientation using Euler angles.</p>
+<p><strong>Subplot Components</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Attitude Angle</strong>: Overall tilt from vertical</p></li>
+<li><p><strong>Psi (ψ)</strong>: Precession - rotation around vertical axis</p></li>
+<li><p><strong>Theta (θ)</strong>: Nutation - nodding motion</p></li>
+<li><p><strong>Phi (φ)</strong>: Spin - rotation around rocket axis</p></li>
+</ol>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Small attitude angle (&lt; 5°)</strong>: Stable, vertical flight
+✅ <strong>Gradual precession</strong>: Normal wind response
+⚠️ <strong>Large nutation (&gt; 10°)</strong>: Possible instability or wind gusts
+⚠️ <strong>Rapid spin increase</strong>: Check fin cant angle or asymmetries</p>
+<p><strong>Normal Behavior</strong>:</p>
+<ul class="simple">
+<li><p>Attitude angle increases slowly (weathercocking into wind)</p></li>
+<li><p>Nutation dampens over time</p></li>
+<li><p>Spin may increase if fins are canted</p></li>
+</ul>
+</section>
+<section id="angular-kinematics-data-png">
+<h3>angular_kinematics_data.png<a class="headerlink" href="#angular-kinematics-data-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows angular velocities (ω) and accelerations (α) on three axes.</p>
+<p><strong>Color Convention</strong>:</p>
+<ul class="simple">
+<li><p><strong>Orange line</strong> (left axis): Angular velocity (rad/s)</p></li>
+<li><p><strong>Blue line</strong> (right axis): Angular acceleration (rad/s²)</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Oscillations dampen</strong>: Rocket is naturally stable
+✅ <strong>Small magnitudes</strong>: Minimal rotation
+⚠️ <strong>Growing oscillations</strong>: Instability or control issues
+⚠️ <strong>Large angular accelerations</strong>: Rapid attitude changes</p>
+</section>
+<section id="aerodynamic-forces-png">
+<h3>aerodynamic_forces.png<a class="headerlink" href="#aerodynamic-forces-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows aerodynamic forces and moments acting on rocket.</p>
+<p><strong>Subplots</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Aerodynamic Lift</strong>: Perpendicular to flight path</p>
+<ul class="simple">
+<li><p>Resultant + components R1, R2</p></li>
+<li><p>Peak during transonic crossing or high angle of attack</p></li>
+</ul>
+</li>
+<li><p><strong>Aerodynamic Drag</strong>: Opposes motion</p>
+<ul class="simple">
+<li><p>Should peak around Max-Q</p></li>
+<li><p>Increases dramatically in transonic region</p></li>
+</ul>
+</li>
+<li><p><strong>Bending Moment</strong>: Stress on rocket body</p>
+<ul class="simple">
+<li><p>Resultant + components M1, M2</p></li>
+<li><p>Critical for structural design</p></li>
+<li><p>Peak at Max-Q or during wind gusts</p></li>
+</ul>
+</li>
+<li><p><strong>Spin Moment</strong>: Torque around rocket axis</p>
+<ul class="simple">
+<li><p>Due to fin cant or asymmetries</p></li>
+<li><p>Controls spin rate</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Lift forces reasonable</strong>: Not excessive weathercocking
+✅ <strong>Drag peak at Max-Q</strong>: Normal behavior
+⚠️ <strong>Excessive bending moment</strong>: Structural failure risk
+📊 <strong>Force magnitudes</strong>: Scale with dynamic pressure</p>
+</section>
+<section id="rail-buttons-forces-png">
+<h3>rail_buttons_forces.png<a class="headerlink" href="#rail-buttons-forces-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows forces acting on rail buttons during launch phase (if rocket has rail buttons).</p>
+<p><strong>Note</strong>: This plot is only generated if the rocket configuration includes rail buttons.</p>
+<p><strong>Subplots</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Upper Rail Button Forces</strong>:</p>
+<ul class="simple">
+<li><p><strong>Normal Force</strong>: Perpendicular to rail - supports rocket weight component</p></li>
+<li><p><strong>Shear Force</strong>: Parallel to rail - friction and acceleration forces</p></li>
+</ul>
+</li>
+<li><p><strong>Lower Rail Button Forces</strong>:</p>
+<ul class="simple">
+<li><p>Same force components for lower button</p></li>
+<li><p>Distribution depends on rocket CoM position</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Forces drop to zero at rail exit</strong>: Clean separation
+✅ <strong>Normal forces positive</strong>: Rocket stays on rail
+✅ <strong>Reasonable magnitudes</strong>: No excessive rail loads
+⚠️ <strong>Very high shear forces</strong>: Possible binding or misalignment
+📊 <strong>Force asymmetry</strong>: Check button placement vs CoM</p>
+<p><strong>Typical Behavior</strong>:
+- Forces highest at ignition (weight + acceleration)
+- Decrease as rocket accelerates and angle changes
+- Drop to zero at ~0.5-2s (rail exit time)</p>
+</section>
+<section id="energy-data-png">
+<h3>energy_data.png<a class="headerlink" href="#energy-data-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows energy conservation and power during flight.</p>
+<p><strong>Subplots</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Total Mechanical Energy</strong>: Should decrease due to drag</p></li>
+<li><p><strong>Energy Components</strong>:</p>
+<ul class="simple">
+<li><p><strong>Kinetic</strong>: ½mv² - peaks at burnout</p></li>
+<li><p><strong>Potential</strong>: mgh - peaks at apogee</p></li>
+</ul>
+</li>
+<li><p><strong>Thrust Power</strong>: Motor power output</p></li>
+<li><p><strong>Drag Power</strong>: Power dissipated by drag</p></li>
+</ol>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Total energy decreases smoothly</strong>: Energy conservation with drag loss
+✅ <strong>KE peaks near burnout</strong>: Good acceleration
+✅ <strong>PE peaks at apogee</strong>: Energy transfer complete
+📊 <strong>Thrust power matches motor</strong>: Validation check</p>
+</section>
+<section id="fluid-mechanics-data-png">
+<h3>fluid_mechanics_data.png<a class="headerlink" href="#fluid-mechanics-data-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows fluid flow parameters around rocket.</p>
+<p><strong>Key Subplots</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Mach Number</strong>: Speed relative to sound</p>
+<ul class="simple">
+<li><p>M &lt; 0.8: Subsonic</p></li>
+<li><p>M = 0.8-1.2: Transonic (critical)</p></li>
+<li><p>M &gt; 1.2: Supersonic</p></li>
+</ul>
+</li>
+<li><p><strong>Reynolds Number</strong>: Flow regime indicator</p>
+<ul class="simple">
+<li><p>Higher Re → turbulent flow</p></li>
+<li><p>Affects drag and heat transfer</p></li>
+</ul>
+</li>
+<li><p><strong>Pressures</strong>:</p>
+<ul class="simple">
+<li><p><strong>Dynamic pressure</strong>: ½ρv² - structural loads</p></li>
+<li><p><strong>Total pressure</strong>: Static + dynamic</p></li>
+<li><p><strong>Static pressure</strong>: Atmospheric pressure</p></li>
+</ul>
+</li>
+<li><p><strong>Angle of Attack (AoA)</strong>: Angle between velocity and rocket axis</p>
+<ul class="simple">
+<li><p>Should be small (&lt; 5°) for stable flight</p></li>
+<li><p>Large AoA → high drag and possible instability</p></li>
+</ul>
+</li>
+<li><p><strong>Stream Velocity</strong>: Apparent wind components</p></li>
+<li><p><strong>Angle of Sideslip</strong>: Lateral flow angle</p></li>
+</ol>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Max Mach as expected</strong>: Performance validation
+✅ <strong>Small AoA after rail exit</strong>: Good launch stability
+✅ <strong>Dynamic pressure peak</strong>: Defines Max-Q
+⚠️ <strong>Large AoA (&gt; 10°)</strong>: Instability or strong winds</p>
+</section>
+<section id="stability-and-control-data-png">
+<h3>stability_and_control_data.png<a class="headerlink" href="#stability-and-control-data-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows stability margin and frequency response.</p>
+<p><strong>Subplot 1 - Stability Margin</strong>:</p>
+<p>Critical event markers:</p>
+<ul class="simple">
+<li><p><strong>Red dashed</strong>: Out of rail</p></li>
+<li><p><strong>Green dashed</strong>: Burnout</p></li>
+<li><p><strong>Magenta dashed</strong>: Apogee</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Margin &gt; 1.5 cal throughout</strong>: Safe
+✅ <strong>Minimum at burnout</strong>: Expected (lightest mass, CP still subsonic)
+⚠️ <strong>Margin &lt; 1.0 cal</strong>: Unstable period</p>
+<p><strong>Subplot 2 - Frequency Response</strong>:</p>
+<p>Shows how rocket responds to oscillations at different frequencies.</p>
+<ul class="simple">
+<li><p><strong>Peaks indicate resonances</strong>: Natural frequencies</p></li>
+<li><p><strong>Lower frequency = slower oscillations</strong></p></li>
+<li><p><strong>Normalized amplitude</strong>: Relative response strength</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="environment-plots">
+<h2>Environment Plots<a class="headerlink" href="#environment-plots" title="Link to this heading">#</a></h2>
+<section id="wind-profile-png">
+<h3>wind_profile.png<a class="headerlink" href="#wind-profile-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows wind speed and direction vs altitude.</p>
+<p><strong>Components</strong>:</p>
+<ul class="simple">
+<li><p><strong>Left axis</strong>: Wind speed (m/s)</p></li>
+<li><p><strong>Right axis</strong>: Wind direction (degrees)</p></li>
+</ul>
+<p><strong>What to Look For</strong>:</p>
+<p>✅ <strong>Smooth wind profile</strong>: Predictable conditions
+⚠️ <strong>Wind shear layers</strong>: Sudden direction/speed changes
+📊 <strong>Peak wind altitude</strong>: May coincide with Max-Q for maximum loads</p>
+</section>
+<section id="atmospheric-profile-png">
+<h3>atmospheric_profile.png<a class="headerlink" href="#atmospheric-profile-png" title="Link to this heading">#</a></h3>
+<p><strong>Purpose</strong>: Shows temperature, pressure, and density vs altitude.</p>
+<p><strong>Uses</strong>:</p>
+<ul class="simple">
+<li><p>Validate environment model</p></li>
+<li><p>Understand Mach number variation</p></li>
+<li><p>Check for atmospheric anomalies</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="common-patterns-and-issues">
+<h2>Common Patterns and Issues<a class="headerlink" href="#common-patterns-and-issues" title="Link to this heading">#</a></h2>
+<section id="normal-flight-patterns">
+<h3>Normal Flight Patterns<a class="headerlink" href="#normal-flight-patterns" title="Link to this heading">#</a></h3>
+<p>✅ <strong>Thrust curve</strong>: Peak early, smooth decrease
+✅ <strong>Stability margin</strong>: Minimum at burnout, increases in transonic
+✅ <strong>Attitude angle</strong>: Small (&lt; 5°), gradual increase
+✅ <strong>AoA</strong>: Small after rail exit (&lt; 3°)
+✅ <strong>Energy</strong>: Smooth transfer from kinetic to potential</p>
+</section>
+<section id="warning-signs">
+<h3>Warning Signs<a class="headerlink" href="#warning-signs" title="Link to this heading">#</a></h3>
+<p>⚠️ <strong>Stability margin &lt; 1.5 cal</strong>: Marginal stability
+⚠️ <strong>Large attitude oscillations</strong>: Possible instability
+⚠️ <strong>AoA &gt; 10°</strong>: Excessive weathercocking or instability
+⚠️ <strong>Irregular thrust</strong>: Motor quality issues
+⚠️ <strong>Growing angular oscillations</strong>: Unstable flight</p>
+</section>
+<section id="critical-issues">
+<h3>Critical Issues<a class="headerlink" href="#critical-issues" title="Link to this heading">#</a></h3>
+<p>❌ <strong>Stability margin &lt; 1.0 cal</strong>: DO NOT FLY
+❌ <strong>Huge bending moments</strong>: Structural failure risk
+❌ <strong>Extreme AoA (&gt; 20°)</strong>: Complete instability
+❌ <strong>Negative stability margin</strong>: Rocket unstable</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="recommended-analysis-workflow">
+<h2>Recommended Analysis Workflow<a class="headerlink" href="#recommended-analysis-workflow" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Stability First</strong>: Check <code class="docutils literal notranslate"><span class="pre">stability_envelope.png</span></code></p>
+<ul class="simple">
+<li><p>Is minimum margin &gt; 1.5 cal?</p></li>
+<li><p>Any dangerous zones?</p></li>
+</ul>
+</li>
+<li><p><strong>Flight Performance</strong>: Check <code class="docutils literal notranslate"><span class="pre">energy_data.png</span></code> and <code class="docutils literal notranslate"><span class="pre">fluid_mechanics_data.png</span></code></p>
+<ul class="simple">
+<li><p>Does max Mach match expectations?</p></li>
+<li><p>Is Max-Q reasonable?</p></li>
+</ul>
+</li>
+<li><p><strong>Structural Loads</strong>: Check <code class="docutils literal notranslate"><span class="pre">aerodynamic_forces.png</span></code></p>
+<ul class="simple">
+<li><p>Are bending moments acceptable?</p></li>
+<li><p>Peak forces at Max-Q?</p></li>
+</ul>
+</li>
+<li><p><strong>Flight Quality</strong>: Check <code class="docutils literal notranslate"><span class="pre">attitude_data.png</span></code> and <code class="docutils literal notranslate"><span class="pre">angular_kinematics_data.png</span></code></p>
+<ul class="simple">
+<li><p>Small attitude deviations?</p></li>
+<li><p>Oscillations dampen?</p></li>
+</ul>
+</li>
+<li><p><strong>Validation</strong>: Cross-check all plots</p>
+<ul class="simple">
+<li><p>Do motor specs match thrust curve?</p></li>
+<li><p>Does energy conservation hold?</p></li>
+<li><p>Are forces consistent with flight profile?</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="advanced-topics">
+<h2>Advanced Topics<a class="headerlink" href="#advanced-topics" title="Link to this heading">#</a></h2>
+<section id="static-margin-vs-stability-margin">
+<h3>Static Margin vs Stability Margin<a class="headerlink" href="#static-margin-vs-stability-margin" title="Link to this heading">#</a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>DySi uses <strong>stability margin</strong> (not static margin) in flight plots because
+it accounts for CP movement with Mach number.</p>
+</div>
+<p><strong>Difference</strong>:</p>
+<ul class="simple">
+<li><p><strong>Static margin</strong>: CP always at Mach=0 (conservative design metric)</p></li>
+<li><p><strong>Stability margin</strong>: CP at actual Mach (realistic flight behavior)</p></li>
+</ul>
+<p><strong>When to use each</strong>:</p>
+<ul class="simple">
+<li><p><strong>Design phase</strong>: Use static margin (conservative)</p></li>
+<li><p><strong>Analysis phase</strong>: Use stability margin (accurate)</p></li>
+</ul>
+<p>See <span class="xref std std-doc">/developer/STABILITY_MARGIN_CLARIFICATION</span> for full explanation.</p>
+</section>
+<section id="transonic-effects">
+<h3>Transonic Effects<a class="headerlink" href="#transonic-effects" title="Link to this heading">#</a></h3>
+<p>The transonic region (M = 0.8-1.2) is critical:</p>
+<ul class="simple">
+<li><p><strong>Drag coefficient peaks</strong>: Up to 2x subsonic values</p></li>
+<li><p><strong>CP shifts aft</strong>: Usually improves stability</p></li>
+<li><p><strong>Max-Q often occurs</strong>: Maximum structural loads</p></li>
+<li><p><strong>Shock waves form</strong>: Changes all aerodynamics</p></li>
+</ul>
+<p><strong>Design implications</strong>:</p>
+<ul class="simple">
+<li><p>Ensure stability margin &gt; 2.0 cal in subsonic (buffer for transonic)</p></li>
+<li><p>Check structural strength for transonic loads</p></li>
+<li><p>Understand CP travel to predict stability variation</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="exporting-and-sharing-plots">
+<h2>Exporting and Sharing Plots<a class="headerlink" href="#exporting-and-sharing-plots" title="Link to this heading">#</a></h2>
+<p>All plots are saved as high-resolution PNG files (300 DPI) suitable for:</p>
+<ul class="simple">
+<li><p>Technical reports</p></li>
+<li><p>Competition documentation</p></li>
+<li><p>Publications</p></li>
+<li><p>Presentations</p></li>
+</ul>
+<p><strong>File locations</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>outputs/&lt;simulation_name&gt;/curves/
+├── motor/
+│   ├── thrust_curve.png
+│   └── ...
+├── rocket/
+├── stability/
+├── environment/
+└── flight/
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../how_to_guides/export_data.html"><span class="doc">Export Simulation Data</span></a> for exporting raw data.</p>
+</section>
+<hr class="docutils" />
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="stability_analysis.html"><span class="doc">Rocket Stability: Theory and Best Practices</span></a> - Complete stability theory</p></li>
+<li><p><a class="reference internal" href="../how_to_guides/validate_design.html"><span class="doc">Validate Your Rocket Design</span></a> - Design validation workflow</p></li>
+<li><p><a class="reference internal" href="../tutorials/02_understanding_outputs.html"><span class="doc">Understanding Simulation Outputs</span></a> - Output tutorial</p></li>
+<li><p><span class="xref std std-doc">/developer/NEW_FLIGHT_PLOTS_IMPLEMENTATION</span> - Technical implementation details</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><strong>RocketPy Documentation</strong></p>
+<p>For deeper understanding of the underlying physics and methods:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.rocketpy.org/en/latest/user/plots.html">RocketPy Flight Plots</a></p></li>
+<li><p><a class="reference external" href="https://docs.rocketpy.org/en/latest/user/first_simulation.html">RocketPy First Simulation</a></p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Technical Documentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="stability_analysis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Rocket Stability: Theory and Best Practices</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-organization">Plot Organization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-plots">Motor Plots</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thrust-curve-png">thrust_curve.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-evolution-png">mass_evolution.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kn-curve-png">kn_curve.png</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rocket-plots">Rocket Plots</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#drag-coefficient-png">drag_coefficient.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cp-position-vs-mach-png">cp_position_vs_mach.png</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-plots">Stability Plots</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-envelope-png">stability_envelope.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-margin-surface-png">stability_margin_surface.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-cp-travel-png">stability_cp_travel.png</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flight-data-plots">Flight Data Plots</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-3d-png">trajectory_3d.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#position-data-png">position_data.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-kinematics-data-png">linear_kinematics_data.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flight-path-angle-data-png">flight_path_angle_data.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attitude-data-png">attitude_data.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#angular-kinematics-data-png">angular_kinematics_data.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aerodynamic-forces-png">aerodynamic_forces.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rail-buttons-forces-png">rail_buttons_forces.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#energy-data-png">energy_data.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fluid-mechanics-data-png">fluid_mechanics_data.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-and-control-data-png">stability_and_control_data.png</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-plots">Environment Plots</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wind-profile-png">wind_profile.png</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#atmospheric-profile-png">atmospheric_profile.png</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-patterns-and-issues">Common Patterns and Issues</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normal-flight-patterns">Normal Flight Patterns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#warning-signs">Warning Signs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-issues">Critical Issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-analysis-workflow">Recommended Analysis Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-topics">Advanced Topics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-margin-vs-stability-margin">Static Margin vs Stability Margin</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transonic-effects">Transonic Effects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-and-sharing-plots">Exporting and Sharing Plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/technical/plot_interpretation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

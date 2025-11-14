@@ -1,0 +1,1261 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Understanding Simulation Outputs &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/tutorials/02_understanding_outputs';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Using Custom Motor Data" href="03_custom_motor.html" />
+    <link rel="prev" title="Tutorial 1: Basic Flight Simulation" href="01_basic_flight.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../quick_plot_reference.html">Quick Plot Reference Card</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/plot_interpretation.html">Output Plot Interpretation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Understanding Simulation Outputs</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="understanding-simulation-outputs">
+<span id="tutorial-understanding-outputs"></span><h1>Understanding Simulation Outputs<a class="headerlink" href="#understanding-simulation-outputs" title="Link to this heading">#</a></h1>
+<p>After running a simulation, <code class="docutils literal notranslate"><span class="pre">rocket-sim</span></code> generates comprehensive output files organized in the <code class="docutils literal notranslate"><span class="pre">outputs/&lt;rocket_name&gt;/</span></code> directory. This tutorial explains the structure and contents of these outputs, helping you analyze your simulation results effectively.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial assumes you’ve already run your first simulation following <span class="xref std std-ref">tutorial_basic_flight</span>. If not, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span>configs/templates/tutorial_rocket.yaml<span class="w"> </span>--name<span class="w"> </span>my_first_rocket
+</pre></div>
+</div>
+</div>
+<section id="output-directory-structure">
+<h2>Output Directory Structure<a class="headerlink" href="#output-directory-structure" title="Link to this heading">#</a></h2>
+<p>After a successful simulation, you’ll find the following structure:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>outputs/
+└── my_first_rocket/              # Named after your rocket
+    ├── initial_state              # Binary state file (Python pickle)
+    ├── initial_state_READABLE.txt # Human-readable initial parameters
+    ├── final_state                # Binary state file (Python pickle)
+    ├── final_state_READABLE.txt   # Human-readable final results
+    ├── my_first_rocket_log        # Simulation log (if --log-file used)
+    ├── curves/                    # Motor and rocket curves
+    │   └── (curve data files)
+    ├── plots/                     # Visualization plots
+    │   ├── my_first_rocket_altitude.png
+    │   ├── my_first_rocket_velocity.png
+    │   ├── my_first_rocket_acceleration.png
+    │   ├── my_first_rocket_trajectory_2d.png
+    │   └── my_first_rocket_trajectory_3d.png
+    └── trajectory/                # Trajectory data
+        ├── my_first_rocket_summary.json
+        └── my_first_rocket_trajectory.csv
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--name</span></code> argument in the run command determines the output directory name. Use descriptive names like <code class="docutils literal notranslate"><span class="pre">artemis</span></code>, <code class="docutils literal notranslate"><span class="pre">test_flight_v3</span></code>, or <code class="docutils literal notranslate"><span class="pre">nominal_flight</span></code> to organize multiple simulations.</p>
+</div>
+</section>
+<section id="state-files">
+<h2>State Files<a class="headerlink" href="#state-files" title="Link to this heading">#</a></h2>
+<section id="initial-and-final-state-binary">
+<h3>Initial and Final State (Binary)<a class="headerlink" href="#initial-and-final-state-binary" title="Link to this heading">#</a></h3>
+<p><strong>Files:</strong> <code class="docutils literal notranslate"><span class="pre">initial_state</span></code> and <code class="docutils literal notranslate"><span class="pre">final_state</span></code></p>
+<p>These are Python pickle files containing the complete serialized state of your rocket, motor, and environment objects. They’re primarily used for:</p>
+<ul class="simple">
+<li><p>Reloading simulation results without re-running</p></li>
+<li><p>Programmatic access to all simulation data</p></li>
+<li><p>Advanced post-processing with custom scripts</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+
+<span class="c1"># Load the final state</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;outputs/my_first_rocket/final_state&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">rocket_state</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Access flight results</span>
+<span class="n">flight</span> <span class="o">=</span> <span class="n">rocket_state</span><span class="p">[</span><span class="s1">&#39;flight&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Apogee: </span><span class="si">{</span><span class="n">flight</span><span class="o">.</span><span class="n">apogee</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Binary state files are Python version-specific and may not work across different RocketPy versions. For long-term storage and sharing, use the READABLE.txt or JSON files instead.</p>
+</div>
+</section>
+<section id="readable-state-files">
+<h3>Readable State Files<a class="headerlink" href="#readable-state-files" title="Link to this heading">#</a></h3>
+<p><strong>Files:</strong> <code class="docutils literal notranslate"><span class="pre">initial_state_READABLE.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">final_state_READABLE.txt</span></code></p>
+<p>These comprehensive text files document all input parameters and simulation results in human-readable format. They’re perfect for:</p>
+<ul class="simple">
+<li><p>Quick review of simulation setup and results</p></li>
+<li><p>Including in reports and documentation</p></li>
+<li><p>Verifying input parameters</p></li>
+<li><p>Sharing results with team members</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">final_state_READABLE.txt</span></code> file is organized into sections:</p>
+<dl class="simple">
+<dt><strong>1. Motor Parameters</strong></dt><dd><ul class="simple">
+<li><p>Basic properties (type, coordinate system, dry mass)</p></li>
+<li><p>Grain geometry (for solid motors)</p></li>
+<li><p>Performance metrics (total impulse, average/max thrust, burn duration)</p></li>
+<li><p>Inertia tensor</p></li>
+</ul>
+</dd>
+<dt><strong>2. Rocket Parameters</strong></dt><dd><ul class="simple">
+<li><p>Basic properties (radius, mass, coordinate system)</p></li>
+<li><p>Center of mass positions (static and with motor)</p></li>
+<li><p>Inertia tensor (with and without motor)</p></li>
+<li><p>Aerodynamic surfaces (nose cone, fins, air brakes)</p></li>
+<li><p>Parachute configurations</p></li>
+<li><p>Stability margins</p></li>
+</ul>
+</dd>
+<dt><strong>3. Environment Parameters</strong></dt><dd><ul class="simple">
+<li><p>Launch location (latitude, longitude, elevation)</p></li>
+<li><p>Atmospheric model configuration</p></li>
+<li><p>Wind conditions</p></li>
+</ul>
+</dd>
+<dt><strong>4. Simulation Configuration</strong></dt><dd><ul class="simple">
+<li><p>Launch rail settings (length, inclination, heading)</p></li>
+<li><p>Numerical integration parameters (rtol, atol, max time)</p></li>
+</ul>
+</dd>
+<dt><strong>5. Flight Results</strong> ⭐</dt><dd><ul class="simple">
+<li><p><strong>Apogee:</strong> Altitude, time, and position at highest point</p></li>
+<li><p><strong>Maximum values:</strong> Peak velocity, Mach number, and acceleration</p></li>
+<li><p><strong>Rail exit:</strong> Velocity and time when leaving the launch rail</p></li>
+<li><p><strong>Impact:</strong> Landing velocity, position, and distance from launch</p></li>
+<li><p><strong>Flight duration:</strong> Total time from launch to landing</p></li>
+<li><p><strong>Events:</strong> Parachute deployments and other flight events</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example excerpt:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>FLIGHT RESULTS
+================================================================================
+
+Apogee:
+----------------------------------------
+  Altitude:                    2299.94 m (7545.74 ft)
+  Time:                        20.77 s
+  Position X:                  -2.71 m
+  Position Y:                  373.64 m
+
+Maximum Values:
+----------------------------------------
+  Velocity:                    240.72 m/s
+  Mach Number:                 0.711
+  Acceleration:                121.42 m/s² (12.38 g)
+
+Rail Exit:
+----------------------------------------
+  Velocity:                    18.20 m/s
+  Time:                        0.18 s
+</pre></div>
+</div>
+</section>
+</section>
+<section id="trajectory-data">
+<h2>Trajectory Data<a class="headerlink" href="#trajectory-data" title="Link to this heading">#</a></h2>
+<section id="summary-json">
+<h3>Summary JSON<a class="headerlink" href="#summary-json" title="Link to this heading">#</a></h3>
+<p><strong>File:</strong> <code class="docutils literal notranslate"><span class="pre">trajectory/&lt;rocket_name&gt;_summary.json</span></code></p>
+<p>This JSON file contains key simulation results in a machine-readable format, ideal for:</p>
+<ul class="simple">
+<li><p>Automated analysis and comparison</p></li>
+<li><p>Integration with other software</p></li>
+<li><p>Creating custom dashboards</p></li>
+<li><p>Monte Carlo result aggregation</p></li>
+</ul>
+<p><strong>Structure:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;simulation_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rail_length_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;rail_inclination_deg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">85.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;rail_heading_deg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_time_s&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">600.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;rtol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1e-06</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;atol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1e-06</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;latitude_deg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">39.3897</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;longitude_deg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-8.2889</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;elevation_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">100.0</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;rocket&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;mass_kg&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">16.426</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;radius_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0635</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;flight_results&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;apogee_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2299.94</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;apogee_time_s&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">20.77</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_velocity_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">240.72</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_acceleration_ms2&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">121.42</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;flight_time_s&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">404.52</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;x_impact_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-2.85</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;y_impact_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">405.26</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;lateral_distance_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">405.27</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Key fields:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">apogee_m</span></code></p></td>
+<td><p>meters</p></td>
+<td><p>Maximum altitude above launch site elevation</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">apogee_time_s</span></code></p></td>
+<td><p>seconds</p></td>
+<td><p>Time from launch to apogee</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_velocity_ms</span></code></p></td>
+<td><p>m/s</p></td>
+<td><p>Peak velocity magnitude during flight</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_acceleration_ms2</span></code></p></td>
+<td><p>m/s²</p></td>
+<td><p>Peak acceleration (typically during motor burn)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_mach_number</span></code></p></td>
+<td><p>—</p></td>
+<td><p>Peak Mach number (velocity/speed of sound)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">out_of_rail_velocity_ms</span></code></p></td>
+<td><p>m/s</p></td>
+<td><p>Velocity when rocket leaves launch rail</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">flight_time_s</span></code></p></td>
+<td><p>seconds</p></td>
+<td><p>Total flight duration from launch to landing</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lateral_distance_m</span></code></p></td>
+<td><p>meters</p></td>
+<td><p>Horizontal distance from launch point to landing</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x_impact_m</span></code>, <code class="docutils literal notranslate"><span class="pre">y_impact_m</span></code></p></td>
+<td><p>meters</p></td>
+<td><p>Landing coordinates (x=East, y=North)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">initial_stability_margin_calibers</span></code></p></td>
+<td><p>calibers</p></td>
+<td><p>Static margin at launch (CoP - CoM distance)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="trajectory-csv">
+<h3>Trajectory CSV<a class="headerlink" href="#trajectory-csv" title="Link to this heading">#</a></h3>
+<p><strong>File:</strong> <code class="docutils literal notranslate"><span class="pre">trajectory/&lt;rocket_name&gt;_trajectory.csv</span></code></p>
+<p>This CSV file contains the complete time-series trajectory data at each integration step. Perfect for:</p>
+<ul class="simple">
+<li><p>Custom analysis with spreadsheet software (Excel, Google Sheets)</p></li>
+<li><p>Creating custom plots with Python, MATLAB, or R</p></li>
+<li><p>Detailed flight phase analysis</p></li>
+<li><p>Verifying simulation behavior</p></li>
+</ul>
+<p><strong>Column structure:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">time_s</span></code></p></td>
+<td><p>seconds</p></td>
+<td><p>Time from launch</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">altitude_m</span></code></p></td>
+<td><p>meters</p></td>
+<td><p>Altitude above sea level</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">x_m</span></code></p></td>
+<td><p>meters</p></td>
+<td><p>East position (positive = east)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">y_m</span></code></p></td>
+<td><p>meters</p></td>
+<td><p>North position (positive = north)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vx_ms</span></code></p></td>
+<td><p>m/s</p></td>
+<td><p>East velocity component</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vy_ms</span></code></p></td>
+<td><p>m/s</p></td>
+<td><p>North velocity component</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vz_ms</span></code></p></td>
+<td><p>m/s</p></td>
+<td><p>Vertical velocity component (positive = up)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ax_ms2</span></code></p></td>
+<td><p>m/s²</p></td>
+<td><p>East acceleration component</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ay_ms2</span></code></p></td>
+<td><p>m/s²</p></td>
+<td><p>North acceleration component</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">az_ms2</span></code></p></td>
+<td><p>m/s²</p></td>
+<td><p>Vertical acceleration component</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Example rows:</strong></p>
+<div class="highlight-csv notranslate"><div class="highlight"><pre><span></span>time_s,altitude_m,x_m,y_m,vx_ms,vy_ms,vz_ms,ax_ms2,ay_ms2,az_ms2
+0.0,100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+0.175,100.0,0.0,0.36,0.0,0.07,0.8,9.6,9.6,109.7
+2.357,208.7,0.14,42.8,0.5,15.2,173.9,-0.6,-1.5,59.9
+20.77,2399.9,-2.7,373.6,-0.1,0.0,0.0,-0.01,-0.01,-9.8
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Analyzing trajectory data with Python:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Load trajectory</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;outputs/my_first_rocket/trajectory/my_first_rocket_trajectory.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Calculate total velocity</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;velocity_ms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;vx_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vy_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vz_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+<span class="c1"># Plot velocity over time</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time_s&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;velocity_ms&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Velocity (m/s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Rocket Velocity Profile&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="visualization-plots">
+<h2>Visualization Plots<a class="headerlink" href="#visualization-plots" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">plots/</span></code> directory contains automatically generated visualization plots:</p>
+<section id="altitude-plot">
+<h3>Altitude Plot<a class="headerlink" href="#altitude-plot" title="Link to this heading">#</a></h3>
+<p><strong>File:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;rocket_name&gt;_altitude.png</span></code></p>
+<p>Shows altitude versus time with key events marked:</p>
+<ul class="simple">
+<li><p>Launch (t=0)</p></li>
+<li><p>Motor burnout</p></li>
+<li><p>Apogee</p></li>
+<li><p>Parachute deployment(s)</p></li>
+<li><p>Landing</p></li>
+</ul>
+<p>This plot helps you quickly assess:</p>
+<ul class="simple">
+<li><p>Maximum altitude achieved</p></li>
+<li><p>Coasting phase duration</p></li>
+<li><p>Descent rate characteristics</p></li>
+</ul>
+</section>
+<section id="velocity-plot">
+<h3>Velocity Plot<a class="headerlink" href="#velocity-plot" title="Link to this heading">#</a></h3>
+<p><strong>File:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;rocket_name&gt;_velocity.png</span></code></p>
+<p>Displays velocity magnitude over time, showing:</p>
+<ul class="simple">
+<li><p>Rapid acceleration during motor burn</p></li>
+<li><p>Peak velocity (typically at burnout)</p></li>
+<li><p>Deceleration during coast</p></li>
+<li><p>Terminal velocity during descent</p></li>
+</ul>
+<p><strong>Key observations:</strong></p>
+<ul class="simple">
+<li><p><strong>Rail exit velocity</strong> should typically be &gt;15 m/s for stable flight</p></li>
+<li><p><strong>Peak velocity</strong> occurs near motor burnout</p></li>
+<li><p><strong>Descent velocity</strong> should be &lt;6-8 m/s for safe recovery</p></li>
+</ul>
+</section>
+<section id="acceleration-plot">
+<h3>Acceleration Plot<a class="headerlink" href="#acceleration-plot" title="Link to this heading">#</a></h3>
+<p><strong>File:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;rocket_name&gt;_acceleration.png</span></code></p>
+<p>Shows acceleration magnitude over time:</p>
+<ul class="simple">
+<li><p><strong>Motor burn phase:</strong> High positive acceleration (may exceed 10g)</p></li>
+<li><p><strong>Coast phase:</strong> Negative acceleration due to drag (typically -1 to -2g)</p></li>
+<li><p><strong>Descent phase:</strong> Oscillates around zero as rocket reaches terminal velocity</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>High accelerations (&gt;15-20g) can damage electronics and payloads. If your simulation shows excessive acceleration, consider:</p>
+<ul class="simple">
+<li><p>Using a motor with lower thrust</p></li>
+<li><p>Increasing rocket mass</p></li>
+<li><p>Redesigning for better weight distribution</p></li>
+</ul>
+</div>
+</section>
+<section id="d-trajectory-plot">
+<h3>2D Trajectory Plot<a class="headerlink" href="#d-trajectory-plot" title="Link to this heading">#</a></h3>
+<p><strong>File:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;rocket_name&gt;_trajectory_2d.png</span></code></p>
+<p>Top-down view showing horizontal displacement from launch point:</p>
+<ul class="simple">
+<li><p>X-axis: East-West displacement</p></li>
+<li><p>Y-axis: North-South displacement</p></li>
+<li><p>Markers indicate key events (apogee, landing)</p></li>
+</ul>
+<p>Useful for:</p>
+<ul class="simple">
+<li><p>Assessing wind drift effects</p></li>
+<li><p>Planning recovery operations</p></li>
+<li><p>Understanding horizontal dispersion</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>3D Trajectory Plot<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p><strong>File:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;rocket_name&gt;_trajectory_3d.png</span></code></p>
+<p>Complete 3D visualization with:</p>
+<ul class="simple">
+<li><p>X-axis: East-West position</p></li>
+<li><p>Y-axis: North-South position</p></li>
+<li><p>Z-axis: Altitude</p></li>
+</ul>
+<p>This plot provides the most complete picture of the flight path, showing the combined effects of launch angle, wind drift, and gravity.</p>
+</section>
+</section>
+<section id="practical-analysis-examples">
+<h2>Practical Analysis Examples<a class="headerlink" href="#practical-analysis-examples" title="Link to this heading">#</a></h2>
+<section id="example-1-quick-result-check">
+<h3>Example 1: Quick Result Check<a class="headerlink" href="#example-1-quick-result-check" title="Link to this heading">#</a></h3>
+<p>After running a simulation, quickly check results:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run simulation</span>
+python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span>configs/single_sim/02_complete.yaml<span class="w"> </span>--name<span class="w"> </span>test_flight
+
+<span class="c1"># View key results</span>
+grep<span class="w"> </span>-A<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s2">&quot;FLIGHT RESULTS&quot;</span><span class="w"> </span>outputs/test_flight/final_state_READABLE.txt
+
+<span class="c1"># Check apogee</span>
+grep<span class="w"> </span><span class="s2">&quot;Apogee:&quot;</span><span class="w"> </span>outputs/test_flight/final_state_READABLE.txt
+</pre></div>
+</div>
+</section>
+<section id="example-2-extract-data-for-report">
+<h3>Example 2: Extract Data for Report<a class="headerlink" href="#example-2-extract-data-for-report" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="c1"># Load summary</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_summary.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Extract for report</span>
+<span class="n">flight</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Flight Performance Summary</span>
+<span class="s2">==========================</span>
+<span class="s2">Apogee:           </span><span class="si">{</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m (</span><span class="si">{</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">3.28084</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft)</span>
+<span class="s2">Max Velocity:     </span><span class="si">{</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s (Mach </span><span class="si">{</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;max_mach_number&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)</span>
+<span class="s2">Max Acceleration: </span><span class="si">{</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;max_acceleration_ms2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s² (</span><span class="si">{</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;max_acceleration_ms2&#39;</span><span class="p">]</span><span class="o">/</span><span class="mf">9.81</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> g)</span>
+<span class="s2">Flight Time:      </span><span class="si">{</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s (</span><span class="si">{</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">60</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> min)</span>
+<span class="s2">Landing Distance: </span><span class="si">{</span><span class="n">flight</span><span class="p">[</span><span class="s1">&#39;lateral_distance_m&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="example-3-compare-multiple-flights">
+<h3>Example 3: Compare Multiple Flights<a class="headerlink" href="#example-3-compare-multiple-flights" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># List of flight names to compare</span>
+<span class="n">flights</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;baseline&#39;</span><span class="p">,</span> <span class="s1">&#39;heavier_rocket&#39;</span><span class="p">,</span> <span class="s1">&#39;longer_rail&#39;</span><span class="p">]</span>
+
+<span class="c1"># Collect results</span>
+<span class="n">comparison</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">flights</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;outputs/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">/trajectory/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_summary.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">comparison</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;Flight&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+        <span class="s1">&#39;Apogee (m)&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">][</span><span class="s1">&#39;apogee_m&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Max Velocity (m/s)&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">][</span><span class="s1">&#39;max_velocity_ms&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Rail Exit Velocity (m/s)&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">][</span><span class="s1">&#39;out_of_rail_velocity_ms&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Flight Time (s)&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flight_results&#39;</span><span class="p">][</span><span class="s1">&#39;flight_time_s&#39;</span><span class="p">]</span>
+    <span class="p">})</span>
+
+<span class="c1"># Create comparison table</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">comparison</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Output:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>        Flight  Apogee (m)  Max Velocity (m/s)  Rail Exit Velocity (m/s)  Flight Time (s)
+      baseline     2299.94              240.72                     18.20           404.52
+heavier_rocket     2105.33              228.41                     17.15           387.21
+   longer_rail     2301.12              240.81                     19.45           404.78
+</pre></div>
+</div>
+</section>
+<section id="example-4-analyze-trajectory-phases">
+<h3>Example 4: Analyze Trajectory Phases<a class="headerlink" href="#example-4-analyze-trajectory-phases" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load trajectory</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;outputs/my_rocket/trajectory/my_rocket_trajectory.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Calculate velocity magnitude</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;velocity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;vx_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vy_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;vz_ms&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+<span class="c1"># Identify motor burnout (when acceleration drops significantly)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;acceleration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ax_ms2&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ay_ms2&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;az_ms2&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+<span class="n">burnout_idx</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;acceleration&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">burnout_time</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">burnout_idx</span><span class="p">,</span> <span class="s1">&#39;time_s&#39;</span><span class="p">]</span>
+<span class="n">burnout_alt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">burnout_idx</span><span class="p">,</span> <span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span>
+
+<span class="c1"># Find apogee</span>
+<span class="n">apogee_idx</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="n">apogee_time</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">apogee_idx</span><span class="p">,</span> <span class="s1">&#39;time_s&#39;</span><span class="p">]</span>
+<span class="n">apogee_alt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">apogee_idx</span><span class="p">,</span> <span class="s1">&#39;altitude_m&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Flight Phase Analysis</span>
+<span class="s2">=====================</span>
+<span class="s2">Motor Burn Phase:</span>
+<span class="s2">  Duration:     </span><span class="si">{</span><span class="n">burnout_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s</span>
+<span class="s2">  End Altitude: </span><span class="si">{</span><span class="n">burnout_alt</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m</span>
+<span class="s2">  End Velocity: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">burnout_idx</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;velocity&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s</span>
+
+<span class="s2">Coast Phase:</span>
+<span class="s2">  Duration:     </span><span class="si">{</span><span class="n">apogee_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">burnout_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s</span>
+<span class="s2">  Altitude Gain: </span><span class="si">{</span><span class="n">apogee_alt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">burnout_alt</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="understanding-output-units">
+<h2>Understanding Output Units<a class="headerlink" href="#understanding-output-units" title="Link to this heading">#</a></h2>
+<p>All outputs use <strong>SI units</strong> consistently:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Quantity</p></th>
+<th class="head"><p>Unit</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Length/Distance/Altitude</p></td>
+<td><p>meters (m)</p></td>
+<td><p>Some READABLE files show feet in parentheses</p></td>
+</tr>
+<tr class="row-odd"><td><p>Velocity</p></td>
+<td><p>meters/second (m/s)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Acceleration</p></td>
+<td><p>meters/second² (m/s²)</p></td>
+<td><p>g-forces shown in parentheses (1g = 9.81 m/s²)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time</p></td>
+<td><p>seconds (s)</p></td>
+<td><p>Minutes shown in parentheses for flight duration</p></td>
+</tr>
+<tr class="row-even"><td><p>Mass</p></td>
+<td><p>kilograms (kg)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Angles</p></td>
+<td><p>degrees (°)</p></td>
+<td><p>Launch rail angles, fin cant angles</p></td>
+</tr>
+<tr class="row-even"><td><p>Coordinates (lat/lon)</p></td>
+<td><p>decimal degrees (°)</p></td>
+<td><p>WGS84 datum</p></td>
+</tr>
+<tr class="row-odd"><td><p>Mach Number</p></td>
+<td><p>dimensionless</p></td>
+<td><p>velocity / speed of sound</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="common-analysis-tasks">
+<h2>Common Analysis Tasks<a class="headerlink" href="#common-analysis-tasks" title="Link to this heading">#</a></h2>
+<section id="verify-stability">
+<h3>Verify Stability<a class="headerlink" href="#verify-stability" title="Link to this heading">#</a></h3>
+<p>Check <code class="docutils literal notranslate"><span class="pre">initial_stability_margin_calibers</span></code> in the summary JSON or READABLE file:</p>
+<ul class="simple">
+<li><p><strong>&lt; 1.0:</strong> Unstable - rocket may tumble</p></li>
+<li><p><strong>1.0-2.0:</strong> Stable - recommended range</p></li>
+<li><p><strong>&gt; 3.0:</strong> Over-stable - may weathercock excessively</p></li>
+</ul>
+</section>
+<section id="rail-exit-velocity-check">
+<h3>Rail Exit Velocity Check<a class="headerlink" href="#rail-exit-velocity-check" title="Link to this heading">#</a></h3>
+<p>Ensure <code class="docutils literal notranslate"><span class="pre">out_of_rail_velocity_ms</span></code> is adequate:</p>
+<ul class="simple">
+<li><p><strong>Minimum:</strong> 15 m/s for small rockets</p></li>
+<li><p><strong>Recommended:</strong> 20-25 m/s for reliable flight</p></li>
+<li><p><strong>If too low:</strong> Increase rail length or use more powerful motor</p></li>
+</ul>
+</section>
+<section id="landing-velocity-assessment">
+<h3>Landing Velocity Assessment<a class="headerlink" href="#landing-velocity-assessment" title="Link to this heading">#</a></h3>
+<p>Check <code class="docutils literal notranslate"><span class="pre">impact_velocity_ms</span></code> for safe recovery:</p>
+<ul class="simple">
+<li><p><strong>&lt; 5 m/s:</strong> Very safe landing</p></li>
+<li><p><strong>5-8 m/s:</strong> Safe for most rockets with proper padding</p></li>
+<li><p><strong>&gt; 10 m/s:</strong> Risk of damage - consider larger parachute</p></li>
+</ul>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>Now that you understand the output structure, you can:</p>
+<ol class="arabic simple">
+<li><p><strong>Run parameter studies</strong> - Vary design parameters and compare results</p></li>
+<li><p><strong>Optimize performance</strong> - Use outputs to improve apogee, stability, or safety</p></li>
+<li><p><strong>Learn Monte Carlo</strong> - Continue to <span class="xref std std-ref">tutorial_monte_carlo_basics</span> to handle uncertainties</p></li>
+<li><p><strong>Create custom analysis</strong> - Build your own analysis scripts using the CSV and JSON data</p></li>
+</ol>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">configuration_simulation_params</span> - Understanding rtol/atol and integration settings</p></li>
+<li><p><span class="xref std std-ref">howto_measure_rocket</span> - Measuring parameters accurately</p></li>
+<li><p><span class="xref std std-ref">tutorial_monte_carlo_basics</span> - Handling measurement uncertainties</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_basic_flight.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorial 1: Basic Flight Simulation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03_custom_motor.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Using Custom Motor Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-directory-structure">Output Directory Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#state-files">State Files</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-and-final-state-binary">Initial and Final State (Binary)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#readable-state-files">Readable State Files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-data">Trajectory Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-json">Summary JSON</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trajectory-csv">Trajectory CSV</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-plots">Visualization Plots</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altitude-plot">Altitude Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#velocity-plot">Velocity Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#acceleration-plot">Acceleration Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-trajectory-plot">2D Trajectory Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3D Trajectory Plot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-analysis-examples">Practical Analysis Examples</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-quick-result-check">Example 1: Quick Result Check</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-extract-data-for-report">Example 2: Extract Data for Report</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-compare-multiple-flights">Example 3: Compare Multiple Flights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-analyze-trajectory-phases">Example 4: Analyze Trajectory Phases</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-output-units">Understanding Output Units</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-analysis-tasks">Common Analysis Tasks</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verify-stability">Verify Stability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rail-exit-velocity-check">Rail Exit Velocity Check</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-velocity-assessment">Landing Velocity Assessment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/tutorials/02_understanding_outputs.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

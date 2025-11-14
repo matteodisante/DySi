@@ -1,0 +1,910 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.weather_fetcher &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/weather_fetcher';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.weather_fetcher</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for src.weather_fetcher</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Weather data fetcher for real-time atmospheric conditions.</span>
+
+<span class="sd">This module provides classes and functions to fetch real-world weather data</span>
+<span class="sd">from various sources for accurate rocket flight simulation:</span>
+<span class="sd">- Wyoming atmospheric soundings (radiosonde data)</span>
+<span class="sd">- GFS (Global Forecast System) forecasts</span>
+<span class="sd">- ERA5 reanalysis (historical data)</span>
+<span class="sd">- Custom atmospheric profiles</span>
+
+<span class="sd">The fetched data integrates seamlessly with RocketPy&#39;s Environment class</span>
+<span class="sd">for realistic atmospheric modeling.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="WeatherConfig">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.WeatherConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Weather data source configuration.&quot;&quot;&quot;</span>
+
+    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;standard_atmosphere&quot;</span>  <span class="c1"># standard_atmosphere, wyoming, gfs, era5, custom</span>
+    <span class="n">wyoming_station</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Station ID (e.g., &quot;72340&quot; for Oakland)</span>
+    <span class="n">custom_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Path to custom atmospheric profile</span>
+    <span class="n">fetch_real_time</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Fetch latest data vs. use specified date</span></div>
+
+
+
+<div class="viewcode-block" id="WeatherFetcher">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.WeatherFetcher">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherFetcher</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetch real-world weather data for flight simulations.</span>
+
+<span class="sd">    This class provides methods to fetch atmospheric data from various sources</span>
+<span class="sd">    and integrate with RocketPy&#39;s Environment class.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        config: WeatherConfig with data source configuration</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; config = WeatherConfig(</span>
+<span class="sd">        ...     source=&quot;wyoming&quot;,</span>
+<span class="sd">        ...     wyoming_station=&quot;72340&quot;,  # Oakland, CA</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; fetcher = WeatherFetcher(config)</span>
+<span class="sd">        &gt;&gt;&gt; url = fetcher.fetch_wyoming_sounding(datetime(2024, 6, 15, 12))</span>
+<span class="sd">        &gt;&gt;&gt; env.set_atmospheric_model(type=&#39;wyoming_sounding&#39;, file=url)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="WeatherFetcher.__init__">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.WeatherFetcher.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">WeatherConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize WeatherFetcher.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: WeatherConfig with data source parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span></div>
+
+
+<div class="viewcode-block" id="WeatherFetcher.fetch_wyoming_sounding">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.WeatherFetcher.fetch_wyoming_sounding">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fetch_wyoming_sounding</span><span class="p">(</span>
+        <span class="n">station</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetch Wyoming atmospheric sounding URL.</span>
+
+<span class="sd">        Wyoming soundings are radiosonde measurements providing direct</span>
+<span class="sd">        atmospheric profile data (temperature, pressure, wind) with altitude.</span>
+<span class="sd">        Data is available twice daily (00Z and 12Z UTC) from ~850 stations worldwide.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            station: Station ID (e.g., &quot;72340&quot; for Oakland, CA)</span>
+<span class="sd">            date: Date/time for sounding (default: latest)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            URL string to Wyoming sounding data (TEXT:LIST format)</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; # Get sounding for Oakland on June 15, 2024 at 12Z</span>
+<span class="sd">            &gt;&gt;&gt; url = WeatherFetcher.fetch_wyoming_sounding(</span>
+<span class="sd">            ...     station=&quot;72340&quot;,</span>
+<span class="sd">            ...     date=datetime(2024, 6, 15, 12, tzinfo=timezone.utc)</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; # Use with RocketPy</span>
+<span class="sd">            &gt;&gt;&gt; env.set_atmospheric_model(type=&#39;wyoming_sounding&#39;, file=url)</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Soundings are launched at 00Z and 12Z UTC. The function automatically</span>
+<span class="sd">            selects the closest sounding time to the provided date.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">date</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Assume UTC if no timezone provided</span>
+            <span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+        <span class="n">year</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">year</span>
+        <span class="n">month</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">month</span>
+        <span class="n">day</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">day</span>
+
+        <span class="c1"># Select closest sounding time (00Z or 12Z)</span>
+        <span class="k">if</span> <span class="n">date</span><span class="o">.</span><span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 00Z sounding</span>
+        <span class="k">elif</span> <span class="n">date</span><span class="o">.</span><span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">:</span>
+            <span class="n">hour</span> <span class="o">=</span> <span class="mi">12</span>  <span class="c1"># 12Z sounding</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># After 18Z, use next day&#39;s 00Z</span>
+            <span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">date</span> <span class="o">=</span> <span class="n">date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">day</span>
+
+        <span class="c1"># Construct Wyoming URL (TEXT:LIST format for RocketPy compatibility)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;http://weather.uwyo.edu/cgi-bin/sounding?&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;region=naconf&amp;TYPE=TEXT%3ALIST&amp;YEAR=</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">&amp;MONTH=</span><span class="si">{</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&amp;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;FROM=</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">02d</span><span class="si">}{</span><span class="n">hour</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&amp;TO=</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">02d</span><span class="si">}{</span><span class="n">hour</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&amp;STNM=</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Wyoming sounding: station=</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;date=</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">hour</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">Z&quot;</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;URL: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">url</span></div>
+
+
+<div class="viewcode-block" id="WeatherFetcher.get_gfs_forecast_params">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.WeatherFetcher.get_gfs_forecast_params">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_gfs_forecast_params</span><span class="p">(</span>
+        <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get parameters for GFS forecast fetching.</span>
+
+<span class="sd">        GFS (Global Forecast System) provides numerical weather predictions</span>
+<span class="sd">        with global coverage and forecasts out to 16 days.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            latitude: Latitude in degrees</span>
+<span class="sd">            longitude: Longitude in degrees</span>
+<span class="sd">            date: Forecast date/time (UTC)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with GFS parameters for RocketPy</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; params = WeatherFetcher.get_gfs_forecast_params(</span>
+<span class="sd">            ...     latitude=39.39,</span>
+<span class="sd">            ...     longitude=-8.29,</span>
+<span class="sd">            ...     date=datetime(2024, 6, 15, 14, tzinfo=timezone.utc)</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; # Use with RocketPy</span>
+<span class="sd">            &gt;&gt;&gt; env.set_atmospheric_model(type=&#39;Forecast&#39;, file=&#39;GFS&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; env.set_date(params[&#39;date&#39;])</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            RocketPy handles GFS fetching internally. This method provides</span>
+<span class="sd">            configuration parameters for the Environment.set_atmospheric_model() call.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">date</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+        <span class="c1"># Check forecast horizon (GFS provides up to 16 days)</span>
+        <span class="n">time_delta</span> <span class="o">=</span> <span class="n">date</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">time_delta</span><span class="o">.</span><span class="n">days</span> <span class="o">&gt;</span> <span class="mi">16</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;GFS forecast requested for </span><span class="si">{</span><span class="n">time_delta</span><span class="o">.</span><span class="n">days</span><span class="si">}</span><span class="s2"> days ahead. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;GFS only provides forecasts up to 16 days.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;GFS forecast: lat=</span><span class="si">{</span><span class="n">latitude</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°, lon=</span><span class="si">{</span><span class="n">longitude</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;date=</span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M UTC&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Forecast&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="s1">&#39;GFS&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="n">latitude</span><span class="p">,</span>
+            <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="n">longitude</span><span class="p">,</span>
+            <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">hour</span><span class="p">),</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="WeatherFetcher.get_era5_reanalysis_params">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.WeatherFetcher.get_era5_reanalysis_params">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_era5_reanalysis_params</span><span class="p">(</span>
+        <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get parameters for ERA5 reanalysis data.</span>
+
+<span class="sd">        ERA5 provides historical weather reanalysis from 1979 to present</span>
+<span class="sd">        with hourly resolution and 31 km spatial resolution.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            latitude: Latitude in degrees</span>
+<span class="sd">            longitude: Longitude in degrees</span>
+<span class="sd">            date: Historical date/time (UTC)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with ERA5 parameters for RocketPy</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; # Get reanalysis for past flight reconstruction</span>
+<span class="sd">            &gt;&gt;&gt; params = WeatherFetcher.get_era5_reanalysis_params(</span>
+<span class="sd">            ...     latitude=39.39,</span>
+<span class="sd">            ...     longitude=-8.29,</span>
+<span class="sd">            ...     date=datetime(2024, 5, 1, 14, tzinfo=timezone.utc)</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; env.set_atmospheric_model(type=&#39;Reanalysis&#39;, file=&#39;ERA5&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; env.set_date(params[&#39;date&#39;])</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            ERA5 data has a ~3 month delay. Use for historical analysis,</span>
+<span class="sd">            not real-time forecasting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">date</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+        <span class="c1"># Check if date is too recent (ERA5 has ~3 month delay)</span>
+        <span class="n">time_since</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span> <span class="o">-</span> <span class="n">date</span>
+        <span class="k">if</span> <span class="n">time_since</span><span class="o">.</span><span class="n">days</span> <span class="o">&lt;</span> <span class="mi">90</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;ERA5 reanalysis requested for </span><span class="si">{</span><span class="n">time_since</span><span class="o">.</span><span class="n">days</span><span class="si">}</span><span class="s2"> days ago. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;ERA5 typically has a 3-month delay. Data may not be available yet.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;ERA5 reanalysis: lat=</span><span class="si">{</span><span class="n">latitude</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°, lon=</span><span class="si">{</span><span class="n">longitude</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;date=</span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M UTC&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Reanalysis&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="s1">&#39;ERA5&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="n">latitude</span><span class="p">,</span>
+            <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="n">longitude</span><span class="p">,</span>
+            <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">hour</span><span class="p">),</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="WeatherFetcher.load_custom_atmospheric_profile">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.WeatherFetcher.load_custom_atmospheric_profile">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_custom_atmospheric_profile</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load custom atmospheric profile from file.</span>
+
+<span class="sd">        Custom profiles allow testing with specific atmospheric conditions</span>
+<span class="sd">        or using data from other sources.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_path: Path to atmospheric profile file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Resolved Path object to the file</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            FileNotFoundError: If file does not exist</span>
+
+<span class="sd">        File Format:</span>
+<span class="sd">            Text file with columns: altitude (m), temperature (K), pressure (Pa)</span>
+<span class="sd">            Example:</span>
+<span class="sd">                0, 288.15, 101325</span>
+<span class="sd">                1000, 281.65, 89874</span>
+<span class="sd">                2000, 275.15, 79495</span>
+<span class="sd">                ...</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; file = WeatherFetcher.load_custom_atmospheric_profile(</span>
+<span class="sd">            ...     &quot;data/atmospheric/custom_profile.txt&quot;</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; env.set_atmospheric_model(type=&#39;custom_atmosphere&#39;, file=str(file))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="c1"># Try relative to project root</span>
+            <span class="n">project_root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">project_root</span> <span class="o">/</span> <span class="n">file_path</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Atmospheric profile file not found: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading custom atmospheric profile: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">path</span></div>
+</div>
+
+
+
+<span class="c1"># Common Wyoming station codes for reference</span>
+<span class="n">WYOMING_STATIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># United States</span>
+    <span class="s2">&quot;72340&quot;</span><span class="p">:</span> <span class="s2">&quot;Oakland, CA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;23048&quot;</span><span class="p">:</span> <span class="s2">&quot;Las Cruces, NM&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;72469&quot;</span><span class="p">:</span> <span class="s2">&quot;Denver, CO&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;74794&quot;</span><span class="p">:</span> <span class="s2">&quot;White Sands, NM&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;72206&quot;</span><span class="p">:</span> <span class="s2">&quot;Cape Canaveral, FL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;72403&quot;</span><span class="p">:</span> <span class="s2">&quot;Vandenberg AFB, CA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;72393&quot;</span><span class="p">:</span> <span class="s2">&quot;Point Mugu, CA&quot;</span><span class="p">,</span>
+
+    <span class="c1"># International</span>
+    <span class="s2">&quot;08495&quot;</span><span class="p">:</span> <span class="s2">&quot;Lisbon, Portugal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;10739&quot;</span><span class="p">:</span> <span class="s2">&quot;Stuttgart, Germany&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;11520&quot;</span><span class="p">:</span> <span class="s2">&quot;Prague, Czech Republic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;16245&quot;</span><span class="p">:</span> <span class="s2">&quot;Rome, Italy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;03005&quot;</span><span class="p">:</span> <span class="s2">&quot;Lerwick, UK&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;06610&quot;</span><span class="p">:</span> <span class="s2">&quot;Valentia, Ireland&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="get_station_name">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.get_station_name">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_station_name</span><span class="p">(</span><span class="n">station_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get station name from ID.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        station_id: Wyoming station ID</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Station name if known, else &quot;Unknown Station&quot;</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; name = get_station_name(&quot;72340&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; print(name)  # &quot;Oakland, CA&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">WYOMING_STATIONS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">station_id</span><span class="p">,</span> <span class="s2">&quot;Unknown Station&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="list_wyoming_stations">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.list_wyoming_stations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_wyoming_stations</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print list of common Wyoming station IDs and names.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; list_wyoming_stations()</span>
+<span class="sd">        Wyoming Atmospheric Sounding Stations:</span>
+<span class="sd">        72340: Oakland, CA</span>
+<span class="sd">        23048: Las Cruces, NM</span>
+<span class="sd">        ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wyoming Atmospheric Sounding Stations:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">station_id</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">WYOMING_STATIONS</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">station_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Convenience functions for common use cases</span>
+
+<div class="viewcode-block" id="fetch_latest_wyoming_sounding">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.fetch_latest_wyoming_sounding">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fetch_latest_wyoming_sounding</span><span class="p">(</span><span class="n">station</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetch latest available Wyoming sounding for a station.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        station: Station ID (e.g., &quot;72340&quot;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        URL to latest sounding data</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; url = fetch_latest_wyoming_sounding(&quot;72340&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; env.set_atmospheric_model(type=&#39;wyoming_sounding&#39;, file=url)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get latest sounding (current time, will select closest 00Z or 12Z)</span>
+    <span class="k">return</span> <span class="n">WeatherFetcher</span><span class="o">.</span><span class="n">fetch_wyoming_sounding</span><span class="p">(</span><span class="n">station</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="fetch_gfs_forecast_for_location">
+<a class="viewcode-back" href="../../api/index.html#src.weather_fetcher.fetch_gfs_forecast_for_location">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fetch_gfs_forecast_for_location</span><span class="p">(</span>
+    <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">forecast_hours_ahead</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">24</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fetch GFS forecast for location N hours ahead.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        latitude: Latitude in degrees</span>
+<span class="sd">        longitude: Longitude in degrees</span>
+<span class="sd">        forecast_hours_ahead: Hours ahead to forecast (default: 24)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary with GFS parameters</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; # Get forecast for 24 hours from now</span>
+<span class="sd">        &gt;&gt;&gt; params = fetch_gfs_forecast_for_location(39.39, -8.29, forecast_hours_ahead=24)</span>
+<span class="sd">        &gt;&gt;&gt; env.set_atmospheric_model(type=&#39;Forecast&#39;, file=&#39;GFS&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; env.set_date(params[&#39;date&#39;])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">forecast_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">forecast_hours_ahead</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">WeatherFetcher</span><span class="o">.</span><span class="n">get_gfs_forecast_params</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">forecast_date</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

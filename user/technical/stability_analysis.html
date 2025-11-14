@@ -1,0 +1,1496 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Rocket Stability: Theory and Best Practices &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/technical/stability_analysis';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="API Reference" href="../../api/index.html" />
+    <link rel="prev" title="Output Plot Interpretation Guide" href="plot_interpretation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../quick_plot_reference.html">Quick Plot Reference Card</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/05_recovery_system.html">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="plot_interpretation.html">Output Plot Interpretation Guide</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Technical Documentation</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Rocket Stability: Theory and Best Practices</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="rocket-stability-theory-and-best-practices">
+<span id="technical-stability-analysis"></span><h1>Rocket Stability: Theory and Best Practices<a class="headerlink" href="#rocket-stability-theory-and-best-practices" title="Link to this heading">#</a></h1>
+<p>Understanding rocket stability is <strong>critical</strong> for safe flight. This page provides a comprehensive explanation of stability concepts, RocketPy’s calculation methods, and best practices for design and analysis.</p>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#why-stability-matters" id="id23">Why Stability Matters</a></p></li>
+<li><p><a class="reference internal" href="#stability-fundamentals" id="id24">Stability Fundamentals</a></p>
+<ul>
+<li><p><a class="reference internal" href="#center-of-mass-cm-and-center-of-pressure-cp" id="id25">Center of Mass (CM) and Center of Pressure (CP)</a></p></li>
+<li><p><a class="reference internal" href="#the-golden-rule" id="id26">The Golden Rule</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#rocketpy-s-stability-metrics" id="id27">RocketPy’s Stability Metrics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#static-margin" id="id28">Static Margin</a></p></li>
+<li><p><a class="reference internal" href="#stability-margin" id="id29">Stability Margin</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#which-metric-should-you-use" id="id30">Which Metric Should You Use?</a></p>
+<ul>
+<li><p><a class="reference internal" href="#understanding-both-metrics" id="id31">Understanding Both Metrics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id32">Static Margin</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id33">Stability Margin</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#interpreting-stability-margin" id="id34">Interpreting Stability Margin</a></p></li>
+<li><p><a class="reference internal" href="#practical-recommendations" id="id35">Practical Recommendations</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#center-of-pressure-calculation" id="id36">Center of Pressure Calculation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#how-rocketpy-calculates-cp" id="id37">How RocketPy Calculates CP</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#practical-stability-analysis" id="id38">Practical Stability Analysis</a></p>
+<ul>
+<li><p><a class="reference internal" href="#common-stability-issues" id="id39">Common Stability Issues</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#design-guidelines" id="id40">Design Guidelines</a></p>
+<ul>
+<li><p><a class="reference internal" href="#general-stability-targets" id="id41">General Stability Targets</a></p></li>
+<li><p><a class="reference internal" href="#fin-design-considerations" id="id42">Fin Design Considerations</a></p></li>
+<li><p><a class="reference internal" href="#mass-distribution-strategy" id="id43">Mass Distribution Strategy</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#advanced-topics" id="id44">Advanced Topics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#transonic-flight-considerations" id="id45">Transonic Flight Considerations</a></p></li>
+<li><p><a class="reference internal" href="#motor-burnout-effects" id="id46">Motor Burnout Effects</a></p></li>
+<li><p><a class="reference internal" href="#weathercocking" id="id47">Weathercocking</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#rocketpy-implementation-details" id="id48">RocketPy Implementation Details</a></p>
+<ul>
+<li><p><a class="reference internal" href="#stability-functions-in-rocketpy" id="id49">Stability Functions in RocketPy</a></p></li>
+<li><p><a class="reference internal" href="#accessing-stability-in-output-files" id="id50">Accessing Stability in Output Files</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#validation-and-testing" id="id51">Validation and Testing</a></p>
+<ul>
+<li><p><a class="reference internal" href="#cross-check-with-other-tools" id="id52">Cross-Check with Other Tools</a></p></li>
+<li><p><a class="reference internal" href="#experimental-validation" id="id53">Experimental Validation</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#troubleshooting-guide" id="id54">Troubleshooting Guide</a></p>
+<ul>
+<li><p><a class="reference internal" href="#unexpected-stability-results" id="id55">Unexpected Stability Results</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#references-and-further-reading" id="id56">References and Further Reading</a></p>
+<ul>
+<li><p><a class="reference internal" href="#additional-resources" id="id57">Additional Resources</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#summary-and-checklist" id="id58">Summary and Checklist</a></p>
+<ul>
+<li><p><a class="reference internal" href="#key-principles" id="id59">Key Principles</a></p></li>
+<li><p><a class="reference internal" href="#pre-flight-stability-checklist" id="id60">Pre-Flight Stability Checklist</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#questions-and-support" id="id61">Questions and Support</a></p></li>
+</ul>
+</nav>
+<hr class="docutils" />
+<section id="why-stability-matters">
+<h2><a class="toc-backref" href="#id23" role="doc-backlink">Why Stability Matters</a><a class="headerlink" href="#why-stability-matters" title="Link to this heading">#</a></h2>
+<p>An <strong>unstable rocket</strong> will tumble uncontrollably, potentially:</p>
+<p>❌ Veering off course and landing far from target
+❌ Experiencing excessive drag and reduced altitude
+❌ Structurally failing due to aerodynamic loads
+❌ Posing safety hazards to people and property</p>
+<p><strong>Proper stability analysis prevents these failures.</strong></p>
+</section>
+<hr class="docutils" />
+<section id="stability-fundamentals">
+<h2><a class="toc-backref" href="#id24" role="doc-backlink">Stability Fundamentals</a><a class="headerlink" href="#stability-fundamentals" title="Link to this heading">#</a></h2>
+<section id="center-of-mass-cm-and-center-of-pressure-cp">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Center of Mass (CM) and Center of Pressure (CP)</a><a class="headerlink" href="#center-of-mass-cm-and-center-of-pressure-cp" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt><strong>Center of Mass (CM)</strong></dt><dd><p>The point where the rocket’s weight acts. Also called <strong>Center of Gravity (CG)</strong>.</p>
+<ul class="simple">
+<li><p>Changes during flight as propellant burns</p></li>
+<li><p>Moves toward the nose as motor empties</p></li>
+<li><p>You specify this in config as <code class="docutils literal notranslate"><span class="pre">cg_location_m</span></code></p></li>
+</ul>
+</dd>
+<dt><strong>Center of Pressure (CP)</strong></dt><dd><p>The point where aerodynamic forces act.</p>
+<ul class="simple">
+<li><p><strong>Depends on Mach number</strong> - varies during flight!</p></li>
+<li><p>Calculated by RocketPy from fin/nosecone geometry</p></li>
+<li><p><strong>Not a single fixed value</strong></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="the-golden-rule">
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">The Golden Rule</a><a class="headerlink" href="#the-golden-rule" title="Link to this heading">#</a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>For stable flight: CP must be BEHIND CM</strong></p>
+<p>(Toward the tail, away from the nose)</p>
+</div>
+<p>When the rocket is perturbed from vertical flight, aerodynamic forces acting at CP create a restoring moment about CM that returns the rocket to stable flight. This requires CP to be aft of CM.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="rocketpy-s-stability-metrics">
+<h2><a class="toc-backref" href="#id27" role="doc-backlink">RocketPy’s Stability Metrics</a><a class="headerlink" href="#rocketpy-s-stability-metrics" title="Link to this heading">#</a></h2>
+<p>RocketPy provides <strong>two different stability metrics</strong>. Understanding when to use each is crucial!</p>
+<section id="static-margin">
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">Static Margin</a><a class="headerlink" href="#static-margin" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">static_margin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="n">CM</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">CP</span><span class="p">(</span><span class="n">Mach</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span> <span class="o">/</span> <span class="n">caliber</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Definition:</strong></dt><dd><p>Distance between CM and CP at <strong>Mach 0</strong> (subsonic), divided by rocket diameter.</p>
+</dd>
+</dl>
+<p><strong>Key Characteristics:</strong></p>
+<p>✅ <strong>Simple</strong> - Uses single CP value (Mach 0)
+✅ <strong>Conservative</strong> - Good for initial design
+✅ <strong>Time-dependent</strong> - Accounts for CM changing as propellant burns
+⚠️ <strong>Approximation</strong> - Assumes CP doesn’t change with speed</p>
+<p><strong>When to Use:</strong></p>
+<ul class="simple">
+<li><p>Initial design and sizing</p></li>
+<li><p>Quick stability checks</p></li>
+<li><p>Subsonic rockets (max speed &lt; Mach 0.8)</p></li>
+<li><p>Rule-of-thumb evaluations</p></li>
+</ul>
+<p><strong>Target Values:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Static Margin</p></th>
+<th class="head"><p>Stability</p></th>
+<th class="head"><p>Flight Characteristics</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt; 0 calibers</p></td>
+<td><p>❌ <strong>Unstable</strong></p></td>
+<td><p>Will tumble immediately</p></td>
+</tr>
+<tr class="row-odd"><td><p>0-1 calibers</p></td>
+<td><p>⚠️ <strong>Marginally stable</strong></p></td>
+<td><p>May weathercock, sensitive to winds</p></td>
+</tr>
+<tr class="row-even"><td><p>1.0-2.5 calibers</p></td>
+<td><p>✅ <strong>Optimal</strong></p></td>
+<td><p>Stable with good maneuverability</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5-3.5 calibers</p></td>
+<td><p>✅ <strong>Very stable</strong></p></td>
+<td><p>Predictable but less maneuverable</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt; 3.5 calibers</p></td>
+<td><p>⚠️ <strong>Over-stable</strong></p></td>
+<td><p>Weathercocking, high drag</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="stability-margin">
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">Stability Margin</a><a class="headerlink" href="#stability-margin" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stability_margin</span><span class="p">(</span><span class="n">Mach</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="n">CM</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">CP</span><span class="p">(</span><span class="n">Mach</span><span class="p">)]</span> <span class="o">/</span> <span class="n">caliber</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Definition:</strong></dt><dd><p>Distance between CM and CP <strong>at actual flight Mach number</strong>, divided by diameter.</p>
+</dd>
+</dl>
+<p><strong>Key Characteristics:</strong></p>
+<p>✅ <strong>Accurate</strong> - Uses actual CP(Mach) during flight
+✅ <strong>Dynamic</strong> - Captures real aerodynamic behavior
+✅ <strong>Two parameters</strong> - Function of both time AND Mach
+⚠️ <strong>Complex</strong> - Requires understanding flight profile</p>
+<p><strong>When to Use:</strong></p>
+<ul class="simple">
+<li><p>Final design validation</p></li>
+<li><p>High-speed rockets (transonic/supersonic)</p></li>
+<li><p>Detailed flight analysis</p></li>
+<li><p>Competition accuracy requirements</p></li>
+<li><p>Post-flight analysis</p></li>
+</ul>
+<p><strong>Why It’s Different:</strong></p>
+<p>CP position changes with speed due to compressibility effects:</p>
+<ol class="arabic simple">
+<li><p><strong>Compressibility effects</strong> at transonic speeds (Mach 0.8-1.2) alter pressure distribution</p></li>
+<li><p><strong>Shock wave formation</strong> changes the location of aerodynamic center</p></li>
+<li><p><strong>Fin effectiveness</strong> varies with Mach number due to boundary layer effects</p></li>
+</ol>
+<p>These variations can be significant (5-15% body length) and affect stability margins.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="which-metric-should-you-use">
+<h2><a class="toc-backref" href="#id30" role="doc-backlink">Which Metric Should You Use?</a><a class="headerlink" href="#which-metric-should-you-use" title="Link to this heading">#</a></h2>
+<section id="understanding-both-metrics">
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">Understanding Both Metrics</a><a class="headerlink" href="#understanding-both-metrics" title="Link to this heading">#</a></h3>
+<p><strong>For comprehensive stability analysis, both metrics are important:</strong></p>
+<section id="id1">
+<h4><a class="toc-backref" href="#id32" role="doc-backlink">Static Margin</a><a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<p>Provides a <strong>conservative baseline</strong> using CP at Mach 0. Useful for:</p>
+<ul class="simple">
+<li><p>Initial design iterations</p></li>
+<li><p>Subsonic rockets (Mach &lt; 0.8)</p></li>
+<li><p>Quick stability checks</p></li>
+</ul>
+<p><strong>Limitation:</strong> Does not capture CP variations during flight.</p>
+</section>
+<section id="id2">
+<h4><a class="toc-backref" href="#id33" role="doc-backlink">Stability Margin</a><a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p>Provides <strong>accurate stability assessment</strong> at actual flight conditions. Essential for:</p>
+<ul class="simple">
+<li><p>Transonic/supersonic rockets (Mach &gt; 0.8)</p></li>
+<li><p>Final design validation</p></li>
+<li><p>Understanding stability evolution during flight</p></li>
+</ul>
+<p><strong>Advantage:</strong> Shows real stability margin throughout the flight envelope.</p>
+</section>
+</section>
+<section id="interpreting-stability-margin">
+<h3><a class="toc-backref" href="#id34" role="doc-backlink">Interpreting Stability Margin</a><a class="headerlink" href="#interpreting-stability-margin" title="Link to this heading">#</a></h3>
+<p>The stability margin varies during flight due to:</p>
+<ol class="arabic simple">
+<li><p><strong>Mach number changes</strong> - CP shifts as rocket accelerates/decelerates</p></li>
+<li><p><strong>Propellant depletion</strong> - CM moves forward as motor burns</p></li>
+<li><p><strong>Altitude effects</strong> - Aerodynamic forces decrease with atmospheric density</p></li>
+</ol>
+<p><strong>Key Analysis Approach:</strong></p>
+<p>Plot stability margin vs. time and identify:</p>
+<ul class="simple">
+<li><p><strong>Minimum stability point</strong> - Often occurs during transonic transition</p></li>
+<li><p><strong>Critical flight phases</strong> - Motor burnout, maximum dynamic pressure</p></li>
+<li><p><strong>Margin safety factor</strong> - Ensure minimum stays above 1.0 caliber</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Analyzing stability margin throughout flight</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Extract from RocketPy Flight object</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">flight</span><span class="o">.</span><span class="n">time</span>
+<span class="n">mach</span> <span class="o">=</span> <span class="n">flight</span><span class="o">.</span><span class="n">mach_number</span>
+
+<span class="c1"># Calculate stability margin at each time point</span>
+<span class="n">stability_margins</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">M</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">mach</span><span class="p">):</span>
+    <span class="n">margin</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">stability_margin</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">stability_margins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">margin</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">stability_margins</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Minimum Safe Margin&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Stability Margin (calibers)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Stability Margin Evolution During Flight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Critical Interpretation Points:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Observation</p></th>
+<th class="head"><p>Interpretation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Margin decreases during acceleration</p></td>
+<td><p>Normal - Mach effects shifting CP forward</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sudden drop near Mach 1</p></td>
+<td><p>Transonic CP shift - verify margin stays &gt; 1.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Margin increases after burnout</p></td>
+<td><p>CM moved forward, propellant depleted</p></td>
+</tr>
+<tr class="row-odd"><td><p>Margin below 1.0 at any point</p></td>
+<td><p><strong>Unsafe</strong> - redesign needed</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="practical-recommendations">
+<h3><a class="toc-backref" href="#id35" role="doc-backlink">Practical Recommendations</a><a class="headerlink" href="#practical-recommendations" title="Link to this heading">#</a></h3>
+<dl class="simple">
+<dt><strong>Initial Design Phase:</strong></dt><dd><p>Start with <strong>Static Margin</strong> targeting 2.0-2.5 calibers for safety buffer</p>
+</dd>
+<dt><strong>Detailed Analysis Phase:</strong></dt><dd><p>Plot <strong>Stability Margin vs Time</strong> for complete flight:</p>
+<ul class="simple">
+<li><p>Verify margin never drops below 1.0 caliber</p></li>
+<li><p>Identify minimum margin point</p></li>
+<li><p>Check margins at critical events (max Q, burnout, apogee)</p></li>
+</ul>
+</dd>
+<dt><strong>For Subsonic Rockets (Mach &lt; 0.8):</strong></dt><dd><p>Static Margin alone is typically sufficient if &gt; 1.5 calibers</p>
+</dd>
+<dt><strong>For Transonic/Supersonic Rockets (Mach &gt; 0.8):</strong></dt><dd><p><strong>Must</strong> analyze Stability Margin throughout flight envelope:</p>
+<ul class="simple">
+<li><p>CP shifts can reduce margin by 0.5-1.0 calibers in transonic region</p></li>
+<li><p>Static Margin alone is inadequate - can miss critical instabilities</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<hr class="docutils" />
+<section id="center-of-pressure-calculation">
+<h2><a class="toc-backref" href="#id36" role="doc-backlink">Center of Pressure Calculation</a><a class="headerlink" href="#center-of-pressure-calculation" title="Link to this heading">#</a></h2>
+<section id="how-rocketpy-calculates-cp">
+<h3><a class="toc-backref" href="#id37" role="doc-backlink">How RocketPy Calculates CP</a><a class="headerlink" href="#how-rocketpy-calculates-cp" title="Link to this heading">#</a></h3>
+<p>RocketPy computes CP(Mach) using <strong>Barrowman equations</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simplified concept (actual code more complex)</span>
+<span class="k">for</span> <span class="n">each</span> <span class="n">aerodynamic</span> <span class="n">surface</span> <span class="p">(</span><span class="n">nose</span><span class="p">,</span> <span class="n">fins</span><span class="p">,</span> <span class="n">tail</span><span class="p">):</span>
+    <span class="n">local_cp</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">cp_position</span><span class="p">(</span><span class="n">Mach</span><span class="p">)</span>
+    <span class="n">local_lift</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">lift_coefficient_derivative</span><span class="p">(</span><span class="n">Mach</span><span class="p">)</span>
+
+<span class="c1"># Weighted average by lift contribution</span>
+<span class="n">total_cp</span> <span class="o">=</span> <span class="n">Σ</span><span class="p">(</span><span class="n">local_cp</span> <span class="err">×</span> <span class="n">local_lift</span><span class="p">)</span> <span class="o">/</span> <span class="n">Σ</span><span class="p">(</span><span class="n">local_lift</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Key Points:</strong></p>
+<p>✅ <strong>Automatic</strong> - No manual CP specification needed
+✅ <strong>Mach-dependent</strong> - Proper transonic/supersonic handling
+✅ <strong>Validated</strong> - Based on Barrowman (1967) methodology <a class="footnote-reference brackets" href="#id15" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
+⚠️ <strong>Approximation</strong> - Complex geometries may require CFD validation</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>RocketPy’s CP Calculation Accounts For:</strong></p>
+<ul class="simple">
+<li><p>Nose cone shape and length (von Karman, ogive, conical, etc.)</p></li>
+<li><p>Fin geometry (trapezoidal, elliptical, all standard types)</p></li>
+<li><p>Body tube effects and diameter changes</p></li>
+<li><p>Interference between components</p></li>
+<li><p>Mach number compressibility corrections</p></li>
+</ul>
+</div>
+<p>For standard rocket configurations, Barrowman’s method provides accuracy within 5-10% of experimental data. Complex geometries (unconventional fins, non-axisymmetric bodies) may require CFD or wind tunnel validation.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="practical-stability-analysis">
+<h2><a class="toc-backref" href="#id38" role="doc-backlink">Practical Stability Analysis</a><a class="headerlink" href="#practical-stability-analysis" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>“static_margin_calibers”: 1.85,
+“center_of_mass_m”: 1.255,
+“center_of_pressure_m”: 1.485,
+“center_of_pressure_mach”: 0.3</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">center_of_pressure_mach:</span> <span class="pre">0.3</span></code> indicates the CP value is calculated at Mach 0.3,
+which is representative for subsonic flight.</p>
+</div>
+<p><strong>4. Plot Stability Evolution</strong></p>
+<p>Use curve plotter to visualize CP vs Mach:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">src.curve_plotter</span><span class="w"> </span><span class="kn">import</span> <span class="n">CurvePlotter</span>
+
+<span class="n">plotter</span> <span class="o">=</span> <span class="n">CurvePlotter</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="n">rocket</span><span class="p">,</span> <span class="n">environment</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">plot_cp_vs_mach</span><span class="p">(</span><span class="s2">&quot;outputs/stability_check/curves/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This shows how CP moves during flight!</p>
+<p><strong>5. Analyze Full Flight</strong></p>
+<p>Check stability margin throughout flight:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;outputs/stability_check/flight_data.csv&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># Plot stability_margin vs time</span>
+    <span class="c1"># Identify minimum value and when it occurs</span>
+</pre></div>
+</div>
+<section id="common-stability-issues">
+<h3><a class="toc-backref" href="#id39" role="doc-backlink">Common Stability Issues</a><a class="headerlink" href="#common-stability-issues" title="Link to this heading">#</a></h3>
+<dl>
+<dt><strong>Symptom: Negative Static Margin</strong></dt><dd><div class="line-block">
+<div class="line"><strong>Cause:</strong> CP ahead of CM</div>
+<div class="line"><strong>Fix:</strong> Move fins back OR increase fin size OR move CG forward</div>
+</div>
+</dd>
+<dt><strong>Symptom: Margin drops below 1.0 during flight</strong></dt><dd><div class="line-block">
+<div class="line"><strong>Cause:</strong> Propellant burnout shifts CM too far forward</div>
+<div class="line"><strong>Fix:</strong> Redesign mass distribution OR shorten motor</div>
+</div>
+</dd>
+<dt><strong>Symptom: Over-stable (&gt; 3.5 calibers)</strong></dt><dd><div class="line-block">
+<div class="line"><strong>Cause:</strong> Fins too large or too far back</div>
+<div class="line"><strong>Fix:</strong> Reduce fin span OR move fins forward</div>
+</div>
+</dd>
+<dt><strong>Symptom: Stable at Mach 0.3 but unstable at Mach 0.9</strong></dt><dd><div class="line-block">
+<div class="line"><strong>Cause:</strong> Transonic CP shift</div>
+<div class="line"><strong>Fix:</strong> Increase subsonic margin to 2.5+ calibers for safety buffer</div>
+</div>
+</dd>
+</dl>
+</section>
+</section>
+<hr class="docutils" />
+<section id="design-guidelines">
+<h2><a class="toc-backref" href="#id40" role="doc-backlink">Design Guidelines</a><a class="headerlink" href="#design-guidelines" title="Link to this heading">#</a></h2>
+<section id="general-stability-targets">
+<h3><a class="toc-backref" href="#id41" role="doc-backlink">General Stability Targets</a><a class="headerlink" href="#general-stability-targets" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="id22">
+<caption><span class="caption-text">Stability Design Targets by Rocket Class</span><a class="headerlink" href="#id22" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Rocket Type</p></th>
+<th class="head"><p>Target Margin</p></th>
+<th class="head"><p>Reference</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Model rocket</strong> (&lt; Mach 0.5)</p></td>
+<td><p>1.5-2.0 cal</p></td>
+<td><p>Stine &amp; Stine (2004) <a class="footnote-reference brackets" href="#id16" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>High-power</strong> (Mach 0.5-0.9)</p></td>
+<td><p>1.8-2.5 cal</p></td>
+<td><p>NFPA 1127 (2023) <a class="footnote-reference brackets" href="#id17" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Transonic</strong> (Mach 0.8-1.2)</p></td>
+<td><p>2.0-3.0 cal</p></td>
+<td><p>Niskanen (2009) <a class="footnote-reference brackets" href="#id18" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Supersonic</strong> (&gt; Mach 1.2)</p></td>
+<td><p>1.5-2.5 cal</p></td>
+<td><p>Box et al. (2011) <a class="footnote-reference brackets" href="#id19" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Competition</strong> (precision)</p></td>
+<td><p>1.5-2.0 cal</p></td>
+<td><p>Empirical best practice</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These are <strong>guidelines</strong>, not absolute rules. Actual optimal margin depends on:</p>
+<ul class="simple">
+<li><p>Specific aerodynamic configuration</p></li>
+<li><p>Flight profile and mission requirements</p></li>
+<li><p>Environmental conditions (wind, altitude)</p></li>
+<li><p>Motor characteristics and burn profile</p></li>
+</ul>
+</div>
+</section>
+<section id="fin-design-considerations">
+<h3><a class="toc-backref" href="#id42" role="doc-backlink">Fin Design Considerations</a><a class="headerlink" href="#fin-design-considerations" title="Link to this heading">#</a></h3>
+<p><strong>Fin Positioning:</strong></p>
+<p>Fins should be located at 85-95% of body length from nose (Barrowman, 1967 <a class="footnote-reference brackets" href="#id15" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>). This positioning:</p>
+<ul class="simple">
+<li><p>Maximizes CP-CM separation</p></li>
+<li><p>Provides adequate structural support</p></li>
+<li><p>Minimizes fin-body interference effects</p></li>
+</ul>
+<p><strong>Fin Span Guidelines:</strong></p>
+<p>For trapezoidal fins on cylindrical body:</p>
+<div class="math notranslate nohighlight">
+\[s_{fin} = (2 \text{ to } 3) \times r_{body}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(s_{fin}\)</span> is fin semi-span and <span class="math notranslate nohighlight">\(r_{body}\)</span> is body radius.</p>
+<p><strong>Source:</strong> Mandell et al. (1973), “Topics in Advanced Model Rocketry” <a class="footnote-reference brackets" href="#id20" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a></p>
+<p><strong>Fin Geometry Starting Point:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Conservative initial design (4-fin configuration)</span>
+<span class="nt">fins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3 or 4</span><span class="w">              </span><span class="c1"># 3-fin more efficient, 4-fin more stable</span>
+<span class="w">  </span><span class="nt">root_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">L_body × 0.18</span><span class="w">  </span><span class="c1"># 15-20% of total body length</span>
+<span class="w">  </span><span class="nt">tip_chord_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root × 0.45</span><span class="w">     </span><span class="c1"># Taper ratio 0.4-0.5</span>
+<span class="w">  </span><span class="nt">span_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">diameter × 1.5</span><span class="w">       </span><span class="c1"># 2-3× body radius for adequate authority</span>
+<span class="w">  </span><span class="nt">sweep_angle_deg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30-45</span><span class="w">       </span><span class="c1"># Reduces transonic drag</span>
+</pre></div>
+</div>
+<p>These are <strong>starting values</strong> - iterate based on simulation results.</p>
+</section>
+<section id="mass-distribution-strategy">
+<h3><a class="toc-backref" href="#id43" role="doc-backlink">Mass Distribution Strategy</a><a class="headerlink" href="#mass-distribution-strategy" title="Link to this heading">#</a></h3>
+<p><strong>Forward-Heavy Configuration (Recommended):</strong></p>
+<p>Per Stine &amp; Stine (2004) <a class="footnote-reference brackets" href="#id16" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, placing heavy components forward ensures stable CG position:</p>
+<p>✅ <strong>Electronics/avionics in nose section</strong> - Maximizes forward mass
+✅ <strong>Heavy nose cone material</strong> (fiberglass, metal tip)
+✅ <strong>Battery packs forward of motor</strong> - Low-density propellant relative to electronics</p>
+<p><strong>Configurations to Avoid:</strong></p>
+<p>❌ <strong>Heavy tail section</strong> - Aft CG reduces stability
+❌ <strong>Excessive motor overhang</strong> - Shifts CG aft
+❌ <strong>Large fin mass without forward ballast</strong> - Unbalanced configuration</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="advanced-topics">
+<h2><a class="toc-backref" href="#id44" role="doc-backlink">Advanced Topics</a><a class="headerlink" href="#advanced-topics" title="Link to this heading">#</a></h2>
+<section id="transonic-flight-considerations">
+<h3><a class="toc-backref" href="#id45" role="doc-backlink">Transonic Flight Considerations</a><a class="headerlink" href="#transonic-flight-considerations" title="Link to this heading">#</a></h3>
+<p>The <strong>transonic region (Mach 0.8-1.2)</strong> presents significant aerodynamic challenges:</p>
+<p>⚠️ <strong>CP can shift 5-15% of body length</strong> (Box et al., 2011 <a class="footnote-reference brackets" href="#id19" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>)
+⚠️ <strong>Wave drag increases dramatically</strong> - drag coefficient may double
+⚠️ <strong>Stability margin may decrease</strong> by 0.5-1.0 calibers</p>
+<p><strong>Mitigation Strategies:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Higher subsonic margin</strong> - Start with 2.5-3.0 calibers minimum (Niskanen, 2009 <a class="footnote-reference brackets" href="#id18" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>)</p></li>
+<li><p><strong>Boat tail design</strong> - 5-7° convergence angle reduces base drag and CP shift</p></li>
+<li><p><strong>Smooth geometric transitions</strong> - Avoid sharp discontinuities that trigger early separation</p></li>
+<li><p><strong>Validation with multiple tools</strong> - Cross-check with OpenRocket, RASAero II, or wind tunnel data</p></li>
+</ol>
+</section>
+<section id="motor-burnout-effects">
+<h3><a class="toc-backref" href="#id46" role="doc-backlink">Motor Burnout Effects</a><a class="headerlink" href="#motor-burnout-effects" title="Link to this heading">#</a></h3>
+<p>CM shifts <strong>forward</strong> as propellant depletes (Stine &amp; Stine, 2004 <a class="footnote-reference brackets" href="#id16" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>):</p>
+<div class="math notranslate nohighlight">
+\[\text{Static Margin}_{\text{burnout}} &gt; \text{Static Margin}_{\text{ignition}}\]</div>
+<p><strong>Critical Check:</strong></p>
+<p>Both initial (full motor) and final (empty motor) margins must be within acceptable range:</p>
+<ul class="simple">
+<li><p><strong>At ignition:</strong> Verify margin ≥ 1.5 calibers</p></li>
+<li><p><strong>At burnout:</strong> Verify margin ≤ 3.5 calibers (avoid over-stability)</p></li>
+</ul>
+<p>Large solid motors can shift CG by 10-20% of body length during burn.</p>
+</section>
+<section id="weathercocking">
+<h3><a class="toc-backref" href="#id47" role="doc-backlink">Weathercocking</a><a class="headerlink" href="#weathercocking" title="Link to this heading">#</a></h3>
+<p><strong>Definition:</strong> Rocket aligns with resultant wind vector, causing trajectory deviation.</p>
+<p><strong>Physical Cause:</strong></p>
+<p>High stability creates strong restoring moments. In crosswind, the rocket “corrects” excessively, turning into the relative wind direction (Gregorek, 1970 <a class="footnote-reference brackets" href="#id21" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>).</p>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Apogee significantly lower than predicted (increased drag from angle of attack)</p></li>
+<li><p>Large horizontal drift downrange</p></li>
+<li><p>Curved trajectory turning into prevailing wind</p></li>
+</ul>
+<p><strong>Mitigation:</strong></p>
+<ul class="simple">
+<li><p>Reduce stability margin to 1.5-2.0 calibers (balance stability and weathercock resistance)</p></li>
+<li><p>Launch in wind speeds &lt; 20 mph for high-power rockets</p></li>
+<li><p>Use aerodynamic damping (larger diameter, shorter fins) to reduce angular response</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="rocketpy-implementation-details">
+<h2><a class="toc-backref" href="#id48" role="doc-backlink">RocketPy Implementation Details</a><a class="headerlink" href="#rocketpy-implementation-details" title="Link to this heading">#</a></h2>
+<section id="stability-functions-in-rocketpy">
+<h3><a class="toc-backref" href="#id49" role="doc-backlink">Stability Functions in RocketPy</a><a class="headerlink" href="#stability-functions-in-rocketpy" title="Link to this heading">#</a></h3>
+<p>RocketPy’s <code class="docutils literal notranslate"><span class="pre">Rocket</span></code> class provides:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rocket</span><span class="o">.</span><span class="n">static_margin</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>           <span class="c1"># Static margin at time t</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">stability_margin</span><span class="p">(</span><span class="n">mach</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>   <span class="c1"># Stability margin at (Mach, t)</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">cp_position</span><span class="p">(</span><span class="n">mach</span><span class="p">)</span>              <span class="c1"># CP position at Mach number</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">center_of_mass</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>           <span class="c1"># CM position at time t</span>
+</pre></div>
+</div>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check stability at launch</span>
+<span class="n">launch_margin</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">static_margin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Launch static margin: </span><span class="si">{</span><span class="n">launch_margin</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> cal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Check stability at burnout</span>
+<span class="n">burnout_time</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">burn_out_time</span>
+<span class="n">burnout_margin</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">static_margin</span><span class="p">(</span><span class="n">burnout_time</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Burnout static margin: </span><span class="si">{</span><span class="n">burnout_margin</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> cal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Check CP at different Mach numbers</span>
+<span class="n">cp_subsonic</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">cp_position</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">cp_transonic</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">cp_position</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">cp_supersonic</span> <span class="o">=</span> <span class="n">rocket</span><span class="o">.</span><span class="n">cp_position</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CP shift: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">cp_transonic</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cp_subsonic</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="accessing-stability-in-output-files">
+<h3><a class="toc-backref" href="#id50" role="doc-backlink">Accessing Stability in Output Files</a><a class="headerlink" href="#accessing-stability-in-output-files" title="Link to this heading">#</a></h3>
+<p><strong>1. final_state_READABLE.txt</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>====== STABILITY ======
+Center of Mass: 1.255 m
+Center of Pressure (Mach 0.3): 1.485 m
+
+Initial Static Margin: 1.81 calibers
+Out-of-rail Static Margin: 1.83 calibers
+</pre></div>
+</div>
+<p><strong>2. flight_summary.json</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;stability&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;initial_stability_margin_calibers&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.81</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;out_of_rail_stability_margin_calibers&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.83</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;center_of_mass_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.255</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;center_of_pressure_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.485</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;center_of_pressure_mach&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.3</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>3. flight_data.csv</strong></p>
+<p>Time-series data including:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">time</span></code> - Simulation time (s)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stability_margin</span></code> - Stability margin evolution</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">center_of_mass</span></code> - CM position vs time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mach_number</span></code> - Flight Mach number</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="validation-and-testing">
+<h2><a class="toc-backref" href="#id51" role="doc-backlink">Validation and Testing</a><a class="headerlink" href="#validation-and-testing" title="Link to this heading">#</a></h2>
+<section id="cross-check-with-other-tools">
+<h3><a class="toc-backref" href="#id52" role="doc-backlink">Cross-Check with Other Tools</a><a class="headerlink" href="#cross-check-with-other-tools" title="Link to this heading">#</a></h3>
+<p><strong>OpenRocket:</strong></p>
+<ol class="arabic simple">
+<li><p>Export your config to OpenRocket format</p></li>
+<li><p>Compare static margin values</p></li>
+<li><p>Should agree within 5-10%</p></li>
+</ol>
+<p><strong>RASAero:</strong></p>
+<ol class="arabic simple">
+<li><p>Model rocket geometry</p></li>
+<li><p>Compare CP location at Mach 0.3</p></li>
+<li><p>Validate transonic CP shift</p></li>
+</ol>
+<p><strong>Hand Calculations:</strong></p>
+<p>For simple geometries, use Barrowman equations to verify RocketPy’s CP.</p>
+</section>
+<section id="experimental-validation">
+<h3><a class="toc-backref" href="#id53" role="doc-backlink">Experimental Validation</a><a class="headerlink" href="#experimental-validation" title="Link to this heading">#</a></h3>
+<p><strong>Wind Tunnel Testing (Advanced):</strong></p>
+<ul class="simple">
+<li><p>Measure CP location experimentally</p></li>
+<li><p>Compare with RocketPy predictions</p></li>
+<li><p>Validate Mach dependence</p></li>
+</ul>
+<p><strong>Swing Tests (Simple):</strong></p>
+<ol class="arabic simple">
+<li><p>Attach rocket to string at estimated CP</p></li>
+<li><p>Swing rocket in arc</p></li>
+<li><p>If stable, hangs nose-first (CP behind CM confirmed)</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="troubleshooting-guide">
+<h2><a class="toc-backref" href="#id54" role="doc-backlink">Troubleshooting Guide</a><a class="headerlink" href="#troubleshooting-guide" title="Link to this heading">#</a></h2>
+<section id="unexpected-stability-results">
+<h3><a class="toc-backref" href="#id55" role="doc-backlink">Unexpected Stability Results</a><a class="headerlink" href="#unexpected-stability-results" title="Link to this heading">#</a></h3>
+<p><strong>Q: Why is my stability margin negative even though OpenRocket shows it’s stable?</strong></p>
+<p>A: Check coordinate systems!</p>
+<ul class="simple">
+<li><p>RocketPy may use <code class="docutils literal notranslate"><span class="pre">tail_to_nose</span></code></p></li>
+<li><p>OpenRocket uses <code class="docutils literal notranslate"><span class="pre">nose_to_tail</span></code></p></li>
+<li><p>Verify your <code class="docutils literal notranslate"><span class="pre">cg_location_m</span></code> is in correct system</p></li>
+</ul>
+<p><strong>Q: CP position seems wrong compared to manual calculation</strong></p>
+<p>A: RocketPy includes:</p>
+<ul class="simple">
+<li><p>Nose cone contribution</p></li>
+<li><p>Fin-body interference</p></li>
+<li><p>Transition effects</p></li>
+<li><p>All generally more accurate than hand calcs</p></li>
+</ul>
+<p><strong>Q: Stability changes unexpectedly during flight</strong></p>
+<p>A: Normal! Check:</p>
+<ul class="simple">
+<li><p>Propellant mass depletion (CM moves forward)</p></li>
+<li><p>Mach number effects (CP shifts)</p></li>
+<li><p>Both are physical and expected</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="references-and-further-reading">
+<h2><a class="toc-backref" href="#id56" role="doc-backlink">References and Further Reading</a><a class="headerlink" href="#references-and-further-reading" title="Link to this heading">#</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id15" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id8">2</a>)</span>
+<p><strong>Barrowman, J. S. (1967).</strong> “The Practical Calculation of the Aerodynamic Characteristics of Slender Finned Vehicles.” M.S. Thesis, Catholic University of America, Washington, D.C.</p>
+<p><em>Foundational work on CP calculation methodology used by RocketPy and most rocket simulation software.</em></p>
+</aside>
+<aside class="footnote brackets" id="id16" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id4">1</a>,<a role="doc-backlink" href="#id10">2</a>,<a role="doc-backlink" href="#id13">3</a>)</span>
+<p><strong>Stine, G. H., &amp; Stine, B. (2004).</strong> “Handbook of Model Rocketry,” 7th Edition. Wiley.</p>
+<p><em>Comprehensive practical guide to rocket stability, design guidelines, and safety practices.</em></p>
+</aside>
+<aside class="footnote brackets" id="id17" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
+<p><strong>NFPA 1127 (2023).</strong> “Code for High Power Rocketry.” National Fire Protection Association.</p>
+<p><em>Official safety code including stability margin requirements for high-power rocketry.</em></p>
+</aside>
+<aside class="footnote brackets" id="id18" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id6">1</a>,<a role="doc-backlink" href="#id12">2</a>)</span>
+<p><strong>Niskanen, S. (2009).</strong> “Development and validation of a computerized model rocket simulation software.” M.S. Thesis, Helsinki University of Technology.</p>
+<p><em>Theoretical foundation of OpenRocket, discusses transonic stability challenges.</em></p>
+</aside>
+<aside class="footnote brackets" id="id19" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id7">1</a>,<a role="doc-backlink" href="#id11">2</a>)</span>
+<p><strong>Box, S., Bishop, C. M., &amp; Hunt, H. (2011).</strong> “Transonic Aerodynamic Characteristics of Slender Bodies with Cruciform Surfaces.” Journal of Spacecraft and Rockets, 48(6), 1028-1034.</p>
+<p><em>Experimental data on CP shifts in transonic region for finned bodies.</em></p>
+</aside>
+<aside class="footnote brackets" id="id20" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">6</a><span class="fn-bracket">]</span></span>
+<p><strong>Mandell, G., Caporaso, G., &amp; Bengen, W. (1973).</strong> “Topics in Advanced Model Rocketry.” MIT Press.</p>
+<p><em>Advanced design techniques including fin sizing and aerodynamic optimization.</em></p>
+</aside>
+<aside class="footnote brackets" id="id21" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">7</a><span class="fn-bracket">]</span></span>
+<p><strong>Gregorek, G. M. (1970).</strong> “An Experimental Investigation of the Effects of Wind on Rocket Flight Paths.” Technical Report, Ohio State University.</p>
+<p><em>Analysis of weathercocking phenomenon and stability-wind interaction.</em></p>
+</aside>
+</aside>
+<section id="additional-resources">
+<h3><a class="toc-backref" href="#id57" role="doc-backlink">Additional Resources</a><a class="headerlink" href="#additional-resources" title="Link to this heading">#</a></h3>
+<p><strong>Software Tools:</strong></p>
+<ul class="simple">
+<li><p><strong>OpenRocket</strong> - Open-source rocket design and simulation (<a class="reference external" href="https://openrocket.info/">https://openrocket.info/</a>)</p></li>
+<li><p><strong>RASAero II</strong> - NASA-developed aerodynamic analysis tool</p></li>
+<li><p><strong>RocketPy Documentation</strong> - <a class="reference external" href="https://docs.rocketpy.org/">https://docs.rocketpy.org/</a></p></li>
+</ul>
+<p><strong>Standards and Guidelines:</strong></p>
+<ul class="simple">
+<li><p><strong>Tripoli Rocketry Association</strong> - High-power rocketry certification guidelines</p></li>
+<li><p><strong>National Association of Rocketry</strong> - Model rocket safety code</p></li>
+<li><p><strong>FAA Part 101</strong> - Regulations for unmanned rockets</p></li>
+</ul>
+<p><strong>Academic References:</strong></p>
+<ul class="simple">
+<li><p><strong>Missile DATCOM (1997)</strong> - Comprehensive aerodynamic prediction methods</p></li>
+<li><p><strong>Fleeman, E. L. (2012)</strong> - “Tactical Missile Design,” 2nd Edition, AIAA</p></li>
+<li><p><strong>Sutton, G. P. (2001)</strong> - “Rocket Propulsion Elements,” 7th Edition</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="summary-and-checklist">
+<h2><a class="toc-backref" href="#id58" role="doc-backlink">Summary and Checklist</a><a class="headerlink" href="#summary-and-checklist" title="Link to this heading">#</a></h2>
+<section id="key-principles">
+<h3><a class="toc-backref" href="#id59" role="doc-backlink">Key Principles</a><a class="headerlink" href="#key-principles" title="Link to this heading">#</a></h3>
+<p>✅ <strong>CP must be aft of CM</strong> for aerodynamic stability
+✅ <strong>Static Margin</strong> for initial design and subsonic rockets
+✅ <strong>Stability Margin</strong> essential for transonic/supersonic analysis
+✅ <strong>Target 1.5-2.5 calibers</strong> for most applications
+✅ <strong>Verify both launch and burnout</strong> configurations
+✅ <strong>Plot stability margin vs time</strong> to identify minimum margin point
+✅ <strong>RocketPy calculates CP(Mach)</strong> automatically using Barrowman equations</p>
+</section>
+<section id="pre-flight-stability-checklist">
+<h3><a class="toc-backref" href="#id60" role="doc-backlink">Pre-Flight Stability Checklist</a><a class="headerlink" href="#pre-flight-stability-checklist" title="Link to this heading">#</a></h3>
+<p><strong>Required Checks:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>□ Static margin ≥ 1.5 calibers at ignition (full motor)
+□ Static margin ≥ 1.0 calibers at burnout (empty motor)
+□ Static margin ≤ 3.5 calibers (avoid over-stability)
+□ CP position behind CM in configured coordinate system
+□ Fin semi-span = 2-3× body radius
+□ Fins positioned at 85-95% of body length from nose
+</pre></div>
+</div>
+<p><strong>Additional Checks for High-Performance Rockets:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>□ (Transonic/Supersonic) Stability margin plotted throughout flight
+□ (Transonic) Minimum margin ≥ 1.0 caliber during Mach 0.8-1.2
+□ (Transonic) Initial static margin ≥ 2.5 calibers for safety buffer
+□ (All) Mass distribution forward-heavy verified
+□ (All) CG measured experimentally (weighing/balancing)
+□ (All) Cross-validated with independent tool (OpenRocket, RASAero II)
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="questions-and-support">
+<h2><a class="toc-backref" href="#id61" role="doc-backlink">Questions and Support</a><a class="headerlink" href="#questions-and-support" title="Link to this heading">#</a></h2>
+<p><strong>Documentation Resources:</strong></p>
+<ul class="simple">
+<li><p><strong>Practical troubleshooting:</strong> <a class="reference internal" href="../how_to_guides/validate_design.html"><span class="doc">Validate Your Rocket Design</span></a></p></li>
+<li><p><strong>Fin design tutorial:</strong> <a class="reference internal" href="../tutorials/04_adding_fins.html"><span class="doc">Adding and Optimizing Fins</span></a></p></li>
+<li><p><strong>Configuration parameters:</strong> <a class="reference internal" href="../configuration/rocket_params.html"><span class="doc">Rocket Parameters Reference</span></a></p></li>
+</ul>
+<p><strong>Community Support:</strong></p>
+<ul class="simple">
+<li><p>GitHub Issues: Bug reports and feature requests</p></li>
+<li><p>RocketPy Forums: Design assistance and community discussion</p></li>
+<li><p>Local rocket clubs: Hands-on validation and mentorship</p></li>
+</ul>
+<hr class="docutils" />
+<div class="important admonition">
+<p class="admonition-title">Safety First</p>
+<p><strong>Stability is not optional—it is a safety requirement.</strong></p>
+<p>Never launch a rocket with uncertain stability. If margins are borderline:</p>
+<ul class="simple">
+<li><p>Increase fin area to boost CP aft</p></li>
+<li><p>Add nose weight to move CM forward</p></li>
+<li><p>Test with lower-impulse motor first</p></li>
+<li><p>Obtain validation from experienced rocketeers</p></li>
+</ul>
+<p>An unstable rocket is uncontrollable and poses significant safety hazards.</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="plot_interpretation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Output Plot Interpretation Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../api/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-stability-matters">Why Stability Matters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-fundamentals">Stability Fundamentals</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#center-of-mass-cm-and-center-of-pressure-cp">Center of Mass (CM) and Center of Pressure (CP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-golden-rule">The Golden Rule</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rocketpy-s-stability-metrics">RocketPy’s Stability Metrics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-margin">Static Margin</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-margin">Stability Margin</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-metric-should-you-use">Which Metric Should You Use?</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-both-metrics">Understanding Both Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Static Margin</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Stability Margin</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-stability-margin">Interpreting Stability Margin</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-recommendations">Practical Recommendations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#center-of-pressure-calculation">Center of Pressure Calculation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-rocketpy-calculates-cp">How RocketPy Calculates CP</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-stability-analysis">Practical Stability Analysis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-stability-issues">Common Stability Issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-guidelines">Design Guidelines</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-stability-targets">General Stability Targets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fin-design-considerations">Fin Design Considerations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-distribution-strategy">Mass Distribution Strategy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-topics">Advanced Topics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transonic-flight-considerations">Transonic Flight Considerations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-burnout-effects">Motor Burnout Effects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weathercocking">Weathercocking</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rocketpy-implementation-details">RocketPy Implementation Details</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-functions-in-rocketpy">Stability Functions in RocketPy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-stability-in-output-files">Accessing Stability in Output Files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-and-testing">Validation and Testing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-check-with-other-tools">Cross-Check with Other Tools</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#experimental-validation">Experimental Validation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-guide">Troubleshooting Guide</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unexpected-stability-results">Unexpected Stability Results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references-and-further-reading">References and Further Reading</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-checklist">Summary and Checklist</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-principles">Key Principles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-flight-stability-checklist">Pre-Flight Stability Checklist</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-and-support">Questions and Support</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/technical/stability_analysis.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1555 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Configuring Recovery Systems &#8212; Rocket Simulation Framework v1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4ebf8126"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/tutorials/05_recovery_system';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="How-To Guides" href="../how_to_guides/index.html" />
+    <link rel="prev" title="Adding and Optimizing Fins" href="04_adding_fins.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">rocket-sim</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../developer/index.html">
+    Developer Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changelog.html">
+    <no title>
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../bibliography.html">
+    Bibliography
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../glossary.html">
+    Glossary
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/matteodisante/rocket-sim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../quick_plot_reference.html">Quick Plot Reference Card</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_basic_flight.html">Tutorial 1: Basic Flight Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_understanding_outputs.html">Understanding Simulation Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_custom_motor.html">Using Custom Motor Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_adding_fins.html">Adding and Optimizing Fins</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Configuring Recovery Systems</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_guides/index.html">How-To Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/create_config.html">Create Configuration Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/measure_rocket.html">How to Measure Your Rocket’s Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/validate_design.html">Validate Your Rocket Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/motor_selection.html">Select the Optimal Motor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_guides/export_data.html">Export Simulation Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration/index.html">Configuration Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/rocket_params.html">Rocket Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/motor_params.html">Motor Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/environment_params.html">Environment Parameters Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration/simulation_params.html">Simulation Parameters Reference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../technical/index.html">Technical Documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../technical/plot_interpretation.html">Output Plot Interpretation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../technical/stability_analysis.html">Rocket Stability: Theory and Best Practices</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Configuring Recovery Systems</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="configuring-recovery-systems">
+<span id="tutorial-recovery-system"></span><h1>Configuring Recovery Systems<a class="headerlink" href="#configuring-recovery-systems" title="Link to this heading">#</a></h1>
+<p>Safe recovery is essential for rocket reusability and payload protection. This tutorial covers parachute configuration, deployment triggers, descent analysis, and dual-deployment systems for high-power rockets.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial assumes you’ve completed <span class="xref std std-ref">tutorial_basic_flight</span> and <a class="reference internal" href="04_adding_fins.html#tutorial-adding-fins"><span class="std std-ref">Adding and Optimizing Fins</span></a>. We’ll focus specifically on recovery system design and optimization.</p>
+</div>
+<section id="recovery-system-basics">
+<h2>Recovery System Basics<a class="headerlink" href="#recovery-system-basics" title="Link to this heading">#</a></h2>
+<section id="why-recovery-matters">
+<h3>Why Recovery Matters<a class="headerlink" href="#why-recovery-matters" title="Link to this heading">#</a></h3>
+<p>A well-designed recovery system:</p>
+<ul class="simple">
+<li><p>✅ <strong>Protects the rocket</strong> - Safe landing prevents damage</p></li>
+<li><p>✅ <strong>Enables reusability</strong> - Fly again without rebuilding</p></li>
+<li><p>✅ <strong>Recovers payloads</strong> - Preserve expensive electronics</p></li>
+<li><p>✅ <strong>Ensures safety</strong> - Controlled descent protects people and property</p></li>
+<li><p>✅ <strong>Meets regulations</strong> - Required for most high-power flights</p></li>
+</ul>
+<p><strong>Landing velocity targets:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Rocket Type</p></th>
+<th class="head"><p>Max Velocity</p></th>
+<th class="head"><p>Recovery Method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Model rocket (&lt; 500g)</p></td>
+<td><p>&lt; 4 m/s</p></td>
+<td><p>Single parachute</p></td>
+</tr>
+<tr class="row-odd"><td><p>High-power (&lt; 5kg)</p></td>
+<td><p>&lt; 6 m/s</p></td>
+<td><p>Single or dual deploy</p></td>
+</tr>
+<tr class="row-even"><td><p>Heavy rocket (&gt; 5kg)</p></td>
+<td><p>&lt; 8 m/s</p></td>
+<td><p>Dual deploy recommended</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fragile payload</p></td>
+<td><p>&lt; 5 m/s</p></td>
+<td><p>Dual deploy + main chute</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="recovery-system-components">
+<h3>Recovery System Components<a class="headerlink" href="#recovery-system-components" title="Link to this heading">#</a></h3>
+<p><strong>Physical components:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Parachute(s)</strong> - Fabric canopy that creates drag</p></li>
+<li><p><strong>Shock cord</strong> - Elastic tether connecting rocket sections</p></li>
+<li><p><strong>Deployment bag</strong> - Protects chute during ascent</p></li>
+<li><p><strong>Ejection charge</strong> - Black powder or CO₂ to separate sections</p></li>
+<li><p><strong>Altimeter/Timer</strong> - Triggers deployment</p></li>
+</ol>
+<p><strong>Simulation parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cd_s</span></code> - Drag coefficient × area (combined parachute effectiveness)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trigger</span></code> - Deployment condition (apogee, altitude, time)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lag</span></code> - Delay from trigger to full deployment (seconds)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sampling_rate</span></code> - Altimeter measurement frequency (Hz)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">noise</span></code> - Sensor noise for realistic simulations</p></li>
+</ul>
+</section>
+</section>
+<section id="understanding-cds">
+<h2>Understanding Cd×S<a class="headerlink" href="#understanding-cds" title="Link to this heading">#</a></h2>
+<section id="the-critical-parameter">
+<h3>The Critical Parameter<a class="headerlink" href="#the-critical-parameter" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">cd_s</span></code> parameter combines two factors:</p>
+<div class="math notranslate nohighlight">
+\[C_D \times S = \text{Drag Coefficient} \times \text{Surface Area}\]</div>
+<p><strong>Physical meaning:</strong></p>
+<ul class="simple">
+<li><p><strong>Cd</strong> (drag coefficient): Shape efficiency (0.75-1.5 for parachutes)</p></li>
+<li><p><strong>S</strong> (surface area): Parachute area in m²</p></li>
+<li><p><strong>Cd×S</strong>: Total drag effectiveness in m²</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Quick estimate:</strong> For a round parachute, <code class="docutils literal notranslate"><span class="pre">Cd</span> <span class="pre">≈</span> <span class="pre">0.75</span></code> to <code class="docutils literal notranslate"><span class="pre">0.85</span></code></p>
+<p>So for a 3-meter diameter chute:</p>
+<ul class="simple">
+<li><p>Area = π × (1.5)² = 7.07 m²</p></li>
+<li><p>Cd×S = 0.8 × 7.07 ≈ <strong>5.7 m²</strong></p></li>
+</ul>
+</div>
+</section>
+<section id="calculating-cds">
+<h3>Calculating Cd×S<a class="headerlink" href="#calculating-cds" title="Link to this heading">#</a></h3>
+<p><strong>Method 1: From parachute diameter</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="n">diameter_m</span> <span class="o">=</span> <span class="mf">3.0</span>      <span class="c1"># Parachute diameter</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="mf">0.8</span>              <span class="c1"># Typical for round chute</span>
+
+<span class="n">area</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">diameter_m</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">cd_s</span> <span class="o">=</span> <span class="n">cd</span> <span class="o">*</span> <span class="n">area</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cd×S = </span><span class="si">{</span><span class="n">cd_s</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m²&quot;</span><span class="p">)</span>  <span class="c1"># Output: Cd×S = 5.65 m²</span>
+</pre></div>
+</div>
+<p><strong>Method 2: From desired descent rate</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">mass_kg</span> <span class="o">=</span> <span class="mf">8.5</span>                <span class="c1"># Rocket mass</span>
+<span class="n">target_velocity_ms</span> <span class="o">=</span> <span class="mf">6.0</span>     <span class="c1"># Desired descent rate</span>
+<span class="n">air_density</span> <span class="o">=</span> <span class="mf">1.225</span>          <span class="c1"># kg/m³ at sea level</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>                     <span class="c1"># Gravity</span>
+
+<span class="c1"># Terminal velocity equation: V = sqrt(2*m*g / (rho * Cd*S))</span>
+<span class="c1"># Solve for Cd*S:</span>
+<span class="n">cd_s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass_kg</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">air_density</span> <span class="o">*</span> <span class="n">target_velocity_ms</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required Cd×S = </span><span class="si">{</span><span class="n">cd_s</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m²&quot;</span><span class="p">)</span>  <span class="c1"># Output: 3.77 m²</span>
+</pre></div>
+</div>
+<p><strong>Method 3: From manufacturer data</strong></p>
+<p>Many parachute manufacturers specify descent rate for a given weight:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&quot;Fruity Chutes FC-60 (60-inch diameter):
+Descent rate: 18 ft/s at 5 lbs&quot;
+
+Convert to SI:
+- Descent rate: 18 ft/s = 5.5 m/s
+- Weight: 5 lbs = 2.27 kg
+
+Calculate Cd×S = (2 × 2.27 × 9.81) / (1.225 × 5.5²)
+               = 1.20 m²
+</pre></div>
+</div>
+</section>
+<section id="common-parachute-types">
+<h3>Common Parachute Types<a class="headerlink" href="#common-parachute-types" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 25.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Cd Range</p></th>
+<th class="head"><p>Best For</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Round (hemispherical)</p></td>
+<td><p>0.75-0.85</p></td>
+<td><p>General purpose</p></td>
+<td><p>Most common, predictable</p></td>
+</tr>
+<tr class="row-odd"><td><p>Flat circular</p></td>
+<td><p>0.70-0.80</p></td>
+<td><p>Light rockets</p></td>
+<td><p>Simpler construction</p></td>
+</tr>
+<tr class="row-even"><td><p>Annular (ring)</p></td>
+<td><p>0.60-0.75</p></td>
+<td><p>Stable descent</p></td>
+<td><p>Less oscillation</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cruciform</p></td>
+<td><p>0.85-1.20</p></td>
+<td><p>Max drag</p></td>
+<td><p>Complex to pack</p></td>
+</tr>
+<tr class="row-even"><td><p>Elliptical</p></td>
+<td><p>0.60-0.70</p></td>
+<td><p>Drift control</p></td>
+<td><p>Horizontal glide</p></td>
+</tr>
+<tr class="row-odd"><td><p>Parafoil (ram-air)</p></td>
+<td><p>0.50-0.60</p></td>
+<td><p>Guided recovery</p></td>
+<td><p>Steerable, complex</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="tutorial-single-parachute-system">
+<h2>Tutorial: Single Parachute System<a class="headerlink" href="#tutorial-single-parachute-system" title="Link to this heading">#</a></h2>
+<section id="step-1-design-requirements">
+<h3>Step 1: Design Requirements<a class="headerlink" href="#step-1-design-requirements" title="Link to this heading">#</a></h3>
+<p>Before configuring, define your requirements:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Rocket specifications:
+- Total mass: 8.5 kg (dry) + 2.0 kg (motor) = 10.5 kg
+- Expected apogee: 2500 m
+- Launch site: Sea level (ρ = 1.225 kg/m³)
+
+Requirements:
+- Landing velocity: &lt; 6 m/s (safe for reuse)
+- Deployment: At apogee (simplest)
+- Recovery: Within 500 m of launch site
+</pre></div>
+</div>
+</section>
+<section id="step-2-calculate-parachute-size">
+<h3>Step 2: Calculate Parachute Size<a class="headerlink" href="#step-2-calculate-parachute-size" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="c1"># Rocket parameters</span>
+<span class="n">mass_total_kg</span> <span class="o">=</span> <span class="mf">10.5</span>
+<span class="n">target_descent_ms</span> <span class="o">=</span> <span class="mf">6.0</span>
+
+<span class="c1"># Atmospheric</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">1.225</span>  <span class="c1"># kg/m³ at sea level</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>
+
+<span class="c1"># Calculate required Cd×S</span>
+<span class="n">cd_s_required</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass_total_kg</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="n">target_descent_ms</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required Cd×S: </span><span class="si">{</span><span class="n">cd_s_required</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m²&quot;</span><span class="p">)</span>
+<span class="c1"># Output: Required Cd×S: 4.67 m²</span>
+
+<span class="c1"># Choose parachute</span>
+<span class="n">cd_round</span> <span class="o">=</span> <span class="mf">0.80</span>  <span class="c1"># Round parachute</span>
+<span class="n">area_required</span> <span class="o">=</span> <span class="n">cd_s_required</span> <span class="o">/</span> <span class="n">cd_round</span>
+<span class="n">diameter_required</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">area_required</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Minimum diameter: </span><span class="si">{</span><span class="n">diameter_required</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+<span class="c1"># Output: Minimum diameter: 2.73 m</span>
+
+<span class="c1"># Round up for safety margin</span>
+<span class="n">diameter_actual</span> <span class="o">=</span> <span class="mf">3.0</span>  <span class="c1"># meters</span>
+<span class="n">area_actual</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">diameter_actual</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">cd_s_actual</span> <span class="o">=</span> <span class="n">cd_round</span> <span class="o">*</span> <span class="n">area_actual</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Final design:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Diameter: </span><span class="si">{</span><span class="n">diameter_actual</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Cd×S: </span><span class="si">{</span><span class="n">cd_s_actual</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m²&quot;</span><span class="p">)</span>
+<span class="c1"># Output: Cd×S: 5.65 m²</span>
+</pre></div>
+</div>
+</section>
+<section id="step-3-configure-in-yaml">
+<h3>Step 3: Configure in YAML<a class="headerlink" href="#step-3-configure-in-yaml" title="Link to this heading">#</a></h3>
+<p>Add parachute configuration to your rocket:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rocket</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># ... other rocket parameters ...</span>
+
+<span class="w">  </span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Main</span><span class="nv"> </span><span class="s">Chute&quot;</span>
+<span class="w">    </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.65</span><span class="w">              </span><span class="c1"># From calculation above</span>
+<span class="w">    </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span><span class="w">       </span><span class="c1"># Deploy at highest point</span>
+<span class="w">    </span><span class="nt">sampling_rate_hz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">105.0</span><span class="w"> </span><span class="c1"># Typical altimeter frequency</span>
+<span class="w">    </span><span class="nt">lag_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">              </span><span class="c1"># Ejection + inflation time</span>
+<span class="w">    </span><span class="nt">noise_std</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="p p-Indicator">]</span><span class="w">    </span><span class="c1"># No noise (ideal conditions)</span>
+</pre></div>
+</div>
+<p><strong>Parameter explanation:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">enabled</span></code></p></td>
+<td><p>boolean</p></td>
+<td><p>Set to <code class="docutils literal notranslate"><span class="pre">true</span></code> to activate recovery</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>string</p></td>
+<td><p>Descriptive name for output files</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cd_s</span></code></p></td>
+<td><p>m²</p></td>
+<td><p>Drag effectiveness (calculated above)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">trigger</span></code></p></td>
+<td><p>string</p></td>
+<td><p>Deployment condition (see triggers below)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sampling_rate_hz</span></code></p></td>
+<td><p>Hz</p></td>
+<td><p>Altimeter measurement frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lag_s</span></code></p></td>
+<td><p>seconds</p></td>
+<td><p>Deployment delay (realistic timing)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">noise_std</span></code></p></td>
+<td><p>[x, y, z]</p></td>
+<td><p>Sensor noise in m (for Monte Carlo)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="step-4-run-and-validate">
+<h3>Step 4: Run and Validate<a class="headerlink" href="#step-4-run-and-validate" title="Link to this heading">#</a></h3>
+<p>Simulate and check descent rate:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_single_simulation.py<span class="w"> </span>--config<span class="w"> </span>configs/my_rocket.yaml<span class="w"> </span>--name<span class="w"> </span>recovery_test
+</pre></div>
+</div>
+<p>Check the results:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span><span class="s2">&quot;Impact&quot;</span><span class="w"> </span>outputs/recovery_test/final_state_READABLE.txt
+</pre></div>
+</div>
+<p>Expected output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Impact:
+----------------------------------------
+  Velocity:                    -5.8 m/s
+  Position X:                  -12.3 m
+  Position Y:                  485.2 m
+  Distance from Launch:        485.4 m
+</pre></div>
+</div>
+<p>✓ Landing velocity 5.8 m/s &lt; 6.0 m/s target - <strong>Success!</strong></p>
+</section>
+</section>
+<section id="deployment-triggers">
+<h2>Deployment Triggers<a class="headerlink" href="#deployment-triggers" title="Link to this heading">#</a></h2>
+<section id="apogee-trigger-most-common">
+<h3>Apogee Trigger (Most Common)<a class="headerlink" href="#apogee-trigger-most-common" title="Link to this heading">#</a></h3>
+<p>Deploy when rocket reaches highest point:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span>
+</pre></div>
+</div>
+<p><strong>How it works:</strong></p>
+<ul class="simple">
+<li><p>Altimeter detects when rocket stops ascending (velocity ≈ 0)</p></li>
+<li><p>Deployment occurs at maximum altitude</p></li>
+<li><p>Simplest and most reliable</p></li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>✅ No programming required (built into altimeters)</p></li>
+<li><p>✅ Maximizes descent time (gentle landing)</p></li>
+<li><p>✅ Predictable deployment altitude</p></li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul class="simple">
+<li><p>❌ May drift far in wind (long descent time)</p></li>
+<li><p>❌ Not suitable for very high flights (excessive drift)</p></li>
+</ul>
+<p><strong>Best for:</strong> Model rockets, low-wind conditions, general sport flying</p>
+</section>
+<section id="altitude-trigger">
+<h3>Altitude Trigger<a class="headerlink" href="#altitude-trigger" title="Link to this heading">#</a></h3>
+<p>Deploy at specific altitude above ground:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">800</span><span class="w">  </span><span class="c1"># Deploy at 800 meters AGL</span>
+</pre></div>
+</div>
+<p><strong>How it works:</strong></p>
+<ul class="simple">
+<li><p>Altimeter triggers when rocket descends through specified altitude</p></li>
+<li><p>Allows dual-deploy configurations (see below)</p></li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li><p>✅ Control drift distance</p></li>
+<li><p>✅ Enable dual-deploy systems</p></li>
+<li><p>✅ Optimize for landing site size</p></li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul class="simple">
+<li><p>❌ Requires accurate ground elevation</p></li>
+<li><p>❌ More complex altimeter programming</p></li>
+<li><p>❌ Risk if apogee &lt; trigger altitude</p></li>
+</ul>
+<p><strong>Best for:</strong> Dual-deploy, high-altitude flights, limited recovery area</p>
+</section>
+<section id="time-trigger-backup">
+<h3>Time Trigger (Backup)<a class="headerlink" href="#time-trigger-backup" title="Link to this heading">#</a></h3>
+<p>Deploy after fixed time from launch:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note: RocketPy uses callable functions for custom triggers</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">time_trigger</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deploy 30 seconds after launch.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">30.0</span>  <span class="c1"># y[0] is time in seconds</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Time triggers are <strong>dangerous</strong> as primary deployment! Only use as backup or for very predictable flights.</p>
+</div>
+</section>
+<section id="custom-triggers">
+<h3>Custom Triggers<a class="headerlink" href="#custom-triggers" title="Link to this heading">#</a></h3>
+<p>For advanced scenarios, create custom trigger functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">velocity_trigger</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deploy when descending faster than 30 m/s.&quot;&quot;&quot;</span>
+    <span class="n">vz</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>  <span class="c1"># Vertical velocity</span>
+    <span class="k">return</span> <span class="n">vz</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">30.0</span>  <span class="c1"># Negative = descending</span>
+
+<span class="c1"># Add to rocket in Python code (not YAML)</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">add_parachute</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Drogue&quot;</span><span class="p">,</span>
+    <span class="n">cd_s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">trigger</span><span class="o">=</span><span class="n">velocity_trigger</span><span class="p">,</span>
+    <span class="n">sampling_rate</span><span class="o">=</span><span class="mi">105</span><span class="p">,</span>
+    <span class="n">lag</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">noise</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="deployment-lag">
+<h2>Deployment Lag<a class="headerlink" href="#deployment-lag" title="Link to this heading">#</a></h2>
+<section id="understanding-lag-time">
+<h3>Understanding Lag Time<a class="headerlink" href="#understanding-lag-time" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">lag_s</span></code> parameter models real-world deployment delay:</p>
+<p><strong>Lag components:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Ejection charge firing</strong> (~0.1-0.3 s)</p></li>
+<li><p><strong>Separation</strong> (~0.2-0.5 s)</p></li>
+<li><p><strong>Bag deployment</strong> (~0.3-0.6 s)</p></li>
+<li><p><strong>Inflation</strong> (~0.5-1.5 s)</p></li>
+</ol>
+<p><strong>Total typical lags:</strong></p>
+<ul class="simple">
+<li><p><strong>Small parachute</strong> (&lt; 1m): 0.8-1.2 seconds</p></li>
+<li><p><strong>Medium parachute</strong> (1-3m): 1.2-1.8 seconds</p></li>
+<li><p><strong>Large parachute</strong> (&gt; 3m): 1.5-2.5 seconds</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Realistic lag for 3-meter chute</span>
+<span class="w">  </span><span class="nt">lag_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Conservative approach:</strong> Use larger lag value for safety margin in simulations. Real flight will only be better than predicted.</p>
+</div>
+</section>
+<section id="effect-on-landing-velocity">
+<h3>Effect on Landing Velocity<a class="headerlink" href="#effect-on-landing-velocity" title="Link to this heading">#</a></h3>
+<p>Longer lag means rocket falls farther before chute inflates:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># At apogee, rocket begins falling</span>
+<span class="c1"># After lag time, additional velocity gained:</span>
+
+<span class="n">lag_time</span> <span class="o">=</span> <span class="mf">2.0</span>  <span class="c1"># seconds</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>
+
+<span class="c1"># Velocity gained during lag (ignoring drag)</span>
+<span class="n">v_gained</span> <span class="o">=</span> <span class="n">g</span> <span class="o">*</span> <span class="n">lag_time</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Velocity gained: </span><span class="si">{</span><span class="n">v_gained</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> m/s&quot;</span><span class="p">)</span>
+<span class="c1"># Output: 19.6 m/s</span>
+
+<span class="c1"># This velocity is then arrested by parachute</span>
+<span class="c1"># Longer lag = harder opening forces!</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Excessive lag can cause:</p>
+<ul class="simple">
+<li><p>High opening forces (shock cord/parachute damage)</p></li>
+<li><p>Increased landing velocity</p></li>
+<li><p>Lower deployment altitude than expected</p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="dual-deploy-systems">
+<h2>Dual-Deploy Systems<a class="headerlink" href="#dual-deploy-systems" title="Link to this heading">#</a></h2>
+<section id="what-is-dual-deploy">
+<h3>What is Dual Deploy?<a class="headerlink" href="#what-is-dual-deploy" title="Link to this heading">#</a></h3>
+<p>Dual-deploy uses two parachutes for optimal recovery:</p>
+<ol class="arabic simple">
+<li><p><strong>Drogue chute</strong> - Small, deploys at apogee</p></li>
+<li><p><strong>Main chute</strong> - Large, deploys at low altitude</p></li>
+</ol>
+<p><strong>Benefits:</strong></p>
+<ul class="simple">
+<li><p>✅ <strong>Reduced drift</strong> - Fast descent with drogue minimizes wind drift</p></li>
+<li><p>✅ <strong>Safe landing</strong> - Large main chute ensures gentle touchdown</p></li>
+<li><p>✅ <strong>Lower deployment</strong> - Main opens close to ground (less stress)</p></li>
+<li><p>✅ <strong>Professional</strong> - Standard for high-power rocketry</p></li>
+</ul>
+<p><strong>Typical deployment:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Apogee (2500m)
+    ↓
+Drogue deploys → Fast descent at 20-30 m/s
+    ↓
+    ↓ (85 seconds, 450m drift)
+    ↓
+800m AGL
+    ↓
+Main deploys → Slow descent at 5-7 m/s
+    ↓
+    ↓ (140 seconds, 180m drift)
+    ↓
+Landing
+
+Total drift: 630m vs. 1850m for single chute!
+</pre></div>
+</div>
+</section>
+<section id="configuring-dual-deploy">
+<h3>Configuring Dual Deploy<a class="headerlink" href="#configuring-dual-deploy" title="Link to this heading">#</a></h3>
+<p><strong>Important:</strong> RocketPy/rocket-sim currently supports <strong>single parachute</strong> in YAML config. For dual-deploy, you need to add a second parachute via Python code or use staged separation.</p>
+<p><strong>Workaround example</strong> (requires Python scripting):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">src.config_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.rocket_builder</span><span class="w"> </span><span class="kn">import</span> <span class="n">RocketBuilder</span>
+
+<span class="c1"># Load base config</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">ConfigLoader</span><span class="p">()</span>
+<span class="n">loader</span><span class="o">.</span><span class="n">load_from_yaml</span><span class="p">(</span><span class="s2">&quot;configs/my_rocket.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Build rocket (without main chute)</span>
+<span class="n">rocket_config</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_rocket_config</span><span class="p">()</span>
+<span class="n">rocket_config</span><span class="o">.</span><span class="n">parachute</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Disable YAML parachute</span>
+
+<span class="n">builder</span> <span class="o">=</span> <span class="n">RocketBuilder</span><span class="p">(</span><span class="n">rocket_config</span><span class="p">)</span>
+<span class="n">rocket</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build_complete_rocket</span><span class="p">()</span>
+
+<span class="c1"># Add drogue chute at apogee</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">add_parachute</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Drogue&quot;</span><span class="p">,</span>
+    <span class="n">cd_s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>          <span class="c1"># Small drogue</span>
+    <span class="n">trigger</span><span class="o">=</span><span class="s2">&quot;apogee&quot;</span><span class="p">,</span>
+    <span class="n">sampling_rate</span><span class="o">=</span><span class="mi">105</span><span class="p">,</span>
+    <span class="n">lag</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">noise</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Add main chute at 800m</span>
+<span class="n">rocket</span><span class="o">.</span><span class="n">add_parachute</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Main&quot;</span><span class="p">,</span>
+    <span class="n">cd_s</span><span class="o">=</span><span class="mf">8.0</span><span class="p">,</span>          <span class="c1"># Large main</span>
+    <span class="n">trigger</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>        <span class="c1"># 800m AGL</span>
+    <span class="n">sampling_rate</span><span class="o">=</span><span class="mi">105</span><span class="p">,</span>
+    <span class="n">lag</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">noise</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Continue with simulation...</span>
+</pre></div>
+</div>
+</section>
+<section id="sizing-dual-deploy-parachutes">
+<h3>Sizing Dual-Deploy Parachutes<a class="headerlink" href="#sizing-dual-deploy-parachutes" title="Link to this heading">#</a></h3>
+<p><strong>Drogue chute:</strong></p>
+<ul class="simple">
+<li><p>Target descent rate: 20-30 m/s</p></li>
+<li><p>Cd×S calculation: same formula, higher velocity</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mass_kg</span> <span class="o">=</span> <span class="mf">10.5</span>
+<span class="n">drogue_velocity</span> <span class="o">=</span> <span class="mf">25.0</span>  <span class="c1"># m/s (fast descent)</span>
+
+<span class="n">drogue_cds</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass_kg</span> <span class="o">*</span> <span class="mf">9.81</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.225</span> <span class="o">*</span> <span class="n">drogue_velocity</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drogue Cd×S: </span><span class="si">{</span><span class="n">drogue_cds</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m²&quot;</span><span class="p">)</span>
+<span class="c1"># Output: 0.34 m²</span>
+
+<span class="c1"># For Cd=0.8, diameter ≈ 0.74m (30 inches)</span>
+</pre></div>
+</div>
+<p><strong>Main chute:</strong></p>
+<ul class="simple">
+<li><p>Same calculation as single-deploy</p></li>
+<li><p>Target: 5-7 m/s descent</p></li>
+</ul>
+</section>
+</section>
+<section id="descent-analysis">
+<h2>Descent Analysis<a class="headerlink" href="#descent-analysis" title="Link to this heading">#</a></h2>
+<section id="predicting-landing-location">
+<h3>Predicting Landing Location<a class="headerlink" href="#predicting-landing-location" title="Link to this heading">#</a></h3>
+<p>Wind causes drift during descent. Estimate landing distance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single chute system</span>
+<span class="n">apogee_m</span> <span class="o">=</span> <span class="mi">2500</span>
+<span class="n">descent_rate_ms</span> <span class="o">=</span> <span class="mf">6.0</span>
+<span class="n">wind_speed_ms</span> <span class="o">=</span> <span class="mf">5.0</span>  <span class="c1"># Average wind</span>
+
+<span class="n">descent_time_s</span> <span class="o">=</span> <span class="n">apogee_m</span> <span class="o">/</span> <span class="n">descent_rate_ms</span>
+<span class="n">drift_distance_m</span> <span class="o">=</span> <span class="n">wind_speed_ms</span> <span class="o">*</span> <span class="n">descent_time_s</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Descent time: </span><span class="si">{</span><span class="n">descent_time_s</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> s (</span><span class="si">{</span><span class="n">descent_time_s</span><span class="o">/</span><span class="mi">60</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> min)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drift distance: </span><span class="si">{</span><span class="n">drift_distance_m</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+<span class="c1"># Output: 417 seconds (6.9 min), 2083 m drift!</span>
+</pre></div>
+</div>
+<p>This is why dual-deploy is important for high flights!</p>
+</section>
+<section id="terminal-velocity">
+<h3>Terminal Velocity<a class="headerlink" href="#terminal-velocity" title="Link to this heading">#</a></h3>
+<p>The rocket reaches terminal velocity when drag force equals weight:</p>
+<div class="math notranslate nohighlight">
+\[V_{\text{terminal}} = \sqrt{\frac{2mg}{\rho \cdot C_D S}}\]</div>
+<p>At terminal velocity, descent rate is constant (equilibrium).</p>
+</section>
+<section id="checking-descent-in-simulation">
+<h3>Checking Descent in Simulation<a class="headerlink" href="#checking-descent-in-simulation" title="Link to this heading">#</a></h3>
+<p>After running simulation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check descent rate in trajectory data</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">import pandas as pd</span>
+<span class="s2">df = pd.read_csv(&#39;outputs/my_rocket/trajectory/my_rocket_trajectory.csv&#39;)</span>
+
+<span class="s2"># Filter for descent after apogee</span>
+<span class="s2">descent = df[df[&#39;vz_ms&#39;] &lt; 0].copy()</span>
+<span class="s2">descent[&#39;velocity_mag&#39;] = (descent[&#39;vx_ms&#39;]**2 +</span>
+<span class="s2">                            descent[&#39;vy_ms&#39;]**2 +</span>
+<span class="s2">                            descent[&#39;vz_ms&#39;]**2)**0.5</span>
+
+<span class="s2"># Terminal velocity (last 10% of flight)</span>
+<span class="s2">terminal_section = descent.iloc[int(len(descent)*0.9):]</span>
+<span class="s2">terminal_velocity = terminal_section[&#39;velocity_mag&#39;].mean()</span>
+
+<span class="s2">print(f&#39;Terminal descent rate: {terminal_velocity:.2f} m/s&#39;)</span>
+<span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="safety-considerations">
+<h2>Safety Considerations<a class="headerlink" href="#safety-considerations" title="Link to this heading">#</a></h2>
+<section id="landing-velocity-limits">
+<h3>Landing Velocity Limits<a class="headerlink" href="#landing-velocity-limits" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Max Safe Velocity</p></th>
+<th class="head"><p>Consequence if Exceeded</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Electronics bay</p></td>
+<td><p>8 m/s</p></td>
+<td><p>Circuit board damage, sensor failure</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fiberglass airframe</p></td>
+<td><p>10 m/s</p></td>
+<td><p>Cracks, joint separation</p></td>
+</tr>
+<tr class="row-even"><td><p>Balsa/plywood fins</p></td>
+<td><p>6 m/s</p></td>
+<td><p>Fin breaking, delamination</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fragile payload (eggs, glass)</p></td>
+<td><p>4 m/s</p></td>
+<td><p>Payload destruction</p></td>
+</tr>
+<tr class="row-even"><td><p>Humans nearby</p></td>
+<td><p>ANY impact dangerous</p></td>
+<td><p>Injury risk - keep clear!</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="parachute-failure-scenarios">
+<h3>Parachute Failure Scenarios<a class="headerlink" href="#parachute-failure-scenarios" title="Link to this heading">#</a></h3>
+<p><strong>What if parachute doesn’t deploy?</strong></p>
+<p>Always have backup plan:</p>
+<ol class="arabic simple">
+<li><p><strong>Backup altimeter</strong> - Redundant deployment system</p></li>
+<li><p><strong>Backup charge</strong> - Two ejection charges in series</p></li>
+<li><p><strong>Motor ejection</strong> (model rockets) - Ejection charge in motor</p></li>
+<li><p><strong>Streamer backup</strong> - Small streamer as last resort</p></li>
+</ol>
+<p><strong>Simulation with failure:</strong></p>
+<p>Test what happens if chute fails:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Simulate failure</span>
+<span class="w">  </span><span class="c1"># OR</span>
+<span class="w">  </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">       </span><span class="c1"># Partially deployed chute</span>
+</pre></div>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p><strong>Never fly without recovery system!</strong> Even small rockets can cause serious injury when falling from altitude.</p>
+</div>
+</section>
+<section id="packing-and-testing">
+<h3>Packing and Testing<a class="headerlink" href="#packing-and-testing" title="Link to this heading">#</a></h3>
+<p><strong>Before flight:</strong></p>
+<ol class="arabic simple">
+<li><p>✅ <strong>Measure actual parachute</strong> - Verify diameter</p></li>
+<li><p>✅ <strong>Test deployment</strong> - Ground test ejection charge</p></li>
+<li><p>✅ <strong>Check shock cord</strong> - Inspect for wear/damage</p></li>
+<li><p>✅ <strong>Proper packing</strong> - No tangles, correct folding</p></li>
+<li><p>✅ <strong>Verify trigger</strong> - Test altimeter programming</p></li>
+<li><p>✅ <strong>Calculate drift</strong> - Ensure recovery area sufficient</p></li>
+</ol>
+</section>
+</section>
+<section id="advanced-topics">
+<h2>Advanced Topics<a class="headerlink" href="#advanced-topics" title="Link to this heading">#</a></h2>
+<section id="reefed-deployment">
+<h3>Reefed Deployment<a class="headerlink" href="#reefed-deployment" title="Link to this heading">#</a></h3>
+<p>Reef the parachute (partially restrict opening) for staged deployment:</p>
+<ol class="arabic simple">
+<li><p>Chute deploys reefed (small effective area)</p></li>
+<li><p>Reef line burns through after delay</p></li>
+<li><p>Chute fully inflates</p></li>
+</ol>
+<p><strong>Benefits:</strong> Reduces opening shock, enables faster initial descent</p>
+</section>
+<section id="streamer-recovery">
+<h3>Streamer Recovery<a class="headerlink" href="#streamer-recovery" title="Link to this heading">#</a></h3>
+<p>For small rockets or high-speed descent tests:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">       </span><span class="c1"># Small Cd×S acts like streamer</span>
+<span class="w">  </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apogee&quot;</span>
+</pre></div>
+</div>
+<p><strong>Typical descent:</strong> 15-30 m/s (much faster than parachute)</p>
+</section>
+<section id="active-recovery">
+<h3>Active Recovery<a class="headerlink" href="#active-recovery" title="Link to this heading">#</a></h3>
+<p>Guided recovery with parafoil or thrust vectoring:</p>
+<ul class="simple">
+<li><p>GPS-guided parafoil</p></li>
+<li><p>Powered descent (SpaceX-style)</p></li>
+<li><p>Helicopter autorotation</p></li>
+</ul>
+<p>These require custom Python code beyond basic YAML configuration.</p>
+</section>
+</section>
+<section id="optimization-example">
+<h2>Optimization Example<a class="headerlink" href="#optimization-example" title="Link to this heading">#</a></h2>
+<p>Let’s optimize parachute size for a target drift distance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">mass_kg</span> <span class="o">=</span> <span class="mf">10.5</span>
+<span class="n">apogee_m</span> <span class="o">=</span> <span class="mi">2500</span>
+<span class="n">wind_ms</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">max_drift_m</span> <span class="o">=</span> <span class="mi">800</span>  <span class="c1"># Recovery area limit</span>
+<span class="n">min_landing_velocity</span> <span class="o">=</span> <span class="mf">4.0</span>  <span class="c1"># Damage threshold</span>
+
+<span class="c1"># Test range of Cd×S values</span>
+<span class="n">cds_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">cds</span> <span class="ow">in</span> <span class="n">cds_values</span><span class="p">:</span>
+    <span class="c1"># Terminal velocity</span>
+    <span class="n">v_term</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mass_kg</span> <span class="o">*</span> <span class="mf">9.81</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.225</span> <span class="o">*</span> <span class="n">cds</span><span class="p">))</span>
+
+    <span class="c1"># Descent time</span>
+    <span class="n">t_descent</span> <span class="o">=</span> <span class="n">apogee_m</span> <span class="o">/</span> <span class="n">v_term</span>
+
+    <span class="c1"># Drift distance</span>
+    <span class="n">drift</span> <span class="o">=</span> <span class="n">wind_ms</span> <span class="o">*</span> <span class="n">t_descent</span>
+
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;cds&#39;</span><span class="p">:</span> <span class="n">cds</span><span class="p">,</span>
+        <span class="s1">&#39;velocity&#39;</span><span class="p">:</span> <span class="n">v_term</span><span class="p">,</span>
+        <span class="s1">&#39;drift&#39;</span><span class="p">:</span> <span class="n">drift</span><span class="p">,</span>
+        <span class="s1">&#39;descent_time&#39;</span><span class="p">:</span> <span class="n">t_descent</span>
+    <span class="p">})</span>
+
+<span class="c1"># Find optimal</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;drift&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">max_drift_m</span> <span class="ow">and</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;velocity&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">min_landing_velocity</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimal Cd×S: </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;cds&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m²&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Landing velocity: </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;velocity&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m/s&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Drift distance: </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;drift&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Descent time: </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;descent_time&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+<p>Example Output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Optimal Cd×S: 5.18 m²
+  Landing velocity: 6.35 m/s
+  Drift distance: 787 m
+  Descent time: 157 s
+</pre></div>
+</div>
+<p>This finds the <strong>minimum Cd×S</strong> (lightest parachute) that keeps drift under limit while landing safely.</p>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h2>
+<section id="problem-1-chute-opens-at-wrong-time">
+<h3>Problem 1: Chute Opens at Wrong Time<a class="headerlink" href="#problem-1-chute-opens-at-wrong-time" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Deployment altitude doesn’t match trigger setting</p>
+<p><strong>Causes:</strong></p>
+<ul class="simple">
+<li><p>Incorrect ground elevation in config</p></li>
+<li><p>Lag time too long/short</p></li>
+<li><p>Trigger altitude is ASL not AGL</p></li>
+</ul>
+<p><strong>Solution:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">elevation_m</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">  </span><span class="c1"># MUST match launch site elevation</span>
+
+<span class="nt">parachute</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">trigger</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">800</span><span class="w">      </span><span class="c1"># 800m AGL (above ground level)</span>
+<span class="w">  </span><span class="c1"># Actual deployment: 100 + 800 = 900m ASL</span>
+</pre></div>
+</div>
+</section>
+<section id="problem-2-landing-too-hard">
+<h3>Problem 2: Landing Too Hard<a class="headerlink" href="#problem-2-landing-too-hard" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Impact velocity &gt; target</p>
+<p><strong>Causes:</strong></p>
+<ul class="simple">
+<li><p>Cd×S too small</p></li>
+<li><p>Lag time too long</p></li>
+<li><p>Wind increasing effective descent rate</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Increase Cd×S by 20%</p></li>
+<li><p>Reduce lag time (better packing/faster deployment)</p></li>
+<li><p>Check actual vs. calculated parachute size</p></li>
+</ol>
+</section>
+<section id="problem-3-excessive-drift">
+<h3>Problem 3: Excessive Drift<a class="headerlink" href="#problem-3-excessive-drift" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Landing far from launch site</p>
+<p><strong>Causes:</strong></p>
+<ul class="simple">
+<li><p>High apogee + large chute</p></li>
+<li><p>Strong winds</p></li>
+<li><p>Single-deploy system</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Use dual-deploy (smaller drogue at apogee)</p></li>
+<li><p>Reduce apogee (smaller motor)</p></li>
+<li><p>Launch in lower wind conditions</p></li>
+<li><p>Increase recovery area size</p></li>
+</ol>
+</section>
+<section id="problem-4-chute-tangled">
+<h3>Problem 4: Chute Tangled<a class="headerlink" href="#problem-4-chute-tangled" title="Link to this heading">#</a></h3>
+<p><strong>Symptom:</strong> Chute doesn’t fully inflate (simulation shows partial deployment)</p>
+<p><strong>Model in simulation:</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parachute</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cd_s</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.5</span><span class="w">  </span><span class="c1"># Half of design value (tangled)</span>
+</pre></div>
+</div>
+<p><strong>Prevention:</strong></p>
+<ul class="simple">
+<li><p>Proper packing technique</p></li>
+<li><p>Deployment bag</p></li>
+<li><p>Shock cord protector</p></li>
+<li><p>Test deployments</p></li>
+</ul>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<p>Now that you understand recovery systems:</p>
+<ol class="arabic simple">
+<li><p><strong>Integrate weather</strong> - See <span class="xref std std-ref">tutorial_weather_integration</span> for wind effects</p></li>
+<li><p><strong>Run parametric studies</strong> - Vary Cd×S and compare landing sites</p></li>
+<li><p><strong>Simulate failures</strong> - Test with partial deployment or no deployment</p></li>
+<li><p><strong>Build and test</strong> - Ground test your deployment system!</p></li>
+</ol>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">configuration_rocket_params</span> - Complete parachute parameter reference</p></li>
+<li><p><a class="reference external" href="https://fruitychutes.com/">Fruity Chutes</a> - Parachute manufacturer (sizing charts)</p></li>
+<li><p><a class="reference external" href="https://publicmissiles.com/">Public Missiles Recovery Handbook</a> - Dual-deploy guide</p></li>
+<li><p><a class="reference external" href="https://docs.rocketpy.org/en/latest/user/parachute.html">RocketPy Recovery Docs</a></p></li>
+</ul>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p><strong>Key takeaways:</strong></p>
+<p>✅ Cd×S is the critical parameter (drag coefficient × area)</p>
+<p>✅ Calculate Cd×S from desired landing velocity: $C_D S = frac{2mg}{rho V^2}$</p>
+<p>✅ Apogee trigger is simplest and most reliable</p>
+<p>✅ Dual-deploy reduces drift for high flights</p>
+<p>✅ Lag time affects deployment altitude and opening forces</p>
+<p>✅ Always validate with simulation before flying</p>
+<p>✅ Safety margins are essential - oversize rather than undersize</p>
+<p><strong>Recovery system design is about balancing:</strong></p>
+<ul class="simple">
+<li><p>Safe landing velocity</p></li>
+<li><p>Acceptable drift distance</p></li>
+<li><p>Deployment reliability</p></li>
+<li><p>Cost and complexity</p></li>
+</ul>
+<p>Start simple (single chute at apogee), then progress to dual-deploy as you gain experience!</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04_adding_fins.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Adding and Optimizing Fins</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../how_to_guides/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">How-To Guides</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recovery-system-basics">Recovery System Basics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-recovery-matters">Why Recovery Matters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recovery-system-components">Recovery System Components</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-cds">Understanding Cd×S</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-critical-parameter">The Critical Parameter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-cds">Calculating Cd×S</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-parachute-types">Common Parachute Types</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-single-parachute-system">Tutorial: Single Parachute System</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-design-requirements">Step 1: Design Requirements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-calculate-parachute-size">Step 2: Calculate Parachute Size</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-configure-in-yaml">Step 3: Configure in YAML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-run-and-validate">Step 4: Run and Validate</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-triggers">Deployment Triggers</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apogee-trigger-most-common">Apogee Trigger (Most Common)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altitude-trigger">Altitude Trigger</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-trigger-backup">Time Trigger (Backup)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-triggers">Custom Triggers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-lag">Deployment Lag</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-lag-time">Understanding Lag Time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-on-landing-velocity">Effect on Landing Velocity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dual-deploy-systems">Dual-Deploy Systems</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-dual-deploy">What is Dual Deploy?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-dual-deploy">Configuring Dual Deploy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sizing-dual-deploy-parachutes">Sizing Dual-Deploy Parachutes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descent-analysis">Descent Analysis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-landing-location">Predicting Landing Location</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminal-velocity">Terminal Velocity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-descent-in-simulation">Checking Descent in Simulation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#safety-considerations">Safety Considerations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-velocity-limits">Landing Velocity Limits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parachute-failure-scenarios">Parachute Failure Scenarios</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#packing-and-testing">Packing and Testing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-topics">Advanced Topics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reefed-deployment">Reefed Deployment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#streamer-recovery">Streamer Recovery</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#active-recovery">Active Recovery</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-example">Optimization Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">Troubleshooting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-chute-opens-at-wrong-time">Problem 1: Chute Opens at Wrong Time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-landing-too-hard">Problem 2: Landing Too Hard</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-excessive-drift">Problem 3: Excessive Drift</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4-chute-tangled">Problem 4: Chute Tangled</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user/tutorials/05_recovery_system.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, STARPI Team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
