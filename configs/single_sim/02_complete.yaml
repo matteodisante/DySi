@@ -97,7 +97,7 @@ rocket:
       target_apogee_m: 3000.0            # Target apogee for controller
       
       # --- Apogee Prediction Method ---
-      apogee_prediction_method: "ballistic"  # Options: "ballistic", "euler", or "rk45"
+      apogee_prediction_method: "euler"  # Options: "ballistic", "euler", or "rk45"
       # ballistic: h + v²/(2g) - FAST but INACCURATE (ignores drag)
       # euler:     Forward Euler - GOOD balance (accounts for drag variation)
       # rk45:      Runge-Kutta 4/5 - MOST ACCURATE but slower

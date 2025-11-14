@@ -533,6 +533,9 @@ class RocketBuilder:
             controller = AirBrakesController(ctrl_cfg)
             controller_function = controller.get_controller_function()
             sampling_rate = ab.controller.sampling_rate_hz
+            
+            # Save controller reference for later access to plot data
+            self.air_brakes_controller = controller
 
             logger.info(
                 f"Air brakes with {ab.controller.algorithm.upper()} controller: "
@@ -543,6 +546,7 @@ class RocketBuilder:
             # No controller: static deployment
             controller_function = None
             sampling_rate = 10.0  # Default for static
+            self.air_brakes_controller = None
             logger.info(
                 f"Air brakes without controller (static deployment={ab.deployment_level})"
             )

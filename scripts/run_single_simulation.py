@@ -30,6 +30,7 @@ from src.data_handler import DataHandler
 from src.visualizer import Visualizer
 from src.state_exporter import StateExporter
 from src.curve_plotter import CurvePlotter
+from src.airbrakes_plotter import create_airbrakes_plots
 from src.utils import setup_logging
 
 
@@ -386,6 +387,37 @@ def main():
             logger.info(f"Generated {len(plot_paths)} curve plots:")
             for plot_name, plot_path in sorted(plot_paths.items()):
                 logger.info(f"  {plot_name}: {plot_path}")
+
+        # 7b. Generate air brakes plots (if enabled and simulation completed)
+        if (not args.no_plots and not simulation_timed_out and flight and 
+            hasattr(rocket_builder, 'air_brakes_controller') and 
+            rocket_builder.air_brakes_controller is not None):
+            logger.info("\n--- GENERATING AIR BRAKES PLOTS ---")
+            
+            try:
+                # Get event times from flight
+                burnout_time = float(flight.motor_burn_out_time) if hasattr(flight, 'motor_burn_out_time') else None
+                apogee_time = float(flight.apogee_time) if hasattr(flight, 'apogee_time') else None
+                parachute_deploy_time = None
+                if hasattr(flight, 'parachute_events') and flight.parachute_events:
+                    parachute_deploy_time = min(t for t, _ in flight.parachute_events)
+                
+                # Create air brakes plots in curves directory
+                airbrakes_dir = sim_output_dir / "curves" / "airbrakes"
+                plot_paths = create_airbrakes_plots(
+                    controller=rocket_builder.air_brakes_controller,
+                    output_dir=airbrakes_dir,
+                    burnout_time=burnout_time,
+                    apogee_time=apogee_time,
+                    parachute_deploy_time=parachute_deploy_time,
+                    target_apogee=rocket_builder.air_brakes_controller.config.target_apogee_m
+                )
+                
+                logger.info(f"Generated {len(plot_paths)} air brakes plots:")
+                for plot_name, plot_path in sorted(plot_paths.items()):
+                    logger.info(f"  {plot_name}: {plot_path}")
+            except Exception as e:
+                logger.warning(f"Could not generate air brakes plots: {e}")
 
         # 8. Export trajectory data (only if simulation completed)
         if not args.no_export and not simulation_timed_out and flight:

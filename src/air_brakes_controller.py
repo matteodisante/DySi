@@ -490,6 +490,17 @@ class AirBrakesController:
         self._filtered_altitude = None
         self._filtered_velocity = None
 
+        # Data storage for plotting and analysis
+        self.time_history: List[float] = []
+        self.commanded_deployment_history: List[float] = []
+        self.actual_deployment_history: List[float] = []
+        self.predicted_apogee_history: List[float] = []
+        self.error_history: List[float] = []
+        self.p_term_history: List[float] = []
+        self.i_term_history: List[float] = []
+        self.d_term_history: List[float] = []
+        self.control_signal_history: List[float] = []
+
         logger.info(f"AirBrakesController initialized: algorithm={config.algorithm}, "
                    f"target={config.target_apogee_m}m, rate={config.sampling_rate_hz}Hz")
 
@@ -507,6 +518,18 @@ class AirBrakesController:
         self._computation_buffer = []
         self._filtered_altitude = None
         self._filtered_velocity = None
+        
+        # Clear history data
+        self.time_history = []
+        self.commanded_deployment_history = []
+        self.actual_deployment_history = []
+        self.predicted_apogee_history = []
+        self.error_history = []
+        self.p_term_history = []
+        self.i_term_history = []
+        self.d_term_history = []
+        self.control_signal_history = []
+        
         logger.debug("Controller state reset for new simulation")
 
     def generate_parameters_documentation(self, filepath: str):
@@ -834,7 +857,7 @@ class AirBrakesController:
             # --- Control algorithm selection ---
 
             if self.config.algorithm == "pid":
-                control_signal = self._pid_control(
+                control_signal, error, p_term, i_term, d_term = self._pid_control(
                     predicted_apogee,
                     filtered_vz,
                     dt
@@ -844,15 +867,21 @@ class AirBrakesController:
                     predicted_apogee,
                     self.config.target_apogee_m
                 )
+                error = predicted_apogee - self.config.target_apogee_m
+                p_term = i_term = d_term = 0.0
             elif self.config.algorithm == "model_predictive":
                 control_signal = self._model_predictive_control(
                     filtered_altitude,
                     filtered_vz,
                     predicted_apogee
                 )
+                error = predicted_apogee - self.config.target_apogee_m
+                p_term = i_term = d_term = 0.0
             else:
                 logger.warning(f"Unknown algorithm '{self.config.algorithm}', using PID")
-                control_signal = self._pid_control(predicted_apogee, filtered_vz, dt)
+                control_signal, error, p_term, i_term, d_term = self._pid_control(
+                    predicted_apogee, filtered_vz, dt
+                )
 
             # --- Hardware constraints ---
 
@@ -891,6 +920,17 @@ class AirBrakesController:
             # --- Apply to air brakes ---
             air_brakes.deployment_level = self._actual_deployment
 
+            # --- Save data for plotting ---
+            self.time_history.append(time)
+            self.commanded_deployment_history.append(self._commanded_deployment)
+            self.actual_deployment_history.append(self._actual_deployment)
+            self.predicted_apogee_history.append(predicted_apogee)
+            self.error_history.append(error)
+            self.p_term_history.append(p_term)
+            self.i_term_history.append(i_term)
+            self.d_term_history.append(d_term)
+            self.control_signal_history.append(control_signal)
+
             # --- Return data for logging ---
             return (
                 time,
@@ -908,7 +948,7 @@ class AirBrakesController:
         predicted_apogee: float,
         velocity_z: float,
         dt: float
-    ) -> float:
+    ) -> tuple:
         """PID control algorithm for air brakes deployment.
 
         Args:
@@ -917,7 +957,7 @@ class AirBrakesController:
             dt: Time step (s)
 
         Returns:
-            Control signal [0, 1] for deployment level
+            Tuple of (deployment, error, p_term, i_term, d_term)
         """
         # Error: positive if overshooting target
         error = predicted_apogee - self.config.target_apogee_m
@@ -940,7 +980,7 @@ class AirBrakesController:
         # Deploy more if overshooting (positive error)
         deployment = np.clip(output, 0.0, 1.0)
 
-        return deployment
+        return deployment, error, proportional, integral, derivative
 
     def _bang_bang_control(
         self,
